@@ -1,34 +1,27 @@
 // Important!
 const DOM = {
-    table : document.getElementById("table")
+    table : document.getElementById("table"),
+    userInput : document.getElementById("userInput"),
+    btn1 : document.getElementById("btn1")
 };
 
-// const tabla = document.getElementById("table")
-
-function generateTable(){
+function generateTableByUserInput(){
     let max = 10;
-    let num = 2;
+    let num = DOM.userInput.value;
+
+    DOM.table.innerHTML="";
 
     for(let i=1; i <= max; i++){
         let row = document.createElement("tr");
         let column = document.createElement("td");
         column.innerHTML = num + " * "+i+ " = "+(i*num)+"\n";
         row.appendChild(column);
-
         DOM.table.appendChild(row);
-    
     } 
-
 }
 
-generateTable();
+// Button on click actions
 
-/* 
-    For text area:
-
-for(let i=0; i <= max; i++){
-    data+= num + " * "+i+ " = "+(i*num)+"\n"
-
- } 
-
- */
+DOM.btn1.addEventListener('click', () => {
+    generateTableByUserInput();
+});
