@@ -10,8 +10,7 @@
     - [Multiplication](#multiplication)
     - [Name in sequence](#name-in-sequence)
 * [CSS](#css)
-
-
+* [References](#references)
 
 ## HTML 
 
@@ -100,8 +99,13 @@ ul>li.item$@-*3 ==> <ul>
                     </ul>
 ```
 
-<br>
+</br>
 
 ## CSS
 
 _In progress._
+
+</br>
+
+## References
+ * https://www.freecodecamp.org/news/write-html-css-faster-with-emmet-cheat-codes/
