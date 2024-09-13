@@ -1,4 +1,8 @@
 // Important!
+
+// Basic JS excercise about the table of any number up to 10 and 
+// the squared of another number.
+
 const DOM = {
     table : document.getElementById("table"),
     table2 : document.getElementById("table2"),
@@ -34,8 +38,6 @@ function calculateSquared(){
         DOM.table2.appendChild(row);
 }
 
-
-// Button on click actions
 DOM.btn1.addEventListener('click', () => {
     generateTableByUserInput(), calculateSquared();
 });
