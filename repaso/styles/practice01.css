@@ -2,7 +2,7 @@
     background-color: #96bed1; 
 }
 
-#table {
+#table, #table2 {
     border: none;
     border-radius: 3px; 
     background-color: #5d76a3; 
@@ -15,7 +15,7 @@ td, th {
     background-color: white; 
 }
 
-#userInput {
+#userInput, #userInput2 {
     border: 2px solid #5d76a3;
     background-color: white; 
     border-radius: 3px; 

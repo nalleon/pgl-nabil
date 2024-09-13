@@ -1,7 +1,9 @@
 // Important!
 const DOM = {
     table : document.getElementById("table"),
+    table2 : document.getElementById("table2"),
     userInput : document.getElementById("userInput"),
+    userInput2 : document.getElementById("userInput2"),
     btn1 : document.getElementById("btn1")
 };
 
@@ -20,8 +22,20 @@ function generateTableByUserInput(){
     } 
 }
 
-// Button on click actions
+function calculateSquared(){
+    let num = DOM.userInput2.value;
 
+    DOM.table2.innerHTML="";
+
+    let row = document.createElement("tr");
+        let column = document.createElement("td");
+        column.innerHTML =  num + " ^2 "+ " = "+(num*num)+"\n";
+        row.appendChild(column);
+        DOM.table2.appendChild(row);
+}
+
+
+// Button on click actions
 DOM.btn1.addEventListener('click', () => {
-    generateTableByUserInput();
+    generateTableByUserInput(), calculateSquared();
 });
