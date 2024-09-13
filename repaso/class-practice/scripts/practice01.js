@@ -11,6 +11,7 @@ const DOM = {
     btn1 : document.getElementById("btn1")
 };
 
+
 function generateTableByUserInput(){
     let max = 10;
     let num = DOM.userInput.value;
