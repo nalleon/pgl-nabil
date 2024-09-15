@@ -2,6 +2,13 @@
     background-color: #96bed1; 
 }
 
+main {
+    width: 550px;
+    margin: 0 auto;
+    padding: 50px;
+}
+
+
 #table, #table2 {
     border: none;
     border-radius: 3px; 
