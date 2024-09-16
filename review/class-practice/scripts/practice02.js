@@ -10,6 +10,7 @@ const DOM =  {
 function operation(){
     let num1 = DOM.userInput.value;
     let num2 = DOM.userInput2.value;
+    
 
     DOM.result.innerHTML="";
 
