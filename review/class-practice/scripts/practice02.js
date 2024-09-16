@@ -1,7 +1,9 @@
 const DOM =  {
     userInput : document.getElementById("userInput"),
     userInput2 : document.getElementById("userInput2"),
-    operatorCalc : document.getElementById("operatorCalc")
+    operatorCalc : document.getElementById("operatorCalc"),
+    result : document.getElementById("result"),
+    btn1 : document.getElementById("btn1")
 }
 
 
@@ -9,28 +11,25 @@ function operation(){
     let num1 = DOM.userInput.value;
     let num2 = DOM.userInput2.value;
 
-    DOM.table2.innerHTML="";
+    DOM.result.innerHTML="";
 
-    switch (operatorCalc.value) {
-        case resta:
-                column.innerHTML = num1 + " - "+num2+ " = "+(num1-num2)+"\n";
+    switch (DOM.operatorCalc.value) {
+        case '-':
+            DOM.result.innerHTML = num1 + " - "+num2+ " = "+(parseFloat(num1))-(parseFloat(num2));
             break;
 
-        case multiplicacion:
-                column.innerHTML = num1 + " * "+num2+ " = "+(num1*num2)+"\n";
+        case '*':
+            DOM.result.innerHTML = num1 + " * "+num2+ " = "+(parseFloat(num1))*(parseFloat(num2));
             break;  
 
-        case division:
-                column.innerHTML = num1 + " : "+num2+ " = "+(num1/num2)+"\n";
-            break;    
+        case ':':
+            DOM.result.innerHTML = num1 + " : "+num2+ " = "+(parseFloat(num1))/(parseFloat(num2));
+            break;
 
         default:
-                column.innerHTML = num1 + " + "+num2+ " = "+(num1+num2)+"\n";
+            DOM.result.innerHTML = num1 + " + "+num2+ " = "+(parseFloat(num1))+(parseFloat(num2));
             break;
     }
 }
 
-
-DOM.btn1.addEventListener(onclick, () => {
-    operationCalc();
-});
+DOM.btn1.addEventListener('click', operation);
