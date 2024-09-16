@@ -42,7 +42,5 @@ function calculateSquared(){
 DOM.btn1.addEventListener('click', () => {
     generateTableByUserInput();
     calculateSquared();
+    alert('test')
 });
-
-console.log("hola");
-
