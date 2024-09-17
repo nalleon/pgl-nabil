@@ -57,7 +57,7 @@ function createCells(){
  */
 function shufflePositions() {
     for (let i = size**2 - 1; i > 0; i--) {
-        let j = createNumArray();
+        let j = Math.floor(Math.random()*size**2-1);
         let temp = cells[i];
         cells[i]= cells[j]; 
         cells[j]= temp;
@@ -70,6 +70,7 @@ function shufflePositions() {
 } 
 
 
+
 function selectedCellsEvent() {
     let clickedCells = [];
 
@@ -77,7 +78,6 @@ function selectedCellsEvent() {
         cells[i].element.addEventListener('click', () => {
             cells[i].element.style.backgroundColor = 'rgba(231, 132, 96, 0.8)';
             cells[i].element.style.fontSize = '40px';   
-            cells[i].element.innerHTML = cells[i].element.datset.nums;
 
             clickedCells.push(cells[i]);
 

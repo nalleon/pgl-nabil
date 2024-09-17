@@ -22,7 +22,7 @@ body {
     border: 1px solid rgba(231, 132, 96, 0.8);
     width: 250px;
     height: 250px;
-    grid-template-columns: repeat(' + size + ', 1fr);
+    grid-template-columns: repeat(250px, 1fr);
     border: 1px solid #171717;
     margin: auto;
     display: grid;
