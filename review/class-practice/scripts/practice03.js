@@ -5,15 +5,16 @@ const DOM = {
 }
 
 let cells = []
-let selectedCells = [];
-let valuesUsed = [];
-let currentMoves = 0;
 let size = 3;
+let sizePx = 250;
+
+let attempsCount = 0;
 
 /**
  * Function to create the cells in the grid.
  */
 function createCells(){
+
     for (let i = 0; i < (size**2); i++){
         cells[i] = {
             element : document.createElement('div')
@@ -22,61 +23,84 @@ function createCells(){
         cells[i].element.className = 'cell';
         DOM.container.appendChild(cells[i].element);
     }
-}
 
+    document.styleSheets[0].deleteRule(1);
+    document.styleSheets[0].insertRule('.container { background-color: #171717;' +
+        'width: ' + sizePx + 'px;' + 
+        'height: ' + sizePx + 'px;' +
+        'grid-template-columns: repeat(' + size + ', 1fr);' +
+        'border: 1px solid #171717;;'+
+        'margin: auto;'+
+        'display: grid;'+
+        'gap: 10px;' +
+        '}');
+
+        
+        for (let i = 0; i < Math.floor((size**2)/2); i++){
+            let randomNum;
+            randomNum = Math.floor(Math.random() * size**2)+1;
+            cells[i].element.innerHTML = randomNum;
+
+            cells[size**2 - 1 - i].element.innerHTML = randomNum;
+        }
+
+        if (size**2 % 2 != 0) {
+            randomNum = Math.floor(Math.random() * size**2)+1;
+            cells[Math.floor((size**2)/2)].element.innerHTML = randomNum;
+        }
+        
+
+    }
 
 /**
- * Function to generate a random number between 1 and size*0.5 (inclusive).
- * This ensures that there are at least two of each number in the grid.
+ * Function to shuffle the positions of the cells.
  */
-function createNumArray(){
-    let randomValues = Math.floor(Math.random() * size * 0.5);
-    let values = valuesUsed.filter(value => value === randomValues);
-
-    if (values.length < 2){
-        valuesUsed.push(randomValues);
-    } else {
-        createNumArray();
+function shufflePositions() {
+    for (let i = size**2 - 1; i > 0; i--) {
+        let j = createNumArray();
+        let temp = cells[i];
+        cells[i]= cells[j]; 
+        cells[j]= temp;
     }
-}
+
+    DOM.container.innerHTML = '';
+    for (let i = 0; i < size**2; i++) {
+        DOM.container.appendChild(cells[i].element);
+    }
+} 
 
 
+function selectedCellsEvent() {
+    let clickedCells = [];
 
-function activate(event){
-    if(currentMoves < 2){
-    
-        if ((!selectedCells[0] || selectedCells[0] !== event.target)){
+    for (let i = 0; i < size**2; i++) {
+        cells[i].element.addEventListener('click', () => {
+            cells[i].element.style.backgroundColor = 'rgba(231, 132, 96, 0.8)';
+            cells[i].element.style.fontSize = '40px';   
+            cells[i].element.innerHTML = cells[i].element.datset.nums;
 
-            selectedCells.push(event.target);
-            currentMoves++;
+            clickedCells.push(cells[i]);
 
-            if(currentMoves == 2){
-                if(selectedCells[0].querySelectorAll('.face').innerHTML === 
-                selectedCells[1].querySelector('.face').innerHTML){
+            if (clickedCells.length == 2 && clickedCells[0].innerHTML == clickedCells[1].innerHTML) {
+                cells[0].element.style.backgroundColor = 'rgba(231, 132, 96, 0.8)';
+                cells[1].element.style.backgroundColor = 'rgba(231, 132, 96, 0.8)';
                     
-                    selectedCells = [];
-                    currentMoves = 0;
-                } else{
-                    setTimeout(() => {
-                        selectedCells[0].classList.remove('active');
-                        selectedCells[1].classList.remove('active');
-                        selectedCells = [];
-                        currentMoves = 0;
-                     }, 600);   
-                }
+            } else {
+                cells[0].element.style.backgroundColor = '';
+                cells[0].element.style.fontSize = '0px';      
+                cells[1].element.style.backgroundColor = '';
+                cells[1].element.style.fontSize = '0px';        
             }
-        }
-    } 
+                clickedCells = [];
+        });
+    }
 }
 
 createCells();
+shufflePositions();
+selectedCellsEvent();
 
 
-function shuffleArray() {
-    for (let i = size**2 - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [DOM.nums[i], DOM.nums[j]] = [DOM.nums[j], DOM.nums[i]];
-    }
-}
 
-shuffleArray();
+
+

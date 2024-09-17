@@ -1,41 +1,41 @@
-* {
+body {
     background-color: #171717;
-    overflow: hidden;
-}
-.main {
-    height: 100vh;
     display: flex;
     justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 70px auto;
-    width: 400px;
-}
-
-
-.container{
-    position: relative;
-    display: grid;
-    border: 1px solid rgba(231, 132, 96, 0.8);
-    column-gap: 20px;
-    row-gap: 20px;
-    grid-template-columns: auto auto auto;
-    padding: 10px;
     align-items: center;
-    justify-content: center;
+    height: 120vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
-.cell{
-    color: aliceblue;
-    background-color: #2d2d2d;
-    border: 1px solid rgba(231, 132, 96, 0.8);
-    padding: 20px;
-    font-size: 50px;
+.main {
+    background-color: #171717;
+    padding: 70px auto;
     text-align: center;
 }
 
-.cell.active{
-    transform: rotateY(180deg);
+
+
+.container{
+    background-color: #171717;
+    border: 1px solid rgba(231, 132, 96, 0.8);
+    width: 250px;
+    height: 250px;
+    grid-template-columns: repeat(' + size + ', 1fr);
+    border: 1px solid #171717;
+    margin: auto;
+    display: grid;
+    gap: 10px;
+}
+
+.cell {
+    display: flex;
+    color: rgb(255, 255, 255);
+    border: 1px solid rgba(231, 132, 96, 0.8);
+    align-items: center;
+    justify-content: center;
+    font-size: 0px;
 }
 
 .cell:hover {
