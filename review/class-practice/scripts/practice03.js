@@ -34,8 +34,11 @@ function createCells(){
         'display: grid;'+
         'gap: 10px;' +
         '}');
-
         
+
+    }
+
+    function arrayRandom(){
         for (let i = 0; i < Math.floor((size**2)/2); i++){
             let randomNum;
             randomNum = Math.floor(Math.random() * size**2)+1;
@@ -48,16 +51,14 @@ function createCells(){
             randomNum = Math.floor(Math.random() * size**2)+1;
             cells[Math.floor((size**2)/2)].element.innerHTML = randomNum;
         }
-        
-
     }
 
 /**
  * Function to shuffle the positions of the cells.
  */
 function shufflePositions() {
-    for (let i = size**2 - 1; i > 0; i--) {
-        let j = Math.floor(Math.random()*size**2-1);
+    for (let i = size**2 - 1; i >= 0; i--) {
+        let j = Math.floor(Math.random()*size**2+1);
         let temp = cells[i];
         cells[i]= cells[j]; 
         cells[j]= temp;
@@ -70,6 +71,21 @@ function shufflePositions() {
 } 
 
 
+/**
+ * Use a set 
+ * (int) (cells / 2)
+ * set rndNumbers;
+ * while (rndNumbers.size() < (int) (cells / 2)) {
+ *  rndNumbers.add
+ * }
+ * 
+ * _______
+ * 
+ * while array.length < cells / 2 {
+ *  rnd = aleatoriogen
+ * }
+ */
+
 
 function selectedCellsEvent() {
     let clickedCells = [];
@@ -78,22 +94,15 @@ function selectedCellsEvent() {
         cells[i].element.addEventListener('click', () => {
             console.log('test');
             cells[i].element.classList.add('cell-active');
-            cells[i].element.style.backgroundColor = 'rgba(231, 132, 96, 0.8)';
-            cells[i].element.style.fontSize = '40px';   
 
             clickedCells.push(cells[i]);
 
             if (clickedCells.length == 2 && clickedCells[0].innerHTML == clickedCells[1].innerHTML) {
                 cells[0].element.style.backgroundColor = 'rgba(231, 132, 96, 0.8)';
                 cells[1].element.style.backgroundColor = 'rgba(231, 132, 96, 0.8)';
-                    
-            } else {
-                cells[0].element.style.backgroundColor = '';
-                cells[0].element.style.fontSize = '0px';      
-                cells[1].element.style.backgroundColor = '';
-                cells[1].element.style.fontSize = '0px';        
-            }
-                clickedCells = [];
+            }        
+            
+
         });
     }
 }
