@@ -1,19 +1,34 @@
 
 const DOM = {
     nums : [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9],
+    container : document.getElementById('container')
 }
 
 let cells = []
 let selectedCells = [];
 let valuesUsed = [];
 let currentMoves = 0;
-let size = 9;
+let size = 3;
 
-function gameSize(){
-    
+/**
+ * Function to create the cells in the grid.
+ */
+function createCells(){
+    for (let i = 0; i < (size**2); i++){
+        cells[i] = {
+            element : document.createElement('div')
+        };
+
+        cells[i].element.className = 'cell';
+        DOM.container.appendChild(cells[i].element);
+    }
 }
 
 
+/**
+ * Function to generate a random number between 1 and size*0.5 (inclusive).
+ * This ensures that there are at least two of each number in the grid.
+ */
 function createNumArray(){
     let randomValues = Math.floor(Math.random() * size * 0.5);
     let values = valuesUsed.filter(value => value === randomValues);
@@ -26,19 +41,6 @@ function createNumArray(){
 }
 
 
-function createCells(){
-    for (let i = 0; i < size; i++){
-        let cell = document.createElement('div');
-        cell.classList.add('cell');
-
-        cells.push(cell);
-        document.querySelector('.container').append(cells[i])
-        createNumArray();
-        cells[i].querySelectorAll('.cell')[0].addEventListener(onclick, activate);
-    }
-
-}
-
 
 function activate(event){
     if(currentMoves < 2){
@@ -46,7 +48,7 @@ function activate(event){
         if ((!selectedCells[0] || selectedCells[0] !== event.target)){
 
             selectedCells.push(event.target);
-            currentMoves ++;
+            currentMoves++;
 
             if(currentMoves == 2){
                 if(selectedCells[0].querySelectorAll('.face').innerHTML === 
@@ -69,3 +71,12 @@ function activate(event){
 
 createCells();
 
+
+function shuffleArray() {
+    for (let i = size**2 - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [DOM.nums[i], DOM.nums[j]] = [DOM.nums[j], DOM.nums[i]];
+    }
+}
+
+shuffleArray();
