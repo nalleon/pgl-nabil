@@ -76,6 +76,8 @@ function selectedCellsEvent() {
 
     for (let i = 0; i < size**2; i++) {
         cells[i].element.addEventListener('click', () => {
+            console.log('test');
+            cells[i].element.classList.add('cell-active');
             cells[i].element.style.backgroundColor = 'rgba(231, 132, 96, 0.8)';
             cells[i].element.style.fontSize = '40px';   
 
