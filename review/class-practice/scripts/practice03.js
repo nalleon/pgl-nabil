@@ -7,7 +7,9 @@ const DOM = {
 let cells = []
 let size = 3;
 let sizePx = 250;
-
+let clickedCells = [];
+let valuesArray = [];
+let counter = 0;
 let attempsCount = 0;
 
 /**
@@ -35,21 +37,17 @@ function createCells(){
         'gap: 10px;' +
         '}');
         
-
+        
     }
 
-    function arrayRandom(){
-        for (let i = 0; i < Math.floor((size**2)/2); i++){
-            let randomNum;
-            randomNum = Math.floor(Math.random() * size**2)+1;
-            cells[i].element.innerHTML = randomNum;
-
-            cells[size**2 - 1 - i].element.innerHTML = randomNum;
+    function rndValues(){
+        let rnd = Math.floor(Math.random() * (size**2) * 0.5);
+        let values = valuesArray.filter(value => value === rnd);
+        if (values.length < 2) {
+            valuesArray.push(rnd);
         }
-
-        if (size**2 % 2 != 0) {
-            randomNum = Math.floor(Math.random() * size**2)+1;
-            cells[Math.floor((size**2)/2)].element.innerHTML = randomNum;
+        else {
+            rndValues();
         }
     }
 
@@ -58,7 +56,7 @@ function createCells(){
  */
 function shufflePositions() {
     for (let i = size**2 - 1; i >= 0; i--) {
-        let j = Math.floor(Math.random()*size**2+1);
+        let j = Math.floor(Math.random()*(size**2)+1);
         let temp = cells[i];
         cells[i]= cells[j]; 
         cells[j]= temp;
@@ -87,8 +85,7 @@ function shufflePositions() {
  */
 
 
-function selectedCellsEvent() {
-    let clickedCells = [];
+function selectedCellsEvent(e) {
 
     for (let i = 0; i < size**2; i++) {
         cells[i].element.addEventListener('click', () => {
@@ -96,18 +93,25 @@ function selectedCellsEvent() {
             cells[i].element.classList.add('cell-active');
 
             clickedCells.push(cells[i]);
+            counter++;
 
-            if (clickedCells.length == 2 && clickedCells[0].innerHTML == clickedCells[1].innerHTML) {
+            if (clickedCells.length == 2 && clickedCells[0].querySelectirAll('.cell-active')[0].innerHTML == clickedCells[1].querySelectirAll('.cell-active')[1].innerHTML) {
                 cells[0].element.style.backgroundColor = 'rgba(231, 132, 96, 0.8)';
                 cells[1].element.style.backgroundColor = 'rgba(231, 132, 96, 0.8)';
-            }        
-            
-
+            } else {
+                setTimeout(() => {
+                    clickedCells[0].classList.remove('cell-active');
+                    clickedCells[1].classList.remove('cell-active');
+                    clickedCells = [];
+                    counter = 0;
+                }, 1000);
+            }
         });
     }
 }
 
 createCells();
+rndValues();
 shufflePositions();
 selectedCellsEvent();
 
