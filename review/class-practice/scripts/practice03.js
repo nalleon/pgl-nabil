@@ -45,8 +45,7 @@ function createCells(){
         let values = valuesArray.filter(value => value === rnd);
         if (values.length < 2) {
             valuesArray.push(rnd);
-        }
-        else {
+        } else {
             rndValues();
         }
     }
