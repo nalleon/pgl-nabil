@@ -13,7 +13,6 @@ function createGame(){
         value.innerHTML = i;
         game.appendChild(cell);
         cell.addEventListener("click", showCells);
-
     }
 }
 
