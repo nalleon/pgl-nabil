@@ -8,6 +8,7 @@ const DOM = {
     canvas : document.getElementById("canvas")
 }
 
+// TODO: refactor to a class for better organization and reusability
 
 let globalWordChosen = "";
 let usedLettersArray = [];
