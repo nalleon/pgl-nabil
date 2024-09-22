@@ -70,11 +70,11 @@ body{
     width: 200px;
     height: 55px;
 
-    border: solid 5px rgb(194, 152, 127);
+    border: solid 5px rgb(163, 104, 83);
     background: transparent;
-    color: rgb(194, 152, 127);
+    color:rgb(163, 104, 83);
 
-    cursor: pointer;
+    cursor:pointer;
 }
 
 #play:hover{
