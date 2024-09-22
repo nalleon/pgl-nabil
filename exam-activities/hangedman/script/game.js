@@ -129,7 +129,45 @@ function drawWord(letter, indexes){
     });
 }
 
+/**
+ * Function to draw the hangman canvas based on the number of errors.
+ * @param {*} errorNumber 
+ */
+function selectCanvas(errorNumber){
+    switch(errorNumber){
+        case 1:
+            drawCanvaError1();
+            break;
+        case 2:
+            drawCanvaError2();
+            break;
+        case 3:
+            drawCanvaError3();
+            break;
+        case 4:
+            drawCanvaError4();
+            break;
+        case 5:
+            drawCanvaError5();
+            break;
+        case 6:
+            drawCanvaError6();
+            break;
+        case 7:
+            drawCanvaError7();
+            break;
+        case 8:
+            drawCanvaError8();
+            break;
+        case 9:
+            drawCanvaError9();
+            break;
+    }
+}
 
+/**
+ * Default canvas drawing function.
+ */
 function drawCanva(){
     let ctx = DOM.canvas.getContext('2d');
     ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
@@ -153,7 +191,9 @@ function drawCanva(){
 }
 
 
-
+/**
+ * Canvas drawing function for the first error.
+ */
 function drawCanvaError1(){
     let ctx = DOM.canvas.getContext('2d');
     ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
@@ -175,8 +215,9 @@ function drawCanvaError1(){
     ctx.stroke();
 }
 
-
-
+/**
+ * Canvas drawing function for the second error.
+ */
 function drawCanvaError2(){
     let ctx = DOM.canvas.getContext('2d');
     ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
@@ -201,6 +242,9 @@ function drawCanvaError2(){
     ctx.stroke();
 }
 
+/**
+ * Canvas drawing function for the third error.
+ */
 
 function drawCanvaError3(){
     let ctx = DOM.canvas.getContext('2d');
@@ -235,6 +279,9 @@ function drawCanvaError3(){
     ctx.stroke();
 }
 
+/**
+ * Canvas drawing function for the fourth error.
+ */
 
 function drawCanvaError4(){
     let ctx = DOM.canvas.getContext('2d');
@@ -271,11 +318,11 @@ function drawCanvaError4(){
     ctx.strokeStyle ="rgb(163, 104, 83)";
     ctx.ellipse(290,143,15,16,0,0, Math.PI*2);
     ctx.stroke();
-
-
 }
 
-
+/**
+ * Canvas drawing function for the fifth error.
+ */
 function drawCanvaError5(){
     let ctx = DOM.canvas.getContext('2d');
     ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
@@ -319,7 +366,9 @@ function drawCanvaError5(){
 
 }
 
-
+/**
+ * Canvas drawing function for the sixth error.
+ */
 function drawCanvaError6(){
     let ctx = DOM.canvas.getContext('2d');
     ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
@@ -364,7 +413,9 @@ function drawCanvaError6(){
     ctx.stroke();
 }
 
-
+/**
+ * Canvas drawing function for the seventh error.
+ */
 function drawCanvaError7(){
     let ctx = DOM.canvas.getContext('2d');
     ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
@@ -412,8 +463,9 @@ function drawCanvaError7(){
     ctx.stroke();
 }
 
-
-
+/**
+ * Canvas drawing function for the eighth error.
+ */
 function drawCanvaError8(){
     let ctx = DOM.canvas.getContext('2d');
     ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
@@ -465,7 +517,9 @@ function drawCanvaError8(){
     ctx.stroke();
 }
 
-
+/**
+ * Canvas drawing function for the ninth error.
+ */
 function drawCanvaError9(){
     let ctx = DOM.canvas.getContext('2d');
     ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
@@ -520,34 +574,3 @@ function drawCanvaError9(){
 }
 
 
-function selectCanvas(errorNumber){
-    switch(errorNumber){
-        case 1:
-            drawCanvaError1();
-            break;
-        case 2:
-            drawCanvaError2();
-            break;
-        case 3:
-            drawCanvaError3();
-            break;
-        case 4:
-            drawCanvaError4();
-            break;
-        case 5:
-            drawCanvaError5();
-            break;
-        case 6:
-            drawCanvaError6();
-            break;
-        case 7:
-            drawCanvaError7();
-            break;
-        case 8:
-            drawCanvaError8();
-            break;
-        case 9:
-            drawCanvaError9();
-            break;
-    }
-}
