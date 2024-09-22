@@ -5,20 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hangedman Game</title>
     <meta author="Nabil L.A.">
+    <link rel="stylesheet" href="./style/hangedman.css">
 </head>
 <body>
     <div id="main">
-        <p id="word">
+        <p id="title">
             Palabra a descubrir: 
         </p>
-    
+        <div id="word">
+            
+        </div>
         <div id="draw">
             <canvas>
 
             </canvas>
         </div>
+        <p id="usedLetters">
+            
+        </p>
         <input type="text" id="letterChosen">
         <button id="play"> Iniciar </button>
+
     </div>
     <script type="text/javascript" type="module" src="./script/game.js"></script>
 </body>
