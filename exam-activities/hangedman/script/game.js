@@ -7,7 +7,7 @@ const DOM = {
     usedLetters : document.getElementById('usedLetters'),
     canvas : document.getElementById("canvas")
 }
-
+// TODO: span wordToGuess's spans after restarting game
 
 let globalWordChosen = "";
 let usedLettersArray = [];
@@ -18,14 +18,14 @@ let errorsCount = 0;
  * @param {*} event 
  */
 function startGame(event) {
+    DOM.wordToGuess.innerHTML = '';
+    DOM.usedLetters.innerHTML = '';
     drawCanva();
     let wordPos = rndWord(0, DOM.words.length);
     showWord(wordPos);
-
 }
 
 DOM.playBtn.addEventListener('click', startGame);
-
 
 /**
  * Function to select a random word from the array
@@ -50,9 +50,9 @@ function showWord(wordPos){
 
     let wordLength = wordChosen.length;
 
-  //  console.log(wordChosen);
+  console.log(wordChosen);
    
-  // const wordToGuess = wordChosen.replace(/[a-zA-Z]/g, '_'); // /g --> global, applies to all regular expressions
+  // const wordToGuess = wordChosen.replace(/[a-zA-Z]/g, '_'); // better for cmd/bash
   // console.log(wordToGuess); 
     
     for (let i = 0; i < wordLength; i++) {
@@ -79,10 +79,18 @@ DOM.letterChosen.addEventListener('keyup', (event) => {
                 errorsCount++;
                 selectCanvas(errorsCount);
             }
-
             usedLetters(userLetter);
         } 
 
+        if (event.target.value.length > 1 ){
+            let userWord = event.target.value.toLowerCase();
+            if (globalWordChosen == userWord) {
+                alert("¡HAS GANADO! La palabra era: " + globalWordChosen);
+            } else {
+                errorsCount++;
+                selectCanvas(errorsCount);
+            }
+        }
         DOM.letterChosen.value = '';
     }
 }); 
@@ -130,7 +138,6 @@ function usedLetters(letter) {
  * @param {*} indexes index of the letter appaerences to update
  */
 function drawWord(letter, indexes){
-
     indexes.forEach(element => {
         DOM.wordToGuess.querySelectorAll('span').forEach(spanElement =>{
                 if(element == spanElement.id) {
@@ -582,5 +589,3 @@ function drawCanvaError9(){
 
     ctx.stroke();
 }
-
-
