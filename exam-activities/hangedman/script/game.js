@@ -21,6 +21,7 @@ function startGame(event) {
     drawCanva();
     let wordPos = rndWord(0, DOM.words.length);
     showWord(wordPos);
+
 }
 
 DOM.playBtn.addEventListener('click', startGame);
@@ -159,9 +160,11 @@ function selectCanvas(errorNumber){
         case 8:
             drawCanvaError8();
             break;
-        case 9:
+        default:
             drawCanvaError9();
+            alert('¡HAS PERDIDO! La palabra era: '+ globalWordChosen);
             break;
+            
     }
 }
 
