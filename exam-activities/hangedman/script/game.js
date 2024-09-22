@@ -18,7 +18,7 @@ let errorsCount = 0;
  * @param {*} event 
  */
 function startGame(event) {
-    console.log('Play Button Clicked');
+    drawCanva();
     let wordPos = rndWord(0, DOM.words.length);
     showWord(wordPos);
 }
@@ -73,7 +73,10 @@ DOM.letterChosen.addEventListener('keyup', (event) => {
         
             //console.log(globalWordChosen.includes(userLetter));
             if (globalWordChosen.includes(userLetter)){
-                 correctLetter(userLetter);
+                correctLetter(userLetter);
+            } else {
+                errorsCount++;
+                selectCanvas(errorsCount);
             }
 
             usedLetters(userLetter);
@@ -127,8 +130,6 @@ function drawWord(letter, indexes){
 }
 
 
-//emptyCanvas();
-
 function drawCanva(){
     let ctx = DOM.canvas.getContext('2d');
     ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
@@ -152,7 +153,6 @@ function drawCanva(){
 }
 
 
-//drawCanva();
 
 function drawCanvaError1(){
     let ctx = DOM.canvas.getContext('2d');
@@ -175,7 +175,7 @@ function drawCanvaError1(){
     ctx.stroke();
 }
 
-//drawCanvaError1();
+
 
 function drawCanvaError2(){
     let ctx = DOM.canvas.getContext('2d');
@@ -199,18 +199,8 @@ function drawCanvaError2(){
     ctx.lineTo(220, 50);
 
     ctx.stroke();
-
-
-    //Dibujar cabeza:
-    /*
-    ctx.beginPath();
-    ctx.strokeStyle ="rgb(163, 104, 83)";
-    ctx.ellipse(203,83,8,11,0,0, Math.PI*2); //se establece centro y radios
-            
-    ctx.stroke();*/
 }
 
-//drawCanvaError2();
 
 function drawCanvaError3(){
     let ctx = DOM.canvas.getContext('2d');
@@ -244,8 +234,6 @@ function drawCanvaError3(){
 
     ctx.stroke();
 }
-
-//drawCanvaError3();
 
 
 function drawCanvaError4(){
@@ -286,8 +274,6 @@ function drawCanvaError4(){
 
 
 }
-
-//drawCanvaError4();
 
 
 function drawCanvaError5(){
@@ -332,8 +318,6 @@ function drawCanvaError5(){
 
 
 }
-
-//drawCanvaError5();
 
 
 function drawCanvaError6(){
@@ -380,7 +364,6 @@ function drawCanvaError6(){
     ctx.stroke();
 }
 
-//drawCanvaError6();
 
 function drawCanvaError7(){
     let ctx = DOM.canvas.getContext('2d');
@@ -429,7 +412,6 @@ function drawCanvaError7(){
     ctx.stroke();
 }
 
-//drawCanvaError7();
 
 
 function drawCanvaError8(){
@@ -483,7 +465,6 @@ function drawCanvaError8(){
     ctx.stroke();
 }
 
-//drawCanvaError8();
 
 function drawCanvaError9(){
     let ctx = DOM.canvas.getContext('2d');
@@ -538,4 +519,35 @@ function drawCanvaError9(){
     ctx.stroke();
 }
 
-drawCanvaError9();
+
+function selectCanvas(errorNumber){
+    switch(errorNumber){
+        case 1:
+            drawCanvaError1();
+            break;
+        case 2:
+            drawCanvaError2();
+            break;
+        case 3:
+            drawCanvaError3();
+            break;
+        case 4:
+            drawCanvaError4();
+            break;
+        case 5:
+            drawCanvaError5();
+            break;
+        case 6:
+            drawCanvaError6();
+            break;
+        case 7:
+            drawCanvaError7();
+            break;
+        case 8:
+            drawCanvaError8();
+            break;
+        case 9:
+            drawCanvaError9();
+            break;
+    }
+}
