@@ -1,13 +1,17 @@
+
 const DOM = {
     playBtn : document.getElementById('play'),
     wordToGuess : document.getElementById('word'),
     letterChosen : document.getElementById('letterChosen'),
-    words : ["esternocleidomastoideo", "paralelepipedo", "otorrinolaringologia", "electrocardiograma", "ornitorrinco"],
-    usedLetters : document.getElementById('usedLetters')
+    words : ["esternocleidomastoideo", "paralelepipedo", "otorrinolaringologia", "electrocardiograma", "ornitorrinco", "olecranon"],
+    usedLetters : document.getElementById('usedLetters'),
+    canvas : document.getElementById("canvas")
 }
 
 
 let globalWordChosen = "";
+let usedLettersArray = [];
+let errorsCount = 0;
 
 /**
  * Function to start the game when the play button is clicked.
@@ -47,7 +51,7 @@ function showWord(wordPos){
 
   //  console.log(wordChosen);
    
-  // const wordToGuess = wordChosen.replace(/[a-zA-Z]/g, '_'); // /g --> global, applaies to all regular expressions
+  // const wordToGuess = wordChosen.replace(/[a-zA-Z]/g, '_'); // /g --> global, applies to all regular expressions
   // console.log(wordToGuess); 
     
     for (let i = 0; i < wordLength; i++) {
@@ -56,8 +60,6 @@ function showWord(wordPos){
         letter.textContent = ' ';
         DOM.wordToGuess.appendChild(letter);
     }
-
-
 }
 
 /**
@@ -68,7 +70,8 @@ DOM.letterChosen.addEventListener('keyup', (event) => {
     if (event.key == 'Enter') {
         if (event.target.value.length == 1) {
             let userLetter = event.target.value.toLowerCase();
-            console.log(globalWordChosen.includes(userLetter));
+        
+            //console.log(globalWordChosen.includes(userLetter));
             if (globalWordChosen.includes(userLetter)){
                  correctLetter(userLetter);
             }
@@ -113,6 +116,7 @@ function usedLetters(letter) {
  */
 function drawWord(letter, indexes){
     console.log(DOM.wordToGuess.getElementsByTagName('span'));
+
     indexes.forEach(element => {
         DOM.wordToGuess.querySelectorAll('span').forEach(spanElement =>{
                 if(element == spanElement.id) {
@@ -122,3 +126,416 @@ function drawWord(letter, indexes){
     });
 }
 
+
+//emptyCanvas();
+
+function drawCanva(){
+    let ctx = DOM.canvas.getContext('2d');
+    ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
+
+    //Dibujando lineas
+    ctx.beginPath();
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(75,400);
+    ctx.lineTo(195, 400);
+
+    ctx.moveTo(135,400);
+    ctx.lineTo(130, 50);
+
+    ctx.stroke();
+
+
+    ctx.moveTo(135,400);
+    ctx.lineTo(130, 50);
+}
+
+
+//drawCanva();
+
+function drawCanvaError1(){
+    let ctx = DOM.canvas.getContext('2d');
+    ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
+
+    //Dibujando lineas
+    ctx.beginPath();
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(75,400);
+    ctx.lineTo(195, 400);
+
+    ctx.moveTo(130,400);
+    ctx.lineTo(130, 50);
+
+    ctx.moveTo(128,50);
+    ctx.lineTo(290, 50);
+
+    ctx.stroke();
+}
+
+//drawCanvaError1();
+
+function drawCanvaError2(){
+    let ctx = DOM.canvas.getContext('2d');
+    ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
+
+    ctx.beginPath();
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(75,400);
+    ctx.lineTo(195, 400);
+
+    ctx.moveTo(130,400);
+    ctx.lineTo(130, 50);
+
+    ctx.moveTo(128,50);
+    ctx.lineTo(290, 50);
+
+    
+    ctx.moveTo(129,160);
+    ctx.lineTo(220, 50);
+
+    ctx.stroke();
+
+
+    //Dibujar cabeza:
+    /*
+    ctx.beginPath();
+    ctx.strokeStyle ="rgb(163, 104, 83)";
+    ctx.ellipse(203,83,8,11,0,0, Math.PI*2); //se establece centro y radios
+            
+    ctx.stroke();*/
+}
+
+//drawCanvaError2();
+
+function drawCanvaError3(){
+    let ctx = DOM.canvas.getContext('2d');
+    ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
+
+    ctx.beginPath();
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(75,400);
+    ctx.lineTo(195, 400);
+
+    ctx.moveTo(130,400);
+    ctx.lineTo(130, 50);
+
+    ctx.moveTo(128,50);
+    ctx.lineTo(290, 50);
+
+    ctx.moveTo(129,160);
+    ctx.lineTo(220, 50);
+
+    ctx.stroke();
+
+
+    ctx.beginPath();
+    ctx.strokeStyle = "rgb(163, 83, 83)";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(290,47);
+    ctx.lineTo(290, 130);
+
+    ctx.stroke();
+}
+
+//drawCanvaError3();
+
+
+function drawCanvaError4(){
+    let ctx = DOM.canvas.getContext('2d');
+    ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
+
+    ctx.beginPath();
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(75,400);
+    ctx.lineTo(195, 400);
+
+    ctx.moveTo(130,400);
+    ctx.lineTo(130, 50);
+
+    ctx.moveTo(128,50);
+    ctx.lineTo(290, 50);
+
+    ctx.moveTo(129,160);
+    ctx.lineTo(220, 50);
+
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle = "rgb(163, 83, 83)";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(290,47);
+    ctx.lineTo(290, 130);
+
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.strokeStyle ="rgb(163, 104, 83)";
+    ctx.ellipse(290,143,15,16,0,0, Math.PI*2);
+    ctx.stroke();
+
+
+}
+
+//drawCanvaError4();
+
+
+function drawCanvaError5(){
+    let ctx = DOM.canvas.getContext('2d');
+    ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
+
+    ctx.beginPath();
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(75,400);
+    ctx.lineTo(195, 400);
+
+    ctx.moveTo(130,400);
+    ctx.lineTo(130, 50);
+
+    ctx.moveTo(128,50);
+    ctx.lineTo(290, 50);
+
+    ctx.moveTo(129,160);
+    ctx.lineTo(220, 50);
+
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle = "rgb(163, 83, 83)";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(290,47);
+    ctx.lineTo(290, 130);
+
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.strokeStyle ="rgb(163, 104, 83)";
+    ctx.ellipse(290,143,15,16,0,0, Math.PI*2);
+
+    ctx.moveTo(290,156);
+    ctx.lineTo(290, 230);
+
+    ctx.stroke();
+
+
+}
+
+//drawCanvaError5();
+
+
+function drawCanvaError6(){
+    let ctx = DOM.canvas.getContext('2d');
+    ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
+
+    ctx.beginPath();
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(75,400);
+    ctx.lineTo(195, 400);
+
+    ctx.moveTo(130,400);
+    ctx.lineTo(130, 50);
+
+    ctx.moveTo(128,50);
+    ctx.lineTo(290, 50);
+
+    ctx.moveTo(129,160);
+    ctx.lineTo(220, 50);
+
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle = "rgb(163, 83, 83)";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(290,47);
+    ctx.lineTo(290, 130);
+
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.strokeStyle ="rgb(163, 104, 83)";
+    ctx.ellipse(290,143,15,16,0,0, Math.PI*2);
+
+    ctx.moveTo(290,156);
+    ctx.lineTo(290, 230);
+    
+    ctx.moveTo(290,159);
+    ctx.lineTo(255, 190);
+
+    ctx.stroke();
+}
+
+//drawCanvaError6();
+
+function drawCanvaError7(){
+    let ctx = DOM.canvas.getContext('2d');
+    ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
+
+    ctx.beginPath();
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(75,400);
+    ctx.lineTo(195, 400);
+
+    ctx.moveTo(130,400);
+    ctx.lineTo(130, 50);
+
+    ctx.moveTo(128,50);
+    ctx.lineTo(290, 50);
+
+    ctx.moveTo(129,160);
+    ctx.lineTo(220, 50);
+
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle = "rgb(163, 83, 83)";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(290,47);
+    ctx.lineTo(290, 130);
+
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.strokeStyle ="rgb(163, 104, 83)";
+    ctx.ellipse(290,143,15,16,0,0, Math.PI*2);
+
+    ctx.moveTo(290,156);
+    ctx.lineTo(290, 230);
+    
+    ctx.moveTo(290,159);
+    ctx.lineTo(255, 190);
+
+    ctx.moveTo(290,159);
+    ctx.lineTo(325, 190);
+
+    ctx.stroke();
+}
+
+//drawCanvaError7();
+
+
+function drawCanvaError8(){
+    let ctx = DOM.canvas.getContext('2d');
+    ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
+
+    ctx.beginPath();
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(75,400);
+    ctx.lineTo(195, 400);
+
+    ctx.moveTo(130,400);
+    ctx.lineTo(130, 50);
+
+    ctx.moveTo(128,50);
+    ctx.lineTo(290, 50);
+
+    ctx.moveTo(129,160);
+    ctx.lineTo(220, 50);
+
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle = "rgb(163, 83, 83)";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(290,47);
+    ctx.lineTo(290, 130);
+
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.strokeStyle ="rgb(163, 104, 83)";
+    ctx.ellipse(290,143,15,16,0,0, Math.PI*2);
+
+    ctx.moveTo(290,156);
+    ctx.lineTo(290, 230);
+    
+    ctx.moveTo(290,159);
+    ctx.lineTo(255, 190);
+
+    ctx.moveTo(290,159);
+    ctx.lineTo(325, 190);
+
+    
+    ctx.moveTo(290,229);
+    ctx.lineTo(325, 259);
+
+    ctx.stroke();
+}
+
+//drawCanvaError8();
+
+function drawCanvaError9(){
+    let ctx = DOM.canvas.getContext('2d');
+    ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
+
+    ctx.beginPath();
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(75,400);
+    ctx.lineTo(195, 400);
+
+    ctx.moveTo(130,400);
+    ctx.lineTo(130, 50);
+
+    ctx.moveTo(128,50);
+    ctx.lineTo(290, 50);
+
+    ctx.moveTo(129,160);
+    ctx.lineTo(220, 50);
+
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle = "rgb(163, 83, 83)";
+    ctx.lineWidth = 6;
+
+    ctx.moveTo(290,47);
+    ctx.lineTo(290, 130);
+
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.strokeStyle ="rgb(163, 104, 83)";
+    ctx.ellipse(290,143,15,16,0,0, Math.PI*2);
+
+    ctx.moveTo(290,156);
+    ctx.lineTo(290, 230);
+    
+    ctx.moveTo(290,159);
+    ctx.lineTo(255, 190);
+
+    ctx.moveTo(290,159);
+    ctx.lineTo(325, 190);
+
+    ctx.moveTo(290,229);
+    ctx.lineTo(325, 259);
+
+    ctx.moveTo(290,229);
+    ctx.lineTo(255, 259);
+
+    ctx.stroke();
+}
+
+drawCanvaError9();

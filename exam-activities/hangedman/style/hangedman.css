@@ -20,7 +20,7 @@ body{
 #word {
     margin: auto, auto;
     text-align: center;
-    width: 90%;
+    width: 1300px;
     height: auto;
     /*border: 1px solid rgb(142, 69, 38);*/
     display: flex;
@@ -33,6 +33,12 @@ body{
     width: 50px;
     height: 50px;
     border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+#canvas {
+    margin-top: 100px;
+    border: rgb(163, 104, 83) solid 1px;
+    background-color: rgb(225, 225, 225);
 }
 
 #usedLetters{
@@ -75,3 +81,4 @@ body{
     background-color: rgb(194, 152, 127);
     color:  rgb(225, 225, 225);
 }
+
