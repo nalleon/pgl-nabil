@@ -7,7 +7,7 @@ const DOM = {
     usedLetters : document.getElementById('usedLetters'),
     canvas : document.getElementById("canvas")
 }
-// TODO: span wordToGuess's spans after restarting game
+
 
 let globalWordChosen = "";
 let usedLettersArray = [];
@@ -50,7 +50,7 @@ function showWord(wordPos){
 
     let wordLength = wordChosen.length;
 
-  console.log(wordChosen);
+  //console.log(wordChosen);
    
   // const wordToGuess = wordChosen.replace(/[a-zA-Z]/g, '_'); // better for cmd/bash
   // console.log(wordToGuess); 
@@ -68,10 +68,16 @@ function showWord(wordPos){
  */
 
 DOM.letterChosen.addEventListener('keyup', (event) => {
+    if(usedLettersArray.includes(event.target.value)){
+        return;
+    }
+
     if (event.key == 'Enter') {
+
+
         if (event.target.value.length == 1 && isLetter(event.target.value)) {
             let userLetter = event.target.value.toLowerCase();
-        
+
             //console.log(globalWordChosen.includes(userLetter));
             if (globalWordChosen.includes(userLetter)){
                 correctLetter(userLetter);
@@ -129,6 +135,7 @@ function correctLetter(userLetter) {
  */
 
 function usedLetters(letter) {
+    usedLettersArray.push(letter);
     DOM.usedLetters.innerText += letter + ',  ';
 }
 
