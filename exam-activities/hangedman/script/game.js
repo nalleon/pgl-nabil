@@ -56,10 +56,10 @@ DOM.letterChosen.addEventListener('keyup', (event) => {
 
             usedLetters(userLetter);
         } 
-    
+
+        DOM.letterChosen.value = '';
     }
-        console.log(event.target.value);
-});
+}); 
 
 
 function correctLetter(userLetter) {
@@ -71,7 +71,7 @@ function correctLetter(userLetter) {
             correctIndexes.push(i);
         }
     });
-    
+
     drawWord(userLetter, correctIndexes);
 }
 
@@ -82,7 +82,7 @@ function usedLetters(letter) {
 function drawWord(letter, indexes){
     console.log(DOM.wordToGuess.getElementsByTagName('span'));
     indexes.forEach(element => {
-        DOM.wordToGuess.getElementsByTagName('span').forEach(spanElement =>{
+        DOM.wordToGuess.querySelectorAll('span').forEach(spanElement =>{
                 if(element == spanElement.id) {
                     spanElement.textContent = letter;
             }
