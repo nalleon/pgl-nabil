@@ -69,7 +69,7 @@ function showWord(wordPos){
 
 DOM.letterChosen.addEventListener('keyup', (event) => {
     if (event.key == 'Enter') {
-        if (event.target.value.length == 1) {
+        if (event.target.value.length == 1 && isLetter(event.target.value)) {
             let userLetter = event.target.value.toLowerCase();
         
             //console.log(globalWordChosen.includes(userLetter));
@@ -86,6 +86,17 @@ DOM.letterChosen.addEventListener('keyup', (event) => {
         DOM.letterChosen.value = '';
     }
 }); 
+
+/**
+ * Function to check if the user input is a letter
+ * @param {*} value to check if it's a letter
+ * @returns true if the value is a letter, false otherwise.
+ */
+
+function isLetter(value) {
+    let letterRegExp = /^[a-zA-ZñÑ]$/;
+    return letterRegExp.test(value);
+}
 
 /**
  * Function to update the word in the HTML based on the correct letters entered by the user.
@@ -119,7 +130,6 @@ function usedLetters(letter) {
  * @param {*} indexes index of the letter appaerences to update
  */
 function drawWord(letter, indexes){
-    console.log(DOM.wordToGuess.getElementsByTagName('span'));
 
     indexes.forEach(element => {
         DOM.wordToGuess.querySelectorAll('span').forEach(spanElement =>{
@@ -175,7 +185,6 @@ function drawCanva(){
     let ctx = DOM.canvas.getContext('2d');
     ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
 
-    //Dibujando lineas
     ctx.beginPath();
     ctx.strokeStyle = "black";
     ctx.lineWidth = 6;
@@ -187,7 +196,6 @@ function drawCanva(){
     ctx.lineTo(130, 50);
 
     ctx.stroke();
-
 
     ctx.moveTo(135,400);
     ctx.lineTo(130, 50);
@@ -201,7 +209,6 @@ function drawCanvaError1(){
     let ctx = DOM.canvas.getContext('2d');
     ctx.clearRect(0,0,DOM.canvas.width, DOM.canvas.height);
 
-    //Dibujando lineas
     ctx.beginPath();
     ctx.strokeStyle = "black";
     ctx.lineWidth = 6;
