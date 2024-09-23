@@ -19,6 +19,8 @@ let errorsCount = 0;
  * @param {*} event 
  */
 function startGame(event) {
+    errorsCount = 0;
+    usedLettersArray = [];
     DOM.wordToGuess.innerHTML = '';
     DOM.usedLetters.innerHTML = '';
     drawCanva();
