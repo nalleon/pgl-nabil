@@ -3,7 +3,6 @@ export class Game{
         this.words = ["esternocleidomastoideo", "paralelepipedo", "otorrinolaringologia", "electrocardiograma", "ornitorrinco", "olecranon", "gaseoducto"],
         this.globalWordChosen = "";
         this.usedLettersArray = [];
-        this.errorsCount = 0;
         this.wordToGuess = document.getElementById("word");
     }
 
@@ -64,11 +63,6 @@ export class Game{
         this.usedLettersArray.push(letter);
     }
 
-    /**increaseErrorsCount() {
-        this.errorsCount++;
-    }*/
-
-
 
     /**
      * Function to update the word in the HTML based on the correct letters entered by the user.
@@ -84,5 +78,4 @@ export class Game{
             })
         });
     }
-
 }

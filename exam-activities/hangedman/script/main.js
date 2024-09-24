@@ -19,11 +19,11 @@ let errorCounter = 0;
  * @param {*} event 
  */
 function startGame(event) {
-    game.errorsCount = 0;
+    errorCounter = 0;
     game.usedLettersArray = [];
     DOM.wordToGuess.innerHTML = '';
     DOM.usedLetters.innerHTML = '';
-    canvas.drawCanva();
+    canvas.drawDefaultCanva();
     let wordPos = game.rndWord(0, game.words.length);
     let wordSelected = game.selectWord(wordPos);
     showWord(wordSelected);
@@ -78,3 +78,6 @@ DOM.letterChosen.addEventListener('keyup', (event) => {
     }
 }); 
 
+/**
+ * 
+ */

@@ -1,9 +1,3 @@
-export class Game{
-    constructor(){
-    
-    }
-}
-
 const DOM = {
     playBtn : document.getElementById('play'),
     wordToGuess : document.getElementById('word'),

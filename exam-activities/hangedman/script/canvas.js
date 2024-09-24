@@ -4,7 +4,6 @@ export class Canvas {
     constructor() {
         this.canvas = document.getElementById('canvas');
         this.ctx = this.canvas.getContext('2d');
-
     }
 
     /**
@@ -60,11 +59,10 @@ export class Canvas {
                 break;
            case 8:
                 this.drawCanvaError8();
-               break;
+                break;
            default:
-               this.drawCanvaError9();
-             
-               break;
+                this.drawCanvaError9();
+                break;
                
        }
    }
