@@ -6,6 +6,7 @@ export class Game{
         this.wordToGuess = document.getElementById("word");
     }
 
+    //TODO: implement an usedWordsArray
 
     /**
      * Function to select a random word from the array
