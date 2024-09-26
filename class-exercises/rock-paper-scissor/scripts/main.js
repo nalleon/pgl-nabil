@@ -4,6 +4,9 @@ const DOM = {
 
 import { Game } from './game.js';
 
+function startGame() {
+
+}
 
 DOM.btn.addEventListener('click', () => {
 
