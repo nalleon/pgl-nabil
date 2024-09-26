@@ -1,11 +1,17 @@
+const { rejects } = require("assert");
+const fs = require(`fs`);
 
-fs.writeFile(
-    'practice05.txt', getTable(1), (error)=>{
-        if(error){
-            console.log('No se pudo grabar el archivo');
-        } else{
-            console.log('Archivo creado con exito');
+
+function write(fileName, content) {
+    return new Promise((resolve, reject) => {
+        try {
+            fs.writeFileSync(fileName, content);
+            resolve("File saved successfully");
+        } catch (error) {
+            reject(error);
         }
-    
-    }
-);
+    });
+}
+
+
+module.exports = {write};

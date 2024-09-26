@@ -8,4 +8,4 @@ function getTable(num){
     return result;
 }
 
-exports.createTable = getTable;
+module.exports.createTable = getTable;
