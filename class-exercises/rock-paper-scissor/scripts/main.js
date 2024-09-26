@@ -5,15 +5,13 @@ const DOM = {
     //userValue : document.getElementById('user-aux'),
 }
 
-
-
 const game = new Game();
 
-function startGame(event) {
+function startGame() {
     let userValue = game.obtainUserValue();
     game.compareElements(userValue);
 }
 
 
 
-DOM.btn.addEventListener('click', startGame());
+DOM.btn.addEventListener('click', startGame);

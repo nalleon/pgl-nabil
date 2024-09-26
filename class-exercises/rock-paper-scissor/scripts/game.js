@@ -8,26 +8,23 @@ export class Game {
         return rndValue;
     }
     
-    resetGame() {
-        this.elementChosen = "";
-    }
-
     obtainUserValue() {
         let userValue = "";
     
-        let possibleValues = document.querySelectorAll('input[name="election"]');
+        let possibleValues = document.querySelectorAll("input[name='election']");
         for(const aux of possibleValues ){
             if(aux.checked){
-                userValue = aux.aux;
+                userValue = aux.value;
                 break;
             }
         }
-    
+        console.log(userValue)
         return userValue;
     }
-    
+
     compareElements(userValue) {
         let computerValue = this.valuesArray[this.rndValue()];
+        console.log(computerValue);
         if (userValue === computerValue) {
             alert('Its a tie!');
         } else if 
