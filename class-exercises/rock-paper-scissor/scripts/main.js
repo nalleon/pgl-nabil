@@ -1,13 +1,19 @@
-const DOM = {
-    btn: document.getElementById('btn'),
-}
-
 import { Game } from './game.js';
 
-function startGame() {
-
+const DOM = {
+    btn: document.getElementById('btn'),
+    //userValue : document.getElementById('user-aux'),
 }
 
-DOM.btn.addEventListener('click', () => {
 
-});
+
+const game = new Game();
+
+function startGame(event) {
+    let userValue = game.obtainUserValue();
+    game.compareElements(userValue);
+}
+
+
+
+DOM.btn.addEventListener('click', startGame());

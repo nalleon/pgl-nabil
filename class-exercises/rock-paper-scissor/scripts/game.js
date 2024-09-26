@@ -12,7 +12,20 @@ export class Game {
         this.elementChosen = "";
     }
 
-
+    obtainUserValue() {
+        let userValue = "";
+    
+        let possibleValues = document.querySelectorAll('input[name="election"]');
+        for(const aux of possibleValues ){
+            if(aux.checked){
+                userValue = aux.aux;
+                break;
+            }
+        }
+    
+        return userValue;
+    }
+    
     compareElements(userValue) {
         let computerValue = this.valuesArray[this.rndValue()];
         if (userValue === computerValue) {
