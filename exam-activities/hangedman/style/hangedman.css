@@ -41,7 +41,7 @@ body{
     background-color: rgb(225, 225, 225);
 }
 
-#usedLetters{
+#usedLetters, #usedWords{
     padding-left: 10px;
     font-size: 35px;
     width: 500px;
@@ -53,6 +53,7 @@ body{
     justify-content: center;
     align-items: center;
 } 
+
 
 #letterChosen{
     font-size: 20px;

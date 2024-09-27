@@ -7,6 +7,7 @@ const DOM = {
     wordToGuess : document.getElementById('word'),
     letterChosen : document.getElementById('letterChosen'),
     usedLetters : document.getElementById('usedLetters'),
+    usedWords : document.getElementById('usedWords'),
     canvas : document.getElementById("canvas")
 }
 
@@ -21,8 +22,10 @@ let errorCounter = 0;
 function startGame(event) {
     errorCounter = 0;
     game.usedLettersArray = [];
+    game.usedWordsArray = [];
     DOM.wordToGuess.innerHTML = '';
     DOM.usedLetters.innerHTML = '';
+    DOM.usedWords.innerHTML = '';
     canvas.drawDefaultCanva();
     let wordPos = game.rndWord(0, game.words.length);
     let wordSelected = game.selectWord(wordPos);
@@ -73,6 +76,8 @@ DOM.letterChosen.addEventListener('keyup', (event) => {
                 errorCounter++;
                 canvas.selectCanvas(errorCounter);
             }
+            DOM.usedWords.innerText += userWord + ', ';
+            game.addUsedWordsArray(userWord);
         }
         DOM.letterChosen.value = '';
     }
