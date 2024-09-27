@@ -59,10 +59,19 @@ DOM.letterChosen.addEventListener('keyup', (event) => {
             let userLetter = event.target.value.toLowerCase();
 
             if (game.globalWordChosen.includes(userLetter)){
+                DOM.letterChosen.style.backgroundColor = 'rgb(105, 193, 118)';
                 game.correctLetter(userLetter);
+                setTimeout(() => {
+                    DOM.letterChosen.style.backgroundColor = 'rgb(225, 225, 225)';
+                }, 500);
+
             } else {
                 errorCounter++;
                 canvas.selectCanvas(errorCounter);
+                DOM.letterChosen.style.backgroundColor = 'rgb(187, 73, 73)';
+                setTimeout(() => {
+                    DOM.letterChosen.style.backgroundColor = 'rgb(225, 225, 225)';
+                }, 500);
             }
             DOM.usedLetters.innerText += userLetter + ', ';
             game.addUsedLettersArray(userLetter);
@@ -72,9 +81,17 @@ DOM.letterChosen.addEventListener('keyup', (event) => {
             let userWord = event.target.value.toLowerCase();
             if (game.globalWordChosen == userWord) {
                 alert("¡HAS GANADO! La palabra era: " + game.globalWordChosen);
+                setTimeout(() => {
+                    DOM.letterChosen.style.backgroundColor = 'rgb(225, 225, 225)';
+                }, 500);
+
             } else {
+                DOM.letterChosen.style.backgroundColor = 'rgb(187, 73, 73)';
                 errorCounter++;
                 canvas.selectCanvas(errorCounter);
+                setTimeout(() => {
+                    DOM.letterChosen.style.backgroundColor = 'rgb(225, 225, 225)';
+                }, 500);
             }
             DOM.usedWords.innerText += userWord + ', ';
             game.addUsedWordsArray(userWord);
