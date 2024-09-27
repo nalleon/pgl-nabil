@@ -70,7 +70,7 @@ body{
 .letters, .words{
     margin: 5px;
     font-size: 20px;
-    border-radius: 5px;
+    border-radius: 15px;
     background-color:transparent;
     border:  3px solid rgb(163, 104, 83);
     color: rgb(225, 225, 225);
@@ -88,14 +88,16 @@ body{
     height: 50px;
     border:rgb(82, 56, 46) 1px solid;
     background-color: rgb(225, 225, 225);
+    border-radius: 15px;
+
 }
 
 #play{
     margin: 10px;
-    border-radius: 5px;
+    border-radius: 15px;
     font-size: 20px;
     font-weight: bold;
-    width: 200px;
+    width: 250px;
     height: 55px;
 
     border: solid 5px rgb(163, 104, 83);
