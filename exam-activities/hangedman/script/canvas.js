@@ -62,7 +62,10 @@ export class Canvas {
                 break;
            default:
                 this.drawCanvaError9();
-                alert('¡HAS PERDIDO! La palabra era: '+ globalWordChosen);
+                setTimeout(() => {
+                    alert('¡HAS PERDIDO! La palabra era: '+ globalWordChosen);                    
+                }, 100);
+
                 break;
        }
    }

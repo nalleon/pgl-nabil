@@ -50,6 +50,10 @@ function showWord(wordChosen){
 DOM.playBtn.addEventListener('click', startGame);
 
 DOM.letterChosen.addEventListener('keyup', (event) => {
+    if (errorCounter == 9){
+        return;
+    }
+    
     if(game.usedLettersArray.includes(event.target.value)){
         return;
     }

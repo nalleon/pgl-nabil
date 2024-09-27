@@ -48,12 +48,12 @@ body{
 
 #usedLetters, #usedWords{
     padding-left: 10px;
-    font-size: 35px;
+    font-size: 25px;
     width: 400px;
     height: 150px;
     border: rgb(163, 104, 83) 1px solid;
     background-color:  rgb(163, 104, 83);
-
+    white-space: normal;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -67,23 +67,20 @@ body{
 
 }
 
-.letters{
+.letters, .words{
     margin: 5px;
     font-size: 20px;
     border-radius: 5px;
     background-color:transparent;
     border:  3px solid rgb(163, 104, 83);
     color: rgb(225, 225, 225);
+
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+    white-space: normal; 
 }
 
-.words{
-    margin: 5px;
-    font-size: 20px;
-    border-radius: 5px;
-    background-color:transparent;
-    border:  3px solid rgb(163, 104, 83);
-    color: rgb(225, 225, 225);
-}
 
 #letterChosen{
     font-size: 20px;

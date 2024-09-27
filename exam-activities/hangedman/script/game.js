@@ -7,7 +7,6 @@ export class Game{
         this.wordToGuess = document.getElementById("word");
     }
 
-    //TODO: implement an usedWordsArray
 
     /**
      * Function to select a random word from the array
@@ -22,6 +21,11 @@ export class Game{
     }
 
 
+    /**
+     * Function to get the word from the array based on the selected position.
+     * @param {*} wordPos of the word
+     * @returns word selected
+     */
     selectWord(wordPos) {
         let wordChosen = this.words[wordPos];
         this.globalWordChosen = wordChosen; 
@@ -65,6 +69,10 @@ export class Game{
         this.usedLettersArray.push(letter);
     }
 
+    /**
+     * Function to update the used words in the HTML.
+     * @param {*} word 
+     */
 
     addUsedWordsArray(word) {
         this.usedWordsArray.push(word);
