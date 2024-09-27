@@ -1,3 +1,6 @@
+/*
+* TODO: add responsivity
+*/
 body{
     background-color: rgb(29, 29, 29);
 }
@@ -9,10 +12,11 @@ body{
     text-align: center;
     display: flex;
     flex-direction: column;
+    padding: 20px;
 }
 
 #title{
-    font-size: 40px;
+    font-size: 3rem;
     font-style: italic;
     font-weight: bold;
 }
@@ -20,16 +24,16 @@ body{
 #word {
     margin: auto, auto;
     text-align: center;
-    width: 1300px;
+    width: 90%;
+    max-width: 1300px;
     height: auto;
-    /*border: 1px solid rgb(142, 69, 38);*/
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
 
 #word > span {
-    font-size: 35px;
+    font-size: 2rem;
     width: 50px;
     height: 50px;
     border-bottom: 1px solid rgb(255, 255, 255);
@@ -41,9 +45,11 @@ body{
 }
 
 #canvas {
-    margin-top: 100px;
+    margin-top: 5vh;
     border: rgb(163, 104, 83) solid 1px;
     background-color: rgb(225, 225, 225);
+    width: 100%;
+    max-width: 800px;
 }
 
 #usedLetters, #usedWords{
