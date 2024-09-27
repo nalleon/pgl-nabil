@@ -35,6 +35,11 @@ body{
     border-bottom: 1px solid rgb(255, 255, 255);
 }
 
+.draw{
+    display: flex;
+    flex-direction: row;
+}
+
 #canvas {
     margin-top: 100px;
     border: rgb(163, 104, 83) solid 1px;
@@ -44,9 +49,9 @@ body{
 #usedLetters, #usedWords{
     padding-left: 10px;
     font-size: 35px;
-    width: 500px;
-    height: 200px;
-    border: rgb(194, 152, 127) 1px solid;
+    width: 400px;
+    height: 150px;
+    border: rgb(163, 104, 83) 1px solid;
     background-color:  rgb(163, 104, 83);
 
     display: flex;
@@ -54,6 +59,31 @@ body{
     align-items: center;
 } 
 
+.result-container{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+}
+
+.letters{
+    margin: 5px;
+    font-size: 20px;
+    border-radius: 5px;
+    background-color:transparent;
+    border:  3px solid rgb(163, 104, 83);
+    color: rgb(225, 225, 225);
+}
+
+.words{
+    margin: 5px;
+    font-size: 20px;
+    border-radius: 5px;
+    background-color:transparent;
+    border:  3px solid rgb(163, 104, 83);
+    color: rgb(225, 225, 225);
+}
 
 #letterChosen{
     font-size: 20px;
