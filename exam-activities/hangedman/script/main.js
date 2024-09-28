@@ -26,6 +26,7 @@ function startGame(event) {
     DOM.wordToGuess.innerHTML = '';
     DOM.usedLetters.innerHTML = '';
     DOM.usedWords.innerHTML = '';
+    DOM.wordToGuess.style.color = 'rgb(225, 225, 225)';
     canvas.drawDefaultCanva();
     let wordPos = game.rndWord(0, game.words.length);
     let wordSelected = game.selectWord(wordPos);
@@ -52,7 +53,7 @@ DOM.playBtn.addEventListener('click', startGame);
 DOM.letterChosen.addEventListener('keyup', (event) => {
     if (errorCounter == maxErrorsAllowed){
         game.revealWord();
-        console.log(game.revealWord());
+        DOM.wordToGuess.style.color =  'rgb(187, 73, 73)';
         return;
     }
 
@@ -90,11 +91,13 @@ DOM.letterChosen.addEventListener('keyup', (event) => {
         if (event.target.value.length > 1 ){
             let userWord = event.target.value.toLowerCase();
             if (game.globalWordChosen == userWord) {
-                alert("¡HAS GANADO! La palabra era: " + game.globalWordChosen);
+                game.revealWord();
+                DOM.wordToGuess.style.color = 'rgb(105, 193, 118)';
                 setTimeout(() => {
                     DOM.letterChosen.style.backgroundColor = 'rgb(225, 225, 225)';
                 }, 500);
 
+             
             } else {
                 DOM.letterChosen.style.backgroundColor = 'rgb(187, 73, 73)';
                 errorCounter++;
@@ -109,7 +112,3 @@ DOM.letterChosen.addEventListener('keyup', (event) => {
         DOM.letterChosen.value = '';
     }
 }); 
-
-/**
- * 
- */

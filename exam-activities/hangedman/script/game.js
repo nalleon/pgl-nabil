@@ -65,7 +65,6 @@ export class Game{
      */
     revealWord() {
         const globalWordChosenArray = this.globalWordChosen.split('');
-    
         globalWordChosenArray.forEach((chosenWordLetter, i) => {
             const spanElement = this.wordToGuess.querySelector(`span[id="${i}"]`);
             if (spanElement && !spanElement.textContent.trim()) {
