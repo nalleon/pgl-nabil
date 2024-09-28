@@ -8,9 +8,9 @@ const DOM = {
 
 const game = new Game();
 const canvas = new Canvas(DOM.canvas);
-
-DOM.playBtn.addEventListener('click', game.startGame.bind(game));
 canvas.drawDefaultCanva();
+DOM.playBtn.addEventListener('click', game.startGame.bind(game));
+
 
 
 game.letterChosen.addEventListener('keyup', (event) => {
