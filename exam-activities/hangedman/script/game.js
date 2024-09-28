@@ -105,7 +105,7 @@ export class Game{
     }
 
     /**
-     * Function to update the word in the HTML based on the correct letters entered by the user.
+     * Function to update the word based on the correct letters entered by the user.
      * @param {*} userLetter 
      */
     correctLetter(userLetter) {
@@ -122,7 +122,7 @@ export class Game{
     }
     
     /**
-     * Function to reveal the word in the HTML.
+     * Function to reveal the word.
      */
     revealWord() {
         const globalWordChosenArray = this.globalWordChosen.split('');
@@ -144,7 +144,7 @@ export class Game{
     }
 
     /**
-     * Function to update the used words in the HTML.
+     * Function to update the used words.
      * @param {*} word 
      */
 
@@ -153,7 +153,7 @@ export class Game{
     }
 
     /**
-     * Function to update the word in the HTML based on the correct letters entered by the user.
+     * Function to update the word based on the correct letters entered by the user.
      * @param {*} letter the letter entered by the user
      * @param {*} indexes index of the letter appaerences to update
      */
@@ -193,6 +193,10 @@ export class Game{
         this.letterChosen.disabled = true;
     }
 
+    /**
+     * Function to get the remaining attempts to guess the word.
+     * @returns number of remaining attempts.
+     */
     remainingAttempts(){
         return this.maxErrorsAllowed - this.errorCounter;
     }

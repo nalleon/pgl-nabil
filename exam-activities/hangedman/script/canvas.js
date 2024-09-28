@@ -22,8 +22,6 @@ export class Canvas {
         this.ctx.lineTo(130, 50);
     }
 
-
-
     /**
     * Function to draw the hangman canvas based on the number of errors.
     * @param {*} errorNumber counter of errors.
