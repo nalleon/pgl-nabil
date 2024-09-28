@@ -1,7 +1,6 @@
 import {Game} from './game.js';
 import { Canvas } from './canvas.js';
 
-
 const DOM = {
     playBtn : document.getElementById('play'),
     wordToGuess : document.getElementById('word'),
@@ -15,6 +14,7 @@ const game = new Game();
 const canvas = new Canvas(DOM.canvas);
 let errorCounter = 0;
 let maxErrorsAllowed = 9;
+
 /**
  * Function to start the game when the play button is clicked.
  * @param {*} event 
@@ -30,30 +30,16 @@ function startGame(event) {
     canvas.drawDefaultCanva();
     let wordPos = game.rndWord(0, game.words.length);
     let wordSelected = game.selectWord(wordPos);
-    showWord(wordSelected);
+    game.showWordSpan(wordSelected);
 }
 
-
-/**
- * Function to select the word and show it in the html
- * @param {*} wordPos position of the word in the array
- */
-
-function showWord(wordChosen){
-    for (let i = 0; i < wordChosen.length; i++) {
-        let letter = document.createElement('span');
-        letter.id = i;
-        letter.textContent = ' ';
-        DOM.wordToGuess.appendChild(letter);
-    }
-}
 
 DOM.playBtn.addEventListener('click', startGame);
 
 DOM.letterChosen.addEventListener('keyup', (event) => {
     if (errorCounter == maxErrorsAllowed){
         game.revealWord();
-        DOM.wordToGuess.style.color =  'rgb(187, 73, 73)';
+        DOM.wordToGuess.style.color = 'rgb(187, 73, 73)';
         return;
     }
 
@@ -97,7 +83,6 @@ DOM.letterChosen.addEventListener('keyup', (event) => {
                     DOM.letterChosen.style.backgroundColor = 'rgb(225, 225, 225)';
                 }, 500);
 
-             
             } else {
                 DOM.letterChosen.style.backgroundColor = 'rgb(187, 73, 73)';
                 errorCounter++;

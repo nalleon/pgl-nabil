@@ -5,9 +5,10 @@ export class Game{
         this.usedLettersArray = [];
         this.usedWordsArray = [];
         this.wordToGuess = document.getElementById("word");
+        this.canvas = document.getElementById("canvas");
     }
 
-
+    
     /**
      * Function to select a random word from the array
      * @param {*} minNum array min number of words
@@ -31,6 +32,23 @@ export class Game{
         this.globalWordChosen = wordChosen; 
         return wordChosen;
     }
+
+    /**
+     * Function to  create the span element for each letter in the word and append it to the HTML.
+     * @param {*} wordSelected 
+     */
+
+    showWordSpan(wordSelected){
+        for (let i = 0; i <  wordSelected.length; i++) {
+            let letter = document.createElement('span');
+            letter.id = i;
+            letter.textContent = ' ';
+            this.wordToGuess.appendChild(letter);
+        }
+    }
+
+
+
 
     /**
      * Function to check if the user input is a letter
@@ -72,9 +90,6 @@ export class Game{
             }
         });
     }
-
-
-
 
     /**
      * Fuction to update the used letters in the HTML.
