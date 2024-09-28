@@ -54,10 +54,9 @@ body{
 
 #usedLetters, #usedWords{
     padding-left: 10px;
-    font-size: 25px;
+    font-size: 1.5rem;
     width: 400px;
-    height: 150px;
-    border: rgb(163, 104, 83) 1px solid;
+    height: auto;
     background-color:  rgb(163, 104, 83);
     white-space: normal;
     display: flex;
@@ -75,36 +74,43 @@ body{
 
 .letters, .words{
     margin: 5px;
-    font-size: 20px;
+    font-size: 1.5rem;
     border-radius: 15px;
     background-color:transparent;
     border:  3px solid rgb(163, 104, 83);
     color: rgb(225, 225, 225);
-
     word-wrap: break-word;
     word-break: break-all;
     overflow: hidden;
     white-space: normal;
 }
 
+.input-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
 
 #letterChosen{
-    font-size: 20px;
-    width: 250px;
-    height: 50px;
-    border:rgb(82, 56, 46) 1px solid;
+    font-size: 1.5rem;
+    max-width: 25rem;
+    width: 20rem;
+    height: 3rem;
+    border: rgb(163, 104, 83) solid 1px;
     background-color: rgb(225, 225, 225);
     border-radius: 15px;
 
 }
 
 #play{
-    margin: 10px;
     border-radius: 15px;
-    font-size: 20px;
+    font-size: 1.5rem;
     font-weight: bold;
-    width: 250px;
-    height: 55px;
+    max-width: 25rem;
+    width: 20rem;
+    height: 3.3rem;
 
     border: solid 5px rgb(163, 104, 83);
     background: transparent;
@@ -116,5 +122,39 @@ body{
 #play:hover{
     background-color: rgb(163, 104, 83);
     color:  rgb(225, 225, 225);
+}
+
+
+@media (max-width: 768px) {
+    #title {
+        font-size: 2.5rem; 
+    }
+
+    #word > span {
+        font-size: 2rem; 
+        width: 20px; 
+    }
+
+    .result-container {
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .words, .letters{
+        font-size: 1.2rem;
+        width: 290px;
+    }
+
+    #usedLetters, #usedWords {
+        width: 100%;
+        font-size: 1.5rem;
+        height: auto;
+    }
+
+    
+    #letterChosen, #play {
+        font-size: 1.5rem;
+        width: 100%; 
+    }
 }
 
