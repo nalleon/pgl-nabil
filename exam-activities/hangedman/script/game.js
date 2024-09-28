@@ -12,8 +12,12 @@ export class Game{
         this.maxErrorsAllowed = 9;
     }
 
+    /**
+     * Function to start the game
+     */	
+
     startGame(event) {
-        errorCounter = 0;
+        this.errorCounter = 0;
         this.usedLettersArray = [];
         this.usedWordsArray = [];
         this.wordToGuess.innerHTML = '';
@@ -63,9 +67,6 @@ export class Game{
             this.wordToGuess.appendChild(letter);
         }
     }
-
-
-
 
     /**
      * Function to check if the user input is a letter

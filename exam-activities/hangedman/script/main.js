@@ -3,19 +3,15 @@ import { Canvas } from './canvas.js';
 
 const DOM = {
     playBtn : document.getElementById('play'),
-    wordToGuess : document.getElementById('word'),
-    letterChosen : document.getElementById('letterChosen'),
-    usedLetters : document.getElementById('usedLetters'),
-    usedWords : document.getElementById('usedWords'),
     canvas : document.getElementById("canvas")
 }
 
 const game = new Game();
 const canvas = new Canvas(DOM.canvas);
 
-DOM.playBtn.addEventListener('click', game.startGame);
-
+DOM.playBtn.addEventListener('click', game.startGame.bind(game));
 canvas.drawDefaultCanva();
+
 
 game.letterChosen.addEventListener('keyup', (event) => {
     if (game.errorCounter == game.maxErrorsAllowed){
