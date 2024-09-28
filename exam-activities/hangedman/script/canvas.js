@@ -111,7 +111,7 @@ export class Canvas {
        this.ctx.moveTo(130,400);
        this.ctx.lineTo(130, 50);
    
-       this.ctx.moveTo(128,50);
+       this.ctx.moveTo(127,50);
        this.ctx.lineTo(290, 50);
    
        this.ctx.stroke();
@@ -134,7 +134,7 @@ export class Canvas {
        this.ctx.moveTo(130,400);
        this.ctx.lineTo(130, 50);
    
-       this.ctx.moveTo(128,50);
+       this.ctx.moveTo(127,50);
        this.ctx.lineTo(290, 50);
    
        
@@ -162,14 +162,13 @@ export class Canvas {
        this.ctx.moveTo(130,400);
        this.ctx.lineTo(130, 50);
    
-       this.ctx.moveTo(128,50);
+       this.ctx.moveTo(127,50);
        this.ctx.lineTo(290, 50);
    
        this.ctx.moveTo(129,160);
        this.ctx.lineTo(220, 50);
    
        this.ctx.stroke();
-   
    
        this.ctx.beginPath();
        this.ctx.strokeStyle = "rgb(163, 83, 83)";
@@ -199,7 +198,7 @@ export class Canvas {
        this.ctx.moveTo(130,400);
        this.ctx.lineTo(130, 50);
    
-       this.ctx.moveTo(128,50);
+       this.ctx.moveTo(127,50);
        this.ctx.lineTo(290, 50);
    
        this.ctx.moveTo(129,160);
@@ -239,7 +238,7 @@ export class Canvas {
        this.ctx.moveTo(130,400);
        this.ctx.lineTo(130, 50);
    
-       this.ctx.moveTo(128,50);
+       this.ctx.moveTo(127,50);
        this.ctx.lineTo(290, 50);
    
        this.ctx.moveTo(129,160);
@@ -283,7 +282,7 @@ export class Canvas {
        this.ctx.moveTo(130,400);
        this.ctx.lineTo(130, 50);
    
-       this.ctx.moveTo(128,50);
+        this.ctx.moveTo(127,50);
        this.ctx.lineTo(290, 50);
    
        this.ctx.moveTo(129,160);
@@ -330,7 +329,7 @@ export class Canvas {
        this.ctx.moveTo(130,400);
        this.ctx.lineTo(130, 50);
    
-       this.ctx.moveTo(128,50);
+       this.ctx.moveTo(127,50);
        this.ctx.lineTo(290, 50);
    
        this.ctx.moveTo(129,160);
@@ -380,7 +379,7 @@ export class Canvas {
        this.ctx.moveTo(130,400);
        this.ctx.lineTo(130, 50);
    
-       this.ctx.moveTo(128,50);
+       this.ctx.moveTo(127,50);
        this.ctx.lineTo(290, 50);
    
        this.ctx.moveTo(129,160);
@@ -409,13 +408,12 @@ export class Canvas {
    
        this.ctx.moveTo(290,159);
        this.ctx.lineTo(325, 190);
-   
        
        this.ctx.moveTo(290,229);
        this.ctx.lineTo(325, 259);
    
        this.ctx.stroke();
-   }
+    }
    
    /**
     * Canvas drawing function for the ninth error.
@@ -434,7 +432,7 @@ export class Canvas {
        this.ctx.moveTo(130,400);
        this.ctx.lineTo(130, 50);
    
-       this.ctx.moveTo(128,50);
+       this.ctx.moveTo(127,50);
        this.ctx.lineTo(290, 50);
    
        this.ctx.moveTo(129,160);
