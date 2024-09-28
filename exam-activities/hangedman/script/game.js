@@ -5,9 +5,26 @@ export class Game{
         this.usedLettersArray = [];
         this.usedWordsArray = [];
         this.wordToGuess = document.getElementById("word");
-        this.canvas = document.getElementById("canvas");
+        this.letterChosen = document.getElementById('letterChosen');
+        this.usedLetters = document.getElementById('usedLetters');
+        this.usedWords = document.getElementById('usedWords');
+        this.errorCounter = 0;
+        this.maxErrorsAllowed = 9;
     }
 
+    startGame(event) {
+        errorCounter = 0;
+        this.usedLettersArray = [];
+        this.usedWordsArray = [];
+        this.wordToGuess.innerHTML = '';
+        this.usedLetters.innerHTML = '';
+        this.usedWords.innerHTML = '';
+        this.wordToGuess.style.color = 'rgb(225, 225, 225)';
+        let wordPos = this.rndWord(0, this.words.length);
+        let wordSelected = this.selectWord(wordPos);
+        this.showWordSpan(wordSelected);
+    }
+    
     
     /**
      * Function to select a random word from the array
@@ -124,3 +141,4 @@ export class Game{
         });
     }
 }
+
