@@ -25,6 +25,7 @@ export class Game{
         this.errorCounter = 0;
         this.usedLettersArray = [];
         this.usedWordsArray = [];
+        this.letterChosen.disabled = false;
         this.wordToGuess.innerHTML = '';
         this.usedLetters.innerHTML = '';
         this.usedWords.innerHTML = '';
@@ -167,9 +168,11 @@ export class Game{
         return counter == globalWordChosenArray.length;
     }
 
-
-    
-
-
+    /**
+     * Function to disable the input field for letters and words entered by the user.
+     */
+    disableSendValues(){
+        this.letterChosen.disabled = true;
+    }
 }
 
