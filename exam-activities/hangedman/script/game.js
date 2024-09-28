@@ -59,6 +59,23 @@ export class Game{
 
         this.drawWord(userLetter, correctIndexes);
     }
+    
+    /**
+     * Function to reveal the word in the HTML.
+     */
+    revealWord() {
+        const globalWordChosenArray = this.globalWordChosen.split('');
+    
+        globalWordChosenArray.forEach((chosenWordLetter, i) => {
+            const spanElement = this.wordToGuess.querySelector(`span[id="${i}"]`);
+            if (spanElement && !spanElement.textContent.trim()) {
+                spanElement.textContent = chosenWordLetter;
+            }
+        });
+    }
+
+
+
 
     /**
      * Fuction to update the used letters in the HTML.

@@ -14,7 +14,7 @@ const DOM = {
 const game = new Game();
 const canvas = new Canvas(DOM.canvas);
 let errorCounter = 0;
-
+let maxErrorsAllowed = 9;
 /**
  * Function to start the game when the play button is clicked.
  * @param {*} event 
@@ -50,7 +50,9 @@ function showWord(wordChosen){
 DOM.playBtn.addEventListener('click', startGame);
 
 DOM.letterChosen.addEventListener('keyup', (event) => {
-    if (errorCounter == 9){
+    if (errorCounter == maxErrorsAllowed){
+        game.revealWord();
+        console.log(game.revealWord());
         return;
     }
 
