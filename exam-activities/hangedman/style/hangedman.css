@@ -1,18 +1,28 @@
-/*
-* TODO: add responsivity
-*/
 body{
     background-color: rgb(29, 29, 29);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
 }
 
 #main{
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
     color:  rgb(225, 225, 225);
     font-family:'Trebuchet MS';
     align-items: center;
     text-align: center;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 5rem;
+
+    background: transparent;
+    border-radius: 20px;
+    border: 1px rgb(163, 104, 83) solid ;
 }
 
 #title{
@@ -22,7 +32,7 @@ body{
 }
 
 #word {
-    margin: auto, auto;
+    margin: auto;
     text-align: center;
     width: 90%;
     max-width: 1300px;
@@ -34,8 +44,8 @@ body{
 
 #word > span {
     font-size: 2rem;
-    width: 50px;
-    height: 50px;
+    width: 42px;
+    height: 42px;
     border-bottom: 1px solid rgb(225, 225, 225);
 }
 
@@ -127,21 +137,22 @@ body{
 
 @media (max-width: 768px) {
     #title {
-        font-size: 2.5rem; 
+        font-size: 2rem; 
     }
 
     #word > span {
-        font-size: 2rem; 
-        width: 20px; 
+        font-size: 1.5rem; 
+        width: 15px; 
     }
 
     .result-container {
         gap: 10px;
         margin-top: 10px;
+        width: 500px;
     }
 
     .words, .letters{
-        font-size: 1.2rem;
+        font-size: 1rem;
         width: 290px;
     }
 
@@ -151,10 +162,14 @@ body{
         height: auto;
     }
 
-    
     #letterChosen, #play {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         width: 100%; 
+    }
+
+    #canvas {
+        width: 100%;
+        max-width: 420px;
     }
 }
 
