@@ -1,4 +1,3 @@
-
 export class Canvas {
     constructor() {
         this.canvas = document.getElementById('canvas');
@@ -6,9 +5,9 @@ export class Canvas {
     }
 
     /**
-     * Function to draw the efault hangman canvas
+     * Function to draw the default hangman canvas
      */
-    drawDefaultCanva(){
+     drawDefaultCanvas(){
         this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
         this.ctx.beginPath();
         this.ctx.strokeStyle = "black";
@@ -16,9 +15,6 @@ export class Canvas {
 
         this.ctx.moveTo(75,400);
         this.ctx.lineTo(195, 400);
-
-        this.ctx.moveTo(135,400);
-        this.ctx.lineTo(130, 50);
 
         this.ctx.stroke();
 
@@ -36,40 +32,42 @@ export class Canvas {
     selectCanvas(errorNumber){
        switch(errorNumber){
            case 1:
-                this.drawCanvaError1();
+                this.drawCanvasError1();
                 break;
            case 2:
-                this.drawCanvaError2();
+                this.drawCanvasError2();
                 break;
            case 3:
-                this.drawCanvaError3();
+                this.drawCanvasError3();
                 break;
            case 4:
-                this.drawCanvaError4();
+                this.drawCanvasError4();
                 break;
            case 5:
-                this.drawCanvaError5();
+                this.drawCanvasError5();
                 break;
            case 6:
-                this.drawCanvaError6();
+                this.drawCanvasError6();
                 break;
            case 7:
-                this.drawCanvaError7();
+                this.drawCanvasError7();
                 break;
            case 8:
-                this.drawCanvaError8();
+                this.drawCanvasError8();
+                break;
+           case 8:
+                this.drawCanvasError9();
                 break;
            default:
-                this.drawCanvaError9();
+                this.drawCanvasError10();
                 break;
        }
    }
    
-   /**
-    * Default canvas drawing function.
-    */
-    drawCanva(){
-       //this.this.ctx = this.canvas.getContext('2d');
+     /**
+     * Canvas drawing function for the first error.
+     */
+     drawCanvasError1(){
        this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
    
        this.ctx.beginPath();
@@ -78,22 +76,19 @@ export class Canvas {
    
        this.ctx.moveTo(75,400);
        this.ctx.lineTo(195, 400);
-   
-       this.ctx.moveTo(135,400);
-       this.ctx.lineTo(130, 50);
-   
+
        this.ctx.stroke();
    
        this.ctx.moveTo(135,400);
        this.ctx.lineTo(130, 50);
    }
+
+
    
-   
-   /**
-    * Canvas drawing function for the first error.
-    */
-    drawCanvaError1(){
-       //this.this.ctx = this.canvas.getContext('2d');
+    /**
+     * Canvas drawing function for the second error.
+     */
+     drawCanvasError2(){
        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
    
        this.ctx.beginPath();
@@ -113,10 +108,9 @@ export class Canvas {
    }
    
    /**
-    * Canvas drawing function for the second error.
+    * Canvas drawing function for the third error.
     */
-    drawCanvaError2(){
-       //this.this.ctx = this.canvas.getContext('2d');
+     drawCanvasError3(){
        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
    
        this.ctx.beginPath();
@@ -140,11 +134,9 @@ export class Canvas {
    }
    
    /**
-    * Canvas drawing function for the third error.
+    * Canvas drawing function for the fourth error.
     */
-   
-    drawCanvaError3(){
-       //this.this.ctx = this.canvas.getContext('2d');
+     drawCanvasError4(){
        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
    
        this.ctx.beginPath();
@@ -176,11 +168,9 @@ export class Canvas {
    }
    
    /**
-    * Canvas drawing function for the fourth error.
+    * Canvas drawing function for the fifth error.
     */
-   
-    drawCanvaError4(){
-       //this.this.ctx = this.canvas.getContext('2d');
+     drawCanvasError5(){
        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
    
        this.ctx.beginPath();
@@ -217,10 +207,9 @@ export class Canvas {
    }
    
    /**
-    * Canvas drawing function for the fifth error.
+    * Canvas drawing function for the sixth error.
     */
-    drawCanvaError5(){
-       //this.this.ctx = this.canvas.getContext('2d');
+     drawCanvasError6(){
        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
    
        this.ctx.beginPath();
@@ -261,10 +250,9 @@ export class Canvas {
    }
    
    /**
-    * Canvas drawing function for the sixth error.
+    * Canvas drawing function for the seventh error.
     */
-    drawCanvaError6(){
-       //this.this.ctx = this.canvas.getContext('2d');
+     drawCanvasError7(){
        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
    
        this.ctx.beginPath();
@@ -308,10 +296,9 @@ export class Canvas {
    }
    
    /**
-    * Canvas drawing function for the seventh error.
+    * Canvas drawing function for the eigth error.
     */
-    drawCanvaError7(){
-       //this.this.ctx = this.canvas.getContext('2d');
+     drawCanvasError8(){
        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
    
        this.ctx.beginPath();
@@ -358,10 +345,9 @@ export class Canvas {
    }
    
    /**
-    * Canvas drawing function for the eighth error.
+    * Canvas drawing function for the ninth error.
     */
-    drawCanvaError8(){
-       //this.this.ctx = this.canvas.getContext('2d');
+     drawCanvasError9(){
        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
    
        this.ctx.beginPath();
@@ -411,10 +397,9 @@ export class Canvas {
     }
    
    /**
-    * Canvas drawing function for the ninth error.
+    * Canvas drawing function for the tenth error.
     */
-    drawCanvaError9(){
-       //this.this.ctx = this.canvas.getContext('2d');
+     drawCanvasError10(){
        this.ctx.clearRect(0,0,this.canvas.width, this.canvas.height);
    
        this.ctx.beginPath();

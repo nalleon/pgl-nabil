@@ -29,7 +29,7 @@ export class Game{
         this.usedLetters = document.getElementById('usedLetters');
         this.usedWords = document.getElementById('usedWords');
         this.errorCounter = 0;
-        this.maxErrorsAllowed = 9;
+        this.maxErrorsAllowed = 10;
         this.canvas = document.getElementById("canvas");
         this.canvasInstance = new Canvas(this.canvas);
     }
@@ -47,7 +47,7 @@ export class Game{
         this.wordToGuess.innerHTML = '';
         this.usedLetters.innerHTML = '';
         this.usedWords.innerHTML = '';
-        this.canvasInstance.drawDefaultCanva();
+        this.canvasInstance.drawDefaultCanvas();
         this.wordToGuess.style.color = 'rgb(225, 225, 225)';
         let wordPos = this.rndWord(0, this.words.length);
         let wordSelected = this.selectWord(wordPos);
