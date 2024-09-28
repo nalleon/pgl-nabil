@@ -134,7 +134,17 @@ body{
     color:  rgb(225, 225, 225);
 }
 
+.attempts > h2{
+    margin-top: 2rem;
+    font-size: 1.85rem;
+    font-weight: bolder;
+}
 
+#attempts {
+    font-size: 1.85rem;
+    font-weight: bolder;
+    margin-bottom: 2rem;
+}
 @media (max-width: 768px) {
     #title {
         font-size: 2rem; 

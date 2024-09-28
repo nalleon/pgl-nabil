@@ -1,4 +1,3 @@
-// TODO: move mvc view elements here
 
 export class Canvas {
     constructor() {

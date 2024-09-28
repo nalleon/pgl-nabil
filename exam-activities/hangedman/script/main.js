@@ -3,80 +3,87 @@ import { Canvas } from './canvas.js';
 
 const DOM = {
     playBtn : document.getElementById('play'),
-    canvas : document.getElementById("canvas")
+    canvas : document.getElementById("canvas"),
+    attempts : document.getElementById('attempts')
 }
 
 const game = new Game();
 const canvas = new Canvas(DOM.canvas);
 
+const loseColor = 'rgb(187, 73, 73)';
+const winColor = 'rgb(105, 193, 118)';
+const defaultColor = 'rgb(225, 225, 225)';
 
-
-DOM.playBtn.addEventListener('click', game.startGame.bind(game));
+DOM.playBtn.addEventListener('click', game.startGame.bind(game));  
 
 game.letterChosen.addEventListener('keyup', (event) => {
+    const inputValue = event.target.value.toLowerCase();
+    DOM.attempts.textContent = game.remainingAttempts();
 
-    if (game.checkIfAllLettersRevealed()) {
-        game.wordToGuess.style.color = 'rgb(105, 193, 118)';
-        game.disableSendValues();
+    if (event.key !== 'Enter') {
+        return;
+    }
+
+    if(game.usedLettersArray.includes(inputValue) || (game.usedWordsArray.includes(inputValue)) ){
         return;
     }
 
     if (game.errorCounter == game.maxErrorsAllowed){
         game.revealWord();
-        game.wordToGuess.style.color = 'rgb(187, 73, 73)';
+        game.wordToGuess.style.color = loseColor;
         game.disableSendValues();
         return;
     }
 
-    if(game.usedLettersArray.includes(event.target.value) || (game.usedWordsArray.includes(event.target.value)) ){
+    if (game.checkIfAllLettersRevealed()) {
+        game.wordToGuess.style.color = winColor;
+        game.disableSendValues();
         return;
     }
 
-    if (event.key == 'Enter') {
-        if (event.target.value.length == 1 && game.isLetter(event.target.value)) {
-            let userLetter = event.target.value.toLowerCase();
+    if (inputValue.length == 1 && game.isLetter(inputValue)) {
+        if (game.globalWordChosen.includes(inputValue)){
+            game.correctLetter(inputValue);
+            game.letterChosen.style.backgroundColor = winColor;
+            setTimeout(() => {
+                game.letterChosen.style.backgroundColor = defaultColor;
+            }, 500);
 
-            if (game.globalWordChosen.includes(userLetter)){
-                game.letterChosen.style.backgroundColor = 'rgb(105, 193, 118)';
-                game.correctLetter(userLetter);
-                setTimeout(() => {
-                    game.letterChosen.style.backgroundColor = 'rgb(225, 225, 225)';
-                }, 500);
-            } else {
-                game.errorCounter++;
-                canvas.selectCanvas(game.errorCounter);
-                game.letterChosen.style.backgroundColor = 'rgb(187, 73, 73)';
-                setTimeout(() => {
-                    game.letterChosen.style.backgroundColor = 'rgb(225, 225, 225)';
-                }, 500);
-            }
-            game.usedLetters.innerText += userLetter + ', ';
-            game.addUsedLettersArray(userLetter);
-        } 
+        } else {
+            game.errorCounter++;
+            canvas.selectCanvas(game.errorCounter);
+            game.letterChosen.style.backgroundColor = loseColor;
 
-        if (event.target.value.length > 1 ){
-            let userWord = event.target.value.toLowerCase();
-            if (game.globalWordChosen == userWord) {
+            setTimeout(() => {
+                game.letterChosen.style.backgroundColor = defaultColor;
+            }, 500);
+        }
+        game.usedLetters.innerText += inputValue + ', ';
+        game.addUsedLettersArray(inputValue);
+    } 
+
+        if (inputValue.length > 1 ){
+            if (game.globalWordChosen == inputValue) {
                 game.revealWord();
                 game.disableSendValues();
-                game.wordToGuess.style.color = 'rgb(105, 193, 118)';
+                game.wordToGuess.style.color = winColor;
                 setTimeout(() => {
-                    game.letterChosen.style.backgroundColor = 'rgb(225, 225, 225)';
+                    game.letterChosen.style.backgroundColor = defaultColor;
                 }, 500);
 
             } else {
-                game.letterChosen.style.backgroundColor = 'rgb(187, 73, 73)';
+                game.letterChosen.style.backgroundColor = loseColor;
                 game.errorCounter++;
                 canvas.selectCanvas(game.errorCounter);
                 setTimeout(() => {
-                    game.letterChosen.style.backgroundColor = 'rgb(225, 225, 225)';
+                    game.letterChosen.style.backgroundColor = defaultColor;
                 }, 500);
             }
-            game.usedWords.innerText += userWord + ', ';
-            game.addUsedWordsArray(userWord);
+            game.usedWords.innerText += inputValue + ', ';
+            game.addUsedWordsArray(inputValue);
         }
         game.letterChosen.value = '';
     }
-}); 
+); 
  
 

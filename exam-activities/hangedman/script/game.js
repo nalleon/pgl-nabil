@@ -2,10 +2,25 @@ import { Canvas } from './canvas.js';
 
 export class Game{
     constructor(){
-        this.words = ["esternocleidomastoideo", "paralelepipedo", "otorrinolaringologia", 
-            "electrocardiograma", "ornitorrinco", "olecranon", "gaseoducto", "trapaceria",
-            "ovoviviparo", "desoxirribonucleico", "antihistaminico", "arterioesclerosis",
-            "caleidoscopio", "logicomecanofobia", "ventrilocuo", "torticolis"];
+        this.words = [
+            "esternocleidomastoideo", 
+            "paralelepípedo", 
+            "otorrinolaringología", 
+            "electrocardiograma", 
+            "ornitorrinco", 
+            "olecrán", 
+            "gaseoducto", 
+            "trapacería", 
+            "ovovivíparo", 
+            "desoxirribonucleico", 
+            "antihistamínico", 
+            "arteriosclerosis", 
+            "caleidoscopio", 
+            "logicomecanofobia", 
+            "ventrílocuo", 
+            "tortícolis"
+        ];
+
         this.globalWordChosen = "";
         this.usedLettersArray = [];
         this.usedWordsArray = [];
@@ -177,5 +192,10 @@ export class Game{
     disableSendValues(){
         this.letterChosen.disabled = true;
     }
+
+    remainingAttempts(){
+        return this.maxErrorsAllowed - this.errorCounter;
+    }
+
 }
 
