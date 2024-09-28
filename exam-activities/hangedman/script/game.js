@@ -147,5 +147,29 @@ export class Game{
             })
         });
     }
+
+    /**
+     * Function to check if the all letters of the word had been revealed
+     * @returns true if all letters of the word have been revealed, false otherwise.
+     */
+
+    checkIfAllLettersRevealed(){
+        const globalWordChosenArray = this.globalWordChosen.split('');
+        let counter = 0;
+
+        globalWordChosenArray.forEach((chosenWordLetter, i) => {
+            const spanElement = this.wordToGuess.querySelector(`span[id="${i}"]`);
+            if (spanElement.textContent.trim() == chosenWordLetter) {
+                counter++;
+            }
+        });
+
+        return counter == globalWordChosenArray.length;
+    }
+
+
+    
+
+
 }
 

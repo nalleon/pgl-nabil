@@ -18,14 +18,11 @@ game.letterChosen.addEventListener('keyup', (event) => {
         game.wordToGuess.style.color = 'rgb(187, 73, 73)';
         return;
     }
-
-    if(game.usedLettersArray.includes(event.target.value)){
+ 
+    if(game.usedLettersArray.includes(event.target.value) || (game.usedWordsArray.includes(event.target.value)) ){
         return;
     }
 
-    if(game.usedWordsArray.includes(event.target.value)){
-        return;
-    }
 
     if (event.key == 'Enter') {
         if (event.target.value.length == 1 && game.isLetter(event.target.value)) {
@@ -37,6 +34,11 @@ game.letterChosen.addEventListener('keyup', (event) => {
                 setTimeout(() => {
                     game.letterChosen.style.backgroundColor = 'rgb(225, 225, 225)';
                 }, 500);
+
+                if (game.checkIfAllLettersRevealed()) {
+                    game.wordToGuess.style.color = 'rgb(105, 193, 118)';
+                    return;
+                }
 
             } else {
                 game.errorCounter++;
