@@ -2,7 +2,10 @@ import { Canvas } from './canvas.js';
 
 export class Game{
     constructor(){
-        this.words = ["esternocleidomastoideo", "paralelepipedo", "otorrinolaringologia", "electrocardiograma", "ornitorrinco", "olecranon", "gaseoducto"],
+        this.words = ["esternocleidomastoideo", "paralelepipedo", "otorrinolaringologia", 
+            "electrocardiograma", "ornitorrinco", "olecranon", "gaseoducto", "trapaceria",
+            "ovoviviparo", "desoxirribonucleico", "antihistaminico", "arterioesclerosis",
+            "caleidoscopio", "logicomecanofobia", "ventrilocuo", "torticolis"];
         this.globalWordChosen = "";
         this.usedLettersArray = [];
         this.usedWordsArray = [];
@@ -82,7 +85,7 @@ export class Game{
      */
 
     isLetter(value) {
-        let letterRegExp = /^[a-zA-ZñÑ]$/;
+        let letterRegExp = /^[a-zA-ZñÑáÁéÉíÍóÓúÚüÜ]$/;
         return letterRegExp.test(value);
     }
 

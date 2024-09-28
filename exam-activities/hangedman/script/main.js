@@ -9,8 +9,12 @@ const DOM = {
 const game = new Game();
 const canvas = new Canvas(DOM.canvas);
 
+
+
 DOM.playBtn.addEventListener('click', game.startGame.bind(game));
+
 game.letterChosen.addEventListener('keyup', (event) => {
+
     if (game.checkIfAllLettersRevealed()) {
         game.wordToGuess.style.color = 'rgb(105, 193, 118)';
         game.disableSendValues();
