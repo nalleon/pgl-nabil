@@ -1,5 +1,3 @@
-import { Canvas } from './canvas.js';
-
 export class Game{
     constructor(){
         this.words = [
@@ -31,28 +29,6 @@ export class Game{
         this.usedWords = document.getElementById('usedWords');
         this.errorCounter = 0;
         this.maxErrorsAllowed = 10;
-        this.canvas = document.getElementById("canvas");
-        this.canvasInstance = new Canvas(this.canvas);
-    }
-
-    
-    /**
-     * Function to start the game
-     */	
-
-    startGame(event) {
-        this.errorCounter = 0;
-        this.usedLettersArray = [];
-        this.usedWordsArray = [];
-        this.letterChosen.disabled = false;
-        this.wordToGuess.innerHTML = '';
-        this.usedLetters.innerHTML = '';
-        this.usedWords.innerHTML = '';
-        this.canvasInstance.drawDefaultCanvas();
-        this.wordToGuess.style.color = 'rgb(225, 225, 225)';
-        let wordPos = this.rndWord(0, this.words.length);
-        let wordSelected = this.selectWord(wordPos);
-        this.showWordSpan(wordSelected);
     }
     
     

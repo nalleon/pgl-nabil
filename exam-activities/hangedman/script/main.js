@@ -14,7 +14,22 @@ const loseColor = 'rgb(187, 73, 73)';
 const winColor = 'rgb(105, 193, 118)';
 const defaultColor = 'rgb(225, 225, 225)';
 
-DOM.playBtn.addEventListener('click', game.startGame.bind(game));  
+function startGame() {
+    game.errorCounter = 0;
+    game.usedLettersArray = [];
+    game.usedWordsArray = [];
+    game.letterChosen.disabled = false;
+    game.wordToGuess.innerHTML = '';
+    game.usedLetters.innerHTML = '';
+    game.usedWords.innerHTML = '';
+    game.wordToGuess.style.color = defaultColor;
+    let wordPos = game.rndWord(0, game.words.length);
+    let wordSelected = game.selectWord(wordPos);
+    game.showWordSpan(wordSelected);
+    canvas.drawDefaultCanvas();
+}
+
+DOM.playBtn.addEventListener('click', startGame);  
 
 game.letterChosen.addEventListener('keyup', (event) => {
     const inputValue = game.removeLetterAccent(event.target.value.toLowerCase());
@@ -41,10 +56,12 @@ game.letterChosen.addEventListener('keyup', (event) => {
         return;
     }
 
+
     if (inputValue.length == 1 && game.isLetter(inputValue)) {
         if (game.globalWordChosen.includes(inputValue)){
             game.correctLetter(inputValue);
             game.letterChosen.style.backgroundColor = winColor;
+
             setTimeout(() => {
                 game.letterChosen.style.backgroundColor = defaultColor;
             }, 500);
