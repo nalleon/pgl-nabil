@@ -1,5 +1,5 @@
-import {Game} from './game.js';
-import { Canvas } from './canvas.js';
+import {Game} from '../model/game.js';
+import { Canvas } from '../view/canvas.js';
 
 const DOM = {
     playBtn : document.getElementById('play'),
