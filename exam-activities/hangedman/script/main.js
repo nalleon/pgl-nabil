@@ -17,7 +17,7 @@ const defaultColor = 'rgb(225, 225, 225)';
 DOM.playBtn.addEventListener('click', game.startGame.bind(game));  
 
 game.letterChosen.addEventListener('keyup', (event) => {
-    const inputValue = event.target.value.toLowerCase();
+    const inputValue = game.removeLetterAccent(event.target.value.toLowerCase());
     DOM.attempts.textContent = game.remainingAttempts();
 
     if (event.key !== 'Enter') {

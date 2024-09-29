@@ -4,22 +4,23 @@ export class Game{
     constructor(){
         this.words = [
             "esternocleidomastoideo", 
-            "paralelepípedo", 
-            "otorrinolaringología", 
+            "paralelepipedo", 
+            "otorrinolaringologia", 
             "electrocardiograma", 
             "ornitorrinco", 
             "olecranon", 
             "gaseoducto", 
-            "trapacería", 
-            "ovovivíparo", 
+            "trapaceria", 
+            "ovoviviparo", 
             "desoxirribonucleico", 
-            "antihistamínico", 
+            "antihistaminico", 
             "arteriosclerosis", 
             "caleidoscopio", 
             "logicomecanofobia", 
-            "ventrílocuo", 
-            "tortícolis"
+            "ventrilocuo", 
+            "torticolis"
         ];
+        
 
         this.globalWordChosen = "";
         this.usedLettersArray = [];
@@ -100,8 +101,33 @@ export class Game{
      */
 
     isLetter(value) {
-        let letterRegExp = /^[a-zA-ZñÑáÁéÉíÍóÓúÚüÜ]$/;
+        let letterRegExp = /^[a-zA-ZñÑ]$/;
         return letterRegExp.test(value);
+    }
+
+
+    /**
+     * Functino to remove the accents from the user input letter.
+     * @param {*} letter to check and remove the accent.
+     * @returns letter without accent
+     */
+    removeLetterAccent(letter){
+        switch(letter){
+            case 'á':
+                return 'a';
+            case 'é':
+                return 'e';
+            case 'í':
+                return 'i';
+            case 'ó':
+                return 'o';
+            case 'ú':
+                return 'u';
+            case 'ü':
+                return 'u';
+            default:
+                return letter;
+        }
     }
 
     /**

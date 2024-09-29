@@ -17,8 +17,6 @@ export class Canvas {
         this.ctx.lineTo(195, 400);
 
         this.ctx.stroke();
-
-
     }
 
     /**
