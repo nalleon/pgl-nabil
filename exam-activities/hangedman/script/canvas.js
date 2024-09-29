@@ -18,8 +18,7 @@ export class Canvas {
 
         this.ctx.stroke();
 
-        this.ctx.moveTo(135,400);
-        this.ctx.lineTo(130, 50);
+
     }
 
     /**
@@ -53,7 +52,7 @@ export class Canvas {
            case 8:
                 this.drawCanvasError8();
                 break;
-           case 8:
+           case 9:
                 this.drawCanvasError9();
                 break;
            default:
@@ -74,11 +73,12 @@ export class Canvas {
    
        this.ctx.moveTo(75,400);
        this.ctx.lineTo(195, 400);
-
-       this.ctx.stroke();
-   
+          
        this.ctx.moveTo(135,400);
        this.ctx.lineTo(130, 50);
+
+       this.ctx.stroke();
+
    }
 
 

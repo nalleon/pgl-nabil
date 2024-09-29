@@ -8,7 +8,7 @@ export class Game{
             "otorrinolaringología", 
             "electrocardiograma", 
             "ornitorrinco", 
-            "olecrán", 
+            "olecranon", 
             "gaseoducto", 
             "trapacería", 
             "ovovivíparo", 
