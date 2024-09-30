@@ -29,6 +29,18 @@ function startGame() {
     canvas.drawDefaultCanvas();
 }
 
+// TODO: transform to console instead
+function revealWord() {
+    const globalWordChosenArray = this.globalWordChosen.split('');
+    globalWordChosenArray.forEach((chosenWordLetter, i) => {
+        const spanElement = this.wordToGuess.querySelector(`span[id="${i}"]`);
+        if (spanElement && !spanElement.textContent.trim()) {
+            spanElement.textContent = chosenWordLetter;
+        }
+    });
+}
+
+
 DOM.playBtn.addEventListener('click', startGame);  
 
 game.letterChosen.addEventListener('keyup', (event) => {

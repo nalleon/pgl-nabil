@@ -31,7 +31,8 @@ export class Game{
         this.maxErrorsAllowed = 10;
     }
     
-    
+    //TODO: convert to console  
+
     /**
      * Function to select a random word from the array
      * @param {*} minNum array min number of words
