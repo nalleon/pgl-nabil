@@ -179,6 +179,19 @@ class Game{
         return this.errorCounter >= this.maxErrorsAllowed;
     }
 
+    wordsCheck(userInput){
+        if(this.usedWordsArray.includes(userInput)){
+            return false;
+        } 
+
+        this.addUsedWordsArray(userInput);         
+        
+        if(userInput == this.globalWordChosen){
+            this.putAllCorrectLettersByWord();
+            return true;
+        }
+
+    }
 
 
 }
