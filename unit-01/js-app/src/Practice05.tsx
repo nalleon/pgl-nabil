@@ -8,6 +8,7 @@ type Props = {
 }
 
 const Practice05 = (props: Props) => {
+
     return (
             <p>
                 La suma de {props.num1 ?? 0} y {props.num2 ?? 0} es: 
