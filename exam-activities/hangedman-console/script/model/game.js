@@ -1,4 +1,4 @@
-export class Game{
+class Game{
     constructor(){
         this.words = [
             "esternocleidomastoideo", 
@@ -178,5 +178,9 @@ export class Game{
     isGameOver() {
         return this.errorCounter >= this.maxErrorsAllowed;
     }
+
+
+
 }
 
+exports.Game = Game;
