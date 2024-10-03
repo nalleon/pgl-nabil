@@ -61,7 +61,7 @@ export class Game{
      */
 
     showWord(){
-        return this.wordToGuess.join('');
+        return this.wordToGuess.join(' ');
     }
 
     /**
@@ -114,7 +114,12 @@ export class Game{
             }
         });
 
-        this.drawWord(userLetter, correctIndexes);
+        if (correctIndexes.length > 0){
+            this.putCorrectLetters(userLetter, correctIndexes);
+            return true;
+        }
+
+        return false;
     }
     
 
@@ -125,7 +130,6 @@ export class Game{
 
     addUsedLettersArray(letter) {
         this.usedLettersArray.push(letter);
-        //console.log(`Used letters: ${this.usedLettersArray.join(', ')}`);
         return this.usedLettersArray;
     }
 
@@ -136,7 +140,7 @@ export class Game{
 
     addUsedWordsArray(word) {
         this.usedWordsArray.push(word);
-        //console.log(`Used letters: ${this.usedWordsArray.join(', ')}`);
+        return this.usedWordsArray;
     }
 
     /**
@@ -144,12 +148,22 @@ export class Game{
      * @param {*} letter the letter entered by the user
      * @param {*} indexes index of the letter appaerences to update
      */
-    drawWord(letter, indexes){
+    putCorrectLetters(letter, indexes){
         indexes.forEach(element => {
             this.wordToGuess[element] = letter;
         });
 
         this.showWord();
+    }
+
+    /**
+     * Function to put the all the letters in the word
+     */
+
+    putCorrectLettersByWord() {
+        for (let i = 0; i < this.globalWordChosen.length; i++) {
+            this.wordToGuess[i] = this.globalWordChosen[i]; 
+        }    
     }
 
     /**
@@ -166,26 +180,15 @@ export class Game{
      * @returns number of remaining attempts.
      */
     remainingAttempts(){
-        let remainingAttempts =  this.maxErrorsAllowed - this.errorCounter;
-        //console.log(`Remaining attempts: ${remainingAttempts}`);
-        return remainingAttempts;
-    }
-
-
-    isGameOver() {
-        return this.errorCounter >= this.maxErrorsAllowed;
+        return this.maxErrorsAllowed - this.errorCounter;
     }
 
     /**
-     * Function to reset the game.
+     * Function to check if game is over by having more or the same amount errors than allowed ones.
+     * @returns true if game is over, false otherwise
      */
-    resetGame(){
-        this.usedLettersArray = [];
-        this.usedWordsArray = [];
-        this.wordToGuess = Array(this.globalWordChosen.length).fill('_');
-        this.errorCounter = 0;
-        //console.log('Game reset');
+    isGameOver() {
+        return this.errorCounter >= this.maxErrorsAllowed;
     }
-
 }
 
