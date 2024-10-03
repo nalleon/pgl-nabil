@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangedman Game</title>
+    <meta name="author" content="Nabil L.A.">
+    <link rel="stylesheet" href="./style/hangedman.css">
+</head>
+<body>
+    <div id="main">
+        <p id="title">
+            PALABRA A DESCUBIR: 
+        </p>
+        <div id="word">
+            
+        </div>
+
+        <div id="draw">
+            <canvas id="canvas" width="500px" height="450px">
+
+            </canvas>
+        </div>
+
+        <div class="attempts">
+            <h2> INTENTOS RESTANTES </h2>
+            <p id="attempts"></p>
+        </div>
+
+        <div class="result-container">
+            <div class="letters">
+                <h2> LETRAS USADAS </h2>
+                <p id="usedLetters"></p>
+            </div>
+            <div class="words">
+                <h2> PALABRAS USADAS</h2>
+                <p id="usedWords"></p>
+            </div>
+         </div>
+       
+        <div class="input-container">
+            <input type="text" id="letterChosen">
+            <button id="play"> (Re)Iniciar </button>
+        </div>
+    </div>
+    <script type="module" src="./script/controller/main.js"></script>
+</body>
+</html>
