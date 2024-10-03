@@ -9,6 +9,7 @@ function startGame() {
     game.errorCounter = 0;
     game.usedLettersArray = [];
     game.usedWordsArray = [];
+    console.log(' ');
     console.log('--------------------H A N G E D M A N----------------------');
     console.log(' ');
     console.log('----------------------------------------------------------');
