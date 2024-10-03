@@ -18,7 +18,6 @@ export class Game{
             "ventrilocuo", 
             "torticolis"
         ];
-        
 
         this.globalWordChosen = "";
         this.usedLettersArray = [];
@@ -28,7 +27,6 @@ export class Game{
         this.maxErrorsAllowed = 10;
     }
     
-    //TODO: convert to console  
 
     /**
      * Function to select a random word from the array
@@ -55,14 +53,6 @@ export class Game{
         return wordChosen;
     }
 
-    /**
-     * Function to  create the span element for each letter in the word and append it to the HTML.
-     * @param {*} wordSelected 
-     */
-
-    showWord(){
-        return this.wordToGuess.join(' ');
-    }
 
     /**
      * Function to check if the user input is a letter
@@ -152,8 +142,6 @@ export class Game{
         indexes.forEach(element => {
             this.wordToGuess[element] = letter;
         });
-
-        this.showWord();
     }
 
     /**

@@ -1,10 +1,10 @@
 import {Game} from '../model/game.js';
-
 import promptSync from 'prompt-sync';
 
 const prompt = promptSync();
-const game = new Game();
 
+const game = new Game();
+let hasWon = false;
 
 function startGame() {
     game.errorCounter = 0;
@@ -17,58 +17,32 @@ function startGame() {
     console.log('----------------------------------------------------------');
 
     let wordPos = game.rndWord(0, game.words.length);
-    let wordSelected = game.selectWord(wordPos);
-    game.showWord(wordSelected);
+    game.selectWord(wordPos);
 
 
     while (!game.isGameOver() && !game.checkIfAllLettersRevealed()){
+        console.log(' ');
         console.log('Word to guess: ');
-        console.log(game.wordToGuess);
-        console.log('-_-_-_-_-_-_-_-_-_-_-_-_');
-
-        console.log('Remaining attempts:' + game.remainingAttempts());
-        console.log('Used letters:'+  game.usedLettersArray);
-        console.log('Used words:'+  game.usedWordsArray);
+        console.log(game.wordToGuess.join(' '));
+        console.log(' ');
+        console.log('- Remaining attempts: ' + game.remainingAttempts());
+        console.log('- Used letters:'+  game.usedLettersArray);
+        console.log('- Used words:'+  game.usedWordsArray);
         console.log(' ');
 
-        let unserInput = prompt('Enter your guess: ').toLowerCase();
-        unserInput = game.removeLetterAccent(unserInput);
+        let userInput = prompt('Enter your guess: ').toLowerCase();
+        userInput = game.removeLetterAccent(userInput);
         console.log(' ');
 
-        if(unserInput.length == 1 && game.isLetter(unserInput)){
-            
-            if(!game.usedLettersArray.includes(unserInput)){
-                game.addUsedLettersArray(unserInput);
-
-                if(game.correctLetter(unserInput)){
-                    console.log('Correct letter: ' + unserInput);
-                } else {
-                    console.log('Incorrect letter: ' + unserInput);
-                    game.errorCounter++;
-                }
-
-            } else {
-                console.log('Letter already used!');
-            }
-
+        if(userInput.length == 1 && game.isLetter(userInput)){
+            lettersCheck(userInput);
         }   
 
-        if(unserInput.length > 1){
-            if(!game.usedWordsArray.includes(unserInput)){
-                game.addUsedWordsArray(unserInput);
-
-                if(unserInput == game.globalWordChosen){
-                    console.log('Congratulations! You won!');
-                    game.putAllCorrectLettersByWord();
-                    break;
-                } else {
-                    console.log(`Incorrect word guess!`);
-                    game.errorCounter++;
-                }
-            } else {
-                console.log('Word already used!');
+        if(userInput.length > 1){
+            if(wordsCheck(userInput)) {
+                hasWon = true;
+                break; 
             }
-                
         }
 
         if (game.isGameOver() || game.checkIfAllLettersRevealed()) {
@@ -76,22 +50,54 @@ function startGame() {
             break;
         }
     }
-
 }
 
+
+function wordsCheck (userInput){
+    if(!game.usedWordsArray.includes(userInput)){
+        game.addUsedWordsArray(userInput);         
+        
+        if(userInput == game.globalWordChosen){
+            game.putAllCorrectLettersByWord();
+            endGame();
+            return true;
+        }
+
+        console.log(`Incorrect word guess!`);
+        game.errorCounter++;
+
+    } else {
+        console.log('Word already used!');
+    }
+}
+
+function lettersCheck (userInput){
+    if(!game.usedLettersArray.includes(userInput)){
+        game.addUsedLettersArray(userInput);
+
+        if(game.correctLetter(userInput)){
+            console.log('Correct letter: ' + userInput);
+        } else {
+            console.log('Incorrect letter: ' + userInput);
+            game.errorCounter++;
+        }
+
+    } else {
+        console.log('Letter already used!');
+    }
+}
 
 function endGame(){
     if(game.checkIfAllLettersRevealed()){
         console.log('Congratulations! You won!');
-    } else {
-        console.log('Game over! You lost!');
+        return;
     }
 
-    console.log(`Word to guess: ${game.globalWordChosen}`);
+    console.log('Game over! You lost!');
+    console.log('Word was: ' + game.globalWordChosen);
 }
 
 startGame();
 
 
  
-
