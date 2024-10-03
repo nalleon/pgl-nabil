@@ -160,7 +160,7 @@ export class Game{
      * Function to put the all the letters in the word
      */
 
-    putCorrectLettersByWord() {
+    putAllCorrectLettersByWord() {
         for (let i = 0; i < this.globalWordChosen.length; i++) {
             this.wordToGuess[i] = this.globalWordChosen[i]; 
         }    

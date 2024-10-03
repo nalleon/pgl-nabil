@@ -13,7 +13,7 @@ function startGame() {
     console.log('------------------H A N G E D M A N-----------------------');
     console.log(' ');
     console.log('----------------------------------------------------------');
-    console.log('Guess the word by entering letters. You have 10 attempts.');
+    console.log(' Guess the word by entering letters. You have 10 attempts ');
     console.log('----------------------------------------------------------');
 
     let wordPos = game.rndWord(0, game.words.length);
@@ -24,6 +24,8 @@ function startGame() {
     while (!game.isGameOver() && !game.checkIfAllLettersRevealed()){
         console.log('Word to guess: ');
         console.log(game.wordToGuess);
+        console.log('-_-_-_-_-_-_-_-_-_-_-_-_');
+
         console.log('Remaining attempts:' + game.remainingAttempts());
         console.log('Used letters:'+  game.usedLettersArray);
         console.log('Used words:'+  game.usedWordsArray);
@@ -39,9 +41,9 @@ function startGame() {
                 game.addUsedLettersArray(unserInput);
 
                 if(game.correctLetter(unserInput)){
-                    console.log(`Correct letter!`);
+                    console.log('Correct letter: ' + unserInput);
                 } else {
-                    console.log(`Incorrect letter!`);
+                    console.log('Incorrect letter: ' + unserInput);
                     game.errorCounter++;
                 }
 
@@ -57,7 +59,7 @@ function startGame() {
 
                 if(unserInput == game.globalWordChosen){
                     console.log('Congratulations! You won!');
-                    game.putCorrectLettersByWord();
+                    game.putAllCorrectLettersByWord();
                     break;
                 } else {
                     console.log(`Incorrect word guess!`);
@@ -86,7 +88,6 @@ function endGame(){
     }
 
     console.log(`Word to guess: ${game.globalWordChosen}`);
-
 }
 
 startGame();
