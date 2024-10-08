@@ -3,20 +3,18 @@ import React, { useState } from 'react'
 type Props = {}
 
 const Practice10 = (props: Props) => {
-    const [num, setNum] = useState([]);
-    
+    const [arraynum, setArraynum] = useState<Array<Number>>([]);
+
     function addNum(){
         const rndNum = Math.trunc(Math.random() * 100)+1;
-
-        setNum((prevNum) => [...prevNum, rndNum]);
+        setArraynum( [...arraynum, rndNum]);
     }
-
 
   return (
     <>
         <div>
             <br></br>
-            <p>{JSON.stringify(num)}</p>
+            <p>{JSON.stringify(arraynum)}</p>
             <button onClick={addNum}> Add num </button>
         </div>
 
