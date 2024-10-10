@@ -1,0 +1,26 @@
+* {
+    background-color: black;
+    color: white;
+}
+
+button{
+    background-color: transparent;
+    border: white 1px solid;
+    width: 100%;
+}
+button:hover{
+    background-color: white;
+    color: black;
+}
+
+.grid-tables{
+    display: grid;
+    grid-template-columns: repeat(3, 4fr);
+    grid-gap: 5rem;
+}
+
+.table{
+    border: 1px solid white;
+    padding: 10px;
+    text-align: center;
+}

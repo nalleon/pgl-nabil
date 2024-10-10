@@ -3,10 +3,9 @@ import React, { useState } from 'react'
 type Props = {}
 
 const Practice12 = (props: Props) => {
-
     const [color, setColor] = useState("");
     function selectColor(color: string) {
-        setColor(color)
+      setColor(color)
     }
 
   return (
