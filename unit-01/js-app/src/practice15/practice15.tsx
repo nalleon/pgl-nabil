@@ -13,10 +13,10 @@ const practice15 = (props: Props) => {
         <>
             <h2> Botones y CSS</h2>
             <p className=''>Este es el area que muestra los resultados de los botones</p>
-            <button id="blue" onClick={()=>selectColor("green")}>Verde</button>     
+            <button id="green" onClick={()=>selectColor("green")}>Verde</button>     
             <button id="blue" onClick={()=>selectColor("blue")}>Azul</button>     
-            <button id="blue" onClick={()=>selectColor("red")}>Rojo</button>     
-            <button id="blue" onClick={()=>selectColor("pink")}>Rosa</button>     
+            <button id="red" onClick={()=>selectColor("red")}>Rojo</button>     
+            <button id="pink" onClick={()=>selectColor("pink")}>Rosa</button>     
 
         </>
      )
