@@ -6,7 +6,7 @@ import Greeting from './greeting.tsx';
 
 type Props = {}
 
-const practice17 = (props: Props) => {
+const Practice17 = (props: Props) => {
     const [showRndNum, setRndNum] = useState(true);
 
     return (
@@ -38,4 +38,4 @@ const GreetingComponent = (props: Props) =>{
 }
 
 
-export default practice17
+export default Practice17
