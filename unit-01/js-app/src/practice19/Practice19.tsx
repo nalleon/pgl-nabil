@@ -12,6 +12,7 @@ const Practice19 = (props: Props) => {
         }
         efecto();
     }, [contador>10] )
+    
     return (
         <div>
         <h3>info en state: {contador}</h3>
