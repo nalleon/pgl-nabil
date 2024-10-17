@@ -589,6 +589,197 @@ export default Practice13;
 </br>
 
 
+### Práctica 14
+
+> 📂
+> Crear un componente: TodasLasTablas que use el componente ya creado Así
+muestra las tablas del 2 al 10 ( mirar imagen ejemplo )
+Se usarán las pros: <PracticarTabla tabla={5} /> → Esto genera la tabla del 5. Usar un
+map para un array [2,3,..,10] y establece para cada componente PracticarTabla el prop para
+su tabla
+>
+
+```code
+type Props = {}
+
+const Practice14 = (props: Props) => {
+    const arr = [2,3,4,5,6,7,8,9,10];
+
+    return (
+    <div className='grid-tables'>
+        {
+            arr.map(num => {
+                    return <div className='table'><Practice09 key={num} numTable={num}/></div>
+            }      
+        )}
+    </div> 
+
+  )
+}
+
+export default Practice14
+```
+
+- Captura:
+
+<div align="center">
+<img src="./img/p14.png"/>
+</div>
+
+</br>
+
+
+### Práctica 15
+
+> 📂
+> Crear el renderizado anterior. Al pulsar en botón rojo el área tiene color fuente rojo y borde
+rojo. Si se pulsa en verde, pues en verde, y así con todos. Se recomienda crear las 4 clases
+CSS y luego que se establezcan mediante:
+<h4 className={claseaplicada}>Este area muestra los resultados de los botones </h4>
+>
+
+- CSS:
+```code
+.red{
+    color: red;
+    border: 2px solid red;
+}
+
+.blue{
+    color: blue;
+    border: 2px solid blue;
+}
+
+.green{
+    color: green;
+    border: 2px solid green;
+}
+
+.pink{
+    color: pink;
+    border: 2px solid pink;
+}
+```
+
+```code
+import React, { useState } from 'react'
+import './practice15.css'
+type Props = {}
+
+const Practice15 = (props: Props) => {
+  const [color, setColor] = useState("");
+  
+    function selectColor(color: string) {
+      setColor(color)
+    }
+
+    return (
+        <>
+            <h2> Botones y CSS</h2>
+            <p className={color}>Este es el area que muestra los resultados de los botones</p>
+            <button id="green" onClick={()=>selectColor("green")}>Verde</button>     
+            <button id="blue" onClick={()=>selectColor("blue")}>Azul</button>     
+            <button id="red" onClick={()=>selectColor("red")}>Rojo</button>     
+            <button id="pink" onClick={()=>selectColor("pink")}>Rosa</button>     
+
+        </>
+     )
+}
+
+export default Practice15
+```
+
+
+
+- Captura:
+
+<div align="center">
+<img src="./img/p15-1.png"/>
+<img src="./img/p15-2.png"/>
+<img src="./img/p15-3.png"/>
+<img src="./img/p15-4.png"/>
+</div>
+
+</br>
+
+### Práctica 16
+
+> 📂
+> En la práctica de los relojes de zonas horarias, crear un array con 5 zonas
+horarias, entre ellas: Londres, Madrid y usando array.map generar los 5 componentes Reloj
+con su respectiva propiedad timezone, dándole estilos CSS a los componentes
+>
+
+- CSS:
+```code
+body{
+    background-color: #000;
+}
+
+.watch-list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 1.2rem;
+}
+
+.watch-item {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    background-color: #f0f0f0;
+    width: 20rem;
+}
+
+.watch-item h2 {
+    background-color: #f0f0f0;
+    color: #000;
+    font-size: 1.2rem;
+}
+
+.watch-item p {
+    font-size: 1rem;
+}
+
+.watch-container {
+    padding: 16.2px;
+}
+```
+
+```code
+type Props = {}
+
+const Practice16 = (props: Props) => {
+    const array = ["Europe/London", "Europe/Madrid",  "America/New_York", "Asia/Tokyo", "Europe/Berlin" ];
+  return (
+    <>
+        <div className="watch-list">
+            {array.map((zone, key) => (
+                <div className="watch-item" key={key}>
+                    <Watch zone={zone} />
+                </div>
+            ))}
+        </div>
+    </>
+    
+  )
+}
+
+export default Practice16
+```
+
+
+
+- Captura:
+
+<div align="center">
+<img src="./img/p16.png"/>
+</div>
+
+</br>
+
 ### Práctica 20
 
 > 📂
