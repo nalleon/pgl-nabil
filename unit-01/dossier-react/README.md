@@ -780,6 +780,346 @@ export default Practice16
 
 </br>
 
+### Práctica 17
+
+> 📂
+> Crear un componente que tenga dos botones. Cuando se pulse en el primer
+botón se cargará un componente que mostrará 10 números aleatorios de 0 a 100 a pulsar un
+botón llamado “generar” que esté dentro del componente
+Si se pulsa en el otro botón se carga otro componente que reemplaza el anterior que muestra
+un saludo y la fecha actual ( la fecha se enviará mediante props )
+>
+
+- Greeting:
+
+```code
+type Props = {
+    date ?: string
+}
+
+function Greeting(props: Props) {
+    const dateStr = props.date ?? "no date provided" ;
+  return (
+    <>
+        <h1> Greetings! </h1>z
+        <p>Hello, today is {dateStr}</p>
+    </>
+  )
+}
+
+export default Greeting
+```
+
+
+```code
+type Props = {}
+
+const Practice17 = (props: Props) => {
+    const [showRndNum, setRndNum] = useState(true);
+
+    return (
+    <>
+        {showRndNum? <RndNumberComponent/> : <GreetingComponent/>}
+        <button onClick={()=> setRndNum(true)}>Generate</button>
+        <button onClick={()=>setRndNum(false)}>Greeting</button>
+    </>
+    
+  )
+}
+
+
+const RndNumberComponent = (props: Props) =>{    
+    const [arraynum, setArraynum] = useState<Array<Number>>([]);
+
+    function generateRndNums(){
+        let auxArr : number [] = [];
+
+        for (let i = 0; i < 10; i++) {
+            const rndNum = Math.trunc(Math.random() * 100)+1;
+            auxArr.push(rndNum);
+        }
+        setArraynum(auxArr);
+    }
+
+    useEffect(() => {
+        generateRndNums(); 
+      }, []);
+
+    return (
+        <>
+            <h2>Random Numbers</h2>
+            <p>{JSON.stringify(arraynum)}</p>
+        </>
+    )
+}
+
+
+const GreetingComponent = (props: Props) =>{
+    return (
+        <>
+            <Greeting date="2024-10-13"/>
+        </>
+    )
+}
+
+
+export default Practice17
+```
+
+- Captura:
+
+<div align="center">
+<img src="./img/p17-1.png"/>
+<img src="./img/p17-2.png"/>
+</div>
+
+</br>
+
+### Práctica 18
+
+> 📂
+> Realizar los dos ejemplos anteriores ( FuntionalComponent con useEffect() y
+React.Component con los métodos componentDidMount() componentDidUpdate()).
+Adaptarlos a React con Typescript
+>
+
+- v1:
+
+```code
+import React from 'react';
+
+class Practice18ReactComponent extends React.Component<{}, { count: number }> {
+  constructor(props: {}) {
+    super(props);
+    this.state = {
+      count: 0
+    };
+  }
+
+  componentDidMount() {
+    document.title = `You clicked ${this.state.count} times`;
+  }
+
+  componentDidUpdate() {
+    document.title = `You clicked ${this.state.count} times`;
+  }
+
+  render() {
+    return (
+      <div>
+        <p>You clicked {this.state.count} times</p>
+        <button onClick={() => this.setState({ count: this.state.count + 1 })}>
+          Click me
+        </button>
+      </div>
+    );
+  }
+}
+
+export default Practice18ReactComponent;
+```
+
+- Captura:
+
+<div align="center">
+<img src="./img/p18-1.png"/>
+</div>
+
+
+- v2:
+
+```code
+type Props = {}
+
+const Practice18 = (props: Props) => {
+    const [count, setCount] = useState<number>(0);
+    useEffect(() => {
+        document.title = `You clicked ${count} times`;
+      }, [count]);
+
+  return (
+    <>
+        <div>
+            <p>You clicked {count} times</p>
+            <button onClick={() => setCount(count + 1)}>
+                Click me
+            </button>
+        </div>
+    </>
+  )
+}
+
+
+export default Practice18
+```
+
+- Captura:
+
+<div align="center">
+<img src="./img/p18-2.png"/>
+</div>
+
+</br>
+
+### Práctica 19
+
+> 📂
+>  Abriendo la consola para ver los mensajes de log, ejecutar el código anterior.
+¿ se muestra la fecha cada vez que se renderiza ( modifica el estado ) ? ¿ el contador
+empieza en qué número ?
+Ahora modifica el código anterior quitando los comentarios en la línea: //setContador(-1)
+¿ qué ocurre ahora ? ¿ En el primer renderizado ( antes de pulsar el botón) qué muestra el
+contador? ¿Y después de ejecutar el botón?
+Sigue modificando el código quitando los comentarios en el array de useEffect quedando la
+línea final del useEffect() así:
+}, [] )
+¿ se ejecuta es useEffect() en cada renderizado ? ¿ se ejecuta en el momento del montaje ?
+Finalmente vamos a dejar nuestro useEffect así:
+useEffect(() => {
+const efecto = () =>{
+let fecha = new Date();
+console.log(fecha);
+setcontador(-1);
+}
+efecto();
+}, [contador>10] )
+Ahora ¿cuándo se ejecuta el useEffect
+>
+
+La fecha se muestra cada vez que se renderiza así cómo el contador.
+
+- v1:
+
+```code
+
+type Props = {}
+
+const Practice19 = (props: Props) => {
+    const [contador, setcontador] = useState<number>(100);
+    useEffect(() => {
+        const efecto = () =>{
+            let fecha = new Date();
+            console.log(fecha);
+            //setcontador(-1);
+        }
+        efecto();
+    },/*[]*/ )
+    
+    return (
+        <div>
+        <h3>info en state: {contador}</h3>
+        <button onClick={() => setcontador(contador + 1)}>Actualizar state</button>
+        </div>
+    )
+}
+export default Practice19
+```
+
+- Captura:
+
+<div align="center">
+<img src="./img/p19-1.png"/>
+</div>
+
+- v2:
+
+Tras quitar el comentario, observamos que el contador no se actualiza. Además, cuando renderiza imprime 2 veces la fecha.
+
+```code
+const Practice19 = (props: Props) => {
+    const [contador, setcontador] = useState<number>(100);
+    useEffect(() => {
+        const efecto = () =>{
+            let fecha = new Date();
+            console.log(fecha);
+            setcontador(-1);
+        }
+        efecto();
+    },/*[]*/ )
+    
+    return (
+        <div>
+        <h3>info en state: {contador}</h3>
+        <button onClick={() => setcontador(contador + 1)}>Actualizar state</button>
+        </div>
+    )
+}
+```
+
+- Captura:
+
+<div align="center">
+<img src="./img/p19-2.png"/>
+</div>
+
+- v3:
+
+Tras quitar el comentario de [], el useEffect se ejectu una sola vez cuando el componente se monta antes del primer renderizado.
+
+```code
+const Practice19 = (props: Props) => {
+    const [contador, setcontador] = useState<number>(100);
+    useEffect(() => {
+        const efecto = () =>{
+            let fecha = new Date();
+            console.log(fecha);
+            setcontador(-1);
+        }
+        efecto();
+    },/*[]*/ )
+    
+    return (
+        <div>
+        <h3>info en state: {contador}</h3>
+        <button onClick={() => setcontador(contador + 1)}>Actualizar state</button>
+        </div>
+    )
+}
+```
+
+- Captura:
+
+<div align="center">
+<img src="./img/p19-3.png"/>
+</div>
+
+
+- v4:
+
+Con este cambio, el useEffect se ejecutara cada vez que se cumpla la condicion de contador>10 sea true.
+
+```code
+type Props = {}
+
+const Practice19 = (props: Props) => {
+    const [contador, setcontador] = useState<number>(100);
+    useEffect(() => {
+        const efecto = () =>{
+            let fecha = new Date();
+            console.log(fecha);
+            setcontador(-1);
+        }
+        efecto();
+    },[contador>10])
+    
+    return (
+        <div>
+        <h3>info en state: {contador}</h3>
+        <button onClick={() => setcontador(contador + 1)}>Actualizar state</button>
+        </div>
+    )
+}
+export default Practice19
+```
+
+- Captura:
+
+<div align="center">
+<img src="./img/p19-4.png"/>
+</div>
+
+</br>
+
 ### Práctica 20
 
 > 📂
