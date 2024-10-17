@@ -1,26 +1,91 @@
 import React, { useEffect, useState } from 'react'
 
+
+class Game {
+    private hiddenNum : number;
+    private guesses : string[];
+    public finished : boolean = false;
+
+    constructor(max:number = 10){
+      this.hiddenNum = Math.trunc(Math.random() * max);
+      this.guesses = [];
+      this.finished = false;
+    }
+
+    guess = (guess: number): boolean => {
+      if (this.finished) {
+        return false;
+      }
+
+      let ocurrence = "";
+      if (guess < this.hiddenNum) {
+        ocurrence = "<";
+      } else if (guess > this.hiddenNum) {
+        ocurrence = ">";
+      } else {
+        ocurrence = "=";
+        this.finished = true;
+      }
+
+      let message = guess + " " + ocurrence + " hidden number";
+      this.guesses.push(message);
+      return true;
+    }
+    
+    /**
+     * 
+   
+    guess(guess: number) : boolean {
+      if(this.finished){
+        return false;
+      }
+
+      let ocurrence = "";
+      if(guess < this.hiddenNum){
+        ocurrence = "<";
+      } else if(guess > this.hiddenNum){
+        ocurrence = ">";
+      } else {
+        ocurrence = "=";
+        this.finished = true;
+      }
+
+      let message = guess + " " +ocurrence + " hidden number";
+      this.guesses.push(message);
+      return true;
+    }
+*/
+    getGuesses = () => {
+      return this.guesses;
+    }
+
+    getFinished = () =>{
+      return this.finished;
+    }
+
+}
+
+
+
 type Props = {}
 /**
  * button to restart
  * use effect 
  */
 const Practice20 = (props: Props) => {
-    let arr = [0,1,2,3,4,5,6,7,8,9];
+    const [game, setGame] = useState<Game>({} as Game);
     const [restart, setRestart] = useState(true);
-    const [numBet, setNumBet] = useState(0);
-    const [win, setWin] = useState(false);
-    const [message, setMessage] = useState('');
+    const [numBet, setNumBet] = useState<number>(0);
+    const [finished, setfinished] = useState<boolean>(false);
+    const [ocurrence, setocurrence] = useState('');
+    let arr = [0,1,2,3,4,5,6,7,8,9];
 
 
     useEffect(() => {
-      const generateNum = () => {
-        const rndNum = Math.trunc(Math.random() * arr.length );
-        setNumBet(rndNum);
-      }
+      let game = new Game(arr.length);
+      setGame(game);
 
       if (restart) {
-        generateNum();
         setRestart(false); 
       }
       console.log(numBet);
@@ -28,20 +93,13 @@ const Practice20 = (props: Props) => {
 
 
     const handleClick = (num: number) => {
-        if (num === numBet) { 
-          setWin(true);
-          setMessage (`You won! Num was ${numBet}`);
-        } else if(num > numBet){
-          setMessage (`${num} > hidden number`);
-        } else {
-          setMessage (`${num} < hidden number`);
-        }
+        game.guess(num);
+        console.log({...game});
+        setGame({...game} as Game);
     }
     
     const restartGame = () =>{
       setRestart(true);
-      setMessage('');
-      setWin(false);
     }
 
   return (
@@ -50,14 +108,12 @@ const Practice20 = (props: Props) => {
         {arr.map(num => {
             return <button key={num} onClick={() => handleClick(num)}> {num}</button>
         })}
+
         <button onClick={restartGame}>Restart</button>
 
-        <p>{message}</p>
+        <p>{ocurrence}</p>
 
-        {win && <p>Congratulations! You guessed the number correctly.</p>}
-
-        
-     
+        {game.finished && <p>Congratulations! You guessed the number correctly.</p>}
     </>
   )
 }
