@@ -6,34 +6,43 @@ type Props = {}
  * use effect 
  */
 const Practice20 = (props: Props) => {
-    let arr = [1,2,3,4,5,6,7,8,9];
-    const [restart, setRestart] = useState(false);
-    const [numBet, setNum] = useState(1);
+    let arr = [0,1,2,3,4,5,6,7,8,9];
+    const [restart, setRestart] = useState(true);
+    const [numBet, setNumBet] = useState(0);
     const [win, setWin] = useState(false);
+    const [message, setMessage] = useState('');
 
 
     useEffect(() => {
       const generateNum = () => {
         const rndNum = Math.trunc(Math.random() * arr.length );
-        setNum(rndNum);
+        setNumBet(rndNum);
       }
 
-      generateNum();
+      if (restart) {
+        generateNum();
+        setRestart(false); 
+      }
       console.log(numBet);
-    }, [numBet])
+    }, [restart]);
 
 
     const handleClick = (num: number) => {
         if (num === numBet) { 
           setWin(true);
-          return <p> You won! Num was {numBet}</p>
+          setMessage (`You won! Num was ${numBet}`);
         } else if(num > numBet){
-            return <p> {num} is greater than hidden number </p>
+          setMessage (`${num} > hidden number`);
         } else {
-            return <p> {num} is smaller than hidden number </p>
+          setMessage (`${num} < hidden number`);
         }
-      }
+    }
     
+    const restartGame = () =>{
+      setRestart(true);
+      setMessage('');
+      setWin(false);
+    }
 
   return (
     <>
@@ -41,10 +50,9 @@ const Practice20 = (props: Props) => {
         {arr.map(num => {
             return <button key={num} onClick={() => handleClick(num)}> {num}</button>
         })}
-        <button onClick={() => {
-                setWin(false);
-            }}>Restart
-        </button>
+        <button onClick={restartGame}>Restart</button>
+
+        <p>{message}</p>
 
         {win && <p>Congratulations! You guessed the number correctly.</p>}
 
