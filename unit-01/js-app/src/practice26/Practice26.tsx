@@ -4,21 +4,30 @@ import Practice09 from '../practice09/Practice09';
 type Props = {}
 
 function Practice26({}: Props) {
-    const inputValue = useRef<HTMLInputElement>({} as HTMLInputElement);
-    const divResult = useRef<HTMLDivElement>({} as HTMLDivElement);
-    const [result, setResult] = useState<boolean>(true);
-    
+    const inputValueRef = useRef<HTMLInputElement>({} as HTMLInputElement);
+    const textareaRef = useRef<HTMLTextAreaElement>({} as HTMLTextAreaElement);
+
+    const [option, setOption] = useState<boolean>(true);
+    const [value, setValue] = useState<String>('');
 
     function getInputType(){
-        let input = inputValue.current;
-        let actualValue = input.value;
+        let input = inputValueRef.current.value;
+        //alert(input);
 
-        switch (input.type) {
+        switch (input) {
             case 'text':
+                setOption(true);
+                break;
+            default:
+                setOption(false);
                 break;
         }
 
-        //if del valor para saber el tipo
+    }
+
+    function practicar(){
+        let rndNum = Math.random()*100;
+        textareaRef.current.value += ""+rndNum;
     }
 
 
@@ -26,12 +35,14 @@ function Practice26({}: Props) {
         <>
         <div>
             <h4>Form</h4>
-            <input type="text" ref={inputValue}/>
+            <input type="text" ref={inputValueRef}/>
             <button onClick={getInputType}>Submit</button>
 
-            {result ? <CountLetters/> : <Table/>}
+            
         </div>
 
+        <textarea ref={textareaRef}> test</textarea>
+        <button onClick={practicar}> practice</button>
         </>
     )
 }
@@ -41,17 +52,21 @@ export default Practice26
 
 
 const CountLetters = (props: Props) =>{
+
+
     return (
         <>
-        <p>Number of letters: {inputValue.current.value.length}</p>
+        <p>Number of letters: {}</p>
         </>
     )
 }
 
 const Table = (props: Props) =>{
+    const num = [1, 2, 3, 4, 5, 6, 7,8, 9, 10]
     return (
         <>
         </>
     )
 
 }
+// {resultNum ? <CountLetters num={}/> : <Table/>}
