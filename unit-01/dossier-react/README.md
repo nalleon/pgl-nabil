@@ -1207,4 +1207,42 @@ export default Practice20
 
 </br>
 
+### Práctica 28
+
+> 📂
+> Realizar un componente llamado: MostrarInput que se introduzca el
+texto en el input y se vaya mostrando en un h5
+>
+
+
+```code
+const Practice28 = (props: Props) => {
+  const [text, setText] = useState<String>("");
+  
+
+  function handleChanges(event:ChangeEvent<HTMLInputElement>){
+    event.preventDefault();
+    setText(event.target.value);
+  }
+
+    return (
+    <>
+        <label htmlFor="name"></label>
+        <input type="text" id="name" onChange={handleChanges}/>
+        <br/>
+        <h5>You wrote: {text} </h5>
+    </>
+  )
+}
+
+export default Practice28
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p28.png"/>
+</div>
+
+</br>
+
 </div>
