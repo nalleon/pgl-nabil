@@ -15,11 +15,11 @@ export default class Game {
         if (!this.finished){
             if (num == this.secret){
                 this.finished = true;
-                this.history.push(`You won: ${this.secret} in ${this.history.length}\n`);
+                this.history.push(`You won: num was ${this.secret} in ${this.history.length} attempts\n`);
             } else if (num < this.secret){
                 this.history.push(`Bet: ${num} < secret\n`);
             } else {
-                this.history.push(`Bet: ${num} < secret\n`);
+                this.history.push(`Bet: ${num} > secret\n`);
             }
             
             return true;

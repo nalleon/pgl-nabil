@@ -1295,4 +1295,60 @@ export default Practica29
 
 </br>
 
+### Práctica 30
+
+> 📂
+> Implementaremos el juego de acertar número secreto. Pero en esta ocasión,
+habrá un input y un botón. Al pulsar el botón el programa evalúa la apuesta del input. NO se
+usarán referencias. Se hará el uso de manejo de eventos para acceso al DOM
+>
+
+
+```code
+const Practice30 = (props: Props) => {
+    const [historic, sethistoric] = useState<string []>([]);
+    const [num, setnum] = useState<number>(0);
+    const [game, setgame] = useState<Game>({} as Game);
+
+    useEffect(() => {
+      setgame(new Game(10));
+    }, [])
+
+
+    const getInputValue = (event:ChangeEvent<HTMLInputElement>) =>{
+        event.preventDefault();
+        setnum(parseInt(event.currentTarget.value));
+    } 
+
+
+    function betGame (event:React.MouseEvent<HTMLButtonElement>){
+        event.preventDefault();
+        game.bet(num);
+        let historicUpdate = game.getHistory();
+        sethistoric([... historicUpdate]);
+    }
+    
+  return (
+        <>
+            <h4>Guess num</h4>
+            <input type="text" id="numbet" onChange={getInputValue}/>
+            <button type='button' onClick={betGame}>Bet</button>
+            {historic}
+        </>
+    )
+}
+
+export default Practice30
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p30-1.png"/>
+<img src="./img/p30-2.png"/>
+<img src="./img/p30-3.png"/>
+
+</div>
+
+</br>
+
 </div>
