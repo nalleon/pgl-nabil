@@ -1245,4 +1245,54 @@ export default Practice28
 
 </br>
 
+### Práctica 29
+
+> 📂
+> Realizar un componente llamado:
+OperarBotones que al pulsar el botón de la izquierda
+divida al valor actual entre 2 y si se pulsa el de la derecha
+multiplique. Se debe hacer mediante un único método que responda a onClick ( el mismo
+método para los dos botones )
+>
+
+
+```code
+function Practica29({}: Props) {
+    const [num, setnum] = useState<number>(1);
+    
+
+    function handleClick(event:React.MouseEvent<HTMLButtonElement>){
+        event.preventDefault();
+        
+        if(event.currentTarget.innerText.includes("*")){
+            setnum(num*2);
+        } else if(event.currentTarget.innerText.includes("/")){
+            setnum(num/2);
+        }
+        
+    }
+
+    return (
+    <>
+        <h5>Current num: {num} </h5>
+        <button onClick={handleClick}>{num}*2</button>
+        <button onClick={handleClick}>{num}/2</button>
+        <br/>
+    </>
+    )
+  }
+
+export default Practica29
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p29-1.png"/>
+<img src="./img/p29-2.png"/>
+<img src="./img/p29-3.png"/>
+
+</div>
+
+</br>
+
 </div>
