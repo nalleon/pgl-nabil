@@ -39,8 +39,8 @@ class Game {
 }
 
 const Practice24 = (props: Props) => {
-    const inputNum = useRef<HTMLInputElement>({} as HTMLInputElement);
-    const divResult = useRef<HTMLDivElement>({} as HTMLDivElement);
+    const inputNumRef = useRef<HTMLInputElement>({} as HTMLInputElement);
+    const divResultRef = useRef<HTMLDivElement>({} as HTMLDivElement);
     const [game, setGame] = useState<Game>({} as Game);
     const [restart, setRestart] = useState(true);
 
@@ -51,14 +51,14 @@ const Practice24 = (props: Props) => {
     }, []);
 
     const handleSubmit = () => {
-        let userInput = inputNum.current;
+        let userInput = inputNumRef.current;
         let userGuess = Number(userInput.value);
 
         game.guess(userGuess);
         
-        let divResultInfo = divResult.current;
+        let divResultRefInfo = divResultRef.current;
         let results = game.getGuesses().toString;
-        divResultInfo.innerText = results();
+        divResultRefInfo.innerText = results();
     }
 
     const restartGame = () =>{
@@ -70,9 +70,9 @@ const Practice24 = (props: Props) => {
     <>
         <div>
             <h4>Guess num</h4>
-            <input type="text" ref={inputNum}/>
+            <input type="text" ref={inputNumRef}/>
             <button onClick={handleSubmit}>Submit</button>
-            <div ref={divResult}></div>
+            <div ref={divResultRef}></div>
 
             <button onClick={restartGame}>Restart</button>
 

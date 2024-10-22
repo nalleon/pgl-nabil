@@ -19,7 +19,6 @@ export class Game{
             "torticolis"
         ];
         
-
         this.globalWordChosen = "";
         this.usedLettersArray = [];
         this.usedWordsArray = [];
