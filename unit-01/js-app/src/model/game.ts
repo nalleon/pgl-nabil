@@ -3,6 +3,7 @@ export default class Game {
     public history :  string[];
     public finished : boolean;
     public maxValue : number;
+    
     constructor(maxValue){
       this.maxValue = maxValue;
       this.secret = Math.trunc(Math.random() * maxValue);

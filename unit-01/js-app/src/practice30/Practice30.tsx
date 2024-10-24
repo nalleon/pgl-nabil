@@ -31,6 +31,7 @@ const Practice30 = (props: Props) => {
             <h4>Guess num</h4>
             <input type="text" id="numbet" onChange={getInputValue}/>
             <button type='button' onClick={betGame}>Bet</button>
+            <br />
             {historic}
         </>
     )
