@@ -1,69 +1,31 @@
 import React, { useEffect, useRef, useState } from 'react'
+import Game from '../model/game.ts';
 
 type Props = {}
 
-class Game {
-    private hiddenNum : number;
-    private guesses : string[];
-    public finished : boolean = false;
 
-    constructor(max:number = 10){
-      this.hiddenNum = Math.trunc(Math.random() * max);
-      this.guesses = [];
-      this.finished = false;
-    }
-
-    guess = (guess: number): boolean => {
-      if (this.finished) {
-        return false;
-      }
-
-      let ocurrence = "";
-      if (guess < this.hiddenNum) {
-        ocurrence = "<";
-      } else if (guess > this.hiddenNum) {
-        ocurrence = ">";
-      } else {
-        ocurrence = "=";
-        this.finished = true;
-      }
-
-      let message = guess + " " + ocurrence + " hidden number";
-      this.guesses.push(message);
-      return true;
-    }
-
-    getGuesses = () => {
-      return this.guesses;
-    }
-}
 
 const Practice24 = (props: Props) => {
     const inputNumRef = useRef<HTMLInputElement>({} as HTMLInputElement);
     const divResultRef = useRef<HTMLDivElement>({} as HTMLDivElement);
     const [game, setGame] = useState<Game>({} as Game);
-    const [restart, setRestart] = useState(true);
 
     
     useEffect(() => {
-      let game = new Game();
-      setGame(game);
+      setGame(new Game(10));
     }, []);
 
     const handleSubmit = () => {
-        let userInput = inputNumRef.current;
-        let userGuess = Number(userInput.value);
+      let userInput = inputNumRef.current;
+      let userGuess = parseInt(userInput.value);
 
-        game.guess(userGuess);
-        
-        let divResultRefInfo = divResultRef.current;
-        let results = game.getGuesses().toString;
-        divResultRefInfo.innerText = results();
+      game.bet(userGuess);
+      
+      let divResultRefInfo = divResultRef.current;
+      let results = game.getHistory();
+      divResultRefInfo.innerText = results.toString();
     }
 
-    const restartGame = () =>{
-        setRestart(true);
-      }
   
 
   return (
@@ -73,9 +35,6 @@ const Practice24 = (props: Props) => {
             <input type="text" ref={inputNumRef}/>
             <button onClick={handleSubmit}>Submit</button>
             <div ref={divResultRef}></div>
-
-            <button onClick={restartGame}>Restart</button>
-
 
             {game.finished && <p>Congratulations! You guessed the number correctly.</p>}
         </div>

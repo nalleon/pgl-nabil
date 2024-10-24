@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Watch from '../practice06/Watch.tsx'
 import Watch22 from './Watch22.tsx';
 
 type Props = {}

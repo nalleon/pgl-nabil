@@ -1207,6 +1207,344 @@ export default Practice20
 
 </br>
 
+### Práctica 21
+
+> 📂
+> Copiar y ejecutar el ejemplo anterior. Buscar información sobre setInterval()
+¿ qué significa el 1000 que le pasamos como parámetro ? ¿ para qué vale el valor devuelto
+timerID ?. Comentar la línea: setfechaactual(newfecha) de la función tick() y escribir en su
+lugar: console.log(newfecha); ¿ qué ocurre con el renderizado ? Mirar en la consola que
+información está mostrando y explicar lo que ocurre
+>
+
+El 1000 que les estamos pasandp sirve para imdicar cada cuanto se va a ejecutar la función tick, en este caso cada 1000ms. 
+
+
+```code
+const Practice21 = (props: Props) => {
+    const [actualDate, setActualDate] = useState<string>("");
+    useEffect(() =>{
+        const timerID = setInterval(
+            tick, 
+            1000
+        );
+        return () => clearInterval(timerID);
+    }, []);
+
+    function tick() {
+        const newDate = " " + new Date();
+        setActualDate(newDate);
+    }
+
+  return (
+    <div>
+        <h3>Example of dinamic watch</h3>    
+        {actualDate}
+    </div>
+  )
+}
+
+export default Practice21
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p21-1.png"/>
+</div>
+
+</br>
+
+### Práctica 22
+
+> 📂
+> Ahora que ya sabemos usar setInterval() y combinarlo con useEffect()
+modificar la actividad de los relojes mundiales de tal forma que se muestren con la
+información de la hora actualizada cada segund
+>
+
+
+```code
+import React, { act, useEffect, useState } from 'react'
+
+type Props = {
+    zone ?: string;
+}
+
+const Watch22 = (props: Props) => {
+    const zoneStr = props.zone ?? "Europe/Madrid";
+    const date = new Date().toLocaleDateString( "es-ES",{timeZone: zoneStr});
+    const timeString = new Date().toLocaleTimeString("es-ES",{timeZone: zoneStr});
+    const [actualDate, setActualDate] = useState<string>("");
+
+
+    useEffect(() =>{
+        const timerID = setInterval(
+            tick, 
+            1000
+        );
+        return () => clearInterval(timerID);
+    }, []);
+
+   
+     function tick() {
+        const newDate = " " + new Date();
+        setActualDate(newDate);
+    }
+
+    return (
+        <>
+            <h2>Time at: {zoneStr}</h2>
+            <p>{actualDate}</p>
+            <p>{timeString}</p>
+        </>
+    );
+}
+
+export default Watch22;
+
+type Props = {}
+
+const Practice22 = (props: Props) => {
+
+  const [actualDate, setActualDate] = useState<string>("");
+    useEffect(() =>{
+        const timerID = setInterval(
+            tick, 
+            1000
+        );
+        return () => clearInterval(timerID);
+    }, []);
+
+    function tick() {
+      const newDate = " " + new Date();
+      setActualDate(newDate);
+    }
+
+  return (
+        <>
+          <Watch22 zone="Europe/Madrid" />
+          <Watch22 zone="America/New_York" />
+          <Watch22 zone="Europe/London" />
+        </>
+    )
+}
+
+export default Practice22
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p22.png"/>
+</div>
+
+</br>
+
+### Práctica 23
+
+> 📂
+> Usando useRef(), crear un componente con 2 input y un párrafo ( etiqueta:
+<p> ) donde uno de los inputs sea para el nombre y el otro input para los apellidos. Al
+pulsar en el botón tomará la información de los dos inputs y lo mostrará en el párrafo
+concatenados y dirá cuántas letras tiene el nombre completo.
+
+>
+
+
+```code
+const Practice23 = (props: Props) => {
+    const refName = useRef<HTMLInputElement>({} as HTMLInputElement);
+    const refSurename = useRef<HTMLInputElement>({} as HTMLInputElement);
+    const [text, settext] = useState<string>('');
+    const [counter, setCounter] = useState<number>(0);
+
+
+    function handleChanges(event:ChangeEvent<HTMLInputElement>){
+        event.preventDefault();
+        let name = refName.current.value;
+        let surename = refSurename.current.value;
+        console.log(surename);
+
+        let fullName = name + " " + surename;
+
+        settext(fullName);
+        setCounter(text.length)
+    }
+
+
+
+  return (
+    <>
+        <div className="main-container">
+            <input type="text" name='userName' id='userName' placeholder='Insert your name' onChange={handleChanges} ref={refName}/>
+            <input type="text" name="surenames" id='surenames' placeholder='Insert your surename(s)' onChange={handleChanges} ref={refSurename}/>
+            <p>{text}: {counter} characters of length</p>
+
+        </div>
+    </>
+    )
+}
+
+export default Practice23
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p23.png"/>
+</div>
+
+</br>
+
+### Práctica 24
+
+> 📂
+> Modificar el ejercicio de acertar número. Ahora en lugar de 10 botones, habrá
+un único input y un único botón. Al pulsar el botón en la acción que desencadene se usará
+useRef() para tomar la información que haya en el input y así realizar la apuesta
+>
+
+
+```code
+export default class Game {
+  public secret : number;
+  public history :  string[];
+  public finished : boolean;
+  public maxValue : number;
+  constructor(maxValue){
+    this.maxValue = maxValue;
+    this.secret = Math.trunc(Math.random() * maxValue);
+    this.history = [];
+    this.finished = false;
+  }
+
+
+  public bet(num : number) : boolean {
+      if (!this.finished){
+          if (num == this.secret){
+              this.finished = true;
+              this.history.push(`You won: num was ${this.secret} in ${this.history.length} attempts\n`);
+          } else if (num < this.secret){
+              this.history.push(`Bet: ${num} < secret\n`);
+          } else {
+              this.history.push(`Bet: ${num} > secret\n`);
+          }
+          
+          return true;
+      } 
+      return false;
+  }
+
+  public getHistory = () :string[]  => {
+      return this.history;
+  }
+}
+
+
+const Practice24 = (props: Props) => {
+    const inputNumRef = useRef<HTMLInputElement>({} as HTMLInputElement);
+    const divResultRef = useRef<HTMLDivElement>({} as HTMLDivElement);
+    const [game, setGame] = useState<Game>({} as Game);
+
+    
+    useEffect(() => {
+      setGame(new Game(10));
+    }, []);
+
+    const handleSubmit = () => {
+      let userInput = inputNumRef.current;
+      let userGuess = parseInt(userInput.value);
+
+      game.bet(userGuess);
+      
+      let divResultRefInfo = divResultRef.current;
+      let results = game.getHistory();
+      divResultRefInfo.innerText = results.toString();
+    }
+
+  
+
+  return (
+    <>
+        <div>
+            <h4>Guess num</h4>
+            <input type="text" ref={inputNumRef}/>
+            <button onClick={handleSubmit}>Submit</button>
+            <div ref={divResultRef}></div>
+
+            {game.finished && <p>Congratulations! You guessed the number correctly.</p>}
+        </div>
+
+    </>
+  )
+}
+
+export default Practice24
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p24.png"/>
+</div>
+
+</br>
+
+### Práctica 25
+
+> 📂
+> Crear un functional component con dos botones uno dice: aleatorio que cada
+vez que se pulsa, agrega un aleatorio a un array apuntado por useRef() y otro botón que
+dice: mostrar este último botón copia el array almacenado en la referencia y lo pone en el
+state. Mostrándose así el array de números generados
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p20-1.png"/>
+</div>
+
+</br>
+
+### Práctica 26
+
+> 📂
+> 
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p20-1.png"/>
+</div>
+
+</br>
+
+### Práctica 27
+
+> 📂
+> 
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p20-1.png"/>
+</div>
+
+</br>
+
+
 ### Práctica 28
 
 > 📂
