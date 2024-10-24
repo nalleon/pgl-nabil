@@ -49,6 +49,10 @@ const Practice31 = (props: Props) => {
 
 
     function handleClick(index : number){
+        if (revealedNumbers.includes(number[index])) {
+            return;
+        }
+
         setAttempts(attempts+1);
 
         if (number[index] === currentNumber){
@@ -58,7 +62,9 @@ const Practice31 = (props: Props) => {
             
             if(updatedRevealedNumbers.length === numArray.length){
                 alert("Congratulations, you won!");
-                endGame();
+                setTimeout(() => {
+                    endGame();
+                }, 2500);
             }
 
 
