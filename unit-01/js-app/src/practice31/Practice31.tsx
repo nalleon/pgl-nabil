@@ -17,14 +17,14 @@ const Practice31 = (props: Props) => {
     /**
      * UseStates
      */
-    const [number, setnumber] = useState<number[]>([]);
+    const [numberArray, setNumberArray] = useState<number[]>([]);
     const [revealedNumbers, setrevealedNumbers] = useState<number[]>([]);
     const [currentNumber, setCurrentNumber] = useState<number>(1); 
     const [attempts, setAttempts] = useState<number>(0);
     const [isShowing, setIsShowing] = useState<boolean>(true);
     const [isGameOver, setIsGameOver] = useState<boolean>(false);
 
-    const numArray = [1,2,3,4,5,6,7,8];
+    const numValuesArray = [1,2,3,4,5,6,7,8];
 
     useEffect(() => {
         setIsGameOver(false);
@@ -32,15 +32,18 @@ const Practice31 = (props: Props) => {
     }, [isGameOver]);
 
 
+    /**
+     * Function to generate shuffle numbers
+     */
     function generateNumbers() {
-        const shuffleNumArray = [...numArray];
+        const shuffleNumArray = [...numValuesArray];
 
         for (let i = 0; i < shuffleNumArray.length; i++){
             const j = Math.floor(Math.random() * (i + 1));
             [shuffleNumArray[i], shuffleNumArray[j]] = [shuffleNumArray[j], shuffleNumArray[i]];
         }
         
-        setnumber(shuffleNumArray);
+        setNumberArray(shuffleNumArray);
 
         setTimeout(() =>{
             setIsShowing(false);
@@ -48,19 +51,23 @@ const Practice31 = (props: Props) => {
     }
 
 
+    /**
+     * Function to handle the users choice
+     * @param index of the button
+     */
     function handleClick(index : number){
-        if (revealedNumbers.includes(number[index])) {
+        if (revealedNumbers.includes(numberArray[index])) {
             return;
         }
 
         setAttempts(attempts+1);
 
-        if (number[index] === currentNumber){
-            const updatedRevealedNumbers = [...revealedNumbers, number[index]];
+        if (numberArray[index] === currentNumber){
+            const updatedRevealedNumbers = [...revealedNumbers, numberArray[index]];
             setrevealedNumbers(updatedRevealedNumbers);
             setCurrentNumber(currentNumber+1);
             
-            if(updatedRevealedNumbers.length === numArray.length){
+            if(updatedRevealedNumbers.length === numValuesArray.length){
                 alert("Congratulations, you won!");
                 setTimeout(() => {
                     endGame();
@@ -72,6 +79,9 @@ const Practice31 = (props: Props) => {
 
     }
 
+    /**
+     * Function to end and restart the game
+     */
     function endGame(){
         setIsGameOver(true);
         setrevealedNumbers([]); 
@@ -86,7 +96,7 @@ const Practice31 = (props: Props) => {
             <h2>Memory Game</h2>
             <p>Attemps: {attempts}</p>
             <div className='btn-container'>
-                {number.map((num, index) => (
+                {numberArray.map((num, index) => (
                     <button key={index} onClick={() => handleClick(index)}>
                         {isShowing || revealedNumbers.includes(num) ? num : "?"}                    
                     </button>
