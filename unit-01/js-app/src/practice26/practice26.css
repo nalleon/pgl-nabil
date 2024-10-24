@@ -1,0 +1,9 @@
+body {
+    background-color: aliceblue;
+    text-align: center;
+    color: black;
+}
+
+button {
+    width: 10rem;
+}

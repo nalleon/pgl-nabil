@@ -50,11 +50,11 @@ const Practice31 = (props: Props) => {
         }, 3000)
     }
 
-
     /**
      * Function to handle the users choice
      * @param index of the button
      */
+
     function handleClick(index : number){
         if (revealedNumbers.includes(numberArray[index])) {
             return;
