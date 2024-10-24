@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import './practice31.css';
 /**
  * Realizar un componente react: Memoria8.tsx que
  * realice el juego de memorizar de forma ordenada 8 números.
@@ -48,7 +48,7 @@ const Practice31 = (props: Props) => {
     }
 
 
-    function handleClick(index){
+    function handleClick(index : number){
         setAttempts(attempts+1);
 
         if (number[index] === currentNumber){
