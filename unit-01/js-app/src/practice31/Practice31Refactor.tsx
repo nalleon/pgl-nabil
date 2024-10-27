@@ -23,6 +23,8 @@ const Practice31Refactor = (props: Props) => {
     const [isShowing, setIsShowing] = useState<boolean>(true);
     const [isGameOver, setIsGameOver] = useState<boolean>(false);
     const [cellArr, setCellArr] = useState<Cell[]>([]);
+    const [countdown, setCountdown] = useState<number>(3);
+
 
     const refGame = useRef<Game31>({} as Game31);
 
@@ -38,12 +40,23 @@ const Practice31Refactor = (props: Props) => {
     const startGame = () => {
         setAttempts(0);
         setIsShowing(true);
+        setCountdown(3);
 
-        setTimeout(() =>{
-            setIsShowing(false);
-        }, 3000);
+        const interval = setInterval(() => {
+            setCountdown(prev => {
+                if (prev <= 1) {
+                    clearInterval(interval);
+                    setIsShowing(false);
+ 
+                    return 0; 
+                }
+                return prev - 1; 
+            });
+        }, 1000);
+
     }
 
+    
     /**
      * Function to handle the users choice
      * @param index of the button
@@ -66,6 +79,7 @@ const Practice31Refactor = (props: Props) => {
     <div className="main-container">
         <h2>Memory Game</h2>
         <p>Attempts: {attempts}</p>
+         
         <div className="btn-container">
             {cellArr.map((cell, index) => (
                 <button key={index} onClick={() => handleClick(index)}>
@@ -73,6 +87,8 @@ const Practice31Refactor = (props: Props) => {
                 </button>
             ))}
         </div>
+        {countdown > 0 && <p>Countdown: {countdown}</p>}
+        {countdown === 0 && <p>Countdown finished!</p>}
     </div>
 </>
   )
