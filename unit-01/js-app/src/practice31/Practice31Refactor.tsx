@@ -37,6 +37,10 @@ const Practice31Refactor = (props: Props) => {
 
     }, [isGameOver]);
 
+
+    /**
+     * Method to start the game
+     */
     const startGame = () => {
         setAttempts(0);
         setIsShowing(true);
@@ -47,7 +51,6 @@ const Practice31Refactor = (props: Props) => {
                 if (prev <= 1) {
                     clearInterval(interval);
                     setIsShowing(false);
- 
                     return 0; 
                 }
                 return prev - 1; 
@@ -63,15 +66,56 @@ const Practice31Refactor = (props: Props) => {
      */
 
     function handleClick(index : number){
-        refGame.current.bet(index);
+        if(refGame.current.cellsArray[index].isVisible == true){
+            return;
+        }
 
+        refGame.current.bet(index);
         setAttempts(refGame.current.attempts);
         
         if(refGame.current.checkWin()){
+            console.log(refGame.current.revealedCells.length);
             alert("Congratulations, you won!");
             setIsGameOver(true);
             startGame();
+        } 
+    }
+
+    /**
+     * Function to handle the mouse down event
+     * @param index of the cell targeted at the event
+     */
+    
+    function handleMouseDown(index: number) {
+        if(!refGame.current.cellsArray[index].isVisible &&
+            refGame.current.revealedCells.includes(cellArr[index])){
+            return;
         }
+
+        refGame.current.showNum(index);
+        
+        const updatedCells = [...cellArr];
+        updatedCells[index].makeVisible(); 
+        setCellArr(updatedCells);
+    
+    }
+
+    /**
+     * Function to handle the mouse up event
+     * @param index of the cell targeted at the event
+     */
+    
+    function handleMouseUp(index: number) {
+        if(refGame.current.cellsArray[index].isVisible &&
+            !refGame.current.revealedCells.includes(cellArr[index])){
+
+            refGame.current.hideNum(index);
+
+            const updatedCells = [...cellArr];
+            updatedCells[index].makeHidden();
+            setCellArr(updatedCells);
+        }
+
     }
 
   return (
@@ -82,8 +126,10 @@ const Practice31Refactor = (props: Props) => {
          
         <div className="btn-container">
             {cellArr.map((cell, index) => (
-                <button key={index} onClick={() => handleClick(index)}>
-                    {isShowing || refGame.current.revealedNumbers.includes(cell.value) ? cell.value : "???"}
+                <button key={index} onClick={() => handleClick(index)} 
+                                    onMouseDown={() => {handleMouseDown(index)}}
+                                    onMouseUp={() => handleMouseUp(index)}>
+                    {isShowing || cell.isVisible ? cell.value : "???"}
                 </button>
             ))}
         </div>

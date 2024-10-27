@@ -5,7 +5,7 @@ export default class Cell {
 
     constructor(id : number, value : number){
         this.id = id;
-        this.isVisible = true;
+        this.isVisible = false;
         this.value = value;
     }
 

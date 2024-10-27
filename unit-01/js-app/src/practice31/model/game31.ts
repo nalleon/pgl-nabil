@@ -5,7 +5,7 @@ export default class Game31 {
     public cellsArray:Cell[];
     public numberArray : number[];
     public currentNumber : number;
-    public revealedNumbers : number[];
+    public revealedCells : Cell[];
     public totalNumber :  number ;
     public attempts : number;
 
@@ -13,7 +13,7 @@ export default class Game31 {
         this.totalNumber = totalNumber;
         this.numberArray = [1,2,3,4,5,6,7,8];
         this.currentNumber = 1;
-        this.revealedNumbers = [];
+        this.revealedCells = new Array<Cell>();
         this.attempts = 0;
         this.cellsArray = new Array<Cell>();
     }
@@ -39,6 +39,9 @@ export default class Game31 {
     public initializeCells(){
         this.numberArray = this.generateNumbers();
         this.cellsArray = [];
+        this.revealedCells = []; 
+        this.currentNumber = 1; 
+        this.attempts = 0;
 
         for (let i = 0; i < this.numberArray.length; i++) {
             const value = this.numberArray[i]; 
@@ -46,37 +49,56 @@ export default class Game31 {
             this.cellsArray[i] = cell;       
         }
 
-        this.revealedNumbers = []; 
-        this.currentNumber = 1; 
-        this.attempts = 0;
-
         return this.cellsArray;
     }
 
+    /**
+     * Function to check the bet of one of the cells
+     * @param index of the cell to check
+     */
 
     public bet(index : number){
         const selectedCell = this.cellsArray[index];
 
-        if (this.revealedNumbers.includes(selectedCell.value)) {
+        if (this.revealedCells.includes(selectedCell)) {
             return;
+        }
+
+        //console.log(this.attempts);
+        console.log(this.currentNumber);
+
+        if (selectedCell.value === this.currentNumber){
+            selectedCell.makeVisible();
+            this.revealedCells[index] = selectedCell;
+            this.currentNumber++;
         }
 
         this.attempts++;
 
-        if (selectedCell.value === this.currentNumber){
-            selectedCell.makeVisible();
-            this.revealedNumbers[index] = selectedCell.value;
-            this.currentNumber++;
-        }
-
     }
 
+    /**
+     * Methos to check if the game is over;
+     */
     public checkWin(){
-        return this.revealedNumbers.length === this.totalNumber;
+        return this.revealedCells.length === this.totalNumber;
     }
+
+    /**
+     * Method to show a cell
+     * @param index of the cell
+     */
 
     public showNum(index : number){
-        return this.cellsArray[index].value;
+        this.cellsArray[index].makeVisible();
+    }
+    
+    /**
+     * Method to hide a cell
+     * @param index of the cell 
+     */
+    public hideNum(index : number){
+        this.cellsArray[index].makeHidden();
     }
     
 }
