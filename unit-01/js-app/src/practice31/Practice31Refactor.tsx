@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './practice31.css';
 import Game31 from './model/game31.ts';
+import Cell from './model/cell.ts';
 /**
  * Realizar un componente react: Memoria8.tsx que
  * realice el juego de memorizar de forma ordenada 8 números.
@@ -21,20 +22,22 @@ const Practice31Refactor = (props: Props) => {
     const [attempts, setAttempts] = useState<number>(0);
     const [isShowing, setIsShowing] = useState<boolean>(true);
     const [isGameOver, setIsGameOver] = useState<boolean>(false);
+    const [cellArr, setCellArr] = useState<Cell[]>([]);
 
-    const [numArr, setnumArr] = useState<number[]>([]);
-    const [revealedNums, setrevealedNums] = useState<number[]>([]);
     const refGame = useRef<Game31>({} as Game31);
 
 
     useEffect(() => {
-        refGame.current = new Game31();
+        refGame.current = new Game31(8);
+        setCellArr(refGame.current.initializeCells());
         startGame();
+        setIsGameOver(false);
+
     }, [isGameOver]);
 
     const startGame = () => {
-        refGame.current.generateNumbers();
-        setnumArr(refGame.current.numberArray);
+        setAttempts(0);
+        setIsShowing(true);
 
         setTimeout(() =>{
             setIsShowing(false);
@@ -48,45 +51,30 @@ const Practice31Refactor = (props: Props) => {
 
     function handleClick(index : number){
         refGame.current.bet(index);
+
+        setAttempts(refGame.current.attempts);
         
         if(refGame.current.checkWin()){
             alert("Congratulations, you won!");
-            endGame();
+            setIsGameOver(true);
+            startGame();
         }
     }
 
-    /**
-     * Function to end and restart the game
-     */
-    function endGame(){
-        setIsGameOver(true);
-        refGame.current.revealedNumbers = [];
-        refGame.current.currentNumber = 1;
-        refGame.current.attempts = 0;
-        setIsShowing(true); 
-    }
-
-    function showNum(index : number) {
-       refGame.current.showNum(index);
-    }
-
   return (
-        <>
-        <div className='main-container'>
-            <h2>Memory Game</h2>
-            <p>Attemps: {attempts}</p>
-            <div className='btn-container'>
-                {numArr.map((num, index) => (
-                    <button key={index} onClick={() => handleClick(index)} onMouseUp={() => showNum(index)}>
-
-                        {isShowing ||
-                         refGame.current.revealedNumbers.includes(num) ? num : "???"}                    
-                    </button>
-                ))}
-
-            </div>
+    <>
+    <div className="main-container">
+        <h2>Memory Game</h2>
+        <p>Attempts: {attempts}</p>
+        <div className="btn-container">
+            {cellArr.map((cell, index) => (
+                <button key={index} onClick={() => handleClick(index)}>
+                    {isShowing || refGame.current.revealedNumbers.includes(cell.value) ? cell.value : "???"}
+                </button>
+            ))}
         </div>
-        </>
+    </div>
+</>
   )
 }
 

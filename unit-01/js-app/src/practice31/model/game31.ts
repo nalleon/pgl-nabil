@@ -2,10 +2,10 @@ import Cell from "./cell.ts";
 
 
 export default class Game31 {
-    public cellsArray:Cell[] = [];
-    public numberArray : number[] = [];
+    public cellsArray:Cell[];
+    public numberArray : number[];
     public currentNumber : number;
-    public revealedNumbers : number[] = [];
+    public revealedNumbers : number[];
     public totalNumber :  number ;
     public attempts : number;
 
@@ -15,7 +15,7 @@ export default class Game31 {
         this.currentNumber = 1;
         this.revealedNumbers = [];
         this.attempts = 0;
-        //this.cellsArray = new Array<Cell[]>();
+        this.cellsArray = new Array<Cell>();
     }
     
     /** 
@@ -38,12 +38,19 @@ export default class Game31 {
 
     public initializeCells(){
         this.numberArray = this.generateNumbers();
+        this.cellsArray = [];
 
         for (let i = 0; i < this.numberArray.length; i++) {
             const value = this.numberArray[i]; 
             const cell = new Cell(i, value);   
             this.cellsArray[i] = cell;       
         }
+
+        this.revealedNumbers = []; 
+        this.currentNumber = 1; 
+        this.attempts = 0;
+
+        return this.cellsArray;
     }
 
 
@@ -69,7 +76,7 @@ export default class Game31 {
     }
 
     public showNum(index : number){
-        return this.numberArray[index];
+        return this.cellsArray[index].value;
     }
     
 }
