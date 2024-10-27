@@ -9,4 +9,11 @@ export default class Cell {
         this.value = value;
     }
 
+    public makeVisible() {
+        this.isVisible = true;
+    }
+
+    public makeHidden() {
+        this.isVisible = false;
+    }
 }

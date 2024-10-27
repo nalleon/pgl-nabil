@@ -2,7 +2,7 @@ import Cell from "./cell.ts";
 
 
 export default class Game31 {
-    public cellsArray: Array<Cell[]>;
+    public cellsArray:Cell[] = [];
     public numberArray : number[] = [];
     public currentNumber : number;
     public revealedNumbers : number[] = [];
@@ -15,7 +15,7 @@ export default class Game31 {
         this.currentNumber = 1;
         this.revealedNumbers = [];
         this.attempts = 0;
-        this.cellsArray = new Array<Cell[]>();
+        //this.cellsArray = new Array<Cell[]>();
     }
     
     /** 
@@ -28,23 +28,37 @@ export default class Game31 {
             let temp = this.numberArray[k];
             this.numberArray[k] = this.numberArray[j];
             this.numberArray[j] = temp;
-            
-            let cell = new Cell(i, j);
+        }
+        return this.numberArray;
+    }
 
+    /**
+     * Function to initialize the cells
+     */
+
+    public initializeCells(){
+        this.numberArray = this.generateNumbers();
+
+        for (let i = 0; i < this.numberArray.length; i++) {
+            const value = this.numberArray[i]; 
+            const cell = new Cell(i, value);   
+            this.cellsArray[i] = cell;       
         }
     }
 
 
     public bet(index : number){
-        if (this.revealedNumbers.includes(this.numberArray[index])) {
+        const selectedCell = this.cellsArray[index];
+
+        if (this.revealedNumbers.includes(selectedCell.value)) {
             return;
         }
 
         this.attempts++;
 
-        if (this.numberArray[index] === this.currentNumber){
-            const auxArray = this.numberArray[index];
-            this.revealedNumbers.push(auxArray);
+        if (selectedCell.value === this.currentNumber){
+            selectedCell.makeVisible();
+            this.revealedNumbers[index] = selectedCell.value;
             this.currentNumber++;
         }
 
