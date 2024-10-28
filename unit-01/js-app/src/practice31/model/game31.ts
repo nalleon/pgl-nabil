@@ -11,7 +11,7 @@ export default class Game31 {
 
     constructor(totalNumber: number=8){
         this.totalNumber = totalNumber;
-        this.numberArray = [];
+        this.numberArray = [1,2,3,4,5,6,7,8];
         this.currentNumber = 1;
         this.revealedCells = new Array<Cell>();
         this.attempts = 0;
