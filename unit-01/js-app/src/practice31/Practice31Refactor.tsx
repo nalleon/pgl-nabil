@@ -24,6 +24,7 @@ const Practice31Refactor = (props: Props) => {
     const [isGameOver, setIsGameOver] = useState<boolean>(false);
     const [cellArr, setCellArr] = useState<Cell[]>([]);
     const [countdown, setCountdown] = useState<number>(3);
+    const [isBlocked, setisBlocked] = useState<boolean>(true);
 
 
     const refGame = useRef<Game31>({} as Game31);
@@ -31,6 +32,7 @@ const Practice31Refactor = (props: Props) => {
 
     useEffect(() => {
         refGame.current = new Game31(8);
+        setCountdown(3);
         setCellArr(refGame.current.initializeCells());
         startGame();
         setIsGameOver(false);
@@ -51,6 +53,7 @@ const Practice31Refactor = (props: Props) => {
                 if (prev <= 1) {
                     clearInterval(interval);
                     setIsShowing(false);
+                    setisBlocked(false);
                     return 0; 
                 }
                 return prev - 1; 
@@ -77,7 +80,7 @@ const Practice31Refactor = (props: Props) => {
             console.log(refGame.current.revealedCells.length);
             alert("Congratulations, you won!");
             setIsGameOver(true);
-            startGame();
+            //startGame();
         } 
     }
 
@@ -126,7 +129,7 @@ const Practice31Refactor = (props: Props) => {
          
         <div className="btn-container">
             {cellArr.map((cell, index) => (
-                <button key={index} onClick={() => handleClick(index)} 
+                <button disabled={isBlocked} key={index} onClick={() => handleClick(index)} 
                                     onMouseDown={() => {handleMouseDown(index)}}
                                     onMouseUp={() => handleMouseUp(index)}>
                     {isShowing || cell.isVisible ? cell.value : "???"}
