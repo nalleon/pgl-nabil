@@ -28,7 +28,7 @@ import Practice36 from './practice36/Practice36.tsx';
 const divRoot = document.getElementById("root");
 ReactDOM.render(
   //<React.StrictMode>
-  <Practice36/>, divRoot
+  <Practice35/>, divRoot
   //</React.StrictMode>
 
 );

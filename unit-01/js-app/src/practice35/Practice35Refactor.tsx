@@ -19,7 +19,7 @@ const Practice35Refactor = (props: Props) => {
     return (
       <div>
         <h2>Estado del padre: {message}</h2>
-        <ComponentA onInputChange={handleInputChange} />
+        <ComponentA sendInfoMessage={handleInputChange}  />
         <ComponentB onButtonClick={handleButtonClick} />
       </div>
     );
@@ -29,25 +29,29 @@ export default Practice35Refactor
 
 
 type Props = {
-
-    infoDelPadreAlHijo?: number,
-    sendInfoMessage: (dato: string) => void
+    sendInfoChild?: number,
+    sendInfoMessage?: (data: string) => void
 }
 
 const ComponentA = (props: Props) => {
     useEffect(() => {
-        props.sendInfoMessage("dato: " + Math.random());
+        if (props.sendInfoMessage) {
+            props.sendInfoMessage("data: " + Math.random());
+        }
     }, [])
 
+
     function enviar(){
+      if (props.sendInfoMessage) {
         props.sendInfoMessage("data: " + Math.random());
+      }
     }
     
   return (
 
     <div>Component A
         <div>
-            MI padre dice: {props.infoDelPadreAlHijo}
+            MI padre dice: {props.sendInfoChild}
             <button type="button" onClick={enviar} >Enviar</button>
         </div>
 
