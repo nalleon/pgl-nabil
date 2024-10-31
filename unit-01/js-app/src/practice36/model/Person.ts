@@ -18,11 +18,11 @@ export default class Person {
         if(this.height === 0 || this.weigth === 0) {
             return 0;
         }
-
+        
         let heightMeter = this.height/100;
         return this.weigth / (heightMeter*heightMeter);
     }
-     
+    
     //Getters and setters
     public getId(): number {
         return this.id;

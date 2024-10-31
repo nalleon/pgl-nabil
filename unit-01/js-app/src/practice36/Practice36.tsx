@@ -33,6 +33,7 @@ type Props = {
 const PersonCard = (props: Props) => {
   const { person } = props;
   
+  const [imc, setImc] = useState(0);
   
   function processForm(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
@@ -51,9 +52,10 @@ const PersonCard = (props: Props) => {
     person.setWeigth(weigth);
     person.setHeight(height);
     
+
     const imcValue = person.calculateIMC();
-    console.log(imcValue);
     person.setImc(imcValue);
+    setImc(imcValue);
   }
 
   return (
@@ -94,7 +96,7 @@ const PersonCard = (props: Props) => {
             <input type="text" name='weightPerson' id='weightId' value={person.weigth}/>
             </div>
             <div>
-            <p>{person.imc}</p>
+            <p>{imc}</p>
             </div>
             <button type='submit'>Submit</button>
           </form>
