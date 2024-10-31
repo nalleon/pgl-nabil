@@ -17,6 +17,7 @@ import Practice23 from './practice23/Practice23.tsx';
 import Practice31Refactor from './practice31/Practice31Refactor.tsx';
 import PadreModificadoPorHijo from './examples/ComponentesHijosPadres.tsx';
 import Practice35 from './practice35/Practice35.tsx';
+import Practice32 from './practice32/Practice32.tsx';
 //import Practice18 from './practice18/practice18.tsx';
 
 //import ComponenteApp from './ComponenteApp.js';
@@ -24,7 +25,7 @@ import Practice35 from './practice35/Practice35.tsx';
 const divRoot = document.getElementById("root");
 ReactDOM.render(
   //<React.StrictMode>
-  <Practice35/>, divRoot
+  <Practice32/>, divRoot
   //</React.StrictMode>
 
 );

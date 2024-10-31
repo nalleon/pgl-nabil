@@ -13,8 +13,6 @@ const Practice35 = () => {
 
   return (
     <div>
-        
-        
         Practice35
         <ComponenteA infoDelPadreAlHijo={4}  comoTuquieras={enviarInfoHijo}/>
     {  // <ComponenteB />  
