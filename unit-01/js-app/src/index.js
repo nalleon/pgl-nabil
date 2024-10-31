@@ -29,7 +29,7 @@ import Practice35Refactor from './practice35/Practice35Refactor.tsx';
 const divRoot = document.getElementById("root");
 ReactDOM.render(
   //<React.StrictMode>
-  <Practice35Refactor/>, divRoot
+  <Practice33/>, divRoot
   //</React.StrictMode>
 
 );

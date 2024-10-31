@@ -14,7 +14,7 @@ const Practice33 = (props: Props) => {
         const endNum = Number(form.endNum.value);
 
 
-        setprimeNumArr([...calculatePrimeNums(startNum, endNum)]); 
+        setprimeNumArr(calculatePrimeNums(startNum, endNum)); 
     }
 
 
@@ -28,10 +28,11 @@ const Practice33 = (props: Props) => {
         }
 
         return primeNumsArrAux;
+        
     }
 
     function checkPrime(num : number) {
-        for(let i = 0; i < num; i++){
+        for(let i = 2; i < num; i++){
             if (num % i === 0){
                 return false;
             }
@@ -60,10 +61,7 @@ const Practice33 = (props: Props) => {
         <h3>Prime Numbers</h3>
             <ul>
                 {primeNumArr.map((num) => {
-                    if (num === primeNumArr[primeNumArr.length - 1]) {
-                        return <li key={num}>{num}</li>;
-                    }
-                    return <li key={num}>{num},</li>;
+                    return <li key={num}>{num}</li>;
                 })}
             </ul>
 

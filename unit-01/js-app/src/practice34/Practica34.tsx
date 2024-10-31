@@ -19,21 +19,50 @@ const Practice34 = (props: Props) => {
 
         switch(sizeDog){
             case "Small":
-                ageUpdate = age * 20;
-                
+                for (let i = 1; i <= age; i++) {
+                    if (i == 1) {
+                        ageUpdate += 20;
+                    } else if (i == 2) {
+                        ageUpdate += 8;
+                    } else {
+                        ageUpdate += 4;
+                    }
+                }
                 break;
 
             case "Medium":
-                ageUpdate = age * 18;
+                for (let i = 1; i <= age; i++) {
+                    if (i == 1) {
+                        ageUpdate += 18;
+                    } else if (i == 2) {
+                        ageUpdate += 9;
+                    } else if (i > 10) {
+                        ageUpdate +=5;
+                    }else {
+                        ageUpdate += 6;
+                    }
+                }
                 break;
 
             default:
-                ageUpdate = age * 16;
+                for (let i = 1; i <= age; i++) {
+                    if (i == 1) {
+                        ageUpdate += 16;
+                    } else if (i == 2) {
+                        ageUpdate += 6;
+                    } else if (i>10){
+                        ageUpdate += 11;
+                    } else {
+                        ageUpdate += 9;
+                    }
+                } 
                 break;
         }
+
         let mensaje : string = " dog's age: " + age + ", human age: " + ageUpdate;
         setAge([...age, mensaje]);
     }
+
 
 return (
     <>
