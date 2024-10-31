@@ -9,12 +9,12 @@ export default class Person {
     public imc : number;
 
     // default constructor
-    constructor(id: number, name: string, surname: string, age: number, height: number, weigth: number) {
-        
-    }
+    constructor() {}
 
     public calculateIMC() {
-       return this.weigth / (this.height^2);
+        let heightMeter = this.height/100;
+
+       return this.weigth / (heightMeter*heightMeter);
     }
      
     //Getters and setters

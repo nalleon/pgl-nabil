@@ -1,16 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 
 const Practice35Refactor = (props: Props) => {
     const [message, setMessage] = useState("");
-
-    const handleInputChange = (text) => {
-      setMessage("input A dice: " + text);
-    };
-  
-    const handleButtonClick = () => {
-      setMessage("pulsado botón en B");
-    };
 
     function sendInfoChild(data: string){
         setMessage(data);
@@ -18,9 +10,9 @@ const Practice35Refactor = (props: Props) => {
   
     return (
       <div>
-        <h2>Estado del padre: {message}</h2>
-        <ComponentA sendInfoMessage={handleInputChange}  />
-        <ComponentB onButtonClick={handleButtonClick} />
+        <h2>Message: {message}</h2>
+        <ComponentA sendMessage={sendInfoChild}  />
+        <ComponentB sendMessage={sendInfoChild}/> 
       </div>
     );
 }
@@ -29,41 +21,45 @@ export default Practice35Refactor
 
 
 type Props = {
-    sendInfoChild?: number,
-    sendInfoMessage?: (data: string) => void
+
+  sendMessage: Function
+
 }
 
 const ComponentA = (props: Props) => {
-    useEffect(() => {
-        if (props.sendInfoMessage) {
-            props.sendInfoMessage("data: " + Math.random());
-        }
-    }, [])
 
-
-    function enviar(){
-      if (props.sendInfoMessage) {
-        props.sendInfoMessage("data: " + Math.random());
-      }
+    function send(e:React.FormEvent<HTMLFormElement>){
+      e.preventDefault();
+      let form = e.currentTarget;
+      const {sendMessage} = props;
+      let message = form.textA.value;
+      sendMessage(message);
     }
     
-  return (
-
-    <div>Component A
-        <div>
-            MI padre dice: {props.sendInfoChild}
-            <button type="button" onClick={enviar} >Enviar</button>
-        </div>
-
-    </div>
+    return (
+    <>
+      <h1>Component A</h1>
+      <form onSubmit={send}>
+        <input type='text' name='textA'></input>
+        <button type='submit'>Send</button>
+      </form>
+    </>
   )
 }
 
 
-
-
 const ComponentB = (props: Props) => {
-    return (
-      <div>Componente B</div>
-    )
+    
+  function send(){
+    const {sendMessage} = props;
+    let message = "Notified from component B"
+    sendMessage(message);
+  }
+  
+  return (
+  <>
+    <h1>Component B</h1>
+    <button onClick={send}>Notified from component B</button>
+  </>
+)
   }
