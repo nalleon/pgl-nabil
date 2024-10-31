@@ -8,12 +8,13 @@ export default class Person {
     public weigth : number;
     public imc : number;
 
-    constructor() {
-
+    // default constructor
+    constructor(id: number, name: string, surname: string, age: number, height: number, weigth: number) {
+        
     }
 
     public calculateIMC() {
-        this.imc = this.weigth / (this.height^2);
+       return this.weigth / (this.height^2);
     }
      
     //Getters and setters
