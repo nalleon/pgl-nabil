@@ -36,8 +36,8 @@ const Practice32 = (props: Props) => {
         e.preventDefault();
 
         const filterProducts = e.currentTarget.value;
-        if (filterProducts === " "){
-            setProductList([...productList]);
+        if (filterProducts === ""){
+            setProductList([...list]);
             return;
         } 
 
