@@ -78,9 +78,8 @@ const PersonCard = (props: Props) => {
             <p>{imc}</p>
             <button type='submit'>Submit</button>
           </form>
-      </div>
+        </div>
       </>
-    
   )
 }
 

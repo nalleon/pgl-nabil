@@ -17,12 +17,19 @@ const Practice34 = (props: Props) => {
 
         let ageUpdate = 0;
 
-        if (sizeDog == "Small") {
-            ageUpdate = age * 20;
-        } else if (sizeDog == "Medium") {
-            ageUpdate = age * 18;
-        } else if (sizeDog == "Big") {
-            ageUpdate = age * 16;
+        switch(sizeDog){
+            case "Small":
+                ageUpdate = age * 20;
+                
+                break;
+
+            case "Medium":
+                ageUpdate = age * 18;
+                break;
+
+            default:
+                ageUpdate = age * 16;
+                break;
         }
         let mensaje : string = " dog's age: " + age + ", human age: " + ageUpdate;
         setAge([...age, mensaje]);
