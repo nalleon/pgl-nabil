@@ -15,6 +15,10 @@ export default class Person {
     }
 
     public calculateIMC() {
+        if(this.height === 0 || this.weigth === 0) {
+            return 0;
+        }
+
         let heightMeter = this.height/100;
         return this.weigth / (heightMeter*heightMeter);
     }

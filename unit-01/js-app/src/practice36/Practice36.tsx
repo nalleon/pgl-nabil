@@ -31,7 +31,8 @@ type Props = {
 }
 
 const PersonCard = (props: Props) => {
-  const [imc, setImc] = useState(0);
+  const { person } = props;
+  
   
   function processForm(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
@@ -44,17 +45,15 @@ const PersonCard = (props: Props) => {
     const age = form.agePerson.value ?? 0;
     const weigth = form.weightPerson.value ?? 0;
 
-    const person = new Person();
     person.setName(name);
     person.setSurname(surname);
     person.setAge(age);
     person.setWeigth(weigth);
     person.setHeight(height);
     
-
     const imcValue = person.calculateIMC();
+    console.log(imcValue);
     person.setImc(imcValue);
-    setImc(imcValue);
   }
 
   return (
@@ -62,37 +61,40 @@ const PersonCard = (props: Props) => {
         <div className='card'>
           <form onSubmit={processForm}>
             <div>
+              <p>{person.id}</p>
+            </div>
+            <div>
               <label htmlFor="nameId">Name</label>
             </div>
             <div>
-              <input type="text" name='namePerson' id='nameId'/>
+              <input type="text" name='namePerson' id='nameId' value={person.name}/>
             </div>
             <div>
               <label htmlFor="surnameId">Surname</label>
             </div>
             <div>
-              <input type="text" name='surnamePerson' id='surnameId'/>
+              <input type="text" name='surnamePerson' id='surnameId' value={person.surname}/>
             </div>
             <div>
             <label htmlFor="heightId">Heigth</label>
             </div>
             <div>
-            <input type="text" name='heightPerson' id='heightId'/>
+            <input type="text" name='heightPerson' id='heightId' value={person.height}/>
             </div>
             <div>
             <label htmlFor="ageId">Age</label>
             </div>
             <div>
-            <input type="text" name='agePerson' id='ageId'/>
+            <input type="text" name='agePerson' id='ageId' value={person.age}/>
             </div>
             <div>
             <label htmlFor="heighthId">Weigth</label>
             </div>
             <div>
-            <input type="text" name='weightPerson' id='weightId'/>
+            <input type="text" name='weightPerson' id='weightId' value={person.weigth}/>
             </div>
             <div>
-            <p>{imc}</p>
+            <p>{person.imc}</p>
             </div>
             <button type='submit'>Submit</button>
           </form>
