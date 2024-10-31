@@ -1,22 +1,16 @@
 body{
-    background-color: black;
+    background-color: rgb(19, 18, 18);
     color: aliceblue;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.main-container{
-    display: flex;
-    flex-direction: column;
-    text-align: center;
+    font-variant: small-caps;
+    text-transform: lowercase;
 }
 
 .btn-container{
     justify-content: center;
 }
 
-
-
-button{
+input[type="submit"]{
     margin: 10px;
     padding: 10px 20px;
     background-color: rgb(193, 135, 77);
@@ -26,6 +20,24 @@ button{
     border-radius: 10px;
     width: 3rem;
     cursor: pointer;
+}
+
+.main-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+input[type="text"], input[type="number"]{
+    border-color:rgb(193, 135, 77);
+    border-radius: 15px;
+    background-color: rgb(34, 34, 34);
+    color: aliceblue;
+}
+
+.card{
+    border: 1px solid white;
+    padding: 10px;
+    text-align: center;
 }
 
 button:hover{

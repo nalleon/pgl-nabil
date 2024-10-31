@@ -1,5 +1,6 @@
 export default class Person {
 
+    public static initialId = 1;
     public id : number;
     public name : string;
     public surname : string;
@@ -9,12 +10,13 @@ export default class Person {
     public imc : number;
 
     // default constructor
-    constructor() {}
+    constructor() {
+        this.id = Person.initialId++;
+    }
 
     public calculateIMC() {
         let heightMeter = this.height/100;
-
-       return this.weigth / (heightMeter*heightMeter);
+        return this.weigth / (heightMeter*heightMeter);
     }
      
     //Getters and setters

@@ -1,5 +1,6 @@
 import React, { ChangeEvent, ReactEventHandler, useEffect, useRef, useState } from 'react'
 import Person from './model/Person.ts';
+import './Practice36.css'
 
 const Practice36 = (props: Props) => {
   const [personList, setPersonList] = useState<Person[]>([]);
@@ -9,10 +10,10 @@ const Practice36 = (props: Props) => {
   };
 
   return (
-   
     <>
-      <div>
-        <button onClick={() => addPerson(new Person())}>+</button>
+      <button onClick={() => addPerson(new Person())}>+</button>
+
+      <div className='main-container'>
 
         {personList.map(person => (
             <PersonCard key={person.getId()} person={person} />
@@ -26,11 +27,10 @@ const Practice36 = (props: Props) => {
 export default Practice36
 
 type Props = {
-    addPerson: (person: Person) => void;
+    person : Person
 }
 
 const PersonCard = (props: Props) => {
-  const [personList, setPersonList] = useState<Person[]>([]);
   const [imc, setImc] = useState(0);
   
   function processForm(e: React.FormEvent<HTMLFormElement>){
@@ -43,10 +43,8 @@ const PersonCard = (props: Props) => {
     const height = form.heightPerson.value ?? 0;
     const age = form.agePerson.value ?? 0;
     const weigth = form.weightPerson.value ?? 0;
-    const id = personList.length +1;
 
     const person = new Person();
-    person.setId(id);
     person.setName(name);
     person.setSurname(surname);
     person.setAge(age);
@@ -57,25 +55,45 @@ const PersonCard = (props: Props) => {
     const imcValue = person.calculateIMC();
     person.setImc(imcValue);
     setImc(imcValue);
-
-    setPersonList([...personList, person]);
   }
 
   return (
       <>
-        <div>
+        <div className='card'>
           <form onSubmit={processForm}>
-            <label htmlFor="nameId">Name</label>
-            <input type="text" name='namePerson' id='nameId'/>
-            <label htmlFor="surnameId">surname</label>
-            <input type="text" name='surnamePerson' id='surnameId'/>
+            <div>
+              <label htmlFor="nameId">Name</label>
+            </div>
+            <div>
+              <input type="text" name='namePerson' id='nameId'/>
+            </div>
+            <div>
+              <label htmlFor="surnameId">Surname</label>
+            </div>
+            <div>
+              <input type="text" name='surnamePerson' id='surnameId'/>
+            </div>
+            <div>
             <label htmlFor="heightId">Heigth</label>
+            </div>
+            <div>
             <input type="text" name='heightPerson' id='heightId'/>
+            </div>
+            <div>
             <label htmlFor="ageId">Age</label>
+            </div>
+            <div>
             <input type="text" name='agePerson' id='ageId'/>
+            </div>
+            <div>
             <label htmlFor="heighthId">Weigth</label>
+            </div>
+            <div>
             <input type="text" name='weightPerson' id='weightId'/>
+            </div>
+            <div>
             <p>{imc}</p>
+            </div>
             <button type='submit'>Submit</button>
           </form>
         </div>

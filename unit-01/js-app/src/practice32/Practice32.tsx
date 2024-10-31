@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import './Practice32.css'
 type Props = {}
 
 type Product = {
