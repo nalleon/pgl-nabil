@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+/**
 //import Practice09 from './practice09/Practice09.tsx';
 import Practice20 from './practice20/Practice20.tsx';
 import Practice21 from './practice21/Practice21.tsx';
@@ -25,6 +26,7 @@ import Practice35Refactor from './practice35/Practice35Refactor.tsx';
 import Practice37 from './practice37/Practice37.tsx';
 import Practice38 from './practice38/Practice38.tsx';
 import Practice39 from './practice39/Practice39.tsx';
+ */
 import Practice40 from './practice40/Practice40.tsx';
 //import Practice18 from './practice18/practice18.tsx';
 
