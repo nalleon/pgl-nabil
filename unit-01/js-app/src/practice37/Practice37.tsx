@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Calculator from './model/Calculator.ts';
 
-
 const Practice37 = (props: Props) => {
     const [number, setNumber] = useState<number>(0);
     const refCalculator = useRef(new Calculator());

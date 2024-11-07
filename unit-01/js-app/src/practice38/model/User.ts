@@ -1,6 +1,4 @@
 export default class User {
-    
-    public static initialId = 0;
     public id : number;
     public name: string;
 

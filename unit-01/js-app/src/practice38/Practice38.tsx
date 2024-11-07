@@ -13,7 +13,7 @@ const Practice38 = (props: Props) => {
         user2.id = 2;
         let auxArr = [user1, user2];
         
-        setUserArray([...auxArr]);
+        setUserArray(auxArr);
 
     }, [])
 
@@ -58,7 +58,7 @@ export default Practice38
 
 type Props = {
     user : User
-    modifyUserParent: Function;
+    modifyUserParent: (user : User) => void ;
 }
 
 

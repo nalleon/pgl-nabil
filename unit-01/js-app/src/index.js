@@ -28,6 +28,8 @@ import Practice38 from './practice38/Practice38.tsx';
 import Practice39 from './practice39/Practice39.tsx';
  */
 import Practice40 from './practice40/Practice40.tsx';
+import Practice39 from './practice39/Practice39.tsx';
+import Practice38 from './practice38/Practice38.tsx';
 //import Practice18 from './practice18/practice18.tsx';
 
 //import ComponenteApp from './ComponenteApp.js';

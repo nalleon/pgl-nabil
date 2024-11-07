@@ -27,11 +27,14 @@ type Props = {
 
 
 const InputToUpper = (props: Props) => {
-
+    const [text, setText] = useState("")
+    
+    function getData(){
+        
+    }
     return (
         <>
             <input type="text" onChange={(e) => props.onNewText(e.target.value.toUpperCase())}/>
         </>
     )
- 
 }
