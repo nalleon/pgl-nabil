@@ -10,6 +10,7 @@ export default class Person {
     public imc : number;
 
     // default constructor
+
     constructor() {
         this.id = Person.initialId++;
     }
