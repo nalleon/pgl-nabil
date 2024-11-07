@@ -9,7 +9,7 @@ export default class Calculator {
     public descomposeNum(num){
         let descomposeStr = "";
 
-        if(num <= 2 || this.checkPrime(num)){
+        if(this.checkPrime(num)){
             descomposeStr = "1 * " + num;
             return descomposeStr;
         }
