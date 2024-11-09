@@ -2,17 +2,23 @@ export default class Cell {
     id : number;
     isBomb : boolean;
     isRevealed : boolean;
-    isFlaged : boolean;
+    isFlagged : boolean;
+    posX : number;
+    posY : number;
+    neighboringBombs : number;
     /**
      * Construct of the class
      * @param id of the cell 
      * @param isBomb if the cell is a bomb (true/false)
      */
-    constructor(id : number) {
-        this.id = id;
+    constructor() {
+        this.id = 0;
         this.isBomb = false;
         this.isRevealed = false;
-        this.isFlaged = false;
+        this.isFlagged = false;
+        this.posX = 0;
+        this.posY = 0;
+        this.neighboringBombs = 0;
     }
 
     /**
@@ -36,29 +42,47 @@ export default class Cell {
      * Getters and setters
      */
 
-    get IsRevealed() {
+    getIsRevealed() {
         return this.isRevealed;
     }
-    set IsRevealed(value: boolean) {
+    setIsRevealed(value: boolean) {
         this.isRevealed = value;
     }
-    get IsBomb() {
+    getIsBomb() {
         return this.isBomb;
     }
-    set IsBomb(value: boolean) {
+    setIsBomb(value: boolean) {
         this.isBomb = value;
     }
-    get Id() {
+    getId() {
         return this.id;
     }
-    set Id(value: number) {
+    setId(value: number) {
         this.id = value;
     }
-    get IsFlaged() {
-        return this.isFlaged;
+    getIsFlagged() {
+        return this.isFlagged;
     }
-    set IsFlaged(value: boolean) {
-        this.isFlaged = value;
+    setIsFlagged(value: boolean) {
+        this.isFlagged = value;
     }
 
+    getPosX() {
+        return this.posX;
+    }
+    setPosX(value: number) {
+        this.posX = value;
+    }
+    getPosY() {
+        return this.posY;
+    }
+    setPosY(value: number) {
+        this.posY = value;
+    }
+    getNeighboringBombs() {
+        return this.neighboringBombs;
+    }
+    setNeighboringBombs(value: number) {
+        this.neighboringBombs = value;
+    }
 }
