@@ -18,8 +18,6 @@ const CellCardComponent = (props: Props) => {
 
   const handleCellClick = () => {
     if (!cell.isRevealed && !cell.isFlagged) {
-      
-
       modifyCellParent(cell); 
     }
   };

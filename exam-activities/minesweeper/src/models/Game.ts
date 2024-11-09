@@ -64,6 +64,7 @@ export default class Game {
         const posY = cell.posY;
         let areaPoints : Cell [] = [];
 
+        try {
         // for horizontal check
         let horizontalCheck1 = posX+1;
         const rightCell = this.findCellByPosition(horizontalCheck1, posY);
@@ -110,6 +111,7 @@ export default class Game {
 
         areaPoints.push(topLeftCell);
 
+
         console.log(areaPoints);
         for(let i = 0; i < areaPoints.length; i++) {
             if(areaPoints[i].getIsBomb()){
@@ -118,14 +120,25 @@ export default class Game {
             }
         }
 
+        
+
 
         console.log(cell.getNeighboringBombs());
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     findCellByPosition(posX : number, posY : number) : Cell {
-        const boardCells = this.board;
-        const cellFound = boardCells[posX][posY];
+        const boardCells = this.board
+        let cellFound = new Cell;
+        try {
+            cellFound = boardCells[posX][posY];
+        } catch (e) {
+            return cellFound;
+        }
         return cellFound;
+
     }
     
 
