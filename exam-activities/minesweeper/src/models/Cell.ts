@@ -8,9 +8,9 @@ export default class Cell {
      * @param id of the cell 
      * @param isBomb if the cell is a bomb (true/false)
      */
-    constructor(id : number, isBomb : boolean) {
+    constructor(id : number) {
         this.id = id;
-        this.isBomb = isBomb;
+        this.isBomb = false;
         this.isRevealed = false;
         this.isFlaged = false;
     }
