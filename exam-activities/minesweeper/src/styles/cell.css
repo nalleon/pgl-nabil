@@ -1,27 +1,25 @@
-    
-    .cell {
-        width: 30px;
-        height: 30px;
-        border: 1px solid #ccc;
-        display: inline-block;
-        text-align: center;
-        background-color: #f0f0f0;
-        cursor: pointer;
-    }
 
-    .cell.revealed {
-        background-color: #807f7f;
-    }
-    
-    .cell.flagged {
-        background-color: yellow;
-    }
-    
+.cell {
+    border: 1px solid #ccc;
+    text-align: center;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    gap: 10;
+}
 
-    .cell.revealed.bomb {
-        background-color: red;
-    }
-    
-    .cell.bombtest{
-        border: 1px solid red;
-    }
+.cell.revealed {
+    background-color: #807f7f;
+}
+
+.cell.flagged {
+    background-color: yellow;
+}
+
+
+.cell.revealed.bomb {
+    background-color: red;
+}
+
+.cell.bombtest{
+    border: 1px solid red;
+}

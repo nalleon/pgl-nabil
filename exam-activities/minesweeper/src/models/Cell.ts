@@ -36,16 +36,6 @@ export default class Cell {
     }
 
     /**
-     * Function to check if the cell revealed is a bomb
-     * @returns true if it is, false otherwise
-     */
-
-    isBombRevealed() {
-        return this.isRevealed && this.isBomb;
-    }
-
-
-    /**
      * Getters and setters
      */
 

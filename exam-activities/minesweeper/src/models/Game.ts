@@ -69,19 +69,19 @@ export default class Game {
         let areaPoints : Cell [] = [];
 
         const positionsToCheck = [
-            { dx: 1, dy: 0 },  
-            { dx: -1, dy: 0 }, 
-            { dx: 0, dy: 1 }, 
-            { dx: 0, dy: -1 }, 
-            { dx: -1, dy: 1 }, 
-            { dx: 1, dy: -1 }, 
-            { dx: -1, dy: -1 },
-            { dx: 1, dy: 1 }   
+            { x: 1, y: 0 },  
+            { x: -1, y: 0 }, 
+            { x: 0, y: 1 }, 
+            { x: 0, y: -1 }, 
+            { x: -1, y: 1 }, 
+            { x: 1, y: -1 }, 
+            { x: -1, y: -1 },
+            { x: 1, y: 1 }   
         ];
 
-        for (const { dx, dy } of positionsToCheck) {
-            const newX = posX + dx;
-            const newY = posY + dy;
+        for (const { x: x, y } of positionsToCheck) {
+            const newX = posX + x;
+            const newY = posY + y;
 
             if (this.checkValidPosition(newX, newY)) {
                 const neighborCell = this.findCellByPosition(newX, newY);
@@ -102,7 +102,6 @@ export default class Game {
      * @param posY of the position of the cell
      * @returns cell in the selected position, new cell if it doesn't exists
      */
-
     findCellByPosition(posX : number, posY : number) : Cell {
         if (this.checkValidPosition(posX, posY)) {
             return this.board[posX][posY];

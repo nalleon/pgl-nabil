@@ -2,6 +2,9 @@ import React from 'react'
 import Cell from '../models/Cell';
 import '../styles/cell.css';
 import useState from 'react';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 type Props = {
   modifyCellParent : (cell : Cell) => void;
   cell : Cell;
@@ -18,6 +21,7 @@ const CellCardComponent = (props: Props) => {
 
   const handleCellClick = () => {
     if (!cell.isRevealed && !cell.isFlagged) {
+      cell.reveal();
       modifyCellParent(cell); 
     }
   };
@@ -25,28 +29,30 @@ const CellCardComponent = (props: Props) => {
 
   const handleRightClick = (event: React.MouseEvent) => {
     event.preventDefault(); 
-
     if (!cell.isRevealed) {
       cell.isFlagged = true;
-    
-      const flaggedCell = cell; 
-      modifyCellParent(flaggedCell); 
+      modifyCellParent(cell); 
     }
   };
 
   return (
     <>
+
     <div
-      className={`cell ${cell.isRevealed ? 'revealed' : ''} ${cell.isFlagged ? 'flagged' : ''} 
-      ${cell.isBomb && cell.isRevealed ? 'bomb' : ''} ${cell.isBomb ? 'bombtest' : ''}`}
+      className={`cell 
+                  ${cell.isRevealed ? 'revealed' : ''} 
+                  ${cell.isFlagged ? 'flagged' : ''} 
+                  ${cell.isBomb && cell.isRevealed ? 'bomb' : ''}
+                  ${cell.isBomb ? 'bombtest' : ''}`
+                }
       onClick={handleCellClick}
       onContextMenu={handleRightClick} 
     >
-      {cell.isFlagged && !cell.isRevealed && 'M'}
+      {(cell.isFlagged) && 'M'} 
 
-      {cell.isRevealed && cell.isBomb && 'B'}
+      {(cell.isRevealed && cell.isBomb) && 'B'}
 
-
+      {(cell.isRevealed && !cell.isBomb && !cell.isFlagged && cell.neighboringBombs > 0) && cell.neighboringBombs}
       </div>
     </>
   )
