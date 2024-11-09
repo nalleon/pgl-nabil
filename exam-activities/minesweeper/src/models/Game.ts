@@ -1,5 +1,7 @@
 import Cell from "./Cell";
-
+/**
+ * @author Nabil L. A. <@nalleon>
+ */
 export default class Game {
     board : Cell[][];
     static BOARD_SIZE = 9;
@@ -16,7 +18,6 @@ export default class Game {
      * Function to create the board of the game
      * @returns a bidimensional Cell array 
      */
-
     public createBoard() : Cell[][] {
         const boardCells : Cell [][] = [];
         let idAux = 1;
@@ -54,102 +55,80 @@ export default class Game {
                 bombsPlaced++;
             }
         }
-
         return board;
     } 
 
 
+    /**
+     * Function to check how many adjacent bomb cells are in the selected cell
+     * @param cell to check
+     */
     cellHasAdjacentBombs(cell : Cell) {
         const posX = cell.posX;
         const posY = cell.posY;
         let areaPoints : Cell [] = [];
 
-        try {
-        // for horizontal check
-        let horizontalCheck1 = posX+1;
-        const rightCell = this.findCellByPosition(horizontalCheck1, posY);
-        areaPoints.push(rightCell);
+        const positionsToCheck = [
+            { dx: 1, dy: 0 },  
+            { dx: -1, dy: 0 }, 
+            { dx: 0, dy: 1 }, 
+            { dx: 0, dy: -1 }, 
+            { dx: -1, dy: 1 }, 
+            { dx: 1, dy: -1 }, 
+            { dx: -1, dy: -1 },
+            { dx: 1, dy: 1 }   
+        ];
 
-        let horizontalCheck2 = posX-1;
-        const leftCell = this.findCellByPosition(horizontalCheck2, posY);
-        areaPoints.push(leftCell);
+        for (const { dx, dy } of positionsToCheck) {
+            const newX = posX + dx;
+            const newY = posY + dy;
 
-        // for vertical check
-
-        let verticalCheck1 = posY+1;
-        const bottomCell = this.findCellByPosition(posX, verticalCheck1);
-        areaPoints.push(bottomCell);
-
-        let verticalCheck2 = posY-1;
-        const topCell = this.findCellByPosition(posX, verticalCheck2);
-        areaPoints.push(topCell);
-
-        // for diagonalLeft check
-
-        let firstHorizontalPointDiagonal = posX-1;
-        let firstVerticalPointDiagonal = posY+1;
-        const botttomLeftCell = this.findCellByPosition(firstHorizontalPointDiagonal, firstVerticalPointDiagonal);
-
-        areaPoints.push(botttomLeftCell);
-
-        let secondHorizontalPointDiagonal = posX+1;
-        let secondVerticalPointDiagonal = posY-1;
-        const topRightCell = this.findCellByPosition(secondHorizontalPointDiagonal, secondVerticalPointDiagonal);
-
-        areaPoints.push(topRightCell);
-
-        // for diagonalRight check
-        let firstHorizontalPointSecondDiagonal = posX-1;
-        let firstVerticalPointSecondDiagonal = posY-1;
-        const botttomRightCell = this.findCellByPosition(firstHorizontalPointSecondDiagonal, firstVerticalPointSecondDiagonal);
-
-        areaPoints.push(botttomRightCell);
-
-        let secondHorizontalPointSecondDiagonal = posX+1;
-        let secondVerticalPointSecondDiagonal = posY+1;
-        const topLeftCell = this.findCellByPosition(secondHorizontalPointSecondDiagonal, secondVerticalPointSecondDiagonal);
-
-        areaPoints.push(topLeftCell);
-
-
-        console.log(areaPoints);
-        for(let i = 0; i < areaPoints.length; i++) {
-            if(areaPoints[i].getIsBomb()){
-                console.log(areaPoints[i]);
-                cell.neighboringBombs++;
+            if (this.checkValidPosition(newX, newY)) {
+                const neighborCell = this.findCellByPosition(newX, newY);
+                areaPoints.push(neighborCell);
             }
         }
 
-        
-
-
-        console.log(cell.getNeighboringBombs());
-        } catch (e) {
-            console.log(e);
+        for(let i = 0; i < areaPoints.length; i++) {
+            if(areaPoints[i].getIsBomb()){
+                cell.neighboringBombs++;
+            }
         }
     }
+
+    /**
+     * Function to find a cell by position
+     * @param posX of the position of the cell
+     * @param posY of the position of the cell
+     * @returns cell in the selected position, new cell if it doesn't exists
+     */
 
     findCellByPosition(posX : number, posY : number) : Cell {
-        const boardCells = this.board
-        let cellFound = new Cell;
-        try {
-            cellFound = boardCells[posX][posY];
-        } catch (e) {
-            return cellFound;
+        if (this.checkValidPosition(posX, posY)) {
+            return this.board[posX][posY];
         }
-        return cellFound;
-
+        return new Cell();
     }
     
+    /**
+     * Function to check if the position of the cell is within the board limits
+     * @param posX of the position of the cell
+     * @param posY of the position of the cell
+     * @param board of the game
+     * @returns true if posX and posY are within the limits of the board, false otherwise
+     */
+    checkValidPosition(posX : number, posY : number) : boolean {
+        return posX >= 0 && posX < this.board.length && posY >= 0 && posY < this.board[0].length;
+    }
 
     /**
      * Getters and setters 
      */
-    get Board() : Cell[][] {
+    getBoard() : Cell[][] {
         return this.board;
     }
     
-    set Board(value : Cell[][]) {
-        this.board = value;
+    setBoard(board : Cell[][]) {
+        this.board = board;
     }
 }

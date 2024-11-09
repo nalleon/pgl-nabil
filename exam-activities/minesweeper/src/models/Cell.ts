@@ -1,4 +1,12 @@
+/**
+ * @author Nabil L. A. <@nalleon>
+ */
 export default class Cell {
+
+    /**
+     * Properties
+     */
+
     id : number;
     isBomb : boolean;
     isRevealed : boolean;
@@ -6,18 +14,17 @@ export default class Cell {
     posX : number;
     posY : number;
     neighboringBombs : number;
+
     /**
-     * Construct of the class
-     * @param id of the cell 
-     * @param isBomb if the cell is a bomb (true/false)
+     * Default of the class
      */
     constructor() {
         this.id = 0;
         this.isBomb = false;
         this.isRevealed = false;
         this.isFlagged = false;
-        this.posX = 0;
-        this.posY = 0;
+        this.posX = -1;
+        this.posY = -1;
         this.neighboringBombs = 0;
     }
 
