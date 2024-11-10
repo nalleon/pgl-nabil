@@ -15,6 +15,10 @@ type Props = {
 const CellCardComponent = (props: Props) => {
   const { cell, modifyCellParent } = props;
 
+  /**
+   * Function handle the left click event to modify the cell from parent component
+   * @param event left click 
+   */
   const handleCellClick = (event: React.MouseEvent) => {
     event.preventDefault(); 
     if (!cell.isRevealed && !cell.isFlagged) {
@@ -23,10 +27,12 @@ const CellCardComponent = (props: Props) => {
     }
   };
 
-
+  /**
+   * Function handle the right click event to modify (mark/flag) the cell from parent component
+   * @param event right click
+   */
   const handleRightClick = (event: React.MouseEvent) => {
     event.preventDefault(); 
-
     if (!cell.isRevealed && !cell.isFlagged) {
       cell.flag();
     } else if (cell.isFlagged) {
