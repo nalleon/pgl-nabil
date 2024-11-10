@@ -1,25 +1,22 @@
 import React from 'react'
 import Cell from '../models/Cell';
 import '../styles/cell.css';
-import useState from 'react';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+/**
+ * @author Nabil L. A. <@nalleon>
+ */
 
 type Props = {
   modifyCellParent : (cell : Cell) => void;
   cell : Cell;
 }
 
-/**
- * TODO:
- * if cell if isFlagged show M else none
- * if cell is bomb and isReveal show B 
- */
-
 const CellCardComponent = (props: Props) => {
   const { cell, modifyCellParent } = props;
 
-  const handleCellClick = () => {
+  const handleCellClick = (event: React.MouseEvent) => {
+    event.preventDefault(); 
     if (!cell.isRevealed && !cell.isFlagged) {
       cell.reveal();
       modifyCellParent(cell); 
@@ -29,10 +26,13 @@ const CellCardComponent = (props: Props) => {
 
   const handleRightClick = (event: React.MouseEvent) => {
     event.preventDefault(); 
-    if (!cell.isRevealed) {
-      cell.isFlagged = true;
-      modifyCellParent(cell); 
-    }
+
+    if (!cell.isRevealed && !cell.isFlagged) {
+      cell.flag();
+    } else if (cell.isFlagged) {
+      cell.unflag();
+    } 
+    modifyCellParent(cell); 
   };
 
   return (
@@ -41,10 +41,11 @@ const CellCardComponent = (props: Props) => {
     <div
       className={`cell 
                   ${cell.isRevealed ? 'revealed' : ''} 
-                  ${cell.isFlagged ? 'flagged' : ''} 
-                  ${cell.isBomb && cell.isRevealed ? 'bomb' : ''}
-                  ${cell.isBomb ? 'bombtest' : ''}`
-                }
+                  ${cell.isFlagged ? 'bg-warning' : ''} 
+                  ${cell.isBomb && cell.isRevealed ? 'bg-danger' : ''}
+                  ${cell.isBomb ? 'bombtest' : ''} 
+                  text-dark fw-bold`
+                } 
       onClick={handleCellClick}
       onContextMenu={handleRightClick} 
     >

@@ -36,6 +36,27 @@ export default class Cell {
     }
 
     /**
+     * Function to hide the cell
+     */
+    hide(){
+        this.isRevealed = false;
+    }
+
+    /**
+     * Function to flag the cell
+     */
+    flag() {
+        this.isFlagged = true;
+    }
+    
+    /**
+     * Function to unflag the cell
+     */
+    unflag() {
+        this.isFlagged = false;
+    }
+
+    /**
      * Getters and setters
      */
 

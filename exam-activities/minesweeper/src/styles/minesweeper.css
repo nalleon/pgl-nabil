@@ -1,4 +1,9 @@
-
+/**
+ * @author Nabil L. A. <@nalleon>
+ */
+body{
+    background-color: rgb(20, 22, 25);
+}
 .board .col {
     aspect-ratio: 1; 
 }
@@ -11,4 +16,3 @@
     justify-content: center;
     cursor: pointer;
 }
-

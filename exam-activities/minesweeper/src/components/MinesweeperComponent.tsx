@@ -5,22 +5,27 @@ import Game from '../models/Game';
 import '../styles/minesweeper.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+/**
+ * @author Nabil L. A. <@nalleon>
+ */
 
 type Props = {}
-/**
- * TODO:
- * Restart buttto, initialize correctly useEffect
- */
 const MinesweeperComponent = (props: Props) => {
+  /**
+   * UseStates for board, gameOver, message
+   */
   const [board, setBoard] = useState<Cell[][]>([]);
   const [gameOver, setGameOver] = useState(false);
+  const [message, setMessage] = useState('');
 
+  /**
+   * UseRef for the game instance
+   */
   const refGame = useRef<Game>(new Game());
 
   useEffect(() => {
     const auxBoard = refGame.current.createBoard();
     setBoard(auxBoard);
-
   }, [])
   
   /**
@@ -28,28 +33,53 @@ const MinesweeperComponent = (props: Props) => {
    * @param cell to reveal
    */
   function modifyCell(cell : Cell){
-    const auxBoard = board;
+    if(gameOver){
+      return;
+    }
 
-    if(cell.isBomb && !cell.isFlagged){
+    let auxBoard = board;
+    setMessage(`Cell${cell.id} --> position: (${cell.posX}, ${cell.posY}), revealed: ${cell.isRevealed},  flagged: ${cell.isFlagged}`);
+
+    if(cell.isBomb && cell.isRevealed){
+      setMessage('Game Over! You hit a bomb');
+      auxBoard = refGame.current.revealAllCells();      
+      setBoard([...auxBoard]);
       setGameOver(true);
+      return;
+    }
+    
+    if(cell.isRevealed && !cell.isFlagged && cell.neighboringBombs == 0){
+      refGame.current.cellHasAdjacentBombs(cell);
       setBoard([...auxBoard]);
       return;
     }
 
-    refGame.current.cellHasAdjacentBombs(cell);
-    setBoard([...auxBoard]);
+
+    if(refGame.current.checkWin()){
+      setMessage('You won!');
+      setGameOver(true);
+      return;
+    }
+  }
+
+  const restartGame = () => {
+    const auxBoard = refGame.current.createBoard();
+    setMessage('');
+    setBoard(auxBoard);
+    setGameOver(false); 
   }
 
   return (
     <>
       <div className="container text-center vh-100 d-flex flex-column justify-content-center">
         <div className="row justify-content-center mt-5">
-          <div className="card col-10 col-sm-12 col-md-10 col-lg-8 bg-dark">
+          <div className="card col-10 col-sm-12 col-md-10 col-lg-8 bg-dark border-light">
             <div className='mt-3'>
               <h2 className='text-success fw-bold text-uppercase'>Minesweeper</h2>
-              {(gameOver) &&
-                <h5 className="card-title mt-1 fw-bold text-uppercase text-danger">Game over</h5>
-              }
+              <h6 className='mt-3 text text-warning fw-bold text-uppercase'>Current cell info</h6>
+              <div className="mb-3">
+                <textarea value={message} readOnly rows={1} className="form-control text-center bg-dark text-light border-light " />
+              </div>
             </div>
 
             <div className='board m-3'>
@@ -67,11 +97,10 @@ const MinesweeperComponent = (props: Props) => {
                 </div>
               ))}
             </div>
-            
             {(gameOver) &&
               <button 
-                className='btn btn-danger m-2 mb-3'
-                onClick={() => setGameOver(false)}
+                className='btn btn-danger m-2 mb-3 text-uppercase fw-bold'
+                onClick={restartGame}
                 >
                   Restart
               </button>

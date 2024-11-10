@@ -3,15 +3,21 @@ import Cell from "./Cell";
  * @author Nabil L. A. <@nalleon>
  */
 export default class Game {
+    /**
+     * Properties 
+     */
     board : Cell[][];
-    static BOARD_SIZE = 9;
-    static MAX_BOMBS = 9;
+    boardBombs : Cell[];
+
+    static BOARD_SIZE = 3;
+    static MAX_BOMBS = 3;
 
     /**
      * Constructor of the class
      */
     constructor() {
         this.board = [];
+        this.boardBombs = [];
     }
 
     /**
@@ -31,9 +37,7 @@ export default class Game {
                 idAux++;
             }
         }
-
         this.addBombs(boardCells);
-
         this.board = boardCells;
         
         return boardCells;
@@ -47,14 +51,19 @@ export default class Game {
     private addBombs(board : Cell[][]) : Cell[][]{
         let bombsPlaced = 0;
 
+        let bombsArray : Cell[] = [];
+
         while(bombsPlaced < Game.MAX_BOMBS) {
             const randomRow = Math.trunc(Math.random() * Game.BOARD_SIZE);
             const randomCol = Math.trunc(Math.random() * Game.BOARD_SIZE);
             if(!board[randomRow][randomCol].isBomb) {
                 board[randomRow][randomCol].isBomb = true;
+                bombsArray.push(board[randomRow][randomCol]);
                 bombsPlaced++;
             }
         }
+
+        this.boardBombs = bombsArray;
         return board;
     } 
 
@@ -64,6 +73,11 @@ export default class Game {
      * @param cell to check
      */
     cellHasAdjacentBombs(cell : Cell) {
+        if(cell.isBomb){
+            console.log('test');
+            return;
+        }
+
         const posX = cell.posX;
         const posY = cell.posY;
         let areaPoints : Cell [] = [];
@@ -88,6 +102,7 @@ export default class Game {
                 areaPoints.push(neighborCell);
             }
         }
+        
 
         for(let i = 0; i < areaPoints.length; i++) {
             if(areaPoints[i].getIsBomb()){
@@ -118,6 +133,65 @@ export default class Game {
      */
     checkValidPosition(posX : number, posY : number) : boolean {
         return posX >= 0 && posX < this.board.length && posY >= 0 && posY < this.board[0].length;
+    }
+
+    /**
+     * Function to reveal all cells in the board
+     * @returns the board with all cells revealed
+     */
+    revealAllCells() : Cell[][] {
+        for(let i = 0; i < Game.BOARD_SIZE; i++) {
+            for(let j = 0; j < Game.BOARD_SIZE; j++) {
+                this.board[i][j].reveal();
+                this.cellHasAdjacentBombs(this.board[i][j]);
+            }
+        }
+        return this.board;
+    }
+
+    /**
+     * Function to check if all cells that are not bombs in the board are revealed
+     * @returns true if all cells with that condition are revealed, false otherwise
+     */
+
+    checkIfAllCellsRevealed() : boolean {
+        for(let i = 0; i < Game.BOARD_SIZE; i++) {
+            for (let j = 0; j < Game.BOARD_SIZE; j++) {
+                const cell = this.board[i][j];
+                if (!cell.isBomb && !cell.isRevealed) {
+                    return false; 
+                }
+            }
+        }
+
+        return true; 
+    }
+    /**
+     * Function to check if all bombs are flagged/marked
+     * @returns true if all are flagged, false otherwise
+     */
+    checkAllBombsFlagged() : boolean{
+        let flaggedBombs = 0;
+
+        for(let i=0; i<this.boardBombs.length; i++){
+            if(this.boardBombs[i].isFlagged){
+                flaggedBombs++;
+            }
+        }
+        
+        if(flaggedBombs === Game.MAX_BOMBS){
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Function to check win
+     * @returns true if all bombs are flagged and the rest of cells revealed, false otherwise
+     */
+    checkWin() : boolean{
+        return this.checkAllBombsFlagged() && this.checkIfAllCellsRevealed();
     }
 
     /**
