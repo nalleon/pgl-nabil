@@ -146,6 +146,7 @@ export default class Game {
         for(let i = 0; i < Game.BOARD_SIZE; i++) {
             for(let j = 0; j < Game.BOARD_SIZE; j++) {
                 this.board[i][j].reveal();
+                this.board[i][j].unflag();
                 this.cellHasAdjacentBombs(this.board[i][j]);
             }
         }
