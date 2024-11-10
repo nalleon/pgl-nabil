@@ -23,7 +23,6 @@
 .cell.revealed.bomb {
     background-color: red;
 }
-
 /**
 .cell.bombtest{
     border: 2px solid red;

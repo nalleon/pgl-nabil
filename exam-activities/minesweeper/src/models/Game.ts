@@ -9,8 +9,8 @@ export default class Game {
     board : Cell[][];
     boardBombs : Cell[];
 
-    static BOARD_SIZE = 3;
-    static MAX_BOMBS = 3;
+    static BOARD_SIZE = 9;
+    static MAX_BOMBS = 9;
 
     /**
      * Constructor of the class
@@ -54,11 +54,11 @@ export default class Game {
         let bombsArray : Cell[] = [];
 
         while(bombsPlaced < Game.MAX_BOMBS) {
-            const randomRow = Math.trunc(Math.random() * Game.BOARD_SIZE);
-            const randomCol = Math.trunc(Math.random() * Game.BOARD_SIZE);
-            if(!board[randomRow][randomCol].isBomb) {
-                board[randomRow][randomCol].isBomb = true;
-                bombsArray.push(board[randomRow][randomCol]);
+            const randomPosX = Math.trunc(Math.random() * Game.BOARD_SIZE);
+            const randomPosY = Math.trunc(Math.random() * Game.BOARD_SIZE);
+            if(!board[randomPosX][randomPosY].isBomb) {
+                board[randomPosX][randomPosY].isBomb = true;
+                bombsArray.push(board[randomPosX][randomPosY]);
                 bombsPlaced++;
             }
         }
@@ -74,7 +74,10 @@ export default class Game {
      */
     cellHasAdjacentBombs(cell : Cell) {
         if(cell.isBomb){
-            console.log('test');
+            return;
+        }
+
+        if (cell.isRevealed && cell.neighboringBombs > 0){
             return;
         }
 
@@ -103,7 +106,7 @@ export default class Game {
             }
         }
         
-
+        
         for(let i = 0; i < areaPoints.length; i++) {
             if(areaPoints[i].getIsBomb()){
                 cell.neighboringBombs++;

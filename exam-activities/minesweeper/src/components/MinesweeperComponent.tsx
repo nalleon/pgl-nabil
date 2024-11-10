@@ -48,7 +48,7 @@ const MinesweeperComponent = (props: Props) => {
       return;
     }
     
-    if(cell.isRevealed && !cell.isFlagged && cell.neighboringBombs == 0){
+    if(cell.isRevealed && !cell.isFlagged && cell.neighboringBombs == 0){      
       refGame.current.cellHasAdjacentBombs(cell);
       setBoard([...auxBoard]);
       return;
