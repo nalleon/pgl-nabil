@@ -6,11 +6,11 @@ export default class Game {
     /**
      * Properties 
      */
-    board : Cell[][];
-    boardBombs : Cell[];
+    private board : Cell[][];
+    private boardBombs : Cell[];
 
-    static BOARD_SIZE = 9;
-    static MAX_BOMBS = 9;
+    private static BOARD_SIZE = 9;
+    private static MAX_BOMBS = 9;
 
     /**
      * Constructor of the class
@@ -31,9 +31,9 @@ export default class Game {
             boardCells[i] = [];
             for(let j = 0; j < Game.BOARD_SIZE; j++) {
                 boardCells[i][j] = new Cell();
-                boardCells[i][j].id = idAux;
-                boardCells[i][j].posX = i;
-                boardCells[i][j].posY = j;
+                boardCells[i][j].setId(idAux);
+                boardCells[i][j].setPosX(i);
+                boardCells[i][j].setPosY(j);
                 idAux++;
             }
         }
@@ -56,8 +56,8 @@ export default class Game {
         while(bombsPlaced < Game.MAX_BOMBS) {
             const randomPosX = Math.trunc(Math.random() * Game.BOARD_SIZE);
             const randomPosY = Math.trunc(Math.random() * Game.BOARD_SIZE);
-            if(!board[randomPosX][randomPosY].isBomb) {
-                board[randomPosX][randomPosY].isBomb = true;
+            if(!board[randomPosX][randomPosY].getIsBomb()) {
+                board[randomPosX][randomPosY].setIsBomb(true);
                 bombsArray.push(board[randomPosX][randomPosY]);
                 bombsPlaced++;
             }
@@ -73,16 +73,16 @@ export default class Game {
      * @param cell to check
      */
     cellHasAdjacentBombs(cell : Cell) {
-        if(cell.isBomb){
+        if(cell.getIsBomb()){
             return;
         }
 
-        if (cell.isRevealed && cell.neighboringBombs > 0){
+        if (cell.getIsRevealed() && cell.getNeighboringBombs() > 0){
             return;
         }
 
-        const posX = cell.posX;
-        const posY = cell.posY;
+        const posX = cell.getPosX();
+        const posY = cell.getPosY();
         let areaPoints : Cell [] = [];
 
         const positionsToCheck = [
@@ -106,10 +106,12 @@ export default class Game {
             }
         }
         
-        
+        let counter = 0;
+
         for(let i = 0; i < areaPoints.length; i++) {
             if(areaPoints[i].getIsBomb()){
-                cell.neighboringBombs++;
+                counter++;
+                cell.setNeighboringBombs(counter);
             }
         }
     }
@@ -162,7 +164,7 @@ export default class Game {
         for(let i = 0; i < Game.BOARD_SIZE; i++) {
             for (let j = 0; j < Game.BOARD_SIZE; j++) {
                 const cell = this.board[i][j];
-                if (!cell.isBomb && !cell.isRevealed) {
+                if (!cell.getIsBomb() && !cell.getIsRevealed()) {
                     return false; 
                 }
             }
@@ -178,7 +180,7 @@ export default class Game {
         let flaggedBombs = 0;
 
         for(let i=0; i<this.boardBombs.length; i++){
-            if(this.boardBombs[i].isFlagged){
+            if(this.boardBombs[i].getIsFlagged()){
                 flaggedBombs++;
             }
         }

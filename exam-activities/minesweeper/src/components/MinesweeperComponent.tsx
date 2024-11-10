@@ -38,9 +38,9 @@ const MinesweeperComponent = (props: Props) => {
     }
 
     let auxBoard = board;
-    setMessage(`Cell${cell.id} --> position: (${cell.posX}, ${cell.posY}), revealed: ${cell.isRevealed},  flagged: ${cell.isFlagged}`);
+    setMessage(`Cell${cell.getId()} --> position: (${cell.getPosX()}, ${cell.getPosY()}), revealed: ${cell.getIsRevealed()},  flagged: ${cell.getIsFlagged()}`);
 
-    if(cell.isBomb && cell.isRevealed){
+    if(cell.getIsBomb() && cell.getIsRevealed()){
       setMessage('Game Over! You hit a bomb');
       auxBoard = refGame.current.revealAllCells();      
       setBoard([...auxBoard]);
@@ -48,7 +48,7 @@ const MinesweeperComponent = (props: Props) => {
       return;
     }
     
-    if(cell.isRevealed && !cell.isFlagged && cell.neighboringBombs == 0){      
+    if(cell.getIsRevealed() && !cell.getIsFlagged() && cell.getNeighboringBombs() == 0){      
       refGame.current.cellHasAdjacentBombs(cell);
       setBoard([...auxBoard]);
       return;
@@ -88,7 +88,7 @@ const MinesweeperComponent = (props: Props) => {
                   {row.map((cell) => (
                     <div className='col p-1'>
                       <CellCardComponent
-                        key={cell.id}
+                        key={cell.getId()}
                         cell={cell}
                         modifyCellParent={modifyCell} 
                       />

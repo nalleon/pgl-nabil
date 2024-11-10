@@ -21,7 +21,7 @@ const CellCardComponent = (props: Props) => {
    */
   const handleCellClick = (event: React.MouseEvent) => {
     event.preventDefault(); 
-    if (!cell.isRevealed && !cell.isFlagged) {
+    if (!cell.getIsRevealed() && !cell.getIsFlagged()) {
       cell.reveal();
       modifyCellParent(cell); 
     }
@@ -33,9 +33,9 @@ const CellCardComponent = (props: Props) => {
    */
   const handleRightClick = (event: React.MouseEvent) => {
     event.preventDefault(); 
-    if (!cell.isRevealed && !cell.isFlagged) {
+    if (!cell.getIsRevealed() && !cell.getIsFlagged()) {
       cell.flag();
-    } else if (cell.isFlagged) {
+    } else if (cell.getIsFlagged()) {
       cell.unflag();
     } 
     modifyCellParent(cell); 
@@ -46,20 +46,21 @@ const CellCardComponent = (props: Props) => {
 
     <div
       className={`cell 
-                  ${cell.isRevealed ? 'revealed' : ''} 
-                  ${cell.isFlagged ? 'bg-warning' : ''} 
-                  ${cell.isBomb && cell.isRevealed ? 'bg-danger' : ''}
-                  ${cell.isBomb ? 'bombtest' : ''} 
+                  ${cell.getIsRevealed() ? 'revealed' : ''} 
+                  ${cell.getIsFlagged() ? 'bg-warning' : ''} 
+                  ${cell.getIsBomb() && cell.getIsRevealed() ? 'bg-danger' : ''}
+                  ${cell.getIsBomb() ? 'bombtest' : ''} 
                   text-dark fw-bold`
                 } 
       onClick={handleCellClick}
       onContextMenu={handleRightClick} 
     >
-      {(cell.isFlagged) && 'M'} 
+      {(cell.getIsFlagged()) && 'M'} 
 
-      {(cell.isRevealed && cell.isBomb) && 'B'}
+      {(cell.getIsRevealed() && cell.getIsBomb()) && 'B'}
 
-      {(cell.isRevealed && !cell.isBomb && !cell.isFlagged && cell.neighboringBombs > 0) && cell.neighboringBombs}
+      {(cell.getIsRevealed() && !cell.getIsBomb() && !cell.getIsFlagged() && cell.getNeighboringBombs() > 0) 
+        && cell.getNeighboringBombs()}
       </div>
     </>
   )

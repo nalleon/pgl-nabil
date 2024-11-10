@@ -7,13 +7,13 @@ export default class Cell {
      * Properties
      */
 
-    id : number;
-    isBomb : boolean;
-    isRevealed : boolean;
-    isFlagged : boolean;
-    posX : number;
-    posY : number;
-    neighboringBombs : number;
+    private id : number;
+    private isBomb : boolean;
+    private isRevealed : boolean;
+    private isFlagged : boolean;
+    private posX : number;
+    private posY : number;
+    private neighboringBombs : number;
 
     /**
      * Default of the class
