@@ -27,11 +27,12 @@ import Practice37 from './practice37/Practice37.tsx';
 import Practice38 from './practice38/Practice38.tsx';
 import Practice39 from './practice39/Practice39.tsx';
  */
-import Practice41 from './practice41/Practice41.tsx';
+//import Practice41 from './practice41/Practice41.tsx';
 //import Practice39 from './practice39/Practice39.tsx';
 //import Practice38 from './practice38/Practice38.tsx';
 import { BrowserRouter } from 'react-router-dom';
-import Practice27 from './practice27/Practice27.tsx';
+//import Practice27 from './practice27/Practice27.tsx';
+import Practice42 from './practice42/Practice42.tsx';
 //import Practice18 from './practice18/practice18.tsx';
 
 //import ComponenteApp from './ComponenteApp.js';
@@ -40,7 +41,7 @@ const divRoot = document.getElementById("root");
 ReactDOM.render(
   //<React.StrictMode>
   <BrowserRouter>
-    <Practice41/>
+    <Practice42/>
   </BrowserRouter>, divRoot
   //</React.StrictMode>
 

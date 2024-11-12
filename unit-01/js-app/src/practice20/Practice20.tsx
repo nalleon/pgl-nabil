@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
+import './practice20.css'
 
 class Game {
     private hiddenNum : number;
