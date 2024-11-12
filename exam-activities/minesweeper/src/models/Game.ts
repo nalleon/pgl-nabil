@@ -8,9 +8,8 @@ export default class Game {
      */
     private board : Cell[][];
     private boardBombs : Cell[];
-
-    private static BOARD_SIZE = 9;
-    private static MAX_BOMBS = 9;
+    private readonly BOARD_SIZE = 9;
+    private readonly MAX_BOMBS = 9;
 
     /**
      * Constructor of the class
@@ -27,9 +26,9 @@ export default class Game {
     public createBoard() : Cell[][] {
         const boardCells : Cell [][] = [];
         let idAux = 1;
-        for(let i = 0; i < Game.BOARD_SIZE; i++) {
+        for(let i = 0; i < this.BOARD_SIZE; i++) {
             boardCells[i] = [];
-            for(let j = 0; j < Game.BOARD_SIZE; j++) {
+            for(let j = 0; j < this.BOARD_SIZE; j++) {
                 boardCells[i][j] = new Cell();
                 boardCells[i][j].setId(idAux);
                 boardCells[i][j].setPosX(i);
@@ -53,9 +52,9 @@ export default class Game {
 
         let bombsArray : Cell[] = [];
 
-        while(bombsPlaced < Game.MAX_BOMBS) {
-            const randomPosX = Math.trunc(Math.random() * Game.BOARD_SIZE);
-            const randomPosY = Math.trunc(Math.random() * Game.BOARD_SIZE);
+        while(bombsPlaced < this.MAX_BOMBS) {
+            const randomPosX = Math.trunc(Math.random() * this.BOARD_SIZE);
+            const randomPosY = Math.trunc(Math.random() * this.BOARD_SIZE);
             if(!board[randomPosX][randomPosY].getIsBomb()) {
                 board[randomPosX][randomPosY].setIsBomb(true);
                 bombsArray.push(board[randomPosX][randomPosY]);
@@ -96,7 +95,7 @@ export default class Game {
             { x: 1, y: 1 }   
         ];
 
-        for (const { x: x, y } of positionsToCheck) {
+        for (const { x, y } of positionsToCheck) {
             const newX = posX + x;
             const newY = posY + y;
 
@@ -145,8 +144,8 @@ export default class Game {
      * @returns the board with all cells revealed
      */
     revealAllCells() : Cell[][] {
-        for(let i = 0; i < Game.BOARD_SIZE; i++) {
-            for(let j = 0; j < Game.BOARD_SIZE; j++) {
+        for(let i = 0; i < this.BOARD_SIZE; i++) {
+            for(let j = 0; j < this.BOARD_SIZE; j++) {
                 this.board[i][j].reveal();
                 this.board[i][j].unflag();
                 this.cellHasAdjacentBombs(this.board[i][j]);
@@ -161,8 +160,8 @@ export default class Game {
      */
 
     checkIfAllCellsRevealed() : boolean {
-        for(let i = 0; i < Game.BOARD_SIZE; i++) {
-            for (let j = 0; j < Game.BOARD_SIZE; j++) {
+        for(let i = 0; i < this.BOARD_SIZE; i++) {
+            for (let j = 0; j < this.BOARD_SIZE; j++) {
                 const cell = this.board[i][j];
                 if (!cell.getIsBomb() && !cell.getIsRevealed()) {
                     return false; 
@@ -177,6 +176,10 @@ export default class Game {
      * @returns true if all are flagged, false otherwise
      */
     checkAllBombsFlagged() : boolean{
+        if(this.boardBombs.length === 0){
+            return true;  
+        }
+
         let flaggedBombs = 0;
 
         for(let i=0; i<this.boardBombs.length; i++){
@@ -185,7 +188,7 @@ export default class Game {
             }
         }
         
-        if(flaggedBombs === Game.MAX_BOMBS){
+        if(flaggedBombs === this.MAX_BOMBS){
             return true;
         }
 
