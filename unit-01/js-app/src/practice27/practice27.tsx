@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 
 type Props = {}
 
-function practice27({}: Props) {
+function Practice27({}: Props) {
 
     const [time, settime] = useState(20);
     const [stateBtn, setstateBtn] = useState<boolean>(false);
@@ -29,11 +29,15 @@ function practice27({}: Props) {
 
     function iniciarParar(){
         if(!stateBtn){
-           refNum.current = 20;
-           // refTimer.current = setInterval(actualizarFecha, 1000);
+          const numUser = parseInt(refInput.current?.value || '0', 10);
+          if (isNaN(numUser) || numUser <= 0) {
+            return;
+          }
+          refNum.current = numUser;
+            refTimer.current = setInterval(actualizarTime, 1000);
             setstateBtn(true);
         } else {
-            clearInterval(refTimer.current);
+            clearInterval(refTimer.current!);
             setstateBtn(false);
         }
 
@@ -42,11 +46,11 @@ function practice27({}: Props) {
   return (
     <div>
     <h2>Cronometro</h2>
-    <input type="text" />
+    <input type="number" name='usertime' id="usertime" ref={refInput}/>
     <button onClick={iniciarParar}> {stateBtn?"parar":"iniciar"}</button>
     <p>{time}</p>
     </div>
   )
 }
 
-export default practice27
+export default Practice27
