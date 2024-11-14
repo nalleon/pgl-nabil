@@ -4,19 +4,19 @@
         "id": 1,
         "name": "Madrid",
         "population": 3223334,
-        "url": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Madrid_skyline.jpg"
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Madrid_-_Sky_Bar_360%C2%BA_%28Hotel_Riu_Plaza_Espa%C3%B1a%29%2C_vistas_19.jpg/402px-Madrid_-_Sky_Bar_360%C2%BA_%28Hotel_Riu_Plaza_Espa%C3%B1a%29%2C_vistas_19.jpg"
     },
     {
         "id": 2,
         "name": "Barcelona",
         "population": 1636762,
-        "url": "https://upload.wikimedia.org/wikipedia/commons/7/76/Barcelona_Skyline.jpg"
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Aerial_view_of_Barcelona%2C_Spain_%2851227309370%29_%28cropped%29.jpg/1200px-Aerial_view_of_Barcelona%2C_Spain_%2851227309370%29_%28cropped%29.jpg"
     },
     {
         "id": 3,
         "name": "Valencia",
         "population": 791413,
-        "url": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Valencia_Skyline.jpg"
+        "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Ciutat_de_les_Arts_i_les_Ci%C3%A8ncies%2C_Val%C3%A8ncia%2C_Valencia%2C_Spain_-_panoramio_%281%29.jpg/402px-Ciutat_de_les_Arts_i_les_Ci%C3%A8ncies%2C_Val%C3%A8ncia%2C_Valencia%2C_Spain_-_panoramio_%281%29.jpg"
     }
 ]
 }

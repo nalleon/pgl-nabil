@@ -35,6 +35,7 @@ import Practice39 from './practice39/Practice39.tsx';
 //import Practice42 from './practice42/Practice42.tsx';
 import Practice43 from './practice43/Components/Practice43.tsx';
 import CapitalList from './practice44/Components/CapitalList.tsx';
+import PokemonApp from './practice45/Components/PokemonApp.tsx';
 //import Practice18 from './practice18/practice18.tsx';
 
 //import ComponenteApp from './ComponenteApp.js';
@@ -43,7 +44,7 @@ const divRoot = document.getElementById("root");
 ReactDOM.render(
   //<React.StrictMode>
   //<BrowserRouter>
-    <CapitalList/>, divRoot
+    <PokemonApp/>, divRoot
   //</BrowserRouter>, divRoot
   //</React.StrictMode>
 
