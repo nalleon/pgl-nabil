@@ -7,19 +7,22 @@ import CapitalListModify from './Capital/CapitalListModify.tsx';
 
 type Props = {}
 
-const PokemonApp = (props: Props) => {
+const Practice45 = (props: Props) => {
     return (
+        <>
         <BrowserRouter>
             <h1> App</h1>
             <Navbar />
             <Routes>
                 <Route path="/" element={<PokemonListModify />} />
-                <Route path="/pokemon/:pokemonId" element={< PokemonCardModify/>} />
                 <Route path="/capitals" element={<CapitalListModify/>}/>
+            </Routes>
+            <Routes>
+                <Route path="/pokemon/:pokemonId" element={< PokemonCardModify/>} />
                 <Route path="/capitals/capital/:capitalId" element={<CapitalCardModify/>}/>
-            
             </Routes>
         </BrowserRouter>
+        </>
         );
     }
     
@@ -32,4 +35,4 @@ const PokemonApp = (props: Props) => {
         );
     }
 
-export default PokemonApp
+export default Practice45

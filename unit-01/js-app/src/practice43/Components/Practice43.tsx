@@ -30,8 +30,8 @@ const Practice43 = () => {
      */
     async function getPokemonCard(url: string) {
         const response = await axios.get(url);
-        let lista = response.data as IPokemonList;
-        setCardList(lista.results)
+        let list = response.data as IPokemonList;
+        setCardList(list.results)
     }
 
     
@@ -39,7 +39,7 @@ const Practice43 = () => {
         <>
             <div className="container">
                 {cardList.map((card) => {
-                    return <PokemonCard name={card.name} url={card.url} />
+                    return <PokemonCard url={card.url} />
                 })}
             </div>
         </>

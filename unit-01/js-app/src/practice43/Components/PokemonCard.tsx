@@ -3,12 +3,12 @@ import axios from 'axios';
 
 
 type Props = {
-    name: string;
     url: string;
 }
 
 
 interface IResult {
+    name: string;
     sprite: string;
     height: number;
     weight: number;
@@ -16,27 +16,34 @@ interface IResult {
 
 function PokemonCard(props : Props) {
     const [cardData, setcardData] = useState<IResult>({} as IResult);
-    const {url, name} = props;
+    const {url} = props;
 
     useEffect(() => {
-        async function getCardInfo(link : string){
-            const response = await axios.get(link);
-            let info = {} as IResult;
-            info.sprite = response.data.sprites.front_shiny;
-            info.height = response.data.height / 10;
-            info.weight = response.data.weight /10;
-            
-            setcardData(info);
-        }
-
         getCardInfo(url);
     }, [])
+
+
+    /**
+     * Async function to fetch pokemon card from the api
+     * @param link of the api
+     */
+    async function getCardInfo(link : string){
+        const response = await axios.get(link);
+        let info = {} as IResult;
+        info.name = response.data.name;
+        info.sprite = response.data.sprites.front_shiny;
+        info.height = response.data.height /10;
+        info.weight = response.data.weight /10;
+        console.log(info.sprite);
+        setcardData(info);
+    }
+
     
     return (
         <>
             <div className='pokemonCard'>
-                <h3>{name}</h3>
-                <img src={url} alt={name}/>
+                <h3>{cardData.name}</h3>
+                <img src={cardData.sprite} alt={cardData.name}/>
                 <p>Height: {cardData.height} m</p>
                 <p>Weight: {cardData.weight} kg</p>
             </div>

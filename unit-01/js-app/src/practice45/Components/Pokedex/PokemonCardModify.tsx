@@ -18,19 +18,22 @@ function PokemonCardModify() {
     const  url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
 
     useEffect(() => {
-        async function getCardInfo(link : string){
-            const response = await axios.get(link);
-            let info = {} as IResult;
-            info.name = response.data.name;
-            info.sprite = response.data.sprites.front_shiny;
-            info.height = response.data.height / 10;
-            info.weight = response.data.weight /10;
-            setcardData(info);
-        }
-
         getCardInfo(url);
     }, [pokemonId])
-    
+
+    /**
+     * Async function to fetch pokemon card from the api
+     * @param link of the api
+     */
+    async function getCardInfo(link : string){
+        const response = await axios.get(link);
+        let info = {} as IResult;
+        info.name = response.data.name;
+        info.sprite = response.data.sprites.front_shiny;
+        info.height = response.data.height / 10;
+        info.weight = response.data.weight /10;
+        setcardData(info);
+    }
     return (
         <>
             <div className='pokemonCard'>
