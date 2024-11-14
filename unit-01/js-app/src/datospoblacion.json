@@ -5296,17 +5296,6 @@
         }
       },
       "foto": "albacete.png"
-    },
-    {
-      "id": "prueba8000",
-      "nombre": "prueba8000",
-      "datos": {
-        "0": {
-          "poblacion": 2324345,
-          "anio": 2340
-        }
-      },
-      "foto": "albacete.png"
     }
   ]
 }
