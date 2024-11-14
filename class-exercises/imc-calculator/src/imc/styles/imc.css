@@ -1,0 +1,58 @@
+body{
+    background-color: rgb(19, 18, 18);
+    color: aliceblue;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-variant: small-caps;
+    text-transform: lowercase;
+    justify-content: center;
+    text-align: center;
+}
+
+
+
+input[type="submit"], button{
+    margin: 10px;
+    /**background-color: rgb(193, 135, 77);
+    */
+    background-color: transparent;
+    color: aliceblue;
+    font-weight: bolder;
+    border-color:rgb(193, 135, 77);
+    border-radius: 10px;
+    width: 5rem;
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
+}
+
+.list-item button {
+    border: 0;
+    width: auto;
+}
+
+input[type="text"], input[type="number"]{
+    border-color:rgb(193, 135, 77);
+    border-radius: 15px;
+    background-color: rgb(34, 34, 34);
+    color: aliceblue;
+}
+
+.card{
+    border: 1px solid white;
+    padding: 10px;
+    text-align: center;
+}
+
+button:hover{
+    background-color: rgb(147, 97, 50);
+}
+
+h2{
+    font-variant: small-caps;
+}
+
+p {
+    font-variant: small-caps;
+}
