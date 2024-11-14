@@ -10,18 +10,18 @@ type Props = {}
 const Practice45 = (props: Props) => {
     return (
         <>
-        <BrowserRouter>
-            <h1> App</h1>
-            <Navbar />
-            <Routes>
-                <Route path="/" element={<PokemonListModify />} />
-                <Route path="/capitals" element={<CapitalListModify/>}/>
-            </Routes>
-            <Routes>
-                <Route path="/pokemon/:pokemonId" element={< PokemonCardModify/>} />
-                <Route path="/capitals/capital/:capitalId" element={<CapitalCardModify/>}/>
-            </Routes>
-        </BrowserRouter>
+            <BrowserRouter>
+                <h1>App</h1>
+                <Navbar />
+                <Routes>
+                    <Route path="/" element={<PokemonListModify />} />
+                    <Route path="/capitals" element={<CapitalListModify/>}/>
+                </Routes>
+                <Routes>
+                    <Route path="/pokemon/:pokemonId" element={< PokemonCardModify/>} />
+                    <Route path="/capitals/capital/:capitalId" element={<CapitalCardModify/>}/>
+                </Routes>
+            </BrowserRouter>
         </>
         );
     }
