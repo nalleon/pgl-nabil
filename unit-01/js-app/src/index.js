@@ -44,7 +44,7 @@ const divRoot = document.getElementById("root");
 ReactDOM.render(
   //<React.StrictMode>
   //<BrowserRouter>
-    <PokemonApp/>, divRoot
+    <CapitalList/>, divRoot
   //</BrowserRouter>, divRoot
   //</React.StrictMode>
 

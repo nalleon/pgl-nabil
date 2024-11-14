@@ -4,61 +4,39 @@ import CapitalCard from './CapitalCard.tsx';
 
 type Props = {}
 
-
-
-/**
- * interface ICapitalList {
-    COD: string;
-    Nombre: string;
-    T3_Unidad: string;
-    T3_Escala: string;
-    MetaData: ICapitalMetaData[];
-    Data: ICapitalData[];
+interface IRootObject {
+    id: string;
+    nombre: string;
+    datos: IDato[];
+    foto: string;
 }
 
-interface ICapitalData {
-    Fecha: string;
-    T3_TipoDato: string;
-    T3_Periodo: string;
-    Anyo: number;
-    Valor: number;
+interface IDato {
+    anio: number;
+    poblacion: number;
 }
 
-interface ICapitalMetaData {
-    Id: number;
-    T3_Variable: string;
-    Nombre: string;
-    Codigo: string;
-}
- */
 
-
-interface IResult {
-  id: string;
-  name: string;
-  population: number;
-  url: string;
-}
 /**
  * json-server --watch capitals.json --port 3001
  */
 const CapitalList = () => {
-    const [capitalList, setCapitalList] = useState<IResult[]>([]);
-    const uri: string = "http://localhost:3001/capitals"
-    
+    const [capitalList, setCapitalList] = useState<IRootObject[]>([]);
+    const uri: string = "http://localhost:3000/"
+    const dataLength = 23; 
+
     useEffect(() => {
         getCapitalInfo(uri)
     }, []);
 
     /**
-     * Async function to fetch pokemon card from the api
+     * Async function to fetch capital from the api
      * @param url of the api
      */
     async function getCapitalInfo(url: string) {
-        const response = await axios.get(url);
-        let lista = response.data;
-        //console.log(lista);
-        setCapitalList(lista)
+        const response = await axios.get(url+"capitales");
+        let list = response.data;
+        setCapitalList(list)
     }
 
     
@@ -66,7 +44,13 @@ const CapitalList = () => {
         <>
             <div className="container">
                 {capitalList.map((capital) => {
-                    return <CapitalCard key={capital.id} name={capital.name} url={capital.url} population={capital.population} />
+                    return <div>
+                        <CapitalCard key={capital.id} id={capital.id}
+                        name={capital.nombre} url={capital.foto} 
+                        population={capital.datos[dataLength].poblacion} year={capital.datos[dataLength].anio} 
+                        urlAPI={uri} />
+                    </div>
+                    
                 })}
             </div>
         </>
