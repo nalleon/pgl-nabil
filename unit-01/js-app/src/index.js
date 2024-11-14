@@ -34,6 +34,7 @@ import Practice39 from './practice39/Practice39.tsx';
 //import Practice27 from './practice27/Practice27.tsx';
 //import Practice42 from './practice42/Practice42.tsx';
 import Practice43 from './practice43/Components/Practice43.tsx';
+import CapitalList from './practice44/Components/CapitalList.tsx';
 //import Practice18 from './practice18/practice18.tsx';
 
 //import ComponenteApp from './ComponenteApp.js';
@@ -42,7 +43,7 @@ const divRoot = document.getElementById("root");
 ReactDOM.render(
   //<React.StrictMode>
   //<BrowserRouter>
-    <Practice43/>, divRoot
+    <CapitalList/>, divRoot
   //</BrowserRouter>, divRoot
   //</React.StrictMode>
 

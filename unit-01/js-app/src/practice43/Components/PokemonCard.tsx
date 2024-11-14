@@ -23,8 +23,8 @@ function PokemonCard(props : Props) {
             const response = await axios.get(link);
             let info = {} as IResult;
             info.sprite = response.data.sprites.front_shiny;
-            info.height = response.data.height;
-            info.weight = response.data.weight;
+            info.height = response.data.height / 10;
+            info.weight = response.data.weight /10;
             
             setcardData(info);
         }

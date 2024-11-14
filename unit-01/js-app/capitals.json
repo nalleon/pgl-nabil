@@ -1,0 +1,22 @@
+{
+"capitals": [
+    {
+        "id": 1,
+        "name": "Madrid",
+        "population": 3223334,
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Madrid_skyline.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Barcelona",
+        "population": 1636762,
+        "url": "https://upload.wikimedia.org/wikipedia/commons/7/76/Barcelona_Skyline.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Valencia",
+        "population": 791413,
+        "url": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Valencia_Skyline.jpg"
+    }
+]
+}
