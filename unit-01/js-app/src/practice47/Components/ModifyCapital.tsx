@@ -17,16 +17,36 @@ interface IDato {
 }
 const ModifyCapital = (props: Props) => {
     const [currentIndex, setcurrentIndex] = useState(0);
-    const [capital, setCapital] = useState<ICapital>();
+    const [capital, setCapital] = useState<ICapital>({} as ICapital);
+    const [name, setName] = useState<string>();
+    const [year, setYear] = useState<number>();
+    const [population, setPopulation] = useState<number>();
 
     function modifyCapitalFromApi(event:React.FormEvent<HTMLFormElement>){
         event.preventDefault();
 
         let form: HTMLFormElement = event.currentTarget;
-        let inputcapitalNameSearch: HTMLInputElement = form.capitalNameSearch;
+        let inputcapitalName: HTMLInputElement = form.capitalName;
+        let inputcapitalYear: HTMLInputElement = form.capitalName;
+        let inputcapitalPopulation: HTMLInputElement = form.capitalName;
+
+        let name:string = inputcapitalName.value;
+
+        const capitalId = capital.nombre.toLowerCase();
+        const year: number = parseInt(inputcapitalYear.value);
+        const population: number = parseInt(inputcapitalPopulation.value);
     
-        let name:string = inputcapitalNameSearch.value;
-        const capitalId = name.toLowerCase();
+        const updateCapital = {
+            "id": capitalId,    
+            "nombre": name,
+            "datos": {
+                    0: {
+                        "poblacion": population,
+                        "anio": year
+                    }
+                },
+            "foto": capitalId+".png"    
+        }
 
         const route: string = "http://localhost:3000/capitales/"+capitalId;
 
@@ -39,6 +59,7 @@ const ModifyCapital = (props: Props) => {
             }
         }
         axiospost(route);
+        setcurrentIndex(0);
     }
 
     function getCapitalFromAPi(event:React.FormEvent<HTMLFormElement>){
@@ -62,13 +83,11 @@ const ModifyCapital = (props: Props) => {
         }
 
         axiosGet();
+        setName(capital?.nombre?.toString());
+        setYear(capital?.datos[0].anio);
+        setPopulation(capital?.datos[0].poblacion);
         setcurrentIndex(1);
     }
-
-    function handleEvent(){
-
-    }
-
     
     return (
     <>
@@ -79,10 +98,10 @@ const ModifyCapital = (props: Props) => {
         <br />
         {currentIndex != 0 &&
             <div>
-                <form onSubmit={modifyCapitalFromApi}>
-                        Name: <input type="text" name="capitalName" /><br />
-                        Year: <input type="number" name="capitalYear" /><br />
-                        Population: <input type="number" id="capitalPopulation" /> <br />
+                <form onSubmit={modifyCapitalFromApi} name='modifyForm'>
+                        Name: <input type="text" name="capitalName" onChange={(e)=> setName(e.target.value)} value={name}/><br />
+                        Year: <input type="number" name="capitalYear" onChange={(e)=> setYear(Number(e.target.value))} value={year} /><br />
+                        Population: <input type="number" id="capitalPopulation" onChange={(e)=> setPopulation(Number(e.target.value))} value={population} /> <br />
                     <button type="submit">Update </button>
                 </form>
             </div>

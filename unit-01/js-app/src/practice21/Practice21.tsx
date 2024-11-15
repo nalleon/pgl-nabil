@@ -4,6 +4,7 @@ type Props = {}
 
 const Practice21 = (props: Props) => {
     const [actualDate, setActualDate] = useState<string>("");
+    
     useEffect(() =>{
         const timerID = setInterval(
             tick, 
