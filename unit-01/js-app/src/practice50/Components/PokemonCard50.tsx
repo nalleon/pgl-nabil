@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useAppContext } from './AppContextProvider.tsx';
 
 
 
@@ -12,10 +13,13 @@ interface IResult {
     weight: number;
 }
 
+
 function PokemonCard50() {
     const [cardData, setcardData] = useState<IResult>({} as IResult);
     const { pokemonId } = useParams();
     const  url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
+    const { setFavourite } = useAppContext();
+    
 
 
     useEffect(() => {
@@ -42,6 +46,7 @@ function PokemonCard50() {
                 <img src={cardData.sprite} alt={cardData.name}/>
                 <p>Height: {cardData.height} m</p>
                 <p>Weight: {cardData.weight} kg</p>
+                <button onClick={() => setFavourite(cardData)}>Set Favorite</button>
             </div>
         </>
     )

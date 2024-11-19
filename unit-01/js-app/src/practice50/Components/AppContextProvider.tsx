@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, createContext, useContext, useState } from 'react'
-import PokemonCard50 from './PokemonCard50';
+
 
 type Props = {}
 
@@ -12,14 +12,14 @@ interface IResult {
 }
 
 interface AppContextType {
-    favourite: IResult;
-    setFavourite: Dispatch<SetStateAction<IResult>>;
+    favourite: IResult | null;
+    setFavourite: Dispatch<SetStateAction<IResult | null>>;
 }
 
 export const AppContext = createContext<AppContextType>({} as AppContextType);
 
 const AppContextProvider = (props: any) => {
-    const [favouritePokemon, setFavouritePokemon] = useState<IResult>({} as IResult);
+    const [favouritePokemon, setFavouritePokemon] = useState<IResult | null>({} as IResult);
 
     const contextValues : AppContextType = {
         favourite: favouritePokemon,

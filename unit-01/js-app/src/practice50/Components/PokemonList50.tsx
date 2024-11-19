@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import PokemonCard50 from './PokemonCard50';
 import { Link } from 'react-router-dom';
-import PokemonCard from '../../practice43/Components/PokemonCard';
 
 
 
