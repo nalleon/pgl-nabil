@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React from 'react'
+import { useAppContext } from '../../practice51/AppContextProvider51.tsx';
 
 type Props = {}
 
 const CreateCapital = (props: Props) => {
+    const { username } = useAppContext(); 
 
 
     function addCapitalToApi(event:React.FormEvent<HTMLFormElement>){
@@ -45,6 +47,10 @@ const CreateCapital = (props: Props) => {
 
     return (
     <>
+    
+        <h2>Create Capital</h2>
+        {username && <span>Hello {username}!</span>}
+        <br />
         <form onSubmit={addCapitalToApi}>
                 Name: <input type="text" name="capitalName" /><br />
                 Year: <input type="number" name="capitalYear" /><br />

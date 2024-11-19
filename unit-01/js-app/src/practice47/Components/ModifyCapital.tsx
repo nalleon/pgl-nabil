@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useAppContext } from '../../practice51/AppContextProvider51.tsx';
 
 type Props = {}
 
@@ -21,6 +22,8 @@ const ModifyCapital = (props: Props) => {
     const [name, setName] = useState<string>();
     const [year, setYear] = useState<number>();
     const [population, setPopulation] = useState<number>();
+    const { username } = useAppContext(); 
+
 
     function modifyCapitalFromApi(event:React.FormEvent<HTMLFormElement>){
         event.preventDefault();
@@ -91,6 +94,9 @@ const ModifyCapital = (props: Props) => {
     
     return (
     <>
+        <h2>Modify Capital</h2>
+        {username && <span>Hello {username}!</span>}
+        <br />
         <form onSubmit={getCapitalFromAPi}>
                 Name: <input type="text" name="capitalNameSearch" /><br />
             <button type="submit">Search </button>

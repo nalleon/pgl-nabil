@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React from 'react'
+import { useAppContext } from '../../practice51/AppContextProvider51.tsx';
 
 type Props = {}
 
 const DeleteCapital = (props: Props) => {
+    const { username } = useAppContext(); 
 
 
     function deleteCapitalFromApi(event:React.FormEvent<HTMLFormElement>){
@@ -30,6 +32,10 @@ const DeleteCapital = (props: Props) => {
 
     return (
     <>
+    
+        <h2>Delete Capital</h2>
+        {username && <span>Hello {username}!</span>}
+        <br />
         <form onSubmit={deleteCapitalFromApi}>
                 Name: <input type="text" name="capitalName" /><br />
             <button type="submit">Delete </button>

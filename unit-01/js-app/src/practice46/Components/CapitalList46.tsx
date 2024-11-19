@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { useAppContext } from '../../practice51/AppContextProvider51.tsx';
 
 type Props = {}
 
@@ -21,6 +22,8 @@ interface IDato {
  * json-server --watch capitals.json --port 3001
  */
 const CapitalList46 = () => {
+    const { username } = useAppContext(); 
+
     const [capitalList, setCapitalList] = useState<IRootObject[]>([]);
     const uri: string = "http://localhost:3000/"
     useEffect(() => {
@@ -40,6 +43,9 @@ const CapitalList46 = () => {
     
     return (
         <>
+            <h2>List of capitals</h2>
+                {username && <span>Hello {username}!</span>}
+            <br />
             <div className="container">
                 {capitalList.map((card, index) => {
                     return <div key={index}>

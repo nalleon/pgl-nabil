@@ -41,6 +41,7 @@ import CapitalApp47 from './practice47/Components/CapitalApp47.tsx';
 import Practice21 from './practice21/Practice21.tsx';
 import Watch22 from './practice22/Watch22.tsx';
 import App50 from './practice50/Components/App50.tsx';
+import CapitalApp51 from './practice51/CapitalApp51.tsx';
 //import Practice18 from './practice18/practice18.tsx';
 
 //import ComponenteApp from './ComponenteApp.js';
@@ -49,7 +50,7 @@ const divRoot = document.getElementById("root");
 ReactDOM.render(
   //<React.StrictMode>
   //<BrowserRouter>
-    <App50/>, divRoot
+    <CapitalApp51/>, divRoot
   //</BrowserRouter>, divRoot
   //</React.StrictMode>
 
