@@ -3439,13 +3439,123 @@ lo único que hacemos en el axios.post es decirle la ruta de la imagen
 >
 
 
+
+```js
+json-server --watch ../src/datospoblacion.json  --static poblacion/img/ç
+```
+
 ```javascript
-json-server --watch ../src/datospoblacion.json  --static poblacion/img/
+import axios from 'axios';
+import React from 'react'
+import { useAppContext } from '../../practice51/AppContextProvider51.tsx';
+
+type Props = {}
+
+const CreateCapital = (props: Props) => {
+    const { username } = useAppContext(); 
+
+
+    function addCapitalToApi(event:React.FormEvent<HTMLFormElement>){
+        event.preventDefault();
+        let form: HTMLFormElement = event.currentTarget;
+        let inputCapitalName: HTMLInputElement = form.capitalName;
+        let inputCapitalYear: HTMLInputElement = form.capitalYear;
+        let inputCapitalPopulation: HTMLInputElement = form.capitalPopulation;
+
+        let name:string = inputCapitalName.value;
+        let population:number = parseInt(inputCapitalPopulation.value);
+        let year:number = parseInt(inputCapitalYear.value);
+
+        const newCapital = {
+            "id": name.toLocaleLowerCase(),    
+            "nombre": name,
+            "datos": {
+                    0: {
+                        "poblacion": population,
+                        "anio": year
+                    }
+                },
+            "foto": "albacete.png"    
+        }
+
+        const route: string = "http://localhost:3000/capitales"
+
+        const axiospost = async(capitalRoute:string)=>{
+            try{
+                const response = await axios.post(capitalRoute, newCapital )
+                console.log(response.data);
+            }catch(error){
+            console.log(error);
+            }
+        }
+        axiospost(route);
+    }
+
+
+    return (
+    <>
+    
+        <h2>Create Capital</h2>
+        {username && <span>Hello {username}!</span>}
+        <br />
+        <form onSubmit={addCapitalToApi}>
+                Name: <input type="text" name="capitalName" /><br />
+                Year: <input type="number" name="capitalYear" /><br />
+                Population: <input type="number" id="capitalPopulation" /> <br />
+            <button type="submit">Create </button>
+        </form>
+    </>
+    )
+}
+
+export default CreateCapital
+
+import React from 'react'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import CapitalCard46 from './CapitalCard46.tsx';
+import CapitalList46 from './CapitalList46.tsx';
+import CreateCapital from './CreateCapital.tsx';
+
+
+type Props = {}
+
+const CapitalApp = (props: Props) => {
+    return (
+        <>
+            <BrowserRouter>
+                <h1>App</h1>
+                <Navbar />
+                <Routes>
+                    <Route path="/" element={<CapitalList46 />} />
+                    <Route path="/capitals" element={<CapitalList46/>}/>
+                </Routes>
+                <Routes>
+                    <Route path="/capitals/capital/:capitalId" element={<CapitalCard46/>}/>
+                    <Route path="/capitals/create-capital" element={<CreateCapital/>}/>
+                </Routes>
+            </BrowserRouter>
+        </>
+        );
+    }
+    
+    function Navbar() {
+        return (
+            <nav>
+                <Link to="/"> </Link>
+                <Link to="/capitals"> Capitals </Link>
+                <Link to="/capitals/create-capital"> Create </Link>
+            </nav>
+        );
+    }
+
+export default CapitalApp
 ```
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p46-1.png"/>
+<img src="./img/p46-2.png"/>
+<img src="./img/p46-3.png"/>
 </div>
 <br>
 
