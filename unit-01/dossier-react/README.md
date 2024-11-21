@@ -37,7 +37,7 @@
 > Crear el hola mundo descrito y agrega tu nombre completo al h3 (usando npx para crear la app y npm start para arrancarla como se indica en el tema )
 >
 
-```code
+```javascript
 function Practice01() {
   return (
     <div>
@@ -79,7 +79,7 @@ export default Practice01;
 nombre, apellidos y estudios que estás realizando
 >
 
-```code
+```javascript
 const Practice03 = () => {
     const myData = {name: 'Nabil', 
                     surname: 'León Álvarez',
@@ -114,7 +114,7 @@ La suma de num1 y num2 es: num1 + num2
 >
 
 
-```code
+```javascript
 const Practice04 = (props) => {
     return (
             <>
@@ -148,7 +148,7 @@ La suma de num1 y num2 es: num1 + num2
 (donde num1 y num2 serían los datos que recibiera el componente )
 >
 
-```code
+```javascript
 type Props = {
     num1: number;
     num2: number;
@@ -183,7 +183,7 @@ export default Practice05;
 apropiado. Para ello generaremos el fichero: Reloj.ts y dentro estará el componente TSX
 >
 
-```code
+```javascript
 type Props = {
     zone ?: string;
 }
@@ -238,7 +238,7 @@ botón
 >
 
 
-```code
+```javascript
 const ComponenteApp = (props:any) => {
     const mostrarHora = ()=>{
     alert(new Date());
@@ -271,7 +271,7 @@ Probarlo en el navegador y comprobar que efectivamente cambia el contador con lo
 >
 
 
-```code
+```javascript
 class Practice08 extends Component {
     state = { count: 0 } 
     render () {
@@ -313,7 +313,7 @@ En definitiva: que vaya mostrando la tabla del 2 a cada click
 Observar que después de 2x10 mostrará 2x1
 >
 
-```code
+```javascript
 type Props = {
     numTable : number;
 }
@@ -365,7 +365,7 @@ const arrayanterior: Array< any > = [4, 2, 7 ];
 [ ...arrayanterior, 5 ]
 >
 
-```code
+```javascript
 type Props = {}
 
 const Practice10 = (props: Props) => {
@@ -412,7 +412,7 @@ actualizando la info del atributo estático ? ¿ y de la variable: dato ?
 >
 
 
-```code
+```javascript
 type Props = {}
 
 const Practice11 = (props: Props) => {
@@ -449,7 +449,7 @@ export default Practice11
 <img src="./img/p11-1.png"/>
 </div>
 
-```code
+```javascript
 type Props = {}
 
 const Practice11 = (props: Props) => {
@@ -496,7 +496,7 @@ export default Practice11
 useState para que muestre un texto u otro según lo que se haya pulsado
 >
 
-```code
+```javascript
 type Props = {}
 
 const Practice12 = (props: Props) => {
@@ -536,7 +536,7 @@ no muestren únicamente el nombre de la moneda sino también el país. Ej:
 li libra de UK /li
 >
 
-```code
+```javascript
 type Props = {}
 
 type Moneda = {
@@ -599,7 +599,7 @@ map para un array [2,3,..,10] y establece para cada componente PracticarTabla el
 su tabla
 >
 
-```code
+```javascript
 type Props = {}
 
 const Practice14 = (props: Props) => {
@@ -639,7 +639,7 @@ CSS y luego que se establezcan mediante:
 >
 
 - CSS:
-```code
+```javascript
 .red{
     color: red;
     border: 2px solid red;
@@ -661,7 +661,7 @@ CSS y luego que se establezcan mediante:
 }
 ```
 
-```code
+```javascript
 import React, { useState } from 'react'
 import './practice15.css'
 type Props = {}
@@ -711,7 +711,7 @@ con su respectiva propiedad timezone, dándole estilos CSS a los componentes
 >
 
 - CSS:
-```code
+```javascript
 body{
     background-color: #000;
 }
@@ -748,7 +748,7 @@ body{
 }
 ```
 
-```code
+```javascript
 type Props = {}
 
 const Practice16 = (props: Props) => {
@@ -792,7 +792,7 @@ un saludo y la fecha actual ( la fecha se enviará mediante props )
 
 - Greeting:
 
-```code
+```javascript
 type Props = {
     date ?: string
 }
@@ -811,7 +811,7 @@ export default Greeting
 ```
 
 
-```code
+```javascript
 type Props = {}
 
 const Practice17 = (props: Props) => {
@@ -885,7 +885,7 @@ Adaptarlos a React con Typescript
 
 - v1:
 
-```code
+```javascript
 import React from 'react';
 
 class Practice18ReactComponent extends React.Component<{}, { count: number }> {
@@ -928,7 +928,7 @@ export default Practice18ReactComponent;
 
 - v2:
 
-```code
+```javascript
 type Props = {}
 
 const Practice18 = (props: Props) => {
@@ -990,7 +990,7 @@ La fecha se muestra cada vez que se renderiza así cómo el contador.
 
 - v1:
 
-```code
+```javascript
 
 type Props = {}
 
@@ -1025,7 +1025,7 @@ export default Practice19
 
 Tras quitar el comentario, observamos que el contador no se actualiza. Además, cuando renderiza imprime 2 veces la fecha.
 
-```code
+```javascript
 const Practice19 = (props: Props) => {
     const [contador, setcontador] = useState<number>(100);
     useEffect(() => {
@@ -1056,7 +1056,7 @@ const Practice19 = (props: Props) => {
 
 Tras quitar el comentario de [], el useEffect se ejectu una sola vez cuando el componente se monta antes del primer renderizado.
 
-```code
+```javascript
 const Practice19 = (props: Props) => {
     const [contador, setcontador] = useState<number>(100);
     useEffect(() => {
@@ -1088,7 +1088,7 @@ const Practice19 = (props: Props) => {
 
 Con este cambio, el useEffect se ejecutara cada vez que se cumpla la condicion de contador>10 sea true.
 
-```code
+```javascript
 type Props = {}
 
 const Practice19 = (props: Props) => {
@@ -1134,7 +1134,7 @@ acertado, si el número es menor o mayor que secreto
 >
 
 
-```code
+```javascript
 type Props = {}
 
 const Practice20 = (props: Props) => {
@@ -1220,7 +1220,7 @@ información está mostrando y explicar lo que ocurre
 El 1000 que les estamos pasandp sirve para imdicar cada cuanto se va a ejecutar la función tick, en este caso cada 1000ms. 
 
 
-```code
+```javascript
 const Practice21 = (props: Props) => {
     const [actualDate, setActualDate] = useState<string>("");
     useEffect(() =>{
@@ -1263,7 +1263,7 @@ información de la hora actualizada cada segund
 >
 
 
-```code
+```javascript
 import React, { act, useEffect, useState } from 'react'
 
 type Props = {
@@ -1350,7 +1350,7 @@ concatenados y dirá cuántas letras tiene el nombre completo.
 >
 
 
-```code
+```javascript
 const Practice23 = (props: Props) => {
     const refName = useRef<HTMLInputElement>({} as HTMLInputElement);
     const refSurename = useRef<HTMLInputElement>({} as HTMLInputElement);
@@ -1403,7 +1403,7 @@ useRef() para tomar la información que haya en el input y así realizar la apue
 >
 
 
-```code
+```javascript
 export default class Game {
   public secret : number;
   public history :  string[];
@@ -1497,7 +1497,7 @@ state. Mostrándose así el array de números generados
 >
 
 
-```code
+```javascript
 
 ```
 - Captura:
@@ -1515,7 +1515,7 @@ state. Mostrándose así el array de números generados
 >
 
 
-```code
+```javascript
 
 ```
 - Captura:
@@ -1533,7 +1533,7 @@ state. Mostrándose así el array de números generados
 >
 
 
-```code
+```javascript
 
 ```
 - Captura:
@@ -1553,7 +1553,7 @@ texto en el input y se vaya mostrando en un h5
 >
 
 
-```code
+```javascript
 const Practice28 = (props: Props) => {
   const [text, setText] = useState<String>("");
   
@@ -1594,7 +1594,7 @@ método para los dos botones )
 >
 
 
-```code
+```javascript
 function Practica29({}: Props) {
     const [num, setnum] = useState<number>(1);
     
@@ -1642,7 +1642,7 @@ usarán referencias. Se hará el uso de manejo de eventos para acceso al DOM
 >
 
 
-```code
+```javascript
 const Practice30 = (props: Props) => {
     const [historic, sethistoric] = useState<string []>([]);
     const [num, setnum] = useState<number>(0);
@@ -1703,7 +1703,7 @@ mismo con el que incluye el 2, etc. Cada pulsación de botón aumenta un contado
 >
 
 
-```code
+```javascript
 type Props = {}
 
 const Practice31 = (props: Props) => {
@@ -1824,7 +1824,7 @@ con nombre queso: “queso rochefort”, “queso edam”,… )
 >
 
 
-```code
+```javascript
 import React, { useState } from 'react'
 import './Practice32.css'
 type Props = {}
@@ -1928,7 +1928,7 @@ mostrará: 11, 13, 17
 >
 
 
-```code
+```javascript
 import React, { useState } from 'react'
 import './Practice32.css'
 type Props = {}
@@ -2031,7 +2031,7 @@ donde aparece la información que envían y es recibida
 >
 
 
-```code
+```javascript
 
 
 import React, { useState } from 'react'
@@ -2142,7 +2142,7 @@ Si se pulsa en el botón del componente B el mensaje recibido en el state del pa
 >
 
 
-```code
+```javascript
 import React, { ChangeEvent, useEffect, useState } from 'react'
 
 
@@ -2233,7 +2233,7 @@ un nuevo id que luego no pueda ser modificado
 >
 
 
-```code
+```javascript
 export default class Person {
 
     public static initialId = 1;
@@ -2438,7 +2438,7 @@ input ( si pones en el value del input: <input value={props.numero}> no puedes )
 >
 
 
-```code
+```javascript
 export default class Calculator {
 
     constructor(){}
@@ -2562,7 +2562,7 @@ aparecía el nombre se haya reemplazado por el nuevo nombre
 >
 
 
-```code
+```javascript
 export default class User {
     public id : number;
     public name: string;
@@ -2683,7 +2683,7 @@ const ComponenteHijo = (props: Props) => {
 >
 
 
-```code
+```javascript
 import React, { ChangeEvent, useState } from 'react'
 
 
@@ -2739,13 +2739,59 @@ elementos de la lista y se de al play en el reproductor sonará la canción.
 >
 
 
-```code
+```javascript
+import React, { useState } from 'react'
+import ReactPlayer from 'react-player'
+import './styles/practice40.css';
+
+type Props = {}
+
+const Practice40 = (props: Props) => {
+
+  const playlist = [
+    {name: "Birth of a New Witch - Umineko", url: "https://www.youtube.com/watch?v=pAkvF7HkFEY"},
+    {name: "Ascension - Final Fantasy XVI", url: "https://youtu.be/rogKdcO7t3A?si=xk6JJz9ivgnUYQhg"},
+    {name: "Pathmaker - Final Fantasy XIV", url: "https://youtu.be/aijP3rvckEE?si=9HCRPjDWxqg4SKCZ"},
+  ];
+
+  const [song, setSong] = useState(playlist[0].url);
+
+  const handleSelectSong = (index: number) => {
+    setSong(playlist[index].url);
+  }
+
+  return (
+    <>
+    <h2>React Player Component</h2>
+    <div className='main-container'>
+        <ReactPlayer
+          url={song}  
+          controls
+              width="400px"
+              height="400px"
+        />
+      </div>
+      <div className='playlist'>
+          <h4>Other tracks</h4>
+          <ul>
+            {playlist.map((song, index) => (
+              <li>
+              <button key={index} onClick={() => handleSelectSong(index)}>{song.name}</button>
+              </li>
+            ))}
+          </ul>
+      </div>
+    </>
+  )
+}
+
+export default Practice40
 
 ```
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p40.png"/>
 </div>
 <br>
 
@@ -2760,13 +2806,60 @@ ruta inicial: “/” lo que debe mostrar es el componente About
 >
 
 
-```code
+```javascript
 
+import React from 'react'
+
+type Props = {}
+
+const About = (props: Props) => {
+  return (
+    <>
+        <h1>About me</h1>
+        <p><b>Name:</b> Nabil</p>
+        <p><b>Surname:</b> León Álvarez</p>
+        <p><b>Class:</b> 2ºDAM</p>
+    </>
+  )
+}
+
+export default About
+
+import React from 'react'
+import { Link, Route, Routes } from 'react-router-dom'
+import Practice36 from '../practice36/Practice36.tsx';
+import Practice27 from '../practice27/Practice27.tsx';
+import About from './About.tsx';
+import Practice21 from '../practice21/Practice21.tsx';
+
+type Props = {}
+
+const Practice41 = (props: Props) => {
+    return (
+        <>
+        <nav className="navbar">
+            <Link to="/"> About </Link>
+            <Link to="/cronometer"> Cronometer</Link>
+            <Link to="/worldwidewatchs">Worldwide Watchs </Link>
+            <Link to="/imc">Imc </Link>
+        </nav>
+            <Routes>
+                <Route path="/cronometer" element={<Practice27 />} />
+                <Route path="/worldwidewatchs" element={<Practice21 />} />
+                <Route path="/imc" element={<Practice36 />} />
+                <Route path="/" element={<About />} />
+            </Routes>
+        </>
+    )
+}
+
+export default Practice41
 ```
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p41-1.png"/>
+<img src="./img/p41-2.png"/>
 </div>
 <br>
 
@@ -2780,13 +2873,36 @@ memoriza8, acertarnumero Pudiendo pasar de un juego a otro gracias a nuestro
 route
 >
 
-```code
+```javascript
+import React from 'react'
+import { Link, Route, Routes } from 'react-router-dom'
+import Practice31 from '../practice31/Practice31.tsx';
+import Practice20 from '../practice20/Practice20.tsx';
 
+type Props = {}
+
+function Practice42({}: Props) {
+  return (
+    <>
+    <nav className="navbar">
+        <Link to="/memorize8"> Memorize8</Link>
+        <Link to="/guessnum">Guess num </Link>
+    </nav>
+        <Routes>
+            <Route path="/memorize8" element={<Practice31 />} />
+            <Route path="/guessnum" element={<Practice20 />} />
+        </Routes>
+    </>
+  )
+}
+
+export default Practice42
 ```
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p42-1.png"/>
+<img src="./img/p42-2.png"/>
 </div>
 <br>
 
@@ -2805,7 +2921,7 @@ sufijo ( el peso está en: kg y la altura en: m )
 >
 
 
-```code
+```javascript
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 
@@ -2934,7 +3050,7 @@ aparecerá la imagen y el nombre de la capital de provincia
 >
 
 
-```code
+```javascript
 
 ```
 - Captura:
@@ -2957,7 +3073,7 @@ de los últimos años
 >
 
 
-```code
+```javascript
 
 ```
 - Captura:
@@ -2979,7 +3095,7 @@ lo único que hacemos en el axios.post es decirle la ruta de la imagen
 >
 
 
-```code
+```javascript
 
 ```
 - Captura:
@@ -2998,7 +3114,7 @@ componentes de borrado y modificación pertinentes para realizar esas acciones
 >
 
 
-```code
+```javascript
 
 ```
 - Captura:
@@ -3021,7 +3137,7 @@ personas en la api
 >
 
 
-```code
+```javascript
 
 ```
 - Captura:
@@ -3041,7 +3157,7 @@ en quedarse en el componente de edición
 >
 
 
-```code
+```javascript
 
 ```
 - Captura:
@@ -3063,7 +3179,7 @@ datos de ese pokemon justo dentro de <Browserrouter> pero por fuera de <Routes>)
 >
 
 
-```code
+```javascript
 
 ```
 - Captura:
@@ -3084,7 +3200,7 @@ decir: “hola nombreusuario! “
 >
 
 
-```code
+```javascript
 
 ```
 - Captura:
@@ -3103,7 +3219,7 @@ la información del pokemon de local storage y lo ponga en el contexto.
 >
 
 
-```code
+```javascript
 
 ```
 - Captura:
