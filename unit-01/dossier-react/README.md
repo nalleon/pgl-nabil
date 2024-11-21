@@ -1496,10 +1496,11 @@ dice: mostrar este último botón copia el array almacenado en la referencia y l
 state. Mostrándose así el array de números generados
 >
 
-
+ 
 ```javascript
 
 ```
+
 - Captura:
 
 <div align="center">
@@ -1511,17 +1512,83 @@ state. Mostrándose así el array de números generados
 ### Práctica 26
 
 > 📂
-> 
+> Crear un componente que tenga un cuadro de texto y un botón. Cuando se
+pulse en el botón se cargará otro componente debajo del botón que será la tabla de
+multiplicar (del 1 al 10 ) si es un número lo introducido. Si en lugar de un número fuera una
+palabra, entonces se cargará otro componente que nos dirá la cantidad de letras de la palabra
+y la cantidad de mayúsculas y minúsculas. Pasar la información a esos dos componentes
+mediante props
 >
 
 
 ```javascript
+import React, { useEffect, useState } from 'react'
 
+type Props = {
+    word : string
+}
+
+const CountLetters = (props: Props) => {
+    const word = props.word;
+
+  return (
+    <>
+        <div>
+            <h4>{word} length is: {word.length}</h4>
+        </div>
+    </>
+  )
+}
+
+export default CountLetters
+
+import React, { useRef, useState } from 'react'
+import Practice09 from '../practice09/Practice09.tsx';
+import CountLetters from './CountLetters.tsx';
+import './practice26.css';
+
+type Props = {}
+
+function Practice26({}: Props) {
+    const inputValueRef = useRef<HTMLInputElement>({} as HTMLInputElement);
+    const textareaRef = useRef<HTMLTextAreaElement>({} as HTMLTextAreaElement);
+
+    const [option, setOption] = useState<boolean>(true);
+    const [value, setValue] = useState<string>('');
+
+    function getInputType(){
+        let input = inputValueRef.current.value;
+        setValue(input);
+
+        if (isNaN(parseInt(input))) {
+            setOption(true);
+        } else {
+            setOption(false);
+        }
+    }
+
+
+
+return (
+        <>
+        <div>
+            <h4>Form</h4>
+            <input type="text" ref={inputValueRef}/>
+            <button onClick={getInputType}>Submit</button>
+                {option ? <CountLetters word={value}/> : <Practice09 numTable={parseInt(value)}/>}
+            
+        </div>
+        </>
+    )
+}
+
+export default Practice26
 ```
+
 - Captura:
 
 <div align="center">
-<img src="./img/p20-1.png"/>
+<img src="./img/p26.png"/>
 </div>
 
 </br>
@@ -1529,17 +1596,72 @@ state. Mostrándose así el array de números generados
 ### Práctica 27
 
 > 📂
-> 
+> Realizar un componente react: Cronometro.tsx De tal forma que el usuario introduzca la cantidad de segundos y al pulsar iniciar vaya mostrando la cuenta atrás
 >
 
-
 ```javascript
+import React, { useState, useRef, useEffect } from 'react'
 
+type Props = {}
+
+function Practice27({}: Props) {
+
+    const [time, settime] = useState(20);
+    const [stateBtn, setstateBtn] = useState<boolean>(false);
+    const refTimer = useRef<ReturnType<typeof setInterval>>();
+    const refNum = useRef<number>(0);
+    const refInput = useRef<HTMLInputElement>(null);
+
+
+    useEffect(() => {
+      if (time === 0 && stateBtn){
+        clearInterval(refTimer.current);
+        setstateBtn(false);
+      }  
+      
+    }, [time, stateBtn]);
+
+
+    const actualizarTime = () =>{
+      if(refNum.current > 0){
+        refNum.current--;
+        settime(refNum.current);
+      }
+    }
+
+    function iniciarParar(){
+        if(!stateBtn){
+          const numUser = parseInt(refInput.current?.value || '0', 10);
+          if (isNaN(numUser) || numUser <= 0) {
+            return;
+          }
+          refNum.current = numUser;
+            refTimer.current = setInterval(actualizarTime, 1000);
+            setstateBtn(true);
+        } else {
+            clearInterval(refTimer.current!);
+            setstateBtn(false);
+        }
+
+    }
+
+  return (
+    <div>
+      <h2>Cronometer</h2>
+      <input type="number" name='usertime' id="usertime" ref={refInput}/>
+      <button onClick={iniciarParar}> {stateBtn?"parar":"iniciar"}</button>
+      <p><b>Remaining time:</b> {time}</p>
+    </div>
+  )
+}
+
+export default Practice27
 ```
+
 - Captura:
 
 <div align="center">
-<img src="./img/p20-1.png"/>
+<img src="./img/p27-1.png"/>
 </div>
 
 </br>
@@ -3551,7 +3673,7 @@ const CapitalApp = (props: Props) => {
 export default CapitalApp
 ```
 - Captura:
-
+  
 <div align="center">
 <img src="./img/p46-1.png"/>
 <img src="./img/p46-2.png"/>
@@ -3567,14 +3689,186 @@ dominado lo anterior. Buscar el funcionamiento específico de axios y crear los
 componentes de borrado y modificación pertinentes para realizar esas acciones
 >
 
+Eliminares y modificaremos micapital
 
 ```javascript
+import axios from 'axios';
+import React, { useState } from 'react'
+import { useAppContext } from '../../practice51/AppContextProvider51.tsx';
 
+type Props = {}
+
+
+interface ICapital {
+    id: String;     
+    nombre: String;
+    datos : IDato [];
+    foto: String;    
+}
+
+interface IDato {
+    poblacion: number;
+    anio: number;
+}
+const ModifyCapital = (props: Props) => {
+    const [currentIndex, setcurrentIndex] = useState(0);
+    const [capital, setCapital] = useState<ICapital>({} as ICapital);
+    const [name, setName] = useState<string>();
+    const [year, setYear] = useState<number>();
+    const [population, setPopulation] = useState<number>();
+    const { username } = useAppContext(); 
+
+
+    function modifyCapitalFromApi(event:React.FormEvent<HTMLFormElement>){
+        event.preventDefault();
+
+        let form: HTMLFormElement = event.currentTarget;
+        let inputcapitalName: HTMLInputElement = form.capitalName;
+        let inputcapitalYear: HTMLInputElement = form.capitalYear;
+        let inputcapitalPopulation: HTMLInputElement = form.capitalPopulation;
+
+        let name: string = inputcapitalName.value;
+        const capitalId = capital.nombre.toLowerCase();
+        const year: number = parseInt(inputcapitalYear.value);
+        const population: number = parseInt(inputcapitalPopulation.value);
+    
+        const updateCapital = {
+            "id": capitalId,    
+            "nombre": name,
+            "datos": {
+                    0: {
+                        "poblacion": population,
+                        "anio": year
+                    }
+                },
+            "foto": capitalId+".png"    
+        }
+
+        const route: string = "http://localhost:3000/capitales/"+capitalId;
+
+        const axiospost = async(capitalRoute:string)=>{
+            try{
+                const response = await axios.put(capitalRoute, updateCapital)
+                console.log("Capital updated:", response.data);
+                setcurrentIndex(0);
+            }catch(error){
+            console.log(error);
+            }
+        }
+
+        axiospost(route);
+    }
+
+    function getCapitalFromAPi(event:React.FormEvent<HTMLFormElement>){
+        event.preventDefault();
+        let form: HTMLFormElement = event.currentTarget;
+        let inputcapitalNameSearch: HTMLInputElement = form.capitalNameSearch;
+    
+        let name:string = inputcapitalNameSearch.value;
+        const capitalId = name.toLowerCase();
+
+        const route: string = "http://localhost:3000/capitales/"+capitalId;
+
+        const axiosGet = async()=>{
+            try{
+                const response = await axios.get(route)
+                setCapital(response.data);
+                setName(capital?.nombre?.toString());
+                setYear(capital?.datos[0].anio);
+                setPopulation(capital?.datos[0].poblacion);
+                setcurrentIndex(1);
+            }catch(error){
+            console.log(error);
+            }
+        }
+
+        axiosGet();
+
+    }
+    
+    return (
+    <>
+        <h2>Modify Capital</h2>
+        {username && <span>Hello {username}!</span>}
+        <br />
+        <form onSubmit={getCapitalFromAPi}>
+                Name: <input type="text" name="capitalNameSearch" /><br />
+            <button type="submit">Search </button>
+        </form>
+        <br />
+        {currentIndex != 0 &&
+            <div>
+                <form onSubmit={modifyCapitalFromApi} name='modifyForm'>
+                        Name: <input type="text" name="capitalName" onChange={(e)=> setName(e.target.value)} value={name}/><br />
+                        Year: <input type="number" name="capitalYear" onChange={(e)=> setYear(Number(e.target.value))} value={year} /><br />
+                        Population: <input type="number" id="capitalPopulation" onChange={(e)=> setPopulation(Number(e.target.value))} value={population} /> <br />
+                    <button type="submit">Update </button>
+                </form>
+            </div>
+        }
+    </>
+    )
+}
+
+export default ModifyCapital
+
+import axios from 'axios';
+import React from 'react'
+import { useAppContext } from '../../practice51/AppContextProvider51.tsx';
+
+type Props = {}
+
+const DeleteCapital = (props: Props) => {
+    const { username } = useAppContext(); 
+
+
+    function deleteCapitalFromApi(event:React.FormEvent<HTMLFormElement>){
+        event.preventDefault();
+        let form: HTMLFormElement = event.currentTarget;
+        let inputCapitalName: HTMLInputElement = form.capitalName;
+    
+        let name:string = inputCapitalName.value;
+        const capitalId = name.toLowerCase();
+
+        const route: string = "http://localhost:3000/capitales/"+capitalId;
+
+        const axiospost = async(capitalRoute:string)=>{
+            try{
+                const response = await axios.delete(capitalRoute)
+                console.log(response.data);
+            }catch(error){
+            console.log(error);
+            }
+        }
+        axiospost(route);
+    }
+
+
+    return (
+    <>
+    
+        <h2>Delete Capital</h2>
+        {username && <span>Hello {username}!</span>}
+        <br />
+        <form onSubmit={deleteCapitalFromApi}>
+                Name: <input type="text" name="capitalName" /><br />
+            <button type="submit">Delete </button>
+        </form>
+    </>
+    )
+}
+
+export default DeleteCapital
 ```
+
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+  <img src="./img/p47-1.png"/>
+  <img src="./img/p47-2.png"/>
+  <img src="./img/p47-3.png"/>
+  <img src="./img/p47-4.png"/>
+  <img src="./img/p47-5.png"/>
 </div>
 <br>
 
@@ -3590,10 +3884,10 @@ Ponerle un router y tener soporte para rutas parametrizadas. Habilitar también 
 personas en la api
 >
 
-
 ```javascript
 
 ```
+
 - Captura:
 
 <div align="center">
@@ -3607,7 +3901,7 @@ personas en la api
 > En nuestras apps de capitales y personas imc, al hacer la edición y pulsar en el
 botón que ejecuta el cambio en la api, usar el hook para que la app cargue directamente el
 componente raíz ( se entiende que una vez se ha terminado de editar, no hay ningún interés
-en quedarse en el componente de edición 
+en quedarse en el componente de edición )
 >
 
 
@@ -3676,6 +3970,7 @@ la información del pokemon de local storage y lo ponga en el contexto.
 ```javascript
 
 ```
+
 - Captura:
 
 <div align="center">
