@@ -2143,12 +2143,77 @@ Si se pulsa en el botón del componente B el mensaje recibido en el state del pa
 
 
 ```code
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
+
+const Practice35Refactor = (props: Props) => {
+    const [message, setMessage] = useState("");
+
+    function sendInfoChild(data: string){
+        setMessage(data);
+    }
+  
+    return (
+      <div>
+        <h2>Message: {message}</h2>
+        <ComponentA sendMessage={sendInfoChild}  />
+        <ComponentB sendMessage={sendInfoChild}/> 
+      </div>
+    );
+}
+
+export default Practice35Refactor
+
+
+type Props = {
+
+  sendMessage: Function
+
+}
+
+const ComponentA = (props: Props) => {
+
+    function send(e:React.FormEvent<HTMLFormElement>){
+      e.preventDefault();
+      let form = e.currentTarget;
+      const {sendMessage} = props;
+      let message = form.textA.value;
+      sendMessage(message);
+    }
+    
+    return (
+    <>
+      <h1>Component A</h1>
+      <form onSubmit={send}>
+        <input type='text' name='textA'></input>
+        <button type='submit'>Send</button>
+      </form>
+    </>
+  )
+}
+
+
+const ComponentB = (props: Props) => {
+    
+  function send(){
+    const {sendMessage} = props;
+    let message = "Notified from component B"
+    sendMessage(message);
+  }
+  
+  return (
+  <>
+    <h1>Component B</h1>
+    <button onClick={send}>Notified from component B</button>
+  </>
+)
+  }
 ```
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p35-1.png"/>
+<img src="./img/p35-2.png"/>
 </div>
 <br>
 
@@ -2169,12 +2234,196 @@ un nuevo id que luego no pueda ser modificado
 
 
 ```code
+export default class Person {
 
+    public static initialId = 1;
+    public id : number;
+    public name : string;
+    public surname : string;
+    public age : number;
+    public height : number;
+    public weigth : number;
+    public imc : number;
+
+    // default constructor
+
+    constructor() {
+        this.id = Person.initialId++;
+    }
+
+    public calculateIMC() {
+        if(this.height === 0 || this.weigth === 0) {
+            return 0;
+        }
+        
+        let heightMeter = this.height/100;
+        return this.weigth / (heightMeter*heightMeter);
+    }
+    
+    //Getters and setters
+    public getId(): number {
+        return this.id;
+    }
+    public setId(id: number): void {
+        this.id = id;
+    }
+    public getName(): string {
+        return this.name;
+    }
+    public setName(name: string): void {
+        this.name = name;
+    }
+    public getSurname(): string {
+        return this.surname;
+    }
+    public setSurname(surname: string): void {
+        this.surname = surname;
+    }
+    public getAge(): number {
+        return this.age;
+    }
+    public setAge(age: number): void {
+        this.age = age;
+    }
+    public getWeigth(): number {
+        return this.weigth;
+    }
+    public setWeigth(weigth: number): void {
+        this.weigth = weigth;
+    }
+    public getImc(): number {
+        return this.imc;
+    }
+    public setImc(imc: number): void {
+        this.imc = imc;
+    }
+    public getHeight(): number {
+        return this.height;
+    }
+    public setHeight(height: number): void {
+        this.height = height;
+    }
+}
+
+import React, { useState } from 'react'
+import Person from './model/Person';
+
+type Props = {
+    person : Person
+}
+
+const PersonCard = (props: Props) => {
+    const { person } = props;
+    
+    const [imc, setImc] = useState(0);
+    
+    function processForm(e: React.FormEvent<HTMLFormElement>){
+    e.preventDefault();
+
+    let form = e.currentTarget;
+
+    const name = form.namePerson.value ?? "";
+    const surname = form.surnamePerson.value ?? "";
+    const height = form.heightPerson.value ?? 0;
+    const age = form.agePerson.value ?? 0;
+    const weigth = form.weightPerson.value ?? 0;
+
+    person.setName(name);
+    person.setSurname(surname);
+    person.setAge(age);
+    person.setWeigth(weigth);
+    person.setHeight(height);
+    
+
+    const imcValue = person.calculateIMC();
+    person.setImc(imcValue);
+    setImc(imcValue);
+}
+
+  return (
+    <>
+        <div className='card'>
+            <form onSubmit={processForm}>
+                <div>
+                    <p>{person.id}</p>
+                </div>
+                <div>
+                    <label htmlFor="nameId">Name</label>
+                </div>
+                <div>
+                    <input type="text" name='namePerson' id='nameId' value={person.name}/>
+                </div>
+                <div>
+                    <label htmlFor="surnameId">Surname</label>
+                </div>
+                <div>
+                    <input type="text" name='surnamePerson' id='surnameId' value={person.surname}/>
+                </div>
+                <div>
+                    <label htmlFor="heightId">Heigth</label>
+                </div>
+                <div>
+                    <input type="text" name='heightPerson' id='heightId' value={person.height}/>
+                </div>
+                <div>
+                    <label htmlFor="ageId">Age</label>
+                </div>
+                <div>
+                    <input type="text" name='agePerson' id='ageId' value={person.age}/>
+                </div>
+                <div>
+                    <label htmlFor="heighthId">Weigth</label>
+                </div>
+                <div>
+                <input type="text" name='weightPerson' id='weightId' value={person.weigth}/>
+                </div>
+                <div>
+                    <p>{imc}</p>
+                </div>
+                <button type='submit'>Submit</button>
+            </form>
+        </div>
+      </>
+  )
+}
+
+
+export default PersonCard
+
+import React, { ChangeEvent, ReactEventHandler, useEffect, useRef, useState } from 'react'
+import Person from './model/Person.ts';
+import './Practice36.css'
+import PersonCard from './PersonCard.tsx';
+
+const Practice36 = () => {
+  const [personList, setPersonList] = useState<Person[]>([]);
+
+  function addPerson (person: Person) : void {
+    setPersonList([...personList, person]);
+  };
+
+  return (
+    <>
+      <button onClick={() => addPerson(new Person())}>+</button>
+
+      <div className='main-container'>
+
+        {personList.map(person => (
+            <PersonCard key={person.getId()} person={person} />
+        ))}
+      </div>
+
+    </>
+  )
+}
+
+export default Practice36
 ```
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p36-1.png"/>
+<img src="./img/p36-2.png"/>
 </div>
 <br>
 
@@ -2190,12 +2439,112 @@ input ( si pones en el value del input: <input value={props.numero}> no puedes )
 
 
 ```code
+export default class Calculator {
 
+    constructor(){}
+    public generateRndNum (){
+        let rndNum = Math.trunc(Math.random() * 100) + 10;
+        return rndNum;
+    } 
+
+    public descomposeNum(num){
+        let descomposeStr = "";
+
+        if(this.checkPrime(num)){
+            descomposeStr = "1 * " + num;
+            return descomposeStr;
+        }
+
+        for (let i = 1; i <= num; i++) {
+            if (num % i === 0) {
+                descomposeStr += i + " ";
+            }
+        }
+        return descomposeStr;
+    }
+
+
+    public checkPrime(num){
+        if (num < 2) {
+            return false;
+        }
+        if (num == 2) {
+            return true;
+        }
+        for (let i = 2; i < num; i++) {
+            if (num % i === 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+import React, { useEffect, useRef, useState } from 'react'
+import Calculator from './model/Calculator.ts';
+
+const Practice37 = (props: Props) => {
+    const [number, setNumber] = useState<number>(0);
+    const refCalculator = useRef(new Calculator());
+
+    function handleClick(event:React.MouseEvent<HTMLButtonElement>){
+        event.preventDefault();
+        let num = refCalculator.current.generateRndNum();
+        setNumber(num);
+    }
+
+    return(
+        <>  
+            <h2>Component A</h2>
+            <button onClick={handleClick}>Send rnd num to child</button>
+            <br />
+            <ComponenteHijo numberRnd={number}/> 
+        </>
+    )
+}
+
+export default Practice37
+
+type Props = {
+    numberRnd: number;
+}
+
+
+const ComponenteHijo = (props: Props) => {
+    const [number, setNumber] = useState<number>(0);
+    const [descomposition, setDescomposition] = useState("");
+    const refCalculator = useRef(new Calculator());
+
+    useEffect(() => {
+        setNumber(props.numberRnd);
+        showDescomposition();
+    }, [props.numberRnd])
+    
+
+
+    function showDescomposition(){
+        let num = props.numberRnd;
+        let descNum = refCalculator.current.descomposeNum(num);
+        setDescomposition(descNum);
+    }
+    
+    return (
+        <>
+            <br />
+            <h2>Component B</h2>
+            <input type="number" onChange={(e) => setNumber(Number(e.target.value))} value={number} />
+            <br/>
+            <br />
+            <input type="textarea" value={descomposition}/> 
+        </>
+    )
+}
 ```
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p37-1.png"/>
+<img src="./img/p37-2.png"/>
 </div>
 <br>
 
@@ -2214,12 +2563,116 @@ aparecía el nombre se haya reemplazado por el nuevo nombre
 
 
 ```code
+export default class User {
+    public id : number;
+    public name: string;
 
+    constructor (name : string) {
+        this.id = 0;
+        this.name = name;
+    }
+
+}
+
+import React, { useEffect, useState } from 'react'
+import User from './model/User.ts';
+
+
+const Practice38 = (props: Props) => {
+    const [userArray, setUserArray] = useState<Array<User>>([])
+    const [currentUser, setCurrentUser] = useState(0);
+
+    useEffect(() => {
+        const user1 = new User("Ana");
+        user1.id = 1;
+        const user2 = new User("Aristarco");
+        user2.id = 2;
+        let auxArr = [user1, user2];
+        
+        setUserArray(auxArr);
+
+    }, [])
+
+    function changeCurrentUser(user : User){
+        setCurrentUser(user.id);
+    }
+
+
+    function modifyUser(user : User){
+        let auxArr = userArray;
+        auxArr[user.id-1] = user;
+        setUserArray([...auxArr]);
+    }
+
+
+    return (
+        <>
+            <h2>Component A</h2>
+            <br/>
+            <br />
+            <br />
+            {
+                userArray.map((user, index) => (
+                    <div key={index}>
+                        <button onClick={() => changeCurrentUser(user)}>Modify {user.name}</button>
+                    </div>
+                ))
+            }
+            {
+                (currentUser != 0) ?
+                <ComponenteHijo user={userArray[currentUser-1]} modifyUserParent={modifyUser}  />
+                :
+                <p>No user selected</p>
+            }
+
+        </>
+    )
+}
+
+export default Practice38
+
+
+type Props = {
+    user : User
+    modifyUserParent: (user : User) => void ;
+}
+
+
+const ComponenteHijo = (props: Props) => {
+    const [newName, setNewName] = useState("");
+
+    useEffect(() => {
+        setNewName(props.user.name);
+    }, [props.user])
+    
+    function handleModify(){
+        const { modifyUserParent } = props;
+        let user = new User(newName);
+        user.id = props.user.id;
+        //console.log(user.id);
+        user.name = newName;
+        console.log(user);
+        modifyUserParent(user);
+    }
+
+    return (
+        <>
+            <br />
+            <h2>Component B</h2>
+            <input type="text" onChange={(e) => setNewName(e.target.value)} value={newName} />
+            <br/>
+            <button onClick={handleModify}> Modify</button>
+            <br/>
+        </>
+    )
+}
 ```
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p38-1.png"/>
+<img src="./img/p38-2.png"/>
+<img src="./img/p38-3.png"/>
 </div>
 <br>
 
@@ -2231,12 +2684,49 @@ aparecía el nombre se haya reemplazado por el nuevo nombre
 
 
 ```code
+import React, { ChangeEvent, useState } from 'react'
 
+
+const Practice39 = (props: Props) => {
+    const [data, setdata] = useState("")
+
+    function getData(dataInput : string){
+        setdata(dataInput);
+    }
+    return (
+        <>
+            <p>Component A</p>
+            <InputToUpper onNewText={getData}/>
+
+        </>
+    )
+}
+
+export default Practice39
+
+
+type Props = {
+    onNewText: Function ;
+}
+
+
+const InputToUpper = (props: Props) => {
+    const [text, setText] = useState("")
+    
+    function getData( text : string ){
+        setText(text.toUpperCase());
+    }
+    return (
+        <>
+            <input type="text" onChange={(e) => getData(e.target.value)}
+                value={text}/>
+        </>
+    )
+}
 ```
 - Captura:
-
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p39.png"/>
 </div>
 <br>
 
@@ -2289,7 +2779,6 @@ y deben estar cargados varios de los componentes de juegos que hemos hecho: el
 memoriza8, acertarnumero Pudiendo pasar de un juego a otro gracias a nuestro
 route
 >
-
 
 ```code
 
