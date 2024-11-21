@@ -3440,7 +3440,7 @@ lo único que hacemos en el axios.post es decirle la ruta de la imagen
 
 
 ```javascript
-
+json-server --watch ../src/datospoblacion.json  --static poblacion/img/
 ```
 - Captura:
 
