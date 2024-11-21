@@ -1820,7 +1820,7 @@ export default Practice31
 > Reproducir el componente anterior y ejecutarlo. Darle algo de CSS.
 Agregar ( fuera del formulario ) un input que mediante el evento onChange permita filtrar el
 array de productos por nombre ( por ejemplo, si escribe queso aparecen todos los productos
-con nombre queso: “queso rochefort”, “queso edam”,… 
+con nombre queso: “queso rochefort”, “queso edam”,… )
 >
 
 
@@ -1929,18 +1929,99 @@ mostrará: 11, 13, 17
 
 
 ```code
+import React, { useState } from 'react'
+import './Practice32.css'
+type Props = {}
 
+type Product = {
+    name: string,
+    price: number,
+    quantity: number
+}
+
+const Practice32 = (props: Props) => {
+    const [productList, setProductList] = useState<Product[]>([]);
+    const [list, setList] = useState<Product[]>([]);
+
+
+    function processForm(e: React.FormEvent<HTMLFormElement>){
+        e.preventDefault();
+
+        let formProducts = e.currentTarget;
+
+        const name = formProducts.nameProduct.value ?? "";
+        const price = Number(formProducts.priceProduct.value) ?? 0;
+        const quantity = Number(formProducts.quantityProduct.value) ?? 0;
+        const newProduct: Product = { name, price, quantity };
+        setProductList([...productList, newProduct]);
+        setList([...list, newProduct]);
+    }
+
+
+    /**
+     * Function to find a product by its name
+     * @param e input change 
+     * @returns product
+     */
+    function filterProducts(e: React.ChangeEvent<HTMLInputElement>){
+        e.preventDefault();
+
+        const filterProducts = e.currentTarget.value;
+        if (filterProducts === ""){
+            setProductList([...list]);
+            return;
+        } 
+
+        setProductList([... productList.filter(includeProduct(filterProducts))]);
+    }
+
+
+    /**
+     * Function to include a product from the search
+     * @param filter to apply
+     * @returns product from the search
+     */
+
+    function includeProduct(filter: string) {
+        return (product: Product) =>
+             product.name.toLowerCase().includes(filter.toLowerCase());
+    }
+
+  return (
+  
+    <>
+        <h3>Product's info</h3>
+        <form onSubmit={processForm}>
+            <label htmlFor="nameId">Name</label>
+            <input type="text" name='nameProduct' id='nameId'/>
+            <label htmlFor="priceId">Price</label>
+            <input type="number" name='priceProduct' id='priceId'/>
+            <label htmlFor="quantityId">Quantity</label>
+            <input type="number" name='quantityProduct' id='quantityId'/>
+            <button type='submit'>Add</button>
+        </form>
+        <div>
+            <input type="text" name='filterProduct' id='filterProductId' onChange={filterProducts} />
+        </div>
+
+
+        <textarea value={JSON.stringify(productList, null, 2)} cols={100} rows={30}></textarea>
+    </>
+  )
+}
+
+export default Practice32
 ```
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p33.png"/>
 </div>
 <br>
 
 ### Práctica 34
 
-> 📂La tabla anterior refleja la edad real de un perro y su equivalente si fuera
+> 📂 La tabla anterior refleja la edad real de un perro y su equivalente si fuera
 humano. Crear un componente con un formulario que contenga un input para poner la edad
 del perro y tres radio button para elegir el tamaño del perro: pequeño, mediano, grande. Al
 pulsar el botón de calcular se mostrará la edad “humana” del perro
@@ -1952,11 +2033,97 @@ donde aparece la información que envían y es recibida
 
 ```code
 
+
+import React, { useState } from 'react'
+
+
+type Props = {}
+
+
+const Practice34 = (props: Props) => {
+    const [age, setAge] = useState<string[]>([]);
+
+    function addDogAge(e:React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        let form = e.currentTarget;
+        let age = form.age.value;
+        let sizeDog = form.sizeDog.value;
+
+        let ageUpdate = 0;
+
+        switch(sizeDog){
+            case "Small":
+                for (let i = 1; i <= age; i++) {
+                    if (i == 1) {
+                        ageUpdate += 20;
+                    } else if (i == 2) {
+                        ageUpdate += 8;
+                    } else {
+                        ageUpdate += 4;
+                    }
+                }
+                break;
+
+            case "Medium":
+                for (let i = 1; i <= age; i++) {
+                    if (i == 1) {
+                        ageUpdate += 18;
+                    } else if (i == 2) {
+                        ageUpdate += 9;
+                    } else if (i > 10) {
+                        ageUpdate +=5;
+                    }else {
+                        ageUpdate += 6;
+                    }
+                }
+                break;
+
+            default:
+                for (let i = 1; i <= age; i++) {
+                    if (i == 1) {
+                        ageUpdate += 16;
+                    } else if (i == 2) {
+                        ageUpdate += 6;
+                    } else if (i>10){
+                        ageUpdate += 11;
+                    } else {
+                        ageUpdate += 9;
+                    }
+                } 
+                break;
+        }
+
+        let mensaje : string = " dog's age: " + age + ", human age: " + ageUpdate;
+        setAge([...age, mensaje]);
+    }
+
+
+return (
+    <>
+    <p>{age}</p>
+    <h2>Add dog's age</h2>
+    <form onSubmit={addDogAge}>
+        <input type="number" name="age" id="age" placeholder="Write your dog's age"/>
+        <input type="radio" name="sizeDog" id="smallDog" value="Small"/>
+        <label htmlFor="smallDog">Small</label>
+        <input type="radio" name="sizeDog" id="mediumDog" value="Medium"/>
+        <label htmlFor="mediumDog">Medium</label>
+        <input type="radio" name="sizeDog" id="tipogrande" value="Big"/>
+        <label htmlFor="bigDog">Big</label>
+        <input type="submit" value="Add"/>
+    </form>
+    </>
+)
+}
+
+
+export default Practice34
 ```
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p34-1.png"/>
+<img src="./img/p34-2.png"/>
 </div>
 <br>
 
@@ -2150,12 +2317,116 @@ sufijo ( el peso está en: kg y la altura en: m )
 
 
 ```code
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 
+
+type Props = {
+    url: string;
+}
+
+
+interface IResult {
+    name: string;
+    sprite: string;
+    height: number;
+    weight: number;
+}
+
+function PokemonCard(props : Props) {
+    const [cardData, setcardData] = useState<IResult>({} as IResult);
+    const {url} = props;
+
+    useEffect(() => {
+        getCardInfo(url);
+    }, [])
+
+
+    /**
+     * Async function to fetch pokemon card from the api
+     * @param link of the api
+     */
+    async function getCardInfo(link : string){
+        const response = await axios.get(link);
+        let info = {} as IResult;
+        info.name = response.data.name;
+        info.sprite = response.data.sprites.front_shiny;
+        info.height = response.data.height /10;
+        info.weight = response.data.weight /10;
+        console.log(info.sprite);
+        setcardData(info);
+    }
+
+    
+    return (
+        <>
+            <div className='pokemonCard'>
+                <h3>{cardData.name}</h3>
+                <img src={cardData.sprite} alt={cardData.name}/>
+                <p>Height: {cardData.height} m</p>
+                <p>Weight: {cardData.weight} kg</p>
+            </div>
+        </>
+    )
+}
+
+export default PokemonCard
+
+
+import React, { useEffect, useState } from 'react'
+import PokemonCard from './PokemonCard.tsx';
+import axios from 'axios';
+
+
+
+interface IPokemonList {
+    count: number;
+    next: string;
+    previous: string;
+    results: IResult[];
+}
+
+interface IResult {
+    name: string;
+    url: string;
+}  
+
+const Practice43 = () => {
+    const [cardList, setCardList] = useState<IResult[]>([]);
+    const uri: string = "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20"
+
+    useEffect(() => {
+        getPokemonCard(uri)
+    }, []);
+
+    /**
+     * Async function to fetch pokemon card from the api
+     * @param url of the api
+     */
+    async function getPokemonCard(url: string) {
+        const response = await axios.get(url);
+        let list = response.data as IPokemonList;
+        setCardList(list.results)
+    }
+
+    
+    return (
+        <>
+            <div className="container">
+                {cardList.map((card) => {
+                    return <PokemonCard url={card.url} />
+                })}
+            </div>
+        </>
+    )
+}
+
+export default Practice43
 ```
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p43.png"/>
 </div>
 <br>
 
