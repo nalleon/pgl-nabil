@@ -1814,4 +1814,545 @@ export default Practice31
 
 </br>
 
+### Práctica 32
+
+> 📂
+> Reproducir el componente anterior y ejecutarlo. Darle algo de CSS.
+Agregar ( fuera del formulario ) un input que mediante el evento onChange permita filtrar el
+array de productos por nombre ( por ejemplo, si escribe queso aparecen todos los productos
+con nombre queso: “queso rochefort”, “queso edam”,… 
+>
+
+
+```code
+import React, { useState } from 'react'
+import './Practice32.css'
+type Props = {}
+
+type Product = {
+    name: string,
+    price: number,
+    quantity: number
+}
+
+const Practice32 = (props: Props) => {
+    const [productList, setProductList] = useState<Product[]>([]);
+    const [list, setList] = useState<Product[]>([]);
+
+
+    function processForm(e: React.FormEvent<HTMLFormElement>){
+        e.preventDefault();
+
+        let formProducts = e.currentTarget;
+
+        const name = formProducts.nameProduct.value ?? "";
+        const price = Number(formProducts.priceProduct.value) ?? 0;
+        const quantity = Number(formProducts.quantityProduct.value) ?? 0;
+        const newProduct: Product = { name, price, quantity };
+        setProductList([...productList, newProduct]);
+        setList([...list, newProduct]);
+    }
+
+
+    /**
+     * Function to find a product by its name
+     * @param e input change 
+     * @returns product
+     */
+    function filterProducts(e: React.ChangeEvent<HTMLInputElement>){
+        e.preventDefault();
+
+        const filterProducts = e.currentTarget.value;
+        if (filterProducts === ""){
+            setProductList([...list]);
+            return;
+        } 
+
+        setProductList([... productList.filter(includeProduct(filterProducts))]);
+    }
+
+
+    /**
+     * Function to include a product from the search
+     * @param filter to apply
+     * @returns product from the search
+     */
+
+    function includeProduct(filter: string) {
+        return (product: Product) =>
+             product.name.toLowerCase().includes(filter.toLowerCase());
+    }
+
+  return (
+  
+    <>
+        <h3>Product's info</h3>
+        <form onSubmit={processForm}>
+            <label htmlFor="nameId">Name</label>
+            <input type="text" name='nameProduct' id='nameId'/>
+            <label htmlFor="priceId">Price</label>
+            <input type="number" name='priceProduct' id='priceId'/>
+            <label htmlFor="quantityId">Quantity</label>
+            <input type="number" name='quantityProduct' id='quantityId'/>
+            <button type='submit'>Add</button>
+        </form>
+        <div>
+            <input type="text" name='filterProduct' id='filterProductId' onChange={filterProducts} />
+        </div>
+
+
+        <textarea value={JSON.stringify(productList, null, 2)} cols={100} rows={30}></textarea>
+    </>
+  )
+}
+
+export default Practice32
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p32-1.png"/>
+<img src="./img/p32-2.png"/>
+<img src="./img/p32-3.png"/>
+</div>
+
+</br>
+
+### Práctica 33
+
+> 📂 Crear un componente con un formulario que contenga dos input numéricos y
+un submit Al enviar el formulario, se muestran los números primos entre los dos dados en
+los input. Ejemplo: primos mayores que: 10 primos menores que: 18
+mostrará: 11, 13, 17
+> 
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+### Práctica 34
+
+> 📂La tabla anterior refleja la edad real de un perro y su equivalente si fuera
+humano. Crear un componente con un formulario que contenga un input para poner la edad
+del perro y tres radio button para elegir el tamaño del perro: pequeño, mediano, grande. Al
+pulsar el botón de calcular se mostrará la edad “humana” del perro
+Nota: recordar que los radio button llevan todos el mismo name y es en el campo: value
+donde aparece la información que envían y es recibida
+> 
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+
+### Práctica 35
+
+> 📂 Realizar 3 componentes: EjStateByProps, A, B
+El componente EjStateByProps contiene al componente A y al componente B
+El componente A lo vemos en color azul ( observar que tiene un input ) Y el componente B
+está en amarillo ( tiene un botón )
+Si se escribe en el input del componente A ( evento onChange ) el texto aparece en el state
+del padre: “input A dice: “ + mensaje escrito en el input
+Si se pulsa en el botón del componente B el mensaje recibido en el state del padre es:
+“pulsado botón en B”
+> 
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+### Práctica 36
+
+> 📂
+> Generar dos componentes. El componente padre tendrá un array de personas
+( hay que hacer la clase Persona también ) . Mediante ese array personas se generan tantos
+componentes hijo: PersonaCard como personas tiene el array.
+PersonaCard permite ir agregando y/o modificando datos en una ficha persona
+Al inicio, en el componente raíz tenemos inicialmente únicamente el botón del más: “+” al
+pulsarlo se crea una persona en el array y por tanto un componente hijo: PersonaCard que
+nos permitirá editar los datos de Persona.
+Nota: para localizar mejor el objeto ( aunque aquí no hay problema ya que la posición del
+array coincide con id de persona ) es importante que al crear cada nueva persona se genera
+un nuevo id que luego no pueda ser modificado
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+### Práctica 37
+
+> 📂 Realizar la actividad descrita. Conseguir que al pulsar el botón el componente
+hijo actualice la descomposición. En el componente padre se mostrará el número generado
+bajo el botón.
+Nota: observar que se debe permitir que el componente hijo pueda introducir un valor en el
+input ( si pones en el value del input: <input value={props.numero}> no puedes )
+> 
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+### Práctica 38
+
+> 📂 Crear dos componentes. Uno es el padre que tiene un state de un array de
+Usuarios ( objetos con atributo id y nombre únicamente ) definido de los nombres iniciales
+: [{id: 1, nombre: “Ana”}, {id: 2,nombre:“Aristarco”} ] que permitirá generar 2 botones
+que dicen: <button type=text >Modificar {nombre} … >
+Al hacer click en alguno de los botones hace que el componente hijo reciba en un <input>
+el nombre del Usuario. Se debe poder modificar el nombre y que al pulsar en un botón:
+Terminar Edición que está dentro del componente hijo hace que el botón del padre donde
+aparecía el nombre se haya reemplazado por el nuevo nombre
+> 
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+### Práctica 39
+
+> 📂
+> Realizar la actividad descrita con el componente: InputToUpper
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+### Práctica 40
+
+> 📂 Crear un componente que se visualice un reproductor y una lista de
+reproducción ( busca urls de mp3 o radios ) Cuándo el usuario puse en uno de los
+elementos de la lista y se de al play en el reproductor sonará la canción.
+> 
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+### Práctica 41
+
+> 📂
+> Reproducir el código anterior de tal forma que tengamos cargada en nuestra
+app 3 componentes que ya hemos hecho: Cronometro y RelojesMundiales y PersonasIMC
+Agregar un componente About. Ese componente lo que mostrará es nuestros datos: nombre,
+apellido, curso. Se debe poder navegar mediante el Navbar a todos los componentes. La
+ruta inicial: “/” lo que debe mostrar es el componente About
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+### Práctica 42
+
+> 📂
+>  Crear otra aplicación React donde el componente App tendrá un router, en
+esta ocasión, en lugar de “mi primer router” debe informar que es una aplicación de juegos
+y deben estar cargados varios de los componentes de juegos que hemos hecho: el
+memoriza8, acertarnumero Pudiendo pasar de un juego a otro gracias a nuestro
+route
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+
+### Práctica 43
+
+> 📂
+> Crear otra aplicación React para trabajar con los pokemon.
+Hacer dos componentes: PokemonListCard y PokemonCard
+La lista obtiene el JSON de la url: https://pokeapi.co/api/v2/pokemon?offset=20&limit=20
+que en el array: results aparecen 20 url de la api pokemon. Esas url se les pasarán como
+props a PokemonCard, sustituyendo la constante uri del ejemplo anterior por la información
+venida por props. Mostrando así de cada pokemon su nombre y su imagen. Agregar también
+su altura y peso ( response.data.weight y response.data.height ) con el correspondiente
+sufijo ( el peso está en: kg y la altura en: m )
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+
+### Práctica 44
+
+> 📂
+>  Crear otra aplicación React para trabajar con los datos de población de las
+capitales de provincia.
+El INE publica en: https://servicios.ine.es/wstempus/js/es/DATOS_TABLA/2911?tip=AM
+Pero habrá que adjuntar imagen de cada provincia ( usar json-server con los datos ya
+preparados)
+Hacer 3 componentes: CapitalesList, CapitalCard
+CapitalesList toma la lista de las capitales y pasa como props a CapitalCard En CapitalCard
+aparecerá la imagen y el nombre de la capital de provincia
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+
+### Práctica 45
+
+> 📂
+> Crear en la aplicación de pokemon, las rutas con parámetro: /pokemon/id y
+que envíe a un componente que cargue el pokemon correspondiente.
+Hacer lo mismo con las capitales de provincia y que lo que se muestre e el componente con
+más información de la capital ( componente Capital, no el componente CapitalCard )
+En Capital.tsx tenemos un componente con la imagen, el nombre y los datos de población
+de los últimos años
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+### Práctica 46
+
+> 📂
+>  Reutilizar el ejemplo anterior para nuestra aplicación de capitales de provincia
+y mejorarlo de tal forma que se pueda crear una capital de provincia nueva . Observar que
+hay que agregar la ruta pertinente en el router. Se propone: /crearcapital y poner el link
+pertinente en el <nav>
+Nota: no vamos a subir imágenes nuevas. Las imágenes ya estarán cargadas en json-server
+lo único que hacemos en el axios.post es decirle la ruta de la imagen
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+### Práctica 47
+
+> 📂
+> Las opciones de: modificar capital y borrar capital son muy sencillas una vez
+dominado lo anterior. Buscar el funcionamiento específico de axios y crear los
+componentes de borrado y modificación pertinentes para realizar esas acciones
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+### Práctica 48
+
+> 📂
+> En la actividad que hicimos del cálculo del IMC, donde mostrábamos una
+lista de personas donde cada una se representaba en un componente PersonaCard, hacer
+uso de json-server para ir agregando los objetos persona a la api y leerlos desde allí.
+Comprobar que quedan correctamente creados ( el fichero json queda modificado. Y
+además la próxima vez que se arranque la aplicación tomará los datos actualizados )
+Ponerle un router y tener soporte para rutas parametrizadas. Habilitar también el borrado de
+personas en la api
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+### Práctica 49
+
+> 📂
+> En nuestras apps de capitales y personas imc, al hacer la edición y pulsar en el
+botón que ejecuta el cambio en la api, usar el hook para que la app cargue directamente el
+componente raíz ( se entiende que una vez se ha terminado de editar, no hay ningún interés
+en quedarse en el componente de edición 
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+### Práctica 50
+
+> 📂
+> Cear un contexto en la aplicación de pokemon La idea es que haya un botón
+en cada PokemonCard que diga: “establecer favorito” de tal forma que si el usuario pulsa el
+botón, elige como su pokemon favorito el de la actual PokemonCard. Debe mostrarse los
+datos de ese pokemon en todo momento (Para ello se propone crear un componente llamado
+PokemonFavorite igual que el Navbar aparece en todo momento en el router, mostramos los
+datos de ese pokemon justo dentro de <Browserrouter> pero por fuera de <Routes>)
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+
+### Práctica 51
+
+> 📂
+> Cear un contexto en la aplicación de capitales y un componente <Login>
+accesible en el navbar del router. Este login únicamente guardará el nombre del usuario en
+el contexto ( nada de contraseña ni roles ) y en todos los componentes de la aplicación debe
+decir: “hola nombreusuario! “
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+### Práctica 52
+
+> 📂
+> En la aplicación de pokemon guardar los datos del pokemon favorito, cuando
+se establezca o modifique en localstorage. De tal forma que cuando se inicie la App cargue
+la información del pokemon de local storage y lo ponga en el contexto.
+>
+
+
+```code
+
+```
+- Captura:
+
+<div align="center">
+<img src="./img/p350-1.png"/>
+</div>
+<br>
+
+
+
 </div>
