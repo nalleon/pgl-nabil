@@ -3044,19 +3044,106 @@ capitales de provincia.
 El INE publica en: https://servicios.ine.es/wstempus/js/es/DATOS_TABLA/2911?tip=AM
 Pero habrá que adjuntar imagen de cada provincia ( usar json-server con los datos ya
 preparados)
-Hacer 3 componentes: CapitalesList, CapitalCard
+Hacer 2 componentes: CapitalesList, CapitalCard
 CapitalesList toma la lista de las capitales y pasa como props a CapitalCard En CapitalCard
 aparecerá la imagen y el nombre de la capital de provincia
 >
 
 
 ```javascript
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import CapitalCard from './CapitalCard.tsx';
 
+type Props = {}
+
+interface IRootObject {
+    id: string;
+    nombre: string;
+    datos: IDato[];
+    foto: string;
+}
+
+interface IDato {
+    anio: number;
+    poblacion: number;
+}
+
+
+/**
+ * json-server --watch capitals.json --port 3001
+ */
+const CapitalList = () => {
+    const [capitalList, setCapitalList] = useState<IRootObject[]>([]);
+    const uri: string = "http://localhost:3000/"
+    const dataLength = 22; 
+
+    useEffect(() => {
+        getCapitalInfo(uri)
+    }, []);
+
+    /**
+     * Async function to fetch capital from the api
+     * @param url of the api
+     */
+    async function getCapitalInfo(url: string) {
+        const response = await axios.get(url+"capitales");
+        let list = response.data;
+        setCapitalList(list)
+    }
+
+    
+    return (
+        <>
+            <div className="container">
+                {capitalList.map((capital) => {
+                    return <div>
+                        <CapitalCard key={capital.id} id={capital.id}
+                        name={capital.nombre} url={capital.foto} 
+                        population={capital.datos[0].poblacion} year={capital.datos[0].anio} 
+                        urlAPI={uri} />
+                    </div>
+                    
+                })}
+            </div>
+        </>
+    )
+}
+
+export default CapitalList
+
+import React from 'react'
+
+type Props = {
+    id : string;
+    name: string;
+    url: string;
+    population: number;
+    year : number;
+    urlAPI : string;
+}
+
+const CapitalCard = (props: Props) => {
+    const { id, name, url, population, year, urlAPI} = props;
+
+    console.log(urlAPI + url);
+    return (
+        <>
+            <div className='capitalCard'>
+                <h2>{name}</h2>
+                <p>{population} in {year}</p>
+                <img src={urlAPI + url} alt={name} />
+            </div>
+        </>
+    )
+}
+
+export default CapitalCard
 ```
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p44.png"/>
 </div>
 <br>
 
@@ -3074,12 +3161,269 @@ de los últimos años
 
 
 ```javascript
+import React from 'react'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import PokemonListModify from './Pokedex/PokemonListModify.tsx';
+import PokemonCardModify from './Pokedex/PokemonCardModify.tsx';
+import CapitalCardModify from './Capital/CapitalCardModify.tsx';
+import CapitalListModify from './Capital/CapitalListModify.tsx';
 
+type Props = {}
+
+const App45 = (props: Props) => {
+    return (
+        <>
+            <BrowserRouter>
+        
+                    <Navbar />
+                    <Routes>
+                        <Route path="/" element={<PokemonListModify />} />
+                        <Route path="/capitals" element={<CapitalListModify/>}/>
+                    </Routes>
+                    <Routes>
+                        <Route path="/pokemon/:pokemonId" element={< PokemonCardModify/>} />
+                        <Route path="/capitals/capital/:capitalId" element={<CapitalCardModify/>}/>
+                    </Routes>
+            </BrowserRouter>
+        </>
+        );
+    }
+    
+    function Navbar() {
+        return (
+            <nav>
+                <Link to="/">Pokedex </Link>
+                <Link to="/capitals"> Capitals </Link>
+            </nav>
+        );
+    }
+
+export default App45
+```
+
+
+- Capital :
+```javascript
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
+
+
+interface IResult {
+    id : string;
+    name: string;
+    url: string;
+    population: number;
+    year : number;
+    urlAPI : string;
+}
+
+const CapitalCardModify = () => {
+    const [cardData, setcardData] = useState<IResult>({} as IResult);
+    const { capitalId } = useParams();
+    const  url = `http://localhost:3000/capitales/${capitalId}`;
+    const auxImgUri = "http://localhost:3001/poblacion/img/";
+
+    useEffect(() => {
+        async function getCardInfo(link : string){
+            const response = await axios.get(link);
+            let info = {} as IResult;
+            info.id = response.data.id;
+            info.name = response.data.nombre;
+            info.url = response.data.foto;
+            info.population = response.data.datos[23].poblacion;
+            info.year = response.data.datos[23].anio;
+            info.urlAPI = auxImgUri;
+            console.log(info.urlAPI);
+            setcardData(info);
+        }
+
+        getCardInfo(url);
+    }, [capitalId])
+    
+    return (
+        <>
+            <div className='capitalCard'>
+                <h2>{cardData.name}</h2>
+                <p>{cardData.population} in {cardData.year}</p>
+                <img src={cardData.urlAPI + cardData.url} alt={cardData.name} />
+            </div>
+        </>
+    )
+}
+
+export default CapitalCardModify
+
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import CapitalCard from './CapitalCardModify.tsx';
+import { Link } from 'react-router-dom';
+
+type Props = {}
+
+interface IRootObject {
+    id: string;
+    nombre: string;
+    datos: IDato[];
+    foto: string;
+}
+
+interface IDato {
+    anio: number;
+    poblacion: number;
+}
+
+
+/**
+ * json-server --watch capitals.json --port 3001
+ */
+const CapitalListModify = () => {
+    const [capitalList, setCapitalList] = useState<IRootObject[]>([]);
+    const uri: string = "http://localhost:3000/"
+    useEffect(() => {
+        getCapitalInfo(uri)
+    }, []);
+
+    /**
+     * Async function to fetch capital from the api
+     * @param url of the api
+     */
+    async function getCapitalInfo(url: string) {
+        const response = await axios.get(url+"capitales");
+        let list = response.data;
+        setCapitalList(list)
+    }
+
+    
+    return (
+        <>
+            <div className="container">
+                {capitalList.map((card, index) => {
+                    return <div key={index}>
+                                <Link to={`/capitals/capital/${card.id}`}>{card.nombre}</Link>
+                            </div>
+                })}
+            </div>
+        </>
+    )
+}
+
+export default CapitalListModify
+```
+
+- Pokémon
+```javascript
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
+
+
+
+interface IResult {
+    name: string;
+    sprite: string;
+    height: number;
+    weight: number;
+}
+
+function PokemonCardModify() {
+    const [cardData, setcardData] = useState<IResult>({} as IResult);
+    const { pokemonId } = useParams();
+    const  url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
+
+    useEffect(() => {
+        getCardInfo(url);
+    }, [pokemonId])
+
+    /**
+     * Async function to fetch pokemon card from the api
+     * @param link of the api
+     */
+    async function getCardInfo(link : string){
+        const response = await axios.get(link);
+        let info = {} as IResult;
+        info.name = response.data.name;
+        info.sprite = response.data.sprites.front_shiny;
+        info.height = response.data.height / 10;
+        info.weight = response.data.weight /10;
+        setcardData(info);
+    }
+    return (
+        <>
+            <div className='pokemonCard'>
+                <h3>{cardData.name}</h3>
+                <img src={cardData.sprite} alt={cardData.name}/>
+                <p>Height: {cardData.height} m</p>
+                <p>Weight: {cardData.weight} kg</p>
+            </div>
+        </>
+    )
+}
+
+export default PokemonCardModify
+
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+import PokemonCardModify from './PokemonCardModify';
+import { Link } from 'react-router-dom';
+
+
+
+interface IPokemonList {
+    count: number;
+    next: string;
+    previous: string;
+    results: IResult[];
+}
+
+interface IResult {
+    name: string;
+    url: string;
+}  
+
+const PokemonListModify = () => {
+    const [cardList, setCardList] = useState<IResult[]>([]);
+    const uri: string = "https://pokeapi.co/api/v2/pokemon/"
+
+    useEffect(() => {
+        getPokemonCard(uri)
+    }, []);
+
+    /**
+     * Async function to fetch pokemon card from the api
+     * @param url of the api
+     */
+    async function getPokemonCard(url: string) {
+        const response = await axios.get(url);
+        let lista = response.data as IPokemonList;
+        setCardList(lista.results)
+    }
+
+
+    
+    return (
+        <>
+            <div className="container">
+                {cardList.map((card, index) => {
+                    return <div key={index}>
+                                <Link to={`/pokemon/${index +1}`}>{card.name}</Link>
+                            </div>
+                })}
+            </div>
+        </>
+    )
+}
+
+export default PokemonListModify
 ```
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/45-1.png"/>
+<img src="./img/45-2.png"/>
+<img src="./img/45-3.png"/>
+<img src="./img/45-4.png"/>
 </div>
 <br>
 
