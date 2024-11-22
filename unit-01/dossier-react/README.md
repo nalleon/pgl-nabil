@@ -3919,13 +3919,285 @@ personas en la api
 >
 
 ```javascript
+import React from 'react'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
+import Practice48 from './PersonList.tsx'
+import Person48 from '../Model/Person48'
+import PersonCard from './PersonCard48.tsx'
+import DeletePerson from './DeletePerson.tsx'
 
+type Props = {}
+
+const App48 = (props: Props) => {
+    return (
+        <>
+            <BrowserRouter>
+                <h1>App</h1>
+                <Navbar />
+                <Routes>
+                    <Route path="/" element={<Practice48 />} />
+                    <Route path="/person/:id" element={<PersonCard/>}/>
+                    <Route path="/person/delete" element={<DeletePerson/>}/>
+
+                </Routes>
+            </BrowserRouter>
+        </>
+    )
+
+    function Navbar() {
+        return (
+            <nav>
+                <Link to="/"> Persons </Link>
+                <Link to="/person/delete"> Delete </Link>
+            </nav>
+        );
+    }
+}
+
+export default App48
+
+import axios from 'axios';
+import React from 'react'
+import { useAppContext } from '../../practice51/AppContextProvider51.tsx';
+
+type Props = {}
+
+const DeletePerson = (props: Props) => {
+    const { username } = useAppContext(); 
+
+
+    function deletePersonFromApi(event:React.FormEvent<HTMLFormElement>){
+        event.preventDefault();
+        let form: HTMLFormElement = event.currentTarget;
+        let inputPersonId: HTMLInputElement = form.personId;
+    
+        let personId:string = inputPersonId.value;
+
+        const route: string = "http://localhost:3000/persons/"+personId;
+
+        const axiosDelete = async(personRoute:string)=>{
+            try{
+                const response = await axios.delete(personRoute)
+            }catch(error){
+                console.log(error);
+            }
+        }
+        
+        axiosDelete(route);
+    }
+
+
+    return (
+    <>
+    
+        <h2>Delete person</h2>
+        <br />
+        <form onSubmit={deletePersonFromApi}>
+                ID: <input type="text" name="personId" /><br />
+            <button type="submit">Delete </button>
+        </form>
+    </>
+    )
+}
+
+export default DeletePerson
+
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+import Person48 from '../Model/Person48';
+import { useParams } from 'react-router-dom';
+
+
+
+type Person = {
+  id: number;
+  name: string;
+  surname: string;
+  age: number;
+  height: number;
+  weigth: number;
+  imc: number;
+};
+
+
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+import Person48 from '../Model/Person48';
+import { useParams } from 'react-router-dom';
+
+
+
+type Person = {
+  id: number;
+  name: string;
+  surname: string;
+  age: number;
+  height: number;
+  weigth: number;
+  imc: number;
+};
+
+const PersonCard = () => {
+  const { id } = useParams<{ id: string }>();
+  const [person, setPerson] = useState<Person | null>(null);
+
+  const [name, setname] = useState(person?.name);
+  const [surname, setsurname] = useState(person?.surname);
+  const [height, setheight] = useState(person?.height);
+  const [age, setage] = useState(person?.age);
+  const [weigth, setweighth] = useState(person?.weigth);
+  const [imc, setimc] = useState(person?.imc);
+
+  const url = `http://localhost:3000/persons/${id}`;
+
+  useEffect(() => {
+      fetchPerson();
+  }, [id])
+  
+  async function fetchPerson() {
+      const response = await axios.get(url);
+      const result = response.data;
+      setPerson(result);
+      setname(result.name);
+      setsurname(result.surname);
+      setheight(result.height);
+      setage(result.age);
+      setweighth(result.weigth);
+      setimc(result.imc);
+      setPerson(response.data);
+  }
+  
+
+  async function processForm(e: React.FormEvent<HTMLFormElement>) {
+      e.preventDefault();
+
+      const updatedPerson = {
+          ...person,
+          name,
+          surname,
+          age,
+          weigth,
+          height,
+          imc: calculateIMC(height ?? 0, weigth ?? 0),
+      };
+;
+      await axios.put(url, updatedPerson);
+  }
+
+
+  function calculateIMC(height : number, weigth :number) : number {
+      if(height === 0 || weigth === 0) {
+          return 0;
+      }
+
+      let heightMeter = height/100;
+      return weigth / (heightMeter*heightMeter);
+  }
+
+  return (
+      <>
+          <div className='card'>
+              <form onSubmit={processForm}>
+              <div>
+                  <p>{person?.id}</p>
+              </div>
+              <div>
+                  <label htmlFor="nameId">Name</label>
+              </div>
+              <div>
+                  <input type="text" name='namePerson' id='nameId' onChange={(e) => setname(e.target.value)} value={name}/>
+              </div>
+              <div>
+                  <label htmlFor="surnameId">Surname</label>
+              </div>
+              <div>
+                  <input type="text" name='surnamePerson' id='surnameId' onChange={(e) => setsurname(e.target.value)} value={surname}/>
+              </div>
+              <div>
+                  <label htmlFor="heightId">Height</label>
+              </div>
+              <div>
+                  <input type="text" name='heightPerson' id='heightId' onChange={(e) => setheight(Number(e.target.value))} value={height}/>
+              </div>
+              <div>
+                  <label htmlFor="ageId">Age</label>
+              </div>
+              <div>
+                  <input type="text" name='agePerson' id='ageId' onChange={(e) => setage(Number(e.target.value))} value={age}/>
+              </div>
+              <div>
+                  <label htmlFor="heighthId">Weight</label>
+              </div>
+              <div>
+                  <input type="text" name='weightPerson' id='weightId' onChange={(e) => setweighth(Number(e.target.value))} value={weigth}/>
+              </div>
+              <div>
+                  <p>{imc}</p>
+              </div>
+              <button type='submit'>Process</button>
+              </form>
+          </div>
+      </>
+  )
+  }
+  
+  
+  export default PersonCard
+
+  import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+
+type Person = {
+    id: number;
+    name: string;
+    surname: string;
+    age: number;
+    height: number;
+    weigth: number;
+    imc: number;
+};
+
+const PersonList = () => {
+    const [persons, setPersons] = useState<Person[]>([]);
+    const url = 'http://localhost:3000/persons';
+
+    useEffect(() => {
+        fetchPersons();
+    }, []);
+
+    const fetchPersons = async () => {
+        const response = await axios.get(url);
+        let list = response.data;
+        setPersons(list);
+    };
+
+    return (
+    <div className="container">
+            {persons.map((person, index) => {
+                return <div key={index}>
+                            <Link to={`/person/${person.id}`}>
+                                {person.name} {person.surname}
+                            </Link>
+                        </div>
+            })}
+        </div>
+    );
+};
+
+export default PersonList;
 ```
 
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p48-1.png"/>
+<img src="./img/p48-2.png"/>
+<img src="./img/p48-3.png"/>
+<img src="./img/p48-4.png"/>
+<img src="./img/p48-5.png"/>
+<img src="./img/p48-6.png"/>
+<img src="./img/p48-7.png"/>
 </div>
 <br>
 
@@ -4223,7 +4495,6 @@ se establezca o modifique en localstorage. De tal forma que cuando se inicie la 
 la información del pokemon de local storage y lo ponga en el contexto.
 >
 
-
 ```javascript
 import React, { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from 'react'
 
@@ -4281,8 +4552,6 @@ export const useAppContext52 = () =>{
 }
 
 export default AppContextProvider52
-
-
 ```
 
 - Captura:
