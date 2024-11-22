@@ -4210,14 +4210,11 @@ componente raíz ( se entiende que una vez se ha terminado de editar, no hay nin
 en quedarse en el componente de edición )
 >
 
+En ambas apps, pertenecientes a las practicas 47 y 48 respectivamente, lo único que debemos añadir es el hook navigate con la direccion de la raiz de la app como vemos en la captura.
 
-```javascript
-
-```
 - Captura:
-
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p49-1.png"/>
 </div>
 <br>
 
