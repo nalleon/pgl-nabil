@@ -22,12 +22,38 @@
 - [Práctica 18](#práctica-18)
 - [Práctica 19](#práctica-19)
 - [Práctica 20](#práctica-20)
-
-
-#### Extras:
-- Example
-
-
+- [Práctica 21](#práctica-21)
+- [Práctica 22](#práctica-22)
+- [Práctica 23](#práctica-23)
+- [Práctica 24](#práctica-24)
+- [Práctica 25](#práctica-25)
+- [Práctica 26](#práctica-26)
+- [Práctica 27](#práctica-27)
+- [Práctica 28](#práctica-28)
+- [Práctica 29](#práctica-29)
+- [Práctica 30](#práctica-30)
+- [Práctica 31](#práctica-31)
+- [Práctica 32](#práctica-32)
+- [Práctica 33](#práctica-33)
+- [Práctica 34](#práctica-34)
+- [Práctica 35](#práctica-35)
+- [Práctica 36](#práctica-36)
+- [Práctica 37](#práctica-37)
+- [Práctica 38](#práctica-38)
+- [Práctica 39](#práctica-39)
+- [Práctica 40](#práctica-40)
+- [Práctica 41](#práctica-41)
+- [Práctica 42](#práctica-42)
+- [Práctica 43](#práctica-43)
+- [Práctica 44](#práctica-44)
+- [Práctica 45](#práctica-45)
+- [Práctica 46](#práctica-46)
+- [Práctica 47](#práctica-47)
+- [Práctica 48](#práctica-48)
+- [Práctica 49](#práctica-49)
+- [Práctica 50](#práctica-50)
+- [Práctica 51](#práctica-51)
+- [Práctica 52](#práctica-52)
 
 ***
 
@@ -1217,7 +1243,7 @@ lugar: console.log(newfecha); ¿ qué ocurre con el renderizado ? Mirar en la co
 información está mostrando y explicar lo que ocurre
 >
 
-El 1000 que les estamos pasandp sirve para imdicar cada cuanto se va a ejecutar la función tick, en este caso cada 1000ms. 
+El 1000 que les estamos pasando sirve para indicar cada cuanto se va a ejecutar la función tick, en este caso cada 1000ms. Como dentro tick se actualiza el useState de actualDate, el renderizado se actualiza.
 
 
 ```javascript
@@ -1249,7 +1275,7 @@ export default Practice21
 - Captura:
 
 <div align="center">
-<img src="./img/p21-1.png"/>
+<img src="./img/p21.png"/>
 </div>
 
 </br>
@@ -1498,8 +1524,6 @@ state. Mostrándose así el array de números generados
 
  
 ```javascript
-import React, { useRef, useState } from 'react'
-
 type Props = {}
 
 const Practice25 = (props: Props) => {
@@ -1556,8 +1580,6 @@ mediante props
 
 
 ```javascript
-import React, { useEffect, useState } from 'react'
-
 type Props = {
     word : string
 }
@@ -1575,11 +1597,6 @@ const CountLetters = (props: Props) => {
 }
 
 export default CountLetters
-
-import React, { useRef, useState } from 'react'
-import Practice09 from '../practice09/Practice09.tsx';
-import CountLetters from './CountLetters.tsx';
-import './practice26.css';
 
 type Props = {}
 
@@ -1634,8 +1651,6 @@ export default Practice26
 >
 
 ```javascript
-import React, { useState, useRef, useEffect } from 'react'
-
 type Props = {}
 
 function Practice27({}: Props) {
@@ -1981,8 +1996,6 @@ con nombre queso: “queso rochefort”, “queso edam”,… )
 
 
 ```javascript
-import React, { useState } from 'react'
-import './Practice32.css'
 type Props = {}
 
 type Product = {
@@ -2085,8 +2098,6 @@ mostrará: 11, 13, 17
 
 
 ```javascript
-import React, { useState } from 'react'
-import './Practice32.css'
 type Props = {}
 
 type Product = {
@@ -2188,13 +2199,7 @@ donde aparece la información que envían y es recibida
 
 
 ```javascript
-
-
-import React, { useState } from 'react'
-
-
 type Props = {}
-
 
 const Practice34 = (props: Props) => {
     const [age, setAge] = useState<string[]>([]);
@@ -2299,9 +2304,6 @@ Si se pulsa en el botón del componente B el mensaje recibido en el state del pa
 
 
 ```javascript
-import React, { ChangeEvent, useEffect, useState } from 'react'
-
-
 const Practice35Refactor = (props: Props) => {
     const [message, setMessage] = useState("");
 
@@ -2401,8 +2403,6 @@ export default class Person {
     public weigth : number;
     public imc : number;
 
-    // default constructor
-
     constructor() {
         this.id = Person.initialId++;
     }
@@ -2416,7 +2416,6 @@ export default class Person {
         return this.weigth / (heightMeter*heightMeter);
     }
     
-    //Getters and setters
     public getId(): number {
         return this.id;
     }
@@ -2461,8 +2460,7 @@ export default class Person {
     }
 }
 
-import React, { useState } from 'react'
-import Person from './model/Person';
+
 
 type Props = {
     person : Person
@@ -2545,11 +2543,6 @@ const PersonCard = (props: Props) => {
 
 
 export default PersonCard
-
-import React, { ChangeEvent, ReactEventHandler, useEffect, useRef, useState } from 'react'
-import Person from './model/Person.ts';
-import './Practice36.css'
-import PersonCard from './PersonCard.tsx';
 
 const Practice36 = () => {
   const [personList, setPersonList] = useState<Person[]>([]);
@@ -2636,8 +2629,6 @@ export default class Calculator {
     }
 }
 
-import React, { useEffect, useRef, useState } from 'react'
-import Calculator from './model/Calculator.ts';
 
 const Practice37 = (props: Props) => {
     const [number, setNumber] = useState<number>(0);
@@ -2730,10 +2721,6 @@ export default class User {
 
 }
 
-import React, { useEffect, useState } from 'react'
-import User from './model/User.ts';
-
-
 const Practice38 = (props: Props) => {
     const [userArray, setUserArray] = useState<Array<User>>([])
     const [currentUser, setCurrentUser] = useState(0);
@@ -2805,7 +2792,6 @@ const ComponenteHijo = (props: Props) => {
         const { modifyUserParent } = props;
         let user = new User(newName);
         user.id = props.user.id;
-        //console.log(user.id);
         user.name = newName;
         console.log(user);
         modifyUserParent(user);
@@ -2840,8 +2826,6 @@ const ComponenteHijo = (props: Props) => {
 
 
 ```javascript
-import React, { ChangeEvent, useState } from 'react'
-
 
 const Practice39 = (props: Props) => {
     const [data, setdata] = useState("")
@@ -2896,9 +2880,6 @@ elementos de la lista y se de al play en el reproductor sonará la canción.
 
 
 ```javascript
-import React, { useState } from 'react'
-import ReactPlayer from 'react-player'
-import './styles/practice40.css';
 
 type Props = {}
 
@@ -2981,12 +2962,6 @@ const About = (props: Props) => {
 
 export default About
 
-import React from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
-import Practice36 from '../practice36/Practice36.tsx';
-import Practice27 from '../practice27/Practice27.tsx';
-import About from './About.tsx';
-import Practice21 from '../practice21/Practice21.tsx';
 
 type Props = {}
 
@@ -3030,11 +3005,6 @@ route
 >
 
 ```javascript
-import React from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
-import Practice31 from '../practice31/Practice31.tsx';
-import Practice20 from '../practice20/Practice20.tsx';
-
 type Props = {}
 
 function Practice42({}: Props) {
@@ -3078,10 +3048,6 @@ sufijo ( el peso está en: kg y la altura en: m )
 
 
 ```javascript
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-
-
 type Props = {
     url: string;
 }
@@ -3132,12 +3098,6 @@ function PokemonCard(props : Props) {
 }
 
 export default PokemonCard
-
-
-import React, { useEffect, useState } from 'react'
-import PokemonCard from './PokemonCard.tsx';
-import axios from 'axios';
-
 
 
 interface IPokemonList {
@@ -3207,9 +3167,6 @@ aparecerá la imagen y el nombre de la capital de provincia
 
 
 ```javascript
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import CapitalCard from './CapitalCard.tsx';
 
 type Props = {}
 
@@ -3268,7 +3225,6 @@ const CapitalList = () => {
 
 export default CapitalList
 
-import React from 'react'
 
 type Props = {
     id : string;
@@ -3317,12 +3273,6 @@ de los últimos años
 
 
 ```javascript
-import React from 'react'
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import PokemonListModify from './Pokedex/PokemonListModify.tsx';
-import PokemonCardModify from './Pokedex/PokemonCardModify.tsx';
-import CapitalCardModify from './Capital/CapitalCardModify.tsx';
-import CapitalListModify from './Capital/CapitalListModify.tsx';
 
 type Props = {}
 
@@ -3359,12 +3309,8 @@ export default App45
 
 
 - Capital :
+
 ```javascript
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
-
-
 interface IResult {
     id : string;
     name: string;
@@ -3409,11 +3355,6 @@ const CapitalCardModify = () => {
 }
 
 export default CapitalCardModify
-
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import CapitalCard from './CapitalCardModify.tsx';
-import { Link } from 'react-router-dom';
 
 type Props = {}
 
@@ -3468,10 +3409,9 @@ export default CapitalListModify
 ```
 
 - Pokémon
+
 ```javascript
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+
 
 
 
@@ -3518,12 +3458,6 @@ function PokemonCardModify() {
 }
 
 export default PokemonCardModify
-
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-import PokemonCardModify from './PokemonCardModify';
-import { Link } from 'react-router-dom';
-
 
 
 interface IPokemonList {
@@ -3597,14 +3531,10 @@ lo único que hacemos en el axios.post es decirle la ruta de la imagen
 
 
 ```js
-json-server --watch ../src/datospoblacion.json  --static poblacion/img/ç
+json-server --watch ../src/datospoblacion.json  --static poblacion/img/
 ```
 
 ```javascript
-import axios from 'axios';
-import React from 'react'
-import { useAppContext } from '../../practice51/AppContextProvider51.tsx';
-
 type Props = {}
 
 const CreateCapital = (props: Props) => {
@@ -3639,7 +3569,6 @@ const CreateCapital = (props: Props) => {
         const axiospost = async(capitalRoute:string)=>{
             try{
                 const response = await axios.post(capitalRoute, newCapital )
-                console.log(response.data);
             }catch(error){
             console.log(error);
             }
@@ -3665,13 +3594,6 @@ const CreateCapital = (props: Props) => {
 }
 
 export default CreateCapital
-
-import React from 'react'
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import CapitalCard46 from './CapitalCard46.tsx';
-import CapitalList46 from './CapitalList46.tsx';
-import CreateCapital from './CreateCapital.tsx';
-
 
 type Props = {}
 
@@ -3706,6 +3628,7 @@ const CapitalApp = (props: Props) => {
 
 export default CapitalApp
 ```
+
 - Captura:
   
 <div align="center">
@@ -3726,10 +3649,6 @@ componentes de borrado y modificación pertinentes para realizar esas acciones
 Eliminares y modificaremos micapital
 
 ```javascript
-import axios from 'axios';
-import React, { useState } from 'react'
-import { useAppContext } from '../../practice51/AppContextProvider51.tsx';
-
 type Props = {}
 
 
@@ -3783,7 +3702,6 @@ const ModifyCapital = (props: Props) => {
         const axiospost = async(capitalRoute:string)=>{
             try{
                 const response = await axios.put(capitalRoute, updateCapital)
-                console.log("Capital updated:", response.data);
                 setcurrentIndex(0);
             }catch(error){
             console.log(error);
@@ -3845,10 +3763,6 @@ const ModifyCapital = (props: Props) => {
 }
 
 export default ModifyCapital
-
-import axios from 'axios';
-import React from 'react'
-import { useAppContext } from '../../practice51/AppContextProvider51.tsx';
 
 type Props = {}
 
@@ -3919,13 +3833,6 @@ personas en la api
 >
 
 ```javascript
-import React from 'react'
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
-import Practice48 from './PersonList.tsx'
-import Person48 from '../Model/Person48'
-import PersonCard from './PersonCard48.tsx'
-import DeletePerson from './DeletePerson.tsx'
-
 type Props = {}
 
 const App48 = (props: Props) => {
@@ -3955,10 +3862,6 @@ const App48 = (props: Props) => {
 }
 
 export default App48
-
-import axios from 'axios';
-import React from 'react'
-import { useAppContext } from '../../practice51/AppContextProvider51.tsx';
 
 type Props = {}
 
@@ -4001,31 +3904,6 @@ const DeletePerson = (props: Props) => {
 }
 
 export default DeletePerson
-
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-import Person48 from '../Model/Person48';
-import { useParams } from 'react-router-dom';
-
-
-
-type Person = {
-  id: number;
-  name: string;
-  surname: string;
-  age: number;
-  height: number;
-  weigth: number;
-  imc: number;
-};
-
-
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-import Person48 from '../Model/Person48';
-import { useParams } from 'react-router-dom';
-
-
 
 type Person = {
   id: number;
@@ -4142,11 +4020,8 @@ const PersonCard = () => {
   }
   
   
-  export default PersonCard
+export default PersonCard
 
-  import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 type Person = {
     id: number;
@@ -4231,14 +4106,6 @@ datos de ese pokemon justo dentro de <Browserrouter> pero por fuera de <Routes>)
 
 
 ```javascript
-import React from 'react'
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import PokemonList50 from './PokemonList50.tsx';
-import PokemonCard50 from './PokemonCard50.tsx';
-import AppContextProvider from './AppContextProvider.tsx';
-import PokemonFavourite from './PokemonFavourite.tsx';
-
-
 type Props = {}
 
 const App50 = (props: Props) => {
@@ -4271,8 +4138,6 @@ const App50 = (props: Props) => {
     }
 
 export default App50
-
-import React, { Dispatch, SetStateAction, createContext, useContext, useState } from 'react'
 
 
 type Props = {}
@@ -4312,14 +4177,6 @@ export const useAppContext = () =>{
 }
 
 export default AppContextProvider
-
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { useAppContext } from './AppContextProvider.tsx';
-
-
-
 
 interface IResult {
     name: string;
@@ -4369,9 +4226,6 @@ function PokemonCard50() {
 
 export default PokemonCard50
 
-import React from 'react'
-import { useAppContext } from './AppContextProvider.tsx';
-
 type Props = {}
 
 const PokemonFavourite = (props: Props) => {
@@ -4395,11 +4249,6 @@ const PokemonFavourite = (props: Props) => {
 }
 
 export default PokemonFavourite
-
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-
 
 
 interface IPokemonList {
@@ -4493,9 +4342,6 @@ la información del pokemon de local storage y lo ponga en el contexto.
 >
 
 ```javascript
-import React, { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from 'react'
-
-
 type Props = {}
 
 
