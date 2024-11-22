@@ -1498,13 +1498,47 @@ state. Mostrándose así el array de números generados
 
  
 ```javascript
+import React, { useRef, useState } from 'react'
 
+type Props = {}
+
+const Practice25 = (props: Props) => {
+  const numbersRef = useRef<number[]>([]);
+    const [numArr, setNumArr] = useState<number[]>([]);
+
+    const addRndNum = () => {
+        const randomNumber = Math.trunc(Math.random() * 100) + 1; 
+        numbersRef.current.push(randomNumber);
+    };
+
+    const showNumbers = () => {
+        setNumArr([...numbersRef.current]); 
+    };
+
+
+  return (
+    <>
+        <div>
+            <button onClick={addRndNum}>Aleatorio</button>
+            <button onClick={showNumbers}>Mostrar</button>
+            <h3>Result:</h3>
+            <ul>
+                {numArr.map((num, index) => (
+                    <li key={index}>{num}</li>
+                ))}
+            </ul>
+        </div>
+    </>
+  )
+}
+
+export default Practice25
 ```
 
 - Captura:
 
 <div align="center">
-<img src="./img/p20-1.png"/>
+<img src="./img/p25.png"/>
 </div>
 
 </br>
@@ -3928,12 +3962,233 @@ datos de ese pokemon justo dentro de <Browserrouter> pero por fuera de <Routes>)
 
 
 ```javascript
+import React from 'react'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import PokemonList50 from './PokemonList50.tsx';
+import PokemonCard50 from './PokemonCard50.tsx';
+import AppContextProvider from './AppContextProvider.tsx';
+import PokemonFavourite from './PokemonFavourite.tsx';
 
+
+type Props = {}
+
+const App50 = (props: Props) => {
+
+
+    return (
+        <>
+            <BrowserRouter>
+                <AppContextProvider>
+                    <Navbar />
+                    
+                    <Routes>
+                        <Route path="/" element={<PokemonList50 />} />
+                        <Route path="/pokemon/:pokemonId" element={< PokemonCard50/>} />
+                        <Route path="/pokemon/favourite" element={<PokemonFavourite />} />
+                    </Routes>
+                </AppContextProvider>
+            </BrowserRouter>
+        </>
+        );
+    }
+    
+    function Navbar() {
+        return (
+            <nav>
+                <Link to="/">Pokedex </Link>
+                <Link to="/pokemon/favourite"> Pokémon Fav </Link>
+            </nav>
+        );
+    }
+
+export default App50
+
+import React, { Dispatch, SetStateAction, createContext, useContext, useState } from 'react'
+
+
+type Props = {}
+
+
+interface IResult {
+    name: string;
+    sprite: string;
+    height: number;
+    weight: number;
+}
+
+interface AppContextType {
+    favourite: IResult | null;
+    setFavourite: Dispatch<SetStateAction<IResult | null>>;
+}
+
+export const AppContext = createContext<AppContextType>({} as AppContextType);
+
+const AppContextProvider = (props: any) => {
+    const [favouritePokemon, setFavouritePokemon] = useState<IResult | null>({} as IResult);
+
+    const contextValues : AppContextType = {
+        favourite: favouritePokemon,
+        setFavourite: setFavouritePokemon
+    }
+
+  return (
+        <AppContext.Provider value={contextValues}>
+            {props.children}
+        </AppContext.Provider>
+  )
+}
+
+export const useAppContext = () =>{
+    return useContext(AppContext);
+}
+
+export default AppContextProvider
+
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useAppContext } from './AppContextProvider.tsx';
+
+
+
+
+interface IResult {
+    name: string;
+    sprite: string;
+    height: number;
+    weight: number;
+}
+
+
+function PokemonCard50() {
+    const [cardData, setcardData] = useState<IResult>({} as IResult);
+    const { pokemonId } = useParams();
+    const  url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
+    const { setFavourite } = useAppContext();
+    
+
+
+    useEffect(() => {
+        getCardInfo(url);
+    }, [pokemonId])
+
+    /**
+     * Async function to fetch pokemon card from the api
+     * @param link of the api
+     */
+    async function getCardInfo(link : string){
+        const response = await axios.get(link);
+        let info = {} as IResult;
+        info.name = response.data.name;
+        info.sprite = response.data.sprites.front_shiny;
+        info.height = response.data.height / 10;
+        info.weight = response.data.weight /10;
+        setcardData(info);
+    }
+    return (
+        <>
+            <div className='pokemonCard'>
+                <h3>{cardData.name}</h3>
+                <img src={cardData.sprite} alt={cardData.name}/>
+                <p>Height: {cardData.height} m</p>
+                <p>Weight: {cardData.weight} kg</p>
+                <button onClick={() => setFavourite(cardData)}>Set Favorite</button>
+            </div>
+        </>
+    )
+}
+
+export default PokemonCard50
+
+import React from 'react'
+import { useAppContext } from './AppContextProvider.tsx';
+
+type Props = {}
+
+const PokemonFavourite = (props: Props) => {
+    const { favourite } = useAppContext();
+
+    if (!favourite) {
+        return <div className="pokemonFavorite">
+                    <p> You have not selected a favourite pokemon</p>
+                </div>;
+    }
+
+    return (
+        <div className="pokemonFavorite">
+            <h2>Favourite</h2>
+            <h3>{favourite.name}</h3>
+            <img src={favourite.sprite} alt={favourite.name} />
+            <p>Height: {favourite.height} m</p>
+            <p>Weight: {favourite.weight} kg</p>
+        </div>
+    )
+}
+
+export default PokemonFavourite
+
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+
+
+
+interface IPokemonList {
+    count: number;
+    next: string;
+    previous: string;
+    results: IResult[];
+}
+
+interface IResult {
+    name: string;
+    url: string;
+}  
+
+
+const PokemonList50 = () => {
+    const [cardList, setCardList] = useState<IResult[]>([]);
+    const uri: string = "https://pokeapi.co/api/v2/pokemon/"
+
+
+    useEffect(() => {
+        getPokemonCard(uri)
+    }, []);
+
+    /**
+     * Async function to fetch pokemon card from the api
+     * @param url of the api
+     */
+    async function getPokemonCard(url: string) {
+        const response = await axios.get(url);
+        let lista = response.data as IPokemonList;
+        setCardList(lista.results)
+    }
+
+
+    
+    return (
+        <>
+            <div className="container">
+                {cardList.map((card, index) => {
+                    return <div key={index}>
+                                <Link to={`/pokemon/${index +1}`}>{card.name}</Link>
+                            </div>
+                })}
+            </div>
+        </>
+    )
+}
+
+export default PokemonList50
 ```
+
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p50-1.png"/>
+<img src="./img/p50-2.png"/>
+<img src="./img/p50-3.png"/>
 </div>
 <br>
 
@@ -3947,14 +4202,16 @@ el contexto ( nada de contraseña ni roles ) y en todos los componentes de la ap
 decir: “hola nombreusuario! “
 >
 
-
 ```javascript
 
 ```
+
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+  <img src="./img/p51-1.png"/>
+  <img src="./img/p51-2.png"/>
+  <img src="./img/p51-3.png"/>
 </div>
 <br>
 
@@ -3968,13 +4225,70 @@ la información del pokemon de local storage y lo ponga en el contexto.
 
 
 ```javascript
+import React, { Dispatch, SetStateAction, createContext, useContext, useEffect, useState } from 'react'
+
+
+type Props = {}
+
+
+interface IResult {
+    name: string;
+    sprite: string;
+    height: number;
+    weight: number;
+}
+
+interface AppContextType {
+    favourite: IResult | null;
+    setFavourite: Dispatch<SetStateAction<IResult | null>>;
+}
+
+export const AppContext = createContext<AppContextType>({} as AppContextType);
+
+const AppContextProvider52 = (props: any) => {
+    const [favouritePokemon, setFavouritePokemon] = useState<IResult | null>({} as IResult);
+
+
+    useEffect(() => {
+        const storedFavourite = localStorage.getItem('favouritePokemon');
+        if (storedFavourite) {
+            setFavouritePokemon(JSON.parse(storedFavourite));
+        }
+    }, []);
+    
+    useEffect(() => {
+        if (favouritePokemon) {
+            localStorage.setItem('favouritePokemon', JSON.stringify(favouritePokemon));
+        }
+    }, [favouritePokemon]);
+
+
+    const contextValues : AppContextType = {
+        favourite: favouritePokemon,
+        setFavourite: setFavouritePokemon
+    }
+
+
+  return (
+        <AppContext.Provider value={contextValues}>
+            {props.children}
+        </AppContext.Provider>
+  )
+}
+
+export const useAppContext52 = () =>{
+    return useContext(AppContext);
+}
+
+export default AppContextProvider52
+
 
 ```
 
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p52-1.png"/>
 </div>
 <br>
 
