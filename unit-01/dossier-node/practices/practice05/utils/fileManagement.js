@@ -8,7 +8,7 @@ function write(fileName, content) {
             fs.writeFileSync(fileName, content);
             resolve("File saved successfully");
         } catch (error) {
-            reject(error);
+            console.error(error);
         }
     });
 }

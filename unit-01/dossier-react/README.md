@@ -22,12 +22,38 @@
 - [Práctica 18](#práctica-18)
 - [Práctica 19](#práctica-19)
 - [Práctica 20](#práctica-20)
-
-
-#### Extras:
-- Example
-
-
+- [Práctica 21](#práctica-21)
+- [Práctica 22](#práctica-22)
+- [Práctica 23](#práctica-23)
+- [Práctica 24](#práctica-24)
+- [Práctica 25](#práctica-25)
+- [Práctica 26](#práctica-26)
+- [Práctica 27](#práctica-27)
+- [Práctica 28](#práctica-28)
+- [Práctica 29](#práctica-29)
+- [Práctica 30](#práctica-30)
+- [Práctica 31](#práctica-31)
+- [Práctica 32](#práctica-32)
+- [Práctica 33](#práctica-33)
+- [Práctica 34](#práctica-34)
+- [Práctica 35](#práctica-35)
+- [Práctica 36](#práctica-36)
+- [Práctica 37](#práctica-37)
+- [Práctica 38](#práctica-38)
+- [Práctica 39](#práctica-39)
+- [Práctica 40](#práctica-40)
+- [Práctica 41](#práctica-41)
+- [Práctica 42](#práctica-42)
+- [Práctica 43](#práctica-43)
+- [Práctica 44](#práctica-44)
+- [Práctica 45](#práctica-45)
+- [Práctica 46](#práctica-46)
+- [Práctica 47](#práctica-47)
+- [Práctica 48](#práctica-48)
+- [Práctica 49](#práctica-49)
+- [Práctica 50](#práctica-50)
+- [Práctica 51](#práctica-51)
+- [Práctica 52](#práctica-52)
 
 ***
 
@@ -1217,7 +1243,7 @@ lugar: console.log(newfecha); ¿ qué ocurre con el renderizado ? Mirar en la co
 información está mostrando y explicar lo que ocurre
 >
 
-El 1000 que les estamos pasandp sirve para imdicar cada cuanto se va a ejecutar la función tick, en este caso cada 1000ms. 
+El 1000 que les estamos pasando sirve para indicar cada cuanto se va a ejecutar la función tick, en este caso cada 1000ms. Como dentro tick se actualiza el useState de actualDate, el renderizado se actualiza.
 
 
 ```javascript
@@ -1249,7 +1275,7 @@ export default Practice21
 - Captura:
 
 <div align="center">
-<img src="./img/p21-1.png"/>
+<img src="./img/p21.png"/>
 </div>
 
 </br>
@@ -1496,14 +1522,47 @@ dice: mostrar este último botón copia el array almacenado en la referencia y l
 state. Mostrándose así el array de números generados
 >
 
-
+ 
 ```javascript
+type Props = {}
 
+const Practice25 = (props: Props) => {
+  const numbersRef = useRef<number[]>([]);
+    const [numArr, setNumArr] = useState<number[]>([]);
+
+    const addRndNum = () => {
+        const randomNumber = Math.trunc(Math.random() * 100) + 1; 
+        numbersRef.current.push(randomNumber);
+    };
+
+    const showNumbers = () => {
+        setNumArr([...numbersRef.current]); 
+    };
+
+
+  return (
+    <>
+        <div>
+            <button onClick={addRndNum}>Aleatorio</button>
+            <button onClick={showNumbers}>Mostrar</button>
+            <h3>Result:</h3>
+            <ul>
+                {numArr.map((num, index) => (
+                    <li key={index}>{num}</li>
+                ))}
+            </ul>
+        </div>
+    </>
+  )
+}
+
+export default Practice25
 ```
+
 - Captura:
 
 <div align="center">
-<img src="./img/p20-1.png"/>
+<img src="./img/p25.png"/>
 </div>
 
 </br>
@@ -1511,17 +1570,76 @@ state. Mostrándose así el array de números generados
 ### Práctica 26
 
 > 📂
-> 
+> Crear un componente que tenga un cuadro de texto y un botón. Cuando se
+pulse en el botón se cargará otro componente debajo del botón que será la tabla de
+multiplicar (del 1 al 10 ) si es un número lo introducido. Si en lugar de un número fuera una
+palabra, entonces se cargará otro componente que nos dirá la cantidad de letras de la palabra
+y la cantidad de mayúsculas y minúsculas. Pasar la información a esos dos componentes
+mediante props
 >
 
 
 ```javascript
+type Props = {
+    word : string
+}
 
+const CountLetters = (props: Props) => {
+    const word = props.word;
+
+  return (
+    <>
+        <div>
+            <h4>{word} length is: {word.length}</h4>
+        </div>
+    </>
+  )
+}
+
+export default CountLetters
+
+type Props = {}
+
+function Practice26({}: Props) {
+    const inputValueRef = useRef<HTMLInputElement>({} as HTMLInputElement);
+    const textareaRef = useRef<HTMLTextAreaElement>({} as HTMLTextAreaElement);
+
+    const [option, setOption] = useState<boolean>(true);
+    const [value, setValue] = useState<string>('');
+
+    function getInputType(){
+        let input = inputValueRef.current.value;
+        setValue(input);
+
+        if (isNaN(parseInt(input))) {
+            setOption(true);
+        } else {
+            setOption(false);
+        }
+    }
+
+
+
+return (
+        <>
+        <div>
+            <h4>Form</h4>
+            <input type="text" ref={inputValueRef}/>
+            <button onClick={getInputType}>Submit</button>
+                {option ? <CountLetters word={value}/> : <Practice09 numTable={parseInt(value)}/>}
+            
+        </div>
+        </>
+    )
+}
+
+export default Practice26
 ```
+
 - Captura:
 
 <div align="center">
-<img src="./img/p20-1.png"/>
+<img src="./img/p26.png"/>
 </div>
 
 </br>
@@ -1529,17 +1647,70 @@ state. Mostrándose así el array de números generados
 ### Práctica 27
 
 > 📂
-> 
+> Realizar un componente react: Cronometro.tsx De tal forma que el usuario introduzca la cantidad de segundos y al pulsar iniciar vaya mostrando la cuenta atrás
 >
 
-
 ```javascript
+type Props = {}
 
+function Practice27({}: Props) {
+
+    const [time, settime] = useState(20);
+    const [stateBtn, setstateBtn] = useState<boolean>(false);
+    const refTimer = useRef<ReturnType<typeof setInterval>>();
+    const refNum = useRef<number>(0);
+    const refInput = useRef<HTMLInputElement>(null);
+
+
+    useEffect(() => {
+      if (time === 0 && stateBtn){
+        clearInterval(refTimer.current);
+        setstateBtn(false);
+      }  
+      
+    }, [time, stateBtn]);
+
+
+    const actualizarTime = () =>{
+      if(refNum.current > 0){
+        refNum.current--;
+        settime(refNum.current);
+      }
+    }
+
+    function iniciarParar(){
+        if(!stateBtn){
+          const numUser = parseInt(refInput.current?.value || '0', 10);
+          if (isNaN(numUser) || numUser <= 0) {
+            return;
+          }
+          refNum.current = numUser;
+            refTimer.current = setInterval(actualizarTime, 1000);
+            setstateBtn(true);
+        } else {
+            clearInterval(refTimer.current!);
+            setstateBtn(false);
+        }
+
+    }
+
+  return (
+    <div>
+      <h2>Cronometer</h2>
+      <input type="number" name='usertime' id="usertime" ref={refInput}/>
+      <button onClick={iniciarParar}> {stateBtn?"parar":"iniciar"}</button>
+      <p><b>Remaining time:</b> {time}</p>
+    </div>
+  )
+}
+
+export default Practice27
 ```
+
 - Captura:
 
 <div align="center">
-<img src="./img/p20-1.png"/>
+<img src="./img/p27-1.png"/>
 </div>
 
 </br>
@@ -1825,8 +1996,6 @@ con nombre queso: “queso rochefort”, “queso edam”,… )
 
 
 ```javascript
-import React, { useState } from 'react'
-import './Practice32.css'
 type Props = {}
 
 type Product = {
@@ -1929,8 +2098,6 @@ mostrará: 11, 13, 17
 
 
 ```javascript
-import React, { useState } from 'react'
-import './Practice32.css'
 type Props = {}
 
 type Product = {
@@ -2032,13 +2199,7 @@ donde aparece la información que envían y es recibida
 
 
 ```javascript
-
-
-import React, { useState } from 'react'
-
-
 type Props = {}
-
 
 const Practice34 = (props: Props) => {
     const [age, setAge] = useState<string[]>([]);
@@ -2143,9 +2304,6 @@ Si se pulsa en el botón del componente B el mensaje recibido en el state del pa
 
 
 ```javascript
-import React, { ChangeEvent, useEffect, useState } from 'react'
-
-
 const Practice35Refactor = (props: Props) => {
     const [message, setMessage] = useState("");
 
@@ -2245,8 +2403,6 @@ export default class Person {
     public weigth : number;
     public imc : number;
 
-    // default constructor
-
     constructor() {
         this.id = Person.initialId++;
     }
@@ -2260,7 +2416,6 @@ export default class Person {
         return this.weigth / (heightMeter*heightMeter);
     }
     
-    //Getters and setters
     public getId(): number {
         return this.id;
     }
@@ -2305,8 +2460,7 @@ export default class Person {
     }
 }
 
-import React, { useState } from 'react'
-import Person from './model/Person';
+
 
 type Props = {
     person : Person
@@ -2389,11 +2543,6 @@ const PersonCard = (props: Props) => {
 
 
 export default PersonCard
-
-import React, { ChangeEvent, ReactEventHandler, useEffect, useRef, useState } from 'react'
-import Person from './model/Person.ts';
-import './Practice36.css'
-import PersonCard from './PersonCard.tsx';
 
 const Practice36 = () => {
   const [personList, setPersonList] = useState<Person[]>([]);
@@ -2480,8 +2629,6 @@ export default class Calculator {
     }
 }
 
-import React, { useEffect, useRef, useState } from 'react'
-import Calculator from './model/Calculator.ts';
 
 const Practice37 = (props: Props) => {
     const [number, setNumber] = useState<number>(0);
@@ -2574,10 +2721,6 @@ export default class User {
 
 }
 
-import React, { useEffect, useState } from 'react'
-import User from './model/User.ts';
-
-
 const Practice38 = (props: Props) => {
     const [userArray, setUserArray] = useState<Array<User>>([])
     const [currentUser, setCurrentUser] = useState(0);
@@ -2649,7 +2792,6 @@ const ComponenteHijo = (props: Props) => {
         const { modifyUserParent } = props;
         let user = new User(newName);
         user.id = props.user.id;
-        //console.log(user.id);
         user.name = newName;
         console.log(user);
         modifyUserParent(user);
@@ -2684,8 +2826,6 @@ const ComponenteHijo = (props: Props) => {
 
 
 ```javascript
-import React, { ChangeEvent, useState } from 'react'
-
 
 const Practice39 = (props: Props) => {
     const [data, setdata] = useState("")
@@ -2740,9 +2880,6 @@ elementos de la lista y se de al play en el reproductor sonará la canción.
 
 
 ```javascript
-import React, { useState } from 'react'
-import ReactPlayer from 'react-player'
-import './styles/practice40.css';
 
 type Props = {}
 
@@ -2825,12 +2962,6 @@ const About = (props: Props) => {
 
 export default About
 
-import React from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
-import Practice36 from '../practice36/Practice36.tsx';
-import Practice27 from '../practice27/Practice27.tsx';
-import About from './About.tsx';
-import Practice21 from '../practice21/Practice21.tsx';
 
 type Props = {}
 
@@ -2874,11 +3005,6 @@ route
 >
 
 ```javascript
-import React from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
-import Practice31 from '../practice31/Practice31.tsx';
-import Practice20 from '../practice20/Practice20.tsx';
-
 type Props = {}
 
 function Practice42({}: Props) {
@@ -2922,10 +3048,6 @@ sufijo ( el peso está en: kg y la altura en: m )
 
 
 ```javascript
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-
-
 type Props = {
     url: string;
 }
@@ -2976,12 +3098,6 @@ function PokemonCard(props : Props) {
 }
 
 export default PokemonCard
-
-
-import React, { useEffect, useState } from 'react'
-import PokemonCard from './PokemonCard.tsx';
-import axios from 'axios';
-
 
 
 interface IPokemonList {
@@ -3051,9 +3167,6 @@ aparecerá la imagen y el nombre de la capital de provincia
 
 
 ```javascript
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import CapitalCard from './CapitalCard.tsx';
 
 type Props = {}
 
@@ -3112,7 +3225,6 @@ const CapitalList = () => {
 
 export default CapitalList
 
-import React from 'react'
 
 type Props = {
     id : string;
@@ -3161,12 +3273,6 @@ de los últimos años
 
 
 ```javascript
-import React from 'react'
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import PokemonListModify from './Pokedex/PokemonListModify.tsx';
-import PokemonCardModify from './Pokedex/PokemonCardModify.tsx';
-import CapitalCardModify from './Capital/CapitalCardModify.tsx';
-import CapitalListModify from './Capital/CapitalListModify.tsx';
 
 type Props = {}
 
@@ -3203,12 +3309,8 @@ export default App45
 
 
 - Capital :
+
 ```javascript
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
-
-
 interface IResult {
     id : string;
     name: string;
@@ -3253,11 +3355,6 @@ const CapitalCardModify = () => {
 }
 
 export default CapitalCardModify
-
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import CapitalCard from './CapitalCardModify.tsx';
-import { Link } from 'react-router-dom';
 
 type Props = {}
 
@@ -3312,10 +3409,9 @@ export default CapitalListModify
 ```
 
 - Pokémon
+
 ```javascript
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+
 
 
 
@@ -3362,12 +3458,6 @@ function PokemonCardModify() {
 }
 
 export default PokemonCardModify
-
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-import PokemonCardModify from './PokemonCardModify';
-import { Link } from 'react-router-dom';
-
 
 
 interface IPokemonList {
@@ -3439,13 +3529,112 @@ lo único que hacemos en el axios.post es decirle la ruta de la imagen
 >
 
 
-```javascript
+
+```js
 json-server --watch ../src/datospoblacion.json  --static poblacion/img/
 ```
-- Captura:
 
+```javascript
+type Props = {}
+
+const CreateCapital = (props: Props) => {
+    const { username } = useAppContext(); 
+
+
+    function addCapitalToApi(event:React.FormEvent<HTMLFormElement>){
+        event.preventDefault();
+        let form: HTMLFormElement = event.currentTarget;
+        let inputCapitalName: HTMLInputElement = form.capitalName;
+        let inputCapitalYear: HTMLInputElement = form.capitalYear;
+        let inputCapitalPopulation: HTMLInputElement = form.capitalPopulation;
+
+        let name:string = inputCapitalName.value;
+        let population:number = parseInt(inputCapitalPopulation.value);
+        let year:number = parseInt(inputCapitalYear.value);
+
+        const newCapital = {
+            "id": name.toLocaleLowerCase(),    
+            "nombre": name,
+            "datos": {
+                    0: {
+                        "poblacion": population,
+                        "anio": year
+                    }
+                },
+            "foto": "albacete.png"    
+        }
+
+        const route: string = "http://localhost:3000/capitales"
+
+        const axiospost = async(capitalRoute:string)=>{
+            try{
+                const response = await axios.post(capitalRoute, newCapital )
+            }catch(error){
+            console.log(error);
+            }
+        }
+        axiospost(route);
+    }
+
+
+    return (
+    <>
+    
+        <h2>Create Capital</h2>
+        {username && <span>Hello {username}!</span>}
+        <br />
+        <form onSubmit={addCapitalToApi}>
+                Name: <input type="text" name="capitalName" /><br />
+                Year: <input type="number" name="capitalYear" /><br />
+                Population: <input type="number" id="capitalPopulation" /> <br />
+            <button type="submit">Create </button>
+        </form>
+    </>
+    )
+}
+
+export default CreateCapital
+
+type Props = {}
+
+const CapitalApp = (props: Props) => {
+    return (
+        <>
+            <BrowserRouter>
+                <h1>App</h1>
+                <Navbar />
+                <Routes>
+                    <Route path="/" element={<CapitalList46 />} />
+                    <Route path="/capitals" element={<CapitalList46/>}/>
+                </Routes>
+                <Routes>
+                    <Route path="/capitals/capital/:capitalId" element={<CapitalCard46/>}/>
+                    <Route path="/capitals/create-capital" element={<CreateCapital/>}/>
+                </Routes>
+            </BrowserRouter>
+        </>
+        );
+    }
+    
+    function Navbar() {
+        return (
+            <nav>
+                <Link to="/"> </Link>
+                <Link to="/capitals"> Capitals </Link>
+                <Link to="/capitals/create-capital"> Create </Link>
+            </nav>
+        );
+    }
+
+export default CapitalApp
+```
+
+- Captura:
+  
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p46-1.png"/>
+<img src="./img/p46-2.png"/>
+<img src="./img/p46-3.png"/>
 </div>
 <br>
 
@@ -3457,14 +3646,177 @@ dominado lo anterior. Buscar el funcionamiento específico de axios y crear los
 componentes de borrado y modificación pertinentes para realizar esas acciones
 >
 
+Eliminares y modificaremos micapital
 
 ```javascript
+type Props = {}
 
+
+interface ICapital {
+    id: String;     
+    nombre: String;
+    datos : IDato [];
+    foto: String;    
+}
+
+interface IDato {
+    poblacion: number;
+    anio: number;
+}
+const ModifyCapital = (props: Props) => {
+    const [currentIndex, setcurrentIndex] = useState(0);
+    const [capital, setCapital] = useState<ICapital>({} as ICapital);
+    const [name, setName] = useState<string>();
+    const [year, setYear] = useState<number>();
+    const [population, setPopulation] = useState<number>();
+    const { username } = useAppContext(); 
+
+
+    function modifyCapitalFromApi(event:React.FormEvent<HTMLFormElement>){
+        event.preventDefault();
+
+        let form: HTMLFormElement = event.currentTarget;
+        let inputcapitalName: HTMLInputElement = form.capitalName;
+        let inputcapitalYear: HTMLInputElement = form.capitalYear;
+        let inputcapitalPopulation: HTMLInputElement = form.capitalPopulation;
+
+        let name: string = inputcapitalName.value;
+        const capitalId = capital.nombre.toLowerCase();
+        const year: number = parseInt(inputcapitalYear.value);
+        const population: number = parseInt(inputcapitalPopulation.value);
+    
+        const updateCapital = {
+            "id": capitalId,    
+            "nombre": name,
+            "datos": {
+                    0: {
+                        "poblacion": population,
+                        "anio": year
+                    }
+                },
+            "foto": capitalId+".png"    
+        }
+
+        const route: string = "http://localhost:3000/capitales/"+capitalId;
+
+        const axiospost = async(capitalRoute:string)=>{
+            try{
+                const response = await axios.put(capitalRoute, updateCapital)
+                setcurrentIndex(0);
+            }catch(error){
+            console.log(error);
+            }
+        }
+
+        axiospost(route);
+    }
+
+    function getCapitalFromAPi(event:React.FormEvent<HTMLFormElement>){
+        event.preventDefault();
+        let form: HTMLFormElement = event.currentTarget;
+        let inputcapitalNameSearch: HTMLInputElement = form.capitalNameSearch;
+    
+        let name:string = inputcapitalNameSearch.value;
+        const capitalId = name.toLowerCase();
+
+        const route: string = "http://localhost:3000/capitales/"+capitalId;
+
+        const axiosGet = async()=>{
+            try{
+                const response = await axios.get(route)
+                setCapital(response.data);
+                setName(capital?.nombre?.toString());
+                setYear(capital?.datos[0].anio);
+                setPopulation(capital?.datos[0].poblacion);
+                setcurrentIndex(1);
+            }catch(error){
+            console.log(error);
+            }
+        }
+
+        axiosGet();
+
+    }
+    
+    return (
+    <>
+        <h2>Modify Capital</h2>
+        {username && <span>Hello {username}!</span>}
+        <br />
+        <form onSubmit={getCapitalFromAPi}>
+                Name: <input type="text" name="capitalNameSearch" /><br />
+            <button type="submit">Search </button>
+        </form>
+        <br />
+        {currentIndex != 0 &&
+            <div>
+                <form onSubmit={modifyCapitalFromApi} name='modifyForm'>
+                        Name: <input type="text" name="capitalName" onChange={(e)=> setName(e.target.value)} value={name}/><br />
+                        Year: <input type="number" name="capitalYear" onChange={(e)=> setYear(Number(e.target.value))} value={year} /><br />
+                        Population: <input type="number" id="capitalPopulation" onChange={(e)=> setPopulation(Number(e.target.value))} value={population} /> <br />
+                    <button type="submit">Update </button>
+                </form>
+            </div>
+        }
+    </>
+    )
+}
+
+export default ModifyCapital
+
+type Props = {}
+
+const DeleteCapital = (props: Props) => {
+    const { username } = useAppContext(); 
+
+
+    function deleteCapitalFromApi(event:React.FormEvent<HTMLFormElement>){
+        event.preventDefault();
+        let form: HTMLFormElement = event.currentTarget;
+        let inputCapitalName: HTMLInputElement = form.capitalName;
+    
+        let name:string = inputCapitalName.value;
+        const capitalId = name.toLowerCase();
+
+        const route: string = "http://localhost:3000/capitales/"+capitalId;
+
+        const axiospost = async(capitalRoute:string)=>{
+            try{
+                const response = await axios.delete(capitalRoute)
+                console.log(response.data);
+            }catch(error){
+            console.log(error);
+            }
+        }
+        axiospost(route);
+    }
+
+
+    return (
+    <>
+    
+        <h2>Delete Capital</h2>
+        {username && <span>Hello {username}!</span>}
+        <br />
+        <form onSubmit={deleteCapitalFromApi}>
+                Name: <input type="text" name="capitalName" /><br />
+            <button type="submit">Delete </button>
+        </form>
+    </>
+    )
+}
+
+export default DeleteCapital
 ```
+
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+  <img src="./img/p47-1.png"/>
+  <img src="./img/p47-2.png"/>
+  <img src="./img/p47-3.png"/>
+  <img src="./img/p47-4.png"/>
+  <img src="./img/p47-5.png"/>
 </div>
 <br>
 
@@ -3480,14 +3832,247 @@ Ponerle un router y tener soporte para rutas parametrizadas. Habilitar también 
 personas en la api
 >
 
-
 ```javascript
+type Props = {}
 
+const App48 = (props: Props) => {
+    return (
+        <>
+            <BrowserRouter>
+                <h1>App</h1>
+                <Navbar />
+                <Routes>
+                    <Route path="/" element={<Practice48 />} />
+                    <Route path="/person/:id" element={<PersonCard/>}/>
+                    <Route path="/person/delete" element={<DeletePerson/>}/>
+
+                </Routes>
+            </BrowserRouter>
+        </>
+    )
+
+    function Navbar() {
+        return (
+            <nav>
+                <Link to="/"> Persons </Link>
+                <Link to="/person/delete"> Delete </Link>
+            </nav>
+        );
+    }
+}
+
+export default App48
+
+type Props = {}
+
+const DeletePerson = (props: Props) => {
+    const { username } = useAppContext(); 
+
+
+    function deletePersonFromApi(event:React.FormEvent<HTMLFormElement>){
+        event.preventDefault();
+        let form: HTMLFormElement = event.currentTarget;
+        let inputPersonId: HTMLInputElement = form.personId;
+    
+        let personId:string = inputPersonId.value;
+
+        const route: string = "http://localhost:3000/persons/"+personId;
+
+        const axiosDelete = async(personRoute:string)=>{
+            try{
+                const response = await axios.delete(personRoute)
+            }catch(error){
+                console.log(error);
+            }
+        }
+        
+        axiosDelete(route);
+    }
+
+
+    return (
+    <>
+    
+        <h2>Delete person</h2>
+        <br />
+        <form onSubmit={deletePersonFromApi}>
+                ID: <input type="text" name="personId" /><br />
+            <button type="submit">Delete </button>
+        </form>
+    </>
+    )
+}
+
+export default DeletePerson
+
+type Person = {
+  id: number;
+  name: string;
+  surname: string;
+  age: number;
+  height: number;
+  weigth: number;
+  imc: number;
+};
+
+const PersonCard = () => {
+  const { id } = useParams<{ id: string }>();
+  const [person, setPerson] = useState<Person | null>(null);
+
+  const [name, setname] = useState(person?.name);
+  const [surname, setsurname] = useState(person?.surname);
+  const [height, setheight] = useState(person?.height);
+  const [age, setage] = useState(person?.age);
+  const [weigth, setweighth] = useState(person?.weigth);
+  const [imc, setimc] = useState(person?.imc);
+
+  const url = `http://localhost:3000/persons/${id}`;
+
+  useEffect(() => {
+      fetchPerson();
+  }, [id])
+  
+  async function fetchPerson() {
+      const response = await axios.get(url);
+      const result = response.data;
+      setPerson(result);
+      setname(result.name);
+      setsurname(result.surname);
+      setheight(result.height);
+      setage(result.age);
+      setweighth(result.weigth);
+      setimc(result.imc);
+      setPerson(response.data);
+  }
+  
+
+  async function processForm(e: React.FormEvent<HTMLFormElement>) {
+      e.preventDefault();
+
+      const updatedPerson = {
+          ...person,
+          name,
+          surname,
+          age,
+          weigth,
+          height,
+          imc: calculateIMC(height ?? 0, weigth ?? 0),
+      };
+;
+      await axios.put(url, updatedPerson);
+  }
+
+
+  function calculateIMC(height : number, weigth :number) : number {
+      if(height === 0 || weigth === 0) {
+          return 0;
+      }
+
+      let heightMeter = height/100;
+      return weigth / (heightMeter*heightMeter);
+  }
+
+  return (
+      <>
+          <div className='card'>
+              <form onSubmit={processForm}>
+              <div>
+                  <p>{person?.id}</p>
+              </div>
+              <div>
+                  <label htmlFor="nameId">Name</label>
+              </div>
+              <div>
+                  <input type="text" name='namePerson' id='nameId' onChange={(e) => setname(e.target.value)} value={name}/>
+              </div>
+              <div>
+                  <label htmlFor="surnameId">Surname</label>
+              </div>
+              <div>
+                  <input type="text" name='surnamePerson' id='surnameId' onChange={(e) => setsurname(e.target.value)} value={surname}/>
+              </div>
+              <div>
+                  <label htmlFor="heightId">Height</label>
+              </div>
+              <div>
+                  <input type="text" name='heightPerson' id='heightId' onChange={(e) => setheight(Number(e.target.value))} value={height}/>
+              </div>
+              <div>
+                  <label htmlFor="ageId">Age</label>
+              </div>
+              <div>
+                  <input type="text" name='agePerson' id='ageId' onChange={(e) => setage(Number(e.target.value))} value={age}/>
+              </div>
+              <div>
+                  <label htmlFor="heighthId">Weight</label>
+              </div>
+              <div>
+                  <input type="text" name='weightPerson' id='weightId' onChange={(e) => setweighth(Number(e.target.value))} value={weigth}/>
+              </div>
+              <div>
+                  <p>{imc}</p>
+              </div>
+              <button type='submit'>Process</button>
+              </form>
+          </div>
+      </>
+  )
+  }
+  
+  
+export default PersonCard
+
+
+type Person = {
+    id: number;
+    name: string;
+    surname: string;
+    age: number;
+    height: number;
+    weigth: number;
+    imc: number;
+};
+
+const PersonList = () => {
+    const [persons, setPersons] = useState<Person[]>([]);
+    const url = 'http://localhost:3000/persons';
+
+    useEffect(() => {
+        fetchPersons();
+    }, []);
+
+    const fetchPersons = async () => {
+        const response = await axios.get(url);
+        let list = response.data;
+        setPersons(list);
+    };
+
+    return (
+    <div className="container">
+            {persons.map((person, index) => {
+                return <div key={index}>
+                            <Link to={`/person/${person.id}`}>
+                                {person.name} {person.surname}
+                            </Link>
+                        </div>
+            })}
+        </div>
+    );
+};
+
+export default PersonList;
 ```
+
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p48-1.png"/>
+<img src="./img/p48-2.png"/>
+<img src="./img/p48-3.png"/>
+<img src="./img/p48-4.png"/>
+<img src="./img/p48-5.png"/>
+<img src="./img/p48-6.png"/>
+<img src="./img/p48-7.png"/>
 </div>
 <br>
 
@@ -3497,17 +4082,14 @@ personas en la api
 > En nuestras apps de capitales y personas imc, al hacer la edición y pulsar en el
 botón que ejecuta el cambio en la api, usar el hook para que la app cargue directamente el
 componente raíz ( se entiende que una vez se ha terminado de editar, no hay ningún interés
-en quedarse en el componente de edición 
+en quedarse en el componente de edición )
 >
 
+En ambas apps, pertenecientes a las practicas 47 y 48 respectivamente, lo único que debemos añadir es el hook navigate con la direccion de la raiz de la app como vemos en la captura.
 
-```javascript
-
-```
 - Captura:
-
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p49-1.png"/>
 </div>
 <br>
 
@@ -3524,12 +4106,207 @@ datos de ese pokemon justo dentro de <Browserrouter> pero por fuera de <Routes>)
 
 
 ```javascript
+type Props = {}
 
+const App50 = (props: Props) => {
+
+
+    return (
+        <>
+            <BrowserRouter>
+                <AppContextProvider>
+                    <Navbar />
+                    
+                    <Routes>
+                        <Route path="/" element={<PokemonList50 />} />
+                        <Route path="/pokemon/:pokemonId" element={< PokemonCard50/>} />
+                        <Route path="/pokemon/favourite" element={<PokemonFavourite />} />
+                    </Routes>
+                </AppContextProvider>
+            </BrowserRouter>
+        </>
+        );
+    }
+    
+    function Navbar() {
+        return (
+            <nav>
+                <Link to="/">Pokedex </Link>
+                <Link to="/pokemon/favourite"> Pokémon Fav </Link>
+            </nav>
+        );
+    }
+
+export default App50
+
+
+type Props = {}
+
+
+interface IResult {
+    name: string;
+    sprite: string;
+    height: number;
+    weight: number;
+}
+
+interface AppContextType {
+    favourite: IResult | null;
+    setFavourite: Dispatch<SetStateAction<IResult | null>>;
+}
+
+export const AppContext = createContext<AppContextType>({} as AppContextType);
+
+const AppContextProvider = (props: any) => {
+    const [favouritePokemon, setFavouritePokemon] = useState<IResult | null>({} as IResult);
+
+    const contextValues : AppContextType = {
+        favourite: favouritePokemon,
+        setFavourite: setFavouritePokemon
+    }
+
+  return (
+        <AppContext.Provider value={contextValues}>
+            {props.children}
+        </AppContext.Provider>
+  )
+}
+
+export const useAppContext = () =>{
+    return useContext(AppContext);
+}
+
+export default AppContextProvider
+
+interface IResult {
+    name: string;
+    sprite: string;
+    height: number;
+    weight: number;
+}
+
+
+function PokemonCard50() {
+    const [cardData, setcardData] = useState<IResult>({} as IResult);
+    const { pokemonId } = useParams();
+    const  url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
+    const { setFavourite } = useAppContext();
+    
+
+
+    useEffect(() => {
+        getCardInfo(url);
+    }, [pokemonId])
+
+    /**
+     * Async function to fetch pokemon card from the api
+     * @param link of the api
+     */
+    async function getCardInfo(link : string){
+        const response = await axios.get(link);
+        let info = {} as IResult;
+        info.name = response.data.name;
+        info.sprite = response.data.sprites.front_shiny;
+        info.height = response.data.height / 10;
+        info.weight = response.data.weight /10;
+        setcardData(info);
+    }
+    return (
+        <>
+            <div className='pokemonCard'>
+                <h3>{cardData.name}</h3>
+                <img src={cardData.sprite} alt={cardData.name}/>
+                <p>Height: {cardData.height} m</p>
+                <p>Weight: {cardData.weight} kg</p>
+                <button onClick={() => setFavourite(cardData)}>Set Favorite</button>
+            </div>
+        </>
+    )
+}
+
+export default PokemonCard50
+
+type Props = {}
+
+const PokemonFavourite = (props: Props) => {
+    const { favourite } = useAppContext();
+
+    if (!favourite) {
+        return <div className="pokemonFavorite">
+                    <p> You have not selected a favourite pokemon</p>
+                </div>;
+    }
+
+    return (
+        <div className="pokemonFavorite">
+            <h2>Favourite</h2>
+            <h3>{favourite.name}</h3>
+            <img src={favourite.sprite} alt={favourite.name} />
+            <p>Height: {favourite.height} m</p>
+            <p>Weight: {favourite.weight} kg</p>
+        </div>
+    )
+}
+
+export default PokemonFavourite
+
+
+interface IPokemonList {
+    count: number;
+    next: string;
+    previous: string;
+    results: IResult[];
+}
+
+interface IResult {
+    name: string;
+    url: string;
+}  
+
+
+const PokemonList50 = () => {
+    const [cardList, setCardList] = useState<IResult[]>([]);
+    const uri: string = "https://pokeapi.co/api/v2/pokemon/"
+
+
+    useEffect(() => {
+        getPokemonCard(uri)
+    }, []);
+
+    /**
+     * Async function to fetch pokemon card from the api
+     * @param url of the api
+     */
+    async function getPokemonCard(url: string) {
+        const response = await axios.get(url);
+        let lista = response.data as IPokemonList;
+        setCardList(lista.results)
+    }
+
+
+    
+    return (
+        <>
+            <div className="container">
+                {cardList.map((card, index) => {
+                    return <div key={index}>
+                                <Link to={`/pokemon/${index +1}`}>{card.name}</Link>
+                            </div>
+                })}
+            </div>
+        </>
+    )
+}
+
+export default PokemonList50
 ```
+
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p50-1.png"/>
+<img src="./img/p50-2.png"/>
+<img src="./img/p50-3.png"/>
 </div>
 <br>
 
@@ -3543,14 +4320,16 @@ el contexto ( nada de contraseña ni roles ) y en todos los componentes de la ap
 decir: “hola nombreusuario! “
 >
 
-
 ```javascript
 
 ```
+
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+  <img src="./img/p51-1.png"/>
+  <img src="./img/p51-2.png"/>
+  <img src="./img/p51-3.png"/>
 </div>
 <br>
 
@@ -3562,14 +4341,66 @@ se establezca o modifique en localstorage. De tal forma que cuando se inicie la 
 la información del pokemon de local storage y lo ponga en el contexto.
 >
 
-
 ```javascript
+type Props = {}
 
+
+interface IResult {
+    name: string;
+    sprite: string;
+    height: number;
+    weight: number;
+}
+
+interface AppContextType {
+    favourite: IResult | null;
+    setFavourite: Dispatch<SetStateAction<IResult | null>>;
+}
+
+export const AppContext = createContext<AppContextType>({} as AppContextType);
+
+const AppContextProvider52 = (props: any) => {
+    const [favouritePokemon, setFavouritePokemon] = useState<IResult | null>({} as IResult);
+
+
+    useEffect(() => {
+        const storedFavourite = localStorage.getItem('favouritePokemon');
+        if (storedFavourite) {
+            setFavouritePokemon(JSON.parse(storedFavourite));
+        }
+    }, []);
+    
+    useEffect(() => {
+        if (favouritePokemon) {
+            localStorage.setItem('favouritePokemon', JSON.stringify(favouritePokemon));
+        }
+    }, [favouritePokemon]);
+
+
+    const contextValues : AppContextType = {
+        favourite: favouritePokemon,
+        setFavourite: setFavouritePokemon
+    }
+
+
+  return (
+        <AppContext.Provider value={contextValues}>
+            {props.children}
+        </AppContext.Provider>
+  )
+}
+
+export const useAppContext52 = () =>{
+    return useContext(AppContext);
+}
+
+export default AppContextProvider52
 ```
+
 - Captura:
 
 <div align="center">
-<img src="./img/p350-1.png"/>
+<img src="./img/p52-1.png"/>
 </div>
 <br>
 

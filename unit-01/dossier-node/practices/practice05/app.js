@@ -7,7 +7,7 @@ En el interior del método escribir() se llama a la función: fs.writeFileSync()
 const {write} = require("./utils/fileManagement");
 const {createTable} = require("./model/table");
 
-write("practice05.txt", createTable(4))
+write("practice05.txt", createTable(7))
     .then(console.log("save ok"))
     .catch(err => console.log("error"));
     
