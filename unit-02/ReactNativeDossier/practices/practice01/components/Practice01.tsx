@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import styles from '../styles/Practice01Styles';
+import styles from '../themes/Practice01Styles';
 type Props = {}
 
 const Practice01 = (props: Props) => {
