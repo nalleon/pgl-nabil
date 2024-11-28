@@ -2783,105 +2783,13 @@
     },
     {
       "id": "madrid",
-      "nombre": "Madrid",
-      "datos": [
-        {
-          "anio": 1998,
-          "poblacion": 2881506
-        },
-        {
-          "anio": 1999,
-          "poblacion": 2879052
-        },
-        {
-          "anio": 2000,
-          "poblacion": 2882860
-        },
-        {
-          "anio": 2001,
-          "poblacion": 2957058
-        },
-        {
-          "anio": 2002,
-          "poblacion": 3016788
-        },
-        {
-          "anio": 2003,
-          "poblacion": 3092759
-        },
-        {
-          "anio": 2004,
-          "poblacion": 3099834
-        },
-        {
-          "anio": 2005,
-          "poblacion": 3155359
-        },
-        {
-          "anio": 2006,
-          "poblacion": 3128600
-        },
-        {
-          "anio": 2007,
-          "poblacion": 3132463
-        },
-        {
-          "anio": 2008,
-          "poblacion": 3213271
-        },
-        {
-          "anio": 2009,
-          "poblacion": 3255944
-        },
-        {
-          "anio": 2010,
-          "poblacion": 3273049
-        },
-        {
-          "anio": 2011,
-          "poblacion": 3265038
-        },
-        {
-          "anio": 2012,
-          "poblacion": 3233527
-        },
-        {
-          "anio": 2013,
-          "poblacion": 3207247
-        },
-        {
-          "anio": 2014,
-          "poblacion": 3165235
-        },
-        {
-          "anio": 2015,
-          "poblacion": 3141991
-        },
-        {
-          "anio": 2016,
-          "poblacion": 3165541
-        },
-        {
-          "anio": 2017,
-          "poblacion": 3182981
-        },
-        {
-          "anio": 2018,
-          "poblacion": 3223334
-        },
-        {
-          "anio": 2019,
-          "poblacion": 3266126
-        },
-        {
-          "anio": 2020,
-          "poblacion": 3334730
-        },
-        {
-          "anio": 2021,
-          "poblacion": 3305408
+      "nombre": "Madrid2",
+      "datos": {
+        "0": {
+          "poblacion": 10,
+          "anio": 2900
         }
-      ],
+      },
       "foto": "madrid.png"
     },
     {
@@ -5273,26 +5181,15 @@
           "anio": "2020"
         }
       },
-      "foto": "example.png"
-    },
-    {
-      "id": "micapital",
-      "nombre": "micapital",
-      "datos": {
-        "0": {
-          "poblacion": "23435435",
-          "anio": "2020"
-        }
-      },
       "foto": "albacete.png"
     },
     {
-      "id": "micapital2323",
-      "nombre": "micapital2323",
+      "id": "pruebacreacion",
+      "nombre": "PruebaCreacion",
       "datos": {
         "0": {
-          "poblacion": 1232324,
-          "anio": 2023
+          "poblacion": 3345436,
+          "anio": 2002
         }
       },
       "foto": "albacete.png"

@@ -1,0 +1,13 @@
+{
+  "persons": [
+    {
+      "id": "66b6",
+      "name": "claus",
+      "surname": "dainn",
+      "age": 49,
+      "weigth": 81,
+      "height": 182,
+      "imc": 24.453568409612362
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useAppContext } from '../../practice51/AppContextProvider51.tsx';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {}
 
@@ -17,6 +18,8 @@ interface IDato {
     anio: number;
 }
 const ModifyCapital = (props: Props) => {
+    const navigate = useNavigate();
+
     const [currentIndex, setcurrentIndex] = useState(0);
     const [capital, setCapital] = useState<ICapital>({} as ICapital);
     const [name, setName] = useState<string>();
@@ -30,11 +33,10 @@ const ModifyCapital = (props: Props) => {
 
         let form: HTMLFormElement = event.currentTarget;
         let inputcapitalName: HTMLInputElement = form.capitalName;
-        let inputcapitalYear: HTMLInputElement = form.capitalName;
-        let inputcapitalPopulation: HTMLInputElement = form.capitalName;
+        let inputcapitalYear: HTMLInputElement = form.capitalYear;
+        let inputcapitalPopulation: HTMLInputElement = form.capitalPopulation;
 
-        let name:string = inputcapitalName.value;
-
+        let name: string = inputcapitalName.value;
         const capitalId = capital.nombre.toLowerCase();
         const year: number = parseInt(inputcapitalYear.value);
         const population: number = parseInt(inputcapitalPopulation.value);
@@ -55,14 +57,16 @@ const ModifyCapital = (props: Props) => {
 
         const axiospost = async(capitalRoute:string)=>{
             try{
-                const response = await axios.post(capitalRoute)
-                console.log(response.data);
+                const response = await axios.put(capitalRoute, updateCapital)
+                console.log("Capital updated:", response.data);
+                setcurrentIndex(0);
             }catch(error){
             console.log(error);
             }
         }
+
         axiospost(route);
-        setcurrentIndex(0);
+        navigate('/');
     }
 
     function getCapitalFromAPi(event:React.FormEvent<HTMLFormElement>){
@@ -79,17 +83,17 @@ const ModifyCapital = (props: Props) => {
             try{
                 const response = await axios.get(route)
                 setCapital(response.data);
-                console.log(response.data);
+                setName(capital?.nombre?.toString());
+                setYear(capital?.datos[0].anio);
+                setPopulation(capital?.datos[0].poblacion);
+                setcurrentIndex(1);
             }catch(error){
             console.log(error);
             }
         }
 
         axiosGet();
-        setName(capital?.nombre?.toString());
-        setYear(capital?.datos[0].anio);
-        setPopulation(capital?.datos[0].poblacion);
-        setcurrentIndex(1);
+
     }
     
     return (

@@ -45,10 +45,10 @@ function Practice27({}: Props) {
 
   return (
     <div>
-    <h2>Cronometro</h2>
-    <input type="number" name='usertime' id="usertime" ref={refInput}/>
-    <button onClick={iniciarParar}> {stateBtn?"parar":"iniciar"}</button>
-    <p>{time}</p>
+      <h2>Cronometer</h2>
+      <input type="number" name='usertime' id="usertime" ref={refInput}/>
+      <button onClick={iniciarParar}> {stateBtn?"parar":"iniciar"}</button>
+      <p><b>Remaining time:</b> {time}</p>
     </div>
   )
 }

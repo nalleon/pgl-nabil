@@ -34,7 +34,6 @@ const CapitalApp51 = (props: Props) => {
     }
     
     function Navbar() {
-        const { username } = useAppContext(); 
         return (
             <nav>
                 <Link to="/">Login </Link>

@@ -1,11 +1,13 @@
 import axios from 'axios';
 import React from 'react'
 import { useAppContext } from '../../practice51/AppContextProvider51.tsx';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {}
 
 const DeleteCapital = (props: Props) => {
     const { username } = useAppContext(); 
+    const navigate = useNavigate();
 
 
     function deleteCapitalFromApi(event:React.FormEvent<HTMLFormElement>){
@@ -27,6 +29,7 @@ const DeleteCapital = (props: Props) => {
             }
         }
         axiospost(route);
+        navigate('/');
     }
 
 
