@@ -3,8 +3,6 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        borderWidth: 3,
-        borderColor: "red",
         borderRadius: 10,
         backgroundColor: 'lightred',
         margin: 1,
@@ -18,6 +16,8 @@ const styles = StyleSheet.create({
     },
 
     initialScreen: {
+        flex: 1,
+        backgroundColor: 'lightgrey',
         justifyContent: 'center',
         alignItems: 'center'
     }

@@ -9,39 +9,27 @@ import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 import InitialScreen from './practices/practice03/screens/InitialScreen';
+import Practice02 from './practices/practice02/components/Practice02';
+import BoxContainer from './practices/practice04/components/BoxContainer';
+import Practice04Screen from './practices/practice04/screens/Practice04Screen';
+import Practice05Screen from './practices/practice05/screens/Practice05Screen';
+import Practice06Screen from './practices/practice06/screens/Practice06Screen';
 
-
+type SectionProps = PropsWithChildren<{
+  title: string;
+}>;
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <InitialScreen/>
+    <SafeAreaView style={{flex:1}}>
+      <Practice06Screen/>
     </SafeAreaView>
   );
 }
-
 
 
 export default App;
