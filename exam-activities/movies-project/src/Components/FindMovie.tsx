@@ -1,14 +1,36 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 type Props = {}
 
-const FindMovie = (props: Props) => {
-  const navigate = useNavigate();
+type MovieType = {
+  name: string;
+}
+const FindMovie = (props: Props) => {  
+  const [movie, setMovie] = useState<MovieType>({} as MovieType);
+  const [name, setName] = useState('');
+
 
   const findMovieFromAPI = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form : HTMLFormElement = e.currentTarget;
+    const typeSearch = form.type_search.value;
+    const nameSearch = form.nameSearch.value;
 
+    
+    
+  }
 
+  const findMovieByName = async (url : string) => {
+    try{
+      const response = await axios.get(url)
+      setMovie(response.data);
+      setName(movie?.name);
+  
+    } catch(error){
+      console.log(error);
+    }
   }
 
   return (
