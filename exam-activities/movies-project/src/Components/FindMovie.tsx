@@ -5,11 +5,23 @@ import { useNavigate } from 'react-router-dom';
 type Props = {}
 
 type MovieType = {
-  name: string;
+  title: string;
+  actor: string;
+  director: string;
+  genre: string;
+  year: number;
 }
-const FindMovie = (props: Props) => {  
+const FindMovie = (props: Props) => { 
+  const [movieList, setMovieList] = useState<MovieType[]>([]);
   const [movie, setMovie] = useState<MovieType>({} as MovieType);
-  const [name, setName] = useState('');
+
+  const [search, setSearch] = useState('');
+  const [title, setTitle] = useState('');
+  const [actor, setActor] = useState('');
+  const [director, setDirector] = useState('');
+  const [genre, setGenre] = useState('');
+  const [year, setYear] = useState(0);
+  
 
 
   const findMovieFromAPI = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -18,15 +30,17 @@ const FindMovie = (props: Props) => {
     const typeSearch = form.type_search.value;
     const nameSearch = form.nameSearch.value;
 
+    let url : string = "http://localhost:3000/movies/"+typeSearch+"/"+nameSearch;
+
     
     
   }
 
-  const findMovieByName = async (url : string) => {
+  const findMovies = async (url : string) => {
     try{
       const response = await axios.get(url)
       setMovie(response.data);
-      setName(movie?.name);
+      setTitle(movie?.title);
   
     } catch(error){
       console.log(error);
@@ -44,6 +58,7 @@ const FindMovie = (props: Props) => {
                   name="nameSearch"
                   placeholder="Enter your search"
                   className="form-control"
+                  onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
 
@@ -58,6 +73,9 @@ const FindMovie = (props: Props) => {
                 >
                   <option value="name" selected>Name</option>
                   <option value="actor">Actor</option>
+                  <option value="director">Director</option>
+                  <option value="genre">Year</option>
+                  <option value="genre">Genre</option>
                 </select>
 
                 <button type="submit" className="btn btn-warning w-50 ms-2">
