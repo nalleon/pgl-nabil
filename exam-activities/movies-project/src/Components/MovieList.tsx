@@ -1,5 +1,8 @@
 import React from 'react'
 
+/**
+ * @author Nabil Leon Alvarez <@nalleon>
+ */
 type Props = {}
 
 const MovieList = (props: Props) => {

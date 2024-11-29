@@ -3,6 +3,11 @@ import React, { Dispatch, SetStateAction, createContext, useContext, useState } 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
  */
+
+/**
+ * App context provider for Login
+ */
+
 interface AppContextType {
     username: string | null;
     setUsername: Dispatch<SetStateAction<string>>;
