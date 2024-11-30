@@ -11,6 +11,8 @@ type MovieType = {
   genre: string;
   year: number;
   description: string;
+  image: string;
+  trailer: string;
 }
 
 const FindMovie = (props: Props) => { 

@@ -1,7 +1,5 @@
 import React, { useContext } from 'react'
 import AppContextProvider, { AppContext } from './Context/AppContextProvider';
-import MovieList from './MovieList';
-import MovieDetails from './MovieDetails';
 import CreateMovie from './CreateMovie';
 import UpdateMovie from './UpdateMovie';
 import DeleteMovie from './DeleteMovie';
@@ -15,6 +13,7 @@ import '../Styles/Theme.css';
 
 import ThemeSwitcher from './ThemeSwitcher';
 import AppThemeContextProvider, { AppThemeContext } from './Context/AppThemeContextProvider';
+import MoviesList from './MoviesList';
 
 
 type Props = {}
@@ -29,9 +28,8 @@ const MoviesApp = (props: Props) => {
                     <Routes>
                         <Route path="/" element={<Login />} />
                         <Route path="/login" element={<Login />} />
-                        <Route path="/movies" element={<MovieList/>}/>
+                        <Route path="/movies" element={<MoviesList/>}/>
                         <Route path="/movies/find-movie" element={<FindMovie/>}/>
-                        <Route path="/movies/movie/:movieId" element={<MovieDetails/>}/>
                         <Route path="/movies/create-movie" element={<CreateMovie/>}/>
                         <Route path="/movies/modify-movie" element={<UpdateMovie/>}/>
                         <Route path="/movies/delete-movie" element={<DeleteMovie/>}/>
@@ -74,14 +72,7 @@ const MoviesApp = (props: Props) => {
         const context = useContext(AppContext);
         return (
             <nav aria-label="breadcrumb" className="d-flex justify-content-between breadcrumb-custom">
-                <ol className="breadcrumb text-light">
-                    <li className="breadcrumb-item">
-                        <Link to="/movies" className='link-offset-2 link-underline link-underline-opacity-0 ms-3'>Home</Link>
-                    </li>
-                    <li className="breadcrumb-item active text-secondary" aria-current="page">
-                        Movies
-                    </li>
-                </ol>
+                <span className='ms-3'></span>
                 <div>
                         { context.username !== ''  &&
                             <span><i className="bi bi-person-circle"></i>{context.username}</span>
