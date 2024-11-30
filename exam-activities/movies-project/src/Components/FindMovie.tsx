@@ -10,7 +10,9 @@ type MovieType = {
   director: string;
   genre: string;
   year: number;
+  description: string;
 }
+
 const FindMovie = (props: Props) => { 
   const [movieList, setMovieList] = useState<MovieType[]>([]);
   const [movie, setMovie] = useState<MovieType>({} as MovieType);
