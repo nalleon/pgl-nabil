@@ -5,12 +5,14 @@ body {
 
 .light {
     --background-color: #e8e8e8;
-    --text-color: #000000;
+    --text-color: #1f1f1f;
+    color: #1f1f1f;
 }
 
 .dark {
     --background-color: #1f1f1f;
-    --text-color: #e8e8e8;;
+    --text-color: #e8e8e8;
+    color: #e8e8e8;
 }
 
 body, .light, .dark {
@@ -18,8 +20,6 @@ body, .light, .dark {
     color: var(--text-color);
     transition: background-color 0.3s, color 0.3s;
 }
-
-
 
 .navbar-light-theme{
     background-color: #f0f0f0;
@@ -38,8 +38,8 @@ body, .light, .dark {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 5px 20px;
+    border-radius: 50px;
     cursor: pointer;
     border: 1px solid #ccc;
 }
@@ -47,11 +47,18 @@ body, .light, .dark {
 .btn-light-theme {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
-
 }
 
 .btn-dark-theme {
     background-color: #333;
-    color: #fff;
     border: 1px solid #555;
+}
+
+
+.breadcrumb-custom {
+    padding: 10px;
+}
+
+.bg-custom {
+    background-color: rgb(106, 151, 219);
 }

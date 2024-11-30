@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import AppContextProvider from './Context/AppContextProvider';
+import AppContextProvider, { AppContext } from './Context/AppContextProvider';
 import MovieList from './MovieList';
 import MovieDetails from './MovieDetails';
 import CreateMovie from './CreateMovie';
@@ -25,6 +25,7 @@ const MoviesApp = (props: Props) => {
             <AppContextProvider>
                 <AppThemeContextProvider>
                     <Navbar />
+                    <BreadCrumb/>
                     <Routes>
                         <Route path="/" element={<Login />} />
                         <Route path="/login" element={<Login />} />
@@ -50,7 +51,8 @@ const MoviesApp = (props: Props) => {
                             }`}>
                 <div className="container-fluid">
                     <h3 className="mt-2 me-2 ms-2"><Link to="/movies" className='link-light link-offset-2 link-underline link-underline-opacity-0 m-3'><i className="ms-3 bi bi-film text-light me-2"></i>Movies </Link></h3>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBar" aria-controls="navBar" aria-expanded="true" aria-label="Toggle navigation" >
+                    <button className="navbar-toggler" style={{ backgroundColor: 'rgb(106, 151, 219)' }}
+                            type="button" data-bs-toggle="collapse" data-bs-target="#navBar" aria-controls="navBar" aria-expanded="true" aria-label="Toggle navigation" >
                         <span className="navbar-toggler-icon"></span>
                     </button>
                         <div id="navBar" className="collapse navbar-collapse">
@@ -61,12 +63,33 @@ const MoviesApp = (props: Props) => {
                                 <li className="list-group-item m-1"><Link to="/movies/modify-movie" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Modify </Link></li>                           
                                 <li className="list-group-item m-1">  <Link to="/movies/delete-movie" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Delete </Link></li>                            
                                 <li className="list-group-item m-1"><Link to="/login" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Login </Link></li>
-                                <li className="list-group-item m-1"><ThemeSwitcher/></li>                                                        
                             </ul>
                         </div>
                 </div>
             </nav>
         );
+    }
+
+    function BreadCrumb(){
+        const context = useContext(AppContext);
+        return (
+            <nav aria-label="breadcrumb" className="d-flex justify-content-between breadcrumb-custom">
+                <ol className="breadcrumb text-light">
+                    <li className="breadcrumb-item">
+                        <Link to="/movies" className='link-offset-2 link-underline link-underline-opacity-0 ms-3'>Home</Link>
+                    </li>
+                    <li className="breadcrumb-item active text-secondary" aria-current="page">
+                        Movies
+                    </li>
+                </ol>
+                <div>
+                        { context.username !== ''  &&
+                            <span><i className="bi bi-person-circle"></i>{context.username}</span>
+                        }
+                    <ThemeSwitcher />
+                </div>
+        </nav>
+        )
     }
 }
 

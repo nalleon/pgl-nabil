@@ -80,14 +80,14 @@ const FindMovie = (props: Props) => {
                   <option value="genre">Genre</option>
                 </select>
 
-                <button type="submit" className="btn btn-warning w-50 ms-2">
+                <button type="submit" className="btn w-50 ms-2" style={{ backgroundColor: 'rgb(106, 151, 219)' }}>
                   Search
                 </button>
                 </div>
             </div>
           </form>
-        </div>
 
+        </div>
       </>
   )
 }
