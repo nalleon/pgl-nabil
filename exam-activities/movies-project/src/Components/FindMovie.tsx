@@ -21,6 +21,8 @@ const FindMovie = (props: Props) => {
   const [director, setDirector] = useState('');
   const [genre, setGenre] = useState('');
   const [year, setYear] = useState(0);
+  const [description, setDescription] = useState('');
+
   
 
 
