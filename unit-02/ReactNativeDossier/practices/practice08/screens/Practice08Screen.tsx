@@ -5,21 +5,40 @@ import Box08 from '../components/Box08'
 
 type Props = {}
 
+/**
+ * Type definition for the data structure representing a circle
+ */
 type DataCircle = {
   name: string;
   red : number;
   green : number;
   blue : number;
 }
-type Direction = "row" | "row-reverse" | "column" | "column-reverse" ;
+
+/**
+ *  Type definition for the flex directions values 
+ */
+
+type Direction = "row" | "row-reverse" | "column" | "column-reverse";
+
+/**
+ *  Type definition for the wrap values 
+ */
 type WrapType= "wrap" | "no-wrap" | "wrap-reverse";
 
 const Practice08Screen = (props: Props) => {
+
+  /**
+   * UseStates
+   */
   const [direction, setDirection] = useState<Direction>("row");
   const [wrap, setWrap] = useState<WrapType>("wrap");
   const [circleArr, setCircleArr] = useState<DataCircle[]>([]);
 
 
+  /**
+   * Function to add a circle to the array of circles
+   */
   function addCircle(){
     const lastCircle = circleArr[circleArr.length - 1] || {
       red: 50,
@@ -30,19 +49,26 @@ const Practice08Screen = (props: Props) => {
     setCircleArr([...circleArr, 
       {
         name: 'b'+(circleArr.length+1),
-        red: (lastCircle.red + 15) % 256,
+        red: (lastCircle.red + 25) % 256,
         green: (lastCircle.green + 35) % 256,
-        blue: (lastCircle.blue + 75) % 256,
+        blue: (lastCircle.blue + 55) % 256,
       }
     ]);
   }
 
+  /**
+   * Function to change the wrap property of the container
+   */
   const changeWrap = () => {
     const options: WrapType[] = ["wrap", "no-wrap", "wrap-reverse"];
     const nextOptionPos = (options.indexOf(wrap!) + 1) % options.length;
     setWrap(options[nextOptionPos]);
   };
 
+  
+  /**
+   * Function to change the flex direction property of the container
+   */
   const changeRow = () => {
     const options: Direction[] = ["row", "column", "row-reverse", "column-reverse"];
     const nextOptionPos = (options.indexOf(direction!) + 1) % options.length;
