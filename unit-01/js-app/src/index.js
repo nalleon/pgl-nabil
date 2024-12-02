@@ -47,6 +47,7 @@ import Practice25 from './practice25/Practice25.tsx';
 import App52 from './practice52/App52.tsx';
 import Practice48 from './practice48/Components/PersonList.tsx';
 import App48 from './practice48/Components/App48.tsx';
+import Primes from './extra/Primes.tsx';
 //import Practice18 from './practice18/practice18.tsx';
 
 //import ComponenteApp from './ComponenteApp.js';
@@ -55,7 +56,7 @@ const divRoot = document.getElementById("root");
 ReactDOM.render(
   //<React.StrictMode>
   //<BrowserRouter>
-  <Practice21/>, divRoot
+  <Primes/>, divRoot
   //</BrowserRouter>, divRoot
   //</React.StrictMode>
 
