@@ -10,7 +10,11 @@ type MovieType = {
   director: string;
   genre: string;
   year: number;
+  description: string;
+  image: string;
+  trailer: string;
 }
+
 const FindMovie = (props: Props) => { 
   const [movieList, setMovieList] = useState<MovieType[]>([]);
   const [movie, setMovie] = useState<MovieType>({} as MovieType);
@@ -21,6 +25,8 @@ const FindMovie = (props: Props) => {
   const [director, setDirector] = useState('');
   const [genre, setGenre] = useState('');
   const [year, setYear] = useState(0);
+  const [description, setDescription] = useState('');
+
   
 
 
@@ -78,14 +84,14 @@ const FindMovie = (props: Props) => {
                   <option value="genre">Genre</option>
                 </select>
 
-                <button type="submit" className="btn btn-warning w-50 ms-2">
+                <button type="submit" className="btn w-50 ms-2" style={{ backgroundColor: 'rgb(106, 151, 219)' }}>
                   Search
                 </button>
                 </div>
             </div>
           </form>
-        </div>
 
+        </div>
       </>
   )
 }

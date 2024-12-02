@@ -1,0 +1,53 @@
+{
+"movies": [
+    {
+        "title": "Inception",
+        "actor": "Leonardo DiCaprio",
+        "director": "Christopher Nolan",
+        "genre": "Sci-Fi",
+        "year": 2010,
+        "description": "A skilled thief is given a chance at redemption if he is able to successfully perform an inception, planting an idea into a target's subconscious.",
+        "image": "inception-poster.jpg",
+        "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0"
+    },
+    {
+        "title": "The Dark Knight",
+        "actor": "Christian Bale",
+        "director": "Christopher Nolan",
+        "genre": "Action",
+        "year": 2008,
+        "description": "Batman faces a new enemy, the Joker, who wants to plunge Gotham City into anarchy and chaos.",
+        "image": "dark-knight-poster.jpg",
+        "trailer": "https://youtu.be/EXeTwQWrcwY?si=eSXV9Q7vrGgxKEj7"
+    },
+    {
+        "title": "Spider-Man: No Way Home",
+        "actor": "Tom Holland",
+        "director": "Jon Watts",
+        "genre": "Action, Adventure, Sci-Fi",
+        "year": 2021,
+        "description": "Spider-Man's identity is exposed, and he seeks the help of Doctor Strange to make the world forget who he is.",
+        "image": "spider-man-no-way-home.jpg",
+        "trailer": "https://www.youtube.com/watch?v=JfVOs4VSpmA"
+    },
+    {
+        "title": "Dune",
+        "actor": "Timothée Chalamet",
+        "director": "Denis Villeneuve",
+        "genre": "Sci-Fi, Adventure",
+        "year": 2021,
+        "description": "A young nobleman becomes embroiled in a war over a valuable spice on the desert planet Arrakis.",
+        "image": "dune-poster.jpg",
+        "trailer": "https://www.youtube.com/watch?v=n9xhJrPXop4"
+    },
+    {
+        "title": "The Matrix Resurrections",
+        "actor": "Keanu Reeves",
+        "director": "Lana Wachowski",
+        "genre": "Action, Sci-Fi",
+        "year": 2021,
+        "description": "Neo lives a seemingly normal life until he is pulled back into the Matrix and has to confront his past once again.",
+        "image": "matrix-resurrections.jpg",
+        "trailer": "https://www.youtube.com/watch?v=fA8o66rBWG4"
+    }]
+}

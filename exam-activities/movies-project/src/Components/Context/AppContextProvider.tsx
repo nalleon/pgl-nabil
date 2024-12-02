@@ -24,9 +24,9 @@ const AppContextProvider = (props: any) => {
     }
 
     return (
-            <AppContext.Provider value={contextValues}>
-                {props.children}
-            </AppContext.Provider>
+        <AppContext.Provider value={contextValues}>
+            {props.children}
+        </AppContext.Provider>
     )
 }
 
