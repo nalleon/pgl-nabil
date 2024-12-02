@@ -13,9 +13,11 @@ const styles = StyleSheet.create({
         marginInlineEnd: 5,
         width: 100,
         height: 100,
+        borderRadius: 50,
         backgroundColor: 'lightblue',
         borderColor: 'black',
         borderWidth: 2,
+        textAlign: 'center',
     },
 
     textTitle: {
@@ -35,7 +37,42 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: 'lightyellow',
         borderColor: 'black',
+    },
+
+    defaultStyle :{
+        backgroundColor: 'lightblue',
+        borderColor: 'black',
+        borderWidth: 2,
+    },
+    
+    btncircle:{
+        backgroundColor: 'blue',
+        width: 300,
+        height: 50,
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    btnwrap:{
+        backgroundColor: 'red',
+        width: 300,
+        height: 50,
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    btnrow:{
+        backgroundColor: 'orange',
+        width: 300,
+        height: 50,
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
     }
+
+
 });
 
 export default styles;

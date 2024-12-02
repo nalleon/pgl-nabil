@@ -1,14 +1,14 @@
 import { Alert, Button, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
-import styles from '../themes/Practice06Styles';
+import styles from '../themes/Practice07Styles';
 
 type Props = {
-  color : string;
-  
+  nameBox : string;
+  stylesBox : any;
 }
 
-const Box06 = (props: Props) => {
-  const { color } = props;
+const Box07 = (props: Props) => {
+  const { nameBox, stylesBox: styleBox } = props;
 
   const [flex, setFlex] = useState(0);
   function changeFlexStyle(flexLevel : number) {
@@ -21,7 +21,7 @@ const Box06 = (props: Props) => {
   }
 
   return (
-    <View style={{...styles.box, backgroundColor:color, flex:flex}}>
+    <View style={{...styles.box, ...styleBox, flex:flex}}>
       <TouchableHighlight onPress={() => changeFlexStyle(flex+1)}>
         <View style={styles.button}>
           <Text> Flex +1 </Text>
@@ -32,6 +32,7 @@ const Box06 = (props: Props) => {
           <Text> Flex -1</Text>
         </View>
       </TouchableOpacity>
+      <Text>{nameBox}</Text>
       <Text>Flex: {flex}</Text>
     </View>
   )
@@ -39,5 +40,5 @@ const Box06 = (props: Props) => {
 
 
 
-export default Box06
+export default Box07
 

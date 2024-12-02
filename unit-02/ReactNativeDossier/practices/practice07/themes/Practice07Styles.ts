@@ -35,6 +35,12 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: 'lightyellow',
         borderColor: 'black',
+    },
+
+    defaultStyle :{
+        backgroundColor: 'lightblue',
+        borderColor: 'black',
+        borderWidth: 2,
     }
 });
 
