@@ -1,9 +1,6 @@
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
-import Box05 from '../components/Box08'
 import styles from '../themes/Practice08Styles'
-import BoxContainer08 from '../components/BoxContainer08'
-import Practice02 from '../../practice02/components/Practice02';
 import Box08 from '../components/Box08'
 
 type Props = {}
@@ -14,39 +11,47 @@ type DataCircle = {
   green : number;
   blue : number;
 }
-type Direction = "row" | "row-reverse" | "column" | "column-reverse" | undefined;
-type WrapType= "wrap" | "no-wrap" | "wrap-reverse" | undefined;
+type Direction = "row" | "row-reverse" | "column" | "column-reverse" ;
+type WrapType= "wrap" | "no-wrap" | "wrap-reverse";
+
 const Practice08Screen = (props: Props) => {
   const [direction, setDirection] = useState<Direction>("row");
   const [wrap, setWrap] = useState<WrapType>("wrap");
   const [circleArr, setCircleArr] = useState<DataCircle[]>([]);
 
-  const [maxRGB, setMaxRGB] = useState<number>(256);
 
   function addCircle(){
+    const lastCircle = circleArr[circleArr.length - 1] || {
+      red: 50,
+      green: 70,
+      blue: 100,
+    };
+
     setCircleArr([...circleArr, 
       {
         name: 'b'+(circleArr.length+1),
-        red: Math.floor(Math.random() * 256)-(maxRGB/2),
-        green: Math.floor(Math.random() * 256)-(maxRGB/3),
-        blue: Math.floor(Math.random() * 256)-(maxRGB/4)
+        red: (lastCircle.red + 15) % 256,
+        green: (lastCircle.green + 35) % 256,
+        blue: (lastCircle.blue + 75) % 256,
       }
     ]);
   }
 
-  function changeWrap(){
+  const changeWrap = () => {
+    const options: WrapType[] = ["wrap", "no-wrap", "wrap-reverse"];
+    const nextOptionPos = (options.indexOf(wrap!) + 1) % options.length;
+    setWrap(options[nextOptionPos]);
+  };
 
-  }
-
-  function changeRow(){
-
-  }
+  const changeRow = () => {
+    const options: Direction[] = ["row", "column", "row-reverse", "column-reverse"];
+    const nextOptionPos = (options.indexOf(direction!) + 1) % options.length;
+    setDirection(options[nextOptionPos]);
+  };
 
   return (
     <View style={styles.mainContainer}>
-      <TouchableOpacity onPress={()=> addCircle()}> 
-        <Text style={styles.btncircle}>Add circle</Text>
-      </TouchableOpacity>
+      <Button title='Add circle' onPress={addCircle}/>
       <TouchableOpacity onPress={()=> changeWrap()}> 
         <Text style={styles.btnwrap}>Change Wrap (Click here)</Text>
       </TouchableOpacity>
@@ -54,13 +59,20 @@ const Practice08Screen = (props: Props) => {
         <Text style={styles.btnrow}>Change Row (Click here)</Text>
       </TouchableOpacity>
       <View>
-        {
-          
-          circleArr.map((box, index) =>(
-              <Box08 key={index} nameBox={box.name} red={box.red} green={box.green} blue={box.blue}/>
-          ))
-
-        }  
+      <View
+        style={[
+          styles.container,
+          {
+            flexDirection: direction ?? "row",
+            flexWrap: wrap === "no-wrap" ? "nowrap" : wrap ?? "wrap",
+          },
+        ]}
+      >
+        {circleArr.map((circle, index) => (
+            <Box08 key={index} nameBox={'B'+circleArr.length+1} red={circle.red} green={circle.green} blue={circle.blue}/>
+        ))}
+        
+      </View>
       </View>
     </View>
   )

@@ -12,20 +12,19 @@ type Props = {
 const Box08 = (props: Props) => {
   const { nameBox, red, green, blue} = props;
 
-  const [flex, setFlex] = useState(0);
-  function changeFlexStyle(flexLevel : number) {
-    if (flexLevel < 0){
-      return;
-    }
 
-    setFlex(flexLevel);
-    Alert.alert('changed flex to: ' + flexLevel);
-  }
 
   return (
-    <View style={{...styles.box, backgroundColor:`rgb(${red}, ${green}, ${blue})`, flex:flex}}>
-      <Text style={{textAlign:'center'}}>{nameBox}</Text>
+    <View
+      style={[styles.circle,
+        {
+          backgroundColor:`rgb(${red}, ${green}, ${blue})`,
+        },
+      ]}
+    >
+      <Text style={styles.circleText}>{nameBox}</Text>
     </View>
+
   )
 }
 

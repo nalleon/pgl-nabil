@@ -6,37 +6,21 @@ const styles = StyleSheet.create({
         backgroundColor: 'lightgrey',  
     },
 
-    box:{
-        marginBlockStart: 5,
-        marginBlockEnd: 5,
-        marginInlineStart: 5,
-        marginInlineEnd: 5,
+    circle:{
         width: 100,
         height: 100,
         borderRadius: 50,
-        backgroundColor: 'lightblue',
-        borderColor: 'black',
-        borderWidth: 2,
-        textAlign: 'center',
-    },
-
-    textTitle: {
-        fontWeight:'bold',
-        color: 'yellow',
-        textAlign: 'center',
-        fontSize: 20,
-        marginVertical:5
+        margin: 5,
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
+        textAlignVertical: "center"
     },
 
     mainContainer:{
         flex: 1,
         backgroundColor: 'grey',
         padding: 10
-    },
-
-    button: {
-        backgroundColor: 'lightyellow',
-        borderColor: 'black',
     },
 
     defaultStyle :{
@@ -46,7 +30,7 @@ const styles = StyleSheet.create({
     },
     
     btncircle:{
-        backgroundColor: 'blue',
+        padding: 10,
         width: 300,
         height: 50,
         borderRadius: 25,
@@ -59,8 +43,7 @@ const styles = StyleSheet.create({
         width: 300,
         height: 50,
         borderRadius: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
+        marginBottom: 10
     },
 
     btnrow:{
@@ -68,8 +51,12 @@ const styles = StyleSheet.create({
         width: 300,
         height: 50,
         borderRadius: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
+        marginBottom: 10
+    }, 
+
+    circleText: {
+        color: "black",
+        fontSize: 12,
     }
 
 
