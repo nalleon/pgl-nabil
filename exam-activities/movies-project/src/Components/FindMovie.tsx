@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 type Props = {}
@@ -18,6 +18,7 @@ type MovieType = {
 const FindMovie = (props: Props) => { 
   const [movieList, setMovieList] = useState<MovieType[]>([]);
   const [movie, setMovie] = useState<MovieType>({} as MovieType);
+  const [typeSearch, setTypeSearch] = useState('title');
 
   const [search, setSearch] = useState('');
   const [title, setTitle] = useState('');
@@ -28,30 +29,41 @@ const FindMovie = (props: Props) => {
   const [description, setDescription] = useState('');
 
   
-
+  useEffect(() => {
+  
+    
+  }, [search, typeSearch])
+  
 
   const findMovieFromAPI = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form : HTMLFormElement = e.currentTarget;
-    const typeSearch = form.type_search.value;
-    const nameSearch = form.nameSearch.value;
 
-    let url : string = "http://localhost:3000/movies/"+typeSearch+"/"+nameSearch;
-
-    
-    
-  }
-
-  const findMovies = async (url : string) => {
-    try{
-      const response = await axios.get(url)
-      setMovie(response.data);
-      setTitle(movie?.title);
+    if (!typeSearch || !search.trim()) {
+      console.error('Search type or query is missing.');
+      setMovieList([]);
+      return;
+    }
   
-    } catch(error){
-      console.log(error);
+    //const url = `http://localhost:3000/movies?${typeSearch}=${encodeURIComponent(search)}`;
+    const url = `http://localhost:3000/movies`;
+    
+    //console.log(`Fetching movies from: ${url}`);
+    
+    try{
+      const response = await axios.get(url);
+
+
+      const filteredMovies = response.data.filter((movie: { [x: string]: string; }) =>
+        movie[typeSearch].toLowerCase().includes(search.toLowerCase())
+      );
+      
+      setMovieList(filteredMovies);
+    } catch (error) {
+      console.error(error);
+      setMovieList([]);
     }
   }
+
 
   return (
       <>
@@ -65,6 +77,7 @@ const FindMovie = (props: Props) => {
                   placeholder="Enter your search"
                   className="form-control"
                   onChange={(e) => setSearch(e.target.value)}
+                  value={search}
                 />
               </div>
 
@@ -76,8 +89,10 @@ const FindMovie = (props: Props) => {
                   id="type_search"
                   name="type_search"
                   className="form-control w-30"
+                  onChange={(e) => setTypeSearch(e.target.value)}
+                  value={typeSearch}
                 >
-                  <option value="name" selected>Name</option>
+                  <option value="title">Title</option>
                   <option value="actor">Actor</option>
                   <option value="director">Director</option>
                   <option value="genre">Year</option>
@@ -91,8 +106,34 @@ const FindMovie = (props: Props) => {
             </div>
           </form>
 
+          <div className="mt-5">
+          {movieList.length > 0 ? (
+            <div className="row">
+              {movieList.map((movie, index) => (
+                <div key={index} className="col-md-4 mb-4">
+                  <div className="card">
+                    <img
+                      src={`http://localhost:3000/${movie.image}`}
+                      className="card-img-top"
+                      alt={movie.title}
+                    />
+                    <div className="card-body">
+                      <h5 className="card-title">{movie.title}</h5>
+                      <p className="card-text"><b>Actor:</b> {movie.actor}</p>
+                      <p className="card-text"><b>Director:</b> {movie.director}</p>
+                      <p className="card-text"><b>Genre:</b> {movie.genre}</p>
+                      <p className="card-text"><b>Year:</b> {movie.year}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>No movies found. Try a different search.</p>
+          )}
         </div>
-      </>
+      </div>
+    </>
   )
 }
 
