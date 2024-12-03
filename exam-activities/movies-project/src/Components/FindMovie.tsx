@@ -69,9 +69,6 @@ const FindMovie = (props: Props) => {
               </div>
 
               <div className="col-md-4 d-flex align-items-center">
-                <label htmlFor="type_search" className="form-label mb-0 me-2">
-                  <b>Type:</b>
-                </label>
                 <select
                   id="type_search"
                   name="type_search"
@@ -87,7 +84,7 @@ const FindMovie = (props: Props) => {
                 </select>
 
                 <button type="submit" className="custom-button w-50 ms-2 ">
-                  Search
+                  <i className="bi bi-search"></i> 
                 </button>
                 </div>
             </div>
