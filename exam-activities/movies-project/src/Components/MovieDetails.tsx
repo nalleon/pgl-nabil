@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import ReactPlayer from 'react-player';
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import '../Styles/MovieDetails.css';
+import DeleteMovie from './DeleteMovie';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -52,19 +53,11 @@ const MovieDetails = (props: Props) => {
             <img
               src={uri + data.image}
               alt={data.title}
-              className="img-fluid rounded shadow-lg"
+              className="img-fluid"
             />
-            <div className="row mt-5 ms-3">  
-              <div className="col-6">
-                <button className='btn btn-primary w-75'>Edit</button>               
-              </div>
-              <div className="col-6">
-                <button className='btn btn-danger w-75'>Delete</button>               
-              </div>
-            </div>
           </div>
           <div className="col-sm-12 col-md-6">
-            <div className='card' style={{backgroundColor:'transparent'}}>
+            <div className='card card-custom'>
               <h3 className="display-5 text-uppercase mb-4 fw-bold">{data.title}</h3>
               <ul className="list-unstyled mb-4">
                 <li className="mb-3">
@@ -97,7 +90,18 @@ const MovieDetails = (props: Props) => {
               </div>
             </div>
           </div>
-          
+          <div className="row mt-5 ms-5 me-5">
+            <div className="col-12 col-md-6">
+              <Link to={`/movies/modify/${data.id}`} className="btn btn-primary w-75">
+                Edit
+              </Link>               
+            </div>
+            <div className="col-12 col-md-6">
+              <Link to={`/movies/delete/${data.id}`} className="btn btn-danger w-75">
+                Delete
+              </Link>               
+            </div>
+          </div>
         </div>
       </div>
     </>

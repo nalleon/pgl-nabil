@@ -1,6 +1,5 @@
 .custom-bg {
     flex: 1;
-    background: transparent; 
     border: 3px solid rgb(30, 30, 30);
     border-radius: 10px;
     padding: 20px;
@@ -9,27 +8,28 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card {
+.card-custom {
+    background: transparent; 
     border: 2px solid rgb(60, 60, 60);
     border-radius: 10px;
     padding: 15px 20px;
     color: #ffffff; 
 }
 
-.card h3, .trailer {
+.card-custom h3, .trailer {
     color: #f9c74f; 
     text-transform: uppercase;
     text-shadow: 1px 1px 3px rgb(97, 49, 23);
 }
 
-.card ul {
+.card-custom ul {
     padding: 0;
     list-style: none;
     font-size: 1rem;
     color: #b3b3b3; 
 }
 
-.card ul li strong {
+.card-custom ul li strong {
     color: #ffffff;
 }
 
