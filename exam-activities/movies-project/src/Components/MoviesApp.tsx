@@ -46,7 +46,7 @@ const MoviesApp = (props: Props) => {
         const context = useContext(AppThemeContext);
 
         return (
-            <nav className={`d-flex justify-content-center navbar navbar-expand-l 
+            <nav className={`d-flex justify-content-center navbar navbar-expand-lg 
                                 ${context.theme === 'dark' ? 'navbar-dark-theme' : 'navbar-light-theme'
                             }`}>
                 <div className="container-fluid">

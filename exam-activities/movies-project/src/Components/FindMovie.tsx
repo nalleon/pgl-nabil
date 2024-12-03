@@ -1,8 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import '../Styles/MovieDetails.css'
-
+import '../Styles/FindMovie.css'
 type Props = {}
 
 type MovieType = {
@@ -65,14 +64,14 @@ const FindMovie = (props: Props) => {
   return (
       <>
         <div className='container mt-5'>
-          <form onSubmit={findMovieFromAPI} className='form-control'>
-            <div className="row g-3 align-items-center">
+          <form onSubmit={findMovieFromAPI} className='custom-form'>
+            <div className="row g-3 align-items-center ">
               <div className="col-md-8">
                 <input
                   type="text"
                   name="nameSearch"
                   placeholder="Enter your search"
-                  className="form-control"
+                  className="custom-input"
                   onChange={(e) => setSearch(e.target.value)}
                   value={search}
                 />
@@ -85,7 +84,7 @@ const FindMovie = (props: Props) => {
                 <select
                   id="type_search"
                   name="type_search"
-                  className="form-control w-30"
+                  className="custom-input w-30"
                   onChange={(e) => setTypeSearch(e.target.value)}
                   value={typeSearch}
                 >
@@ -96,7 +95,7 @@ const FindMovie = (props: Props) => {
                   <option value="genre">Genre</option>
                 </select>
 
-                <button type="submit" className="btn w-50 ms-2" style={{ backgroundColor: 'rgb(106, 151, 219)' }}>
+                <button type="submit" className="custom-button w-50 ms-2 ">
                   Search
                 </button>
                 </div>

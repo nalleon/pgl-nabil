@@ -91,12 +91,9 @@ const MovieDetails = (props: Props) => {
             </div>
           </div>
         </div>
-        <div className="col-sm-12 col-md-6">  
-          <button className='btn btn-warning'>Edit</button>        
-        </div>
-        <div className="col-sm-12 col-md-6">          
-        <button className='btn btn-warning'>Delete</button>        
-
+        <div className="w-ms-auto">  
+          <button className='btn btn-warning'>Edit</button>               
+          <button className='btn btn-warning'>Delete</button>        
         </div>
       </div>
     </div>

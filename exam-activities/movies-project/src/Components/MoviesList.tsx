@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import MovieDetails from './MovieDetails';
 import { Link } from 'react-router-dom';
-
+import '../Styles/MoviesList.css';
 /**
  * @author Nabil Leon Alvarez <@nalleon>
  */
@@ -50,11 +50,12 @@ const MoviesList = (props: Props) => {
                   <img
                     src={`${uri}${movie.image}`} 
                     alt={movie.title} 
-                    className="card-img-top" 
+                    className="card-img-top custom-img" 
                     width={500} 
                     height={750} 
+                    
                   />
-                  <div className="card-body">
+                  <div className="card-img-overlay">
                     <h5 className="card-title text-center">{movie.title}</h5>
                   </div>
                 </Link>
