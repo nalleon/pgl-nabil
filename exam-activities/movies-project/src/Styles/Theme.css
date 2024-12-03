@@ -5,12 +5,12 @@ body {
 
 .light {
     --background-color: #e8e8e8;
-    --text-color: #1f1f1f;
-    color: #1f1f1f;
+    --text-color: #0b0b0b;
+    color: #0b0b0b;
 }
 
 .dark {
-    --background-color: #1f1f1f;
+    --background-color: #0b0b0b;
     --text-color: #e8e8e8;
     color: #e8e8e8;
 }
@@ -28,7 +28,7 @@ body, .light, .dark {
 }
 
 .navbar-dark-theme{
-    background-color: #1f1f1f;
+    background-color: #0b0b0b;
     border: 1px solid #ccc;
     color: #f0f0f0;
 }
@@ -50,7 +50,7 @@ body, .light, .dark {
 }
 
 .btn-dark-theme {
-    background-color: #333;
+    background-color: #0b0b0b;
     border: 1px solid #555;
 }
 

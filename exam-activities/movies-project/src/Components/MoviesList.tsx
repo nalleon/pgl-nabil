@@ -10,6 +10,7 @@ type Props = {}
 
 
 type MovieType = {
+  id: number;
   title: string;
   actor: string;
   director: string;
@@ -44,7 +45,7 @@ const MoviesList = (props: Props) => {
           {moviesList.map((movie, index) => (
             <div key={index} className="col-md-4 mb-4">
               <div className="card">
-                <Link to={`/movies/${movie.title.replace(/\s+/g, '_').toLowerCase()}`} 
+                <Link to={`/movies/${movie.id}`} 
                       className='link-offset-2 link-underline link-underline-opacity-0'>
                   <img
                     src={`${uri}${movie.image}`} 

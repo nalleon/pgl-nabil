@@ -14,6 +14,7 @@ import '../Styles/Theme.css';
 import ThemeSwitcher from './ThemeSwitcher';
 import AppThemeContextProvider, { AppThemeContext } from './Context/AppThemeContextProvider';
 import MoviesList from './MoviesList';
+import MovieDetails from './MovieDetails';
 
 
 type Props = {}
@@ -30,9 +31,10 @@ const MoviesApp = (props: Props) => {
                         <Route path="/login" element={<Login />} />
                         <Route path="/movies" element={<MoviesList/>}/>
                         <Route path="/movies/find-movie" element={<FindMovie/>}/>
-                        <Route path="/movies/create-movie" element={<CreateMovie/>}/>
-                        <Route path="/movies/modify-movie" element={<UpdateMovie/>}/>
-                        <Route path="/movies/delete-movie" element={<DeleteMovie/>}/>
+                        <Route path="/movies/create" element={<CreateMovie/>}/>
+                        <Route path="/movies/:movieId" element={<MovieDetails/>}/>
+                        <Route path="/movies/modify/:movieId" element={<UpdateMovie/>}/>
+                        <Route path="/movies/delete/:movieId" element={<DeleteMovie/>}/>
                     </Routes>
                 </AppThemeContextProvider>
             </AppContextProvider>
@@ -57,9 +59,9 @@ const MoviesApp = (props: Props) => {
                             <ul className="d-flex align-items-start navbar-nav me-auto mb-2 mb-lg-0 ms-5">
                                 <li className="list-group-item m-1"><Link to="/movies" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3 '> Movies </Link></li>
                                 <li className="list-group-item m-1"><Link to="/movies/find-movie" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Find movie </Link></li>
-                                <li className="list-group-item m-1"><Link to="/movies/create-movie" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Create </Link></li>
-                                <li className="list-group-item m-1"><Link to="/movies/modify-movie" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Modify </Link></li>                           
-                                <li className="list-group-item m-1">  <Link to="/movies/delete-movie" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Delete </Link></li>                            
+                                <li className="list-group-item m-1"><Link to="/movies/create/:movieId" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Create </Link></li>
+                                <li className="list-group-item m-1"><Link to="/movies/modify/:movieId" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Modify </Link></li>                           
+                                <li className="list-group-item m-1"> <Link to="/movies/delete/:movieId" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Delete </Link></li>                            
                                 <li className="list-group-item m-1"><Link to="/login" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Login </Link></li>
                             </ul>
                         </div>

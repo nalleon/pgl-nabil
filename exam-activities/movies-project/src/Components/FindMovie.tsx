@@ -1,10 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import '../Styles/MovieDetails.css'
 
 type Props = {}
 
 type MovieType = {
+  id: number;
   title: string;
   actor: string;
   director: string;
@@ -17,16 +19,11 @@ type MovieType = {
 
 const FindMovie = (props: Props) => { 
   const [movieList, setMovieList] = useState<MovieType[]>([]);
-  const [movie, setMovie] = useState<MovieType>({} as MovieType);
   const [typeSearch, setTypeSearch] = useState('title');
 
   const [search, setSearch] = useState('');
-  const [title, setTitle] = useState('');
-  const [actor, setActor] = useState('');
-  const [director, setDirector] = useState('');
-  const [genre, setGenre] = useState('');
-  const [year, setYear] = useState(0);
-  const [description, setDescription] = useState('');
+
+
 
   
   useEffect(() => {
@@ -107,30 +104,28 @@ const FindMovie = (props: Props) => {
           </form>
 
           <div className="mt-5">
-          {movieList.length > 0 ? (
-            <div className="row">
-              {movieList.map((movie, index) => (
-                <div key={index} className="col-md-4 mb-4">
-                  <div className="card">
-                    <img
-                      src={`http://localhost:3000/${movie.image}`}
-                      className="card-img-top"
-                      alt={movie.title}
-                    />
-                    <div className="card-body">
-                      <h5 className="card-title">{movie.title}</h5>
-                      <p className="card-text"><b>Actor:</b> {movie.actor}</p>
-                      <p className="card-text"><b>Director:</b> {movie.director}</p>
-                      <p className="card-text"><b>Genre:</b> {movie.genre}</p>
-                      <p className="card-text"><b>Year:</b> {movie.year}</p>
+          {
+            movieList.length > 0 && (
+              <div className="row">
+                {movieList.map((movie, index) => (
+                  <Link to={`/movies/${movie.id}`}>
+                    <div key={index} className="col-md-4 mb-4">
+                      <div className="card">
+                        <img
+                          src={`http://localhost:3000/${movie.image}`}
+                          className="img-animation"
+                          alt={movie.title}
+                        />
+                        <div className="card-body">
+                          <h5 className="card-title text-center text-primary">{movie.title}</h5>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p>No movies found. Try a different search.</p>
-          )}
+                    </Link>
+                ))}
+              </div>
+            )
+          }
         </div>
       </div>
     </>

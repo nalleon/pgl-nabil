@@ -1,6 +1,7 @@
 {
     "movies": [
     {
+        "id": 1,
         "title": "Inception",
         "actor": "Leonardo DiCaprio",
         "director": "Christopher Nolan",
@@ -11,6 +12,7 @@
         "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0"
     },
     {
+        "id": 2,
         "title": "The Dark Knight",
         "actor": "Christian Bale",
         "director": "Christopher Nolan",
@@ -21,6 +23,7 @@
         "trailer": "https://youtu.be/EXeTwQWrcwY?si=eSXV9Q7vrGgxKEj7"
     },
     {
+        "id": 3,
         "title": "Spider-Man: No Way Home",
         "actor": "Tom Holland",
         "director": "Jon Watts",
@@ -31,6 +34,7 @@
         "trailer": "https://www.youtube.com/watch?v=JfVOs4VSpmA"
     },
     {
+        "id": 4,
         "title": "Dune",
         "actor": "Timothée Chalamet",
         "director": "Denis Villeneuve",
@@ -41,6 +45,7 @@
         "trailer": "https://www.youtube.com/watch?v=n9xhJrPXop4"
     },
     {
+        "id": 5,
         "title": "The Matrix Resurrections",
         "actor": "Keanu Reeves",
         "director": "Lana Wachowski",

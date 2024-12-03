@@ -1,0 +1,46 @@
+.container {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+h3.display-5 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: rgb(106, 151, 219);;
+}
+
+ul li {
+    font-size: 1.1rem;
+    color: #cb7474;
+}
+
+ul li strong {
+    color: rgb(106, 151, 219);;
+}
+
+.description {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #cb7474;
+}
+
+.trailer {
+    color: #cb7474;
+    margin-top: 20px;
+}
+
+.card{
+    background-color: transparent;
+    border-color: 2px solid  rgb(106, 151, 219);
+    width: 100%;
+    height: auto;
+}
+
+.img-animation {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+¡
+.img-animation:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
+}

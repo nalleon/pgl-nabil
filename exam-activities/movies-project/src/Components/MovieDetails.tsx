@@ -1,14 +1,18 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect } from 'react'
+import ReactPlayer from 'react-player';
+import { useParams } from 'react-router-dom'
+import '../Styles/MovieDetails.css';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
  */
 type Props = {
-  data : MovieType
-  url : string
+
 }
 
 type MovieType = {
+  id: number;
   title: string;
   actor: string;
   director: string;
@@ -20,21 +24,83 @@ type MovieType = {
 }
 
 const MovieDetails = (props: Props) => {
-  const {data, url} = props;
+  const { movieId } = useParams();
+  const [data, setData] = React.useState<MovieType>({} as MovieType);
+  const uri: string = "http://localhost:3000/"
+
+  useEffect(() => {
+
+    fetchMovie();
+    
+  }, [movieId])
   
-  console.log(url + "/" + data.image);
+
+  const fetchMovie = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/movies/${movieId}`);
+      setData(response.data);
+    } catch (error) {
+      console.error("Error fetching the movie:", error);
+    }
+  };
+
   return (
     <>
-    <div className="card">
-      <h1>{data.title}</h1>
-      <img src={url + data.image} alt={data.title} width={500} />
-      <p>Actor: {data.actor}</p>
-      <p>Director: {data.director}</p>
-      <p>Genre: {data.genre}</p>
-      <p>Year: {data.year}</p>
-      <p>Description: {data.description}</p>
-      <p>Trailer: <a href={data.trailer} target="_blank" rel="noopener noreferrer">Watch Trailer</a></p>
+<div className="container py-5">
+      <div className="row align-items-center custom-bg">
+        <div className="col-sm-12 col-md-6 d-flex justify-content-center mb-4 mb-md-0">
+          <img
+            src={uri + data.image}
+            alt={data.title}
+            className="img-fluid rounded shadow-lg"
+            style={{ maxWidth: '100%', height: 'auto' }}
+          />
+        </div>
+
+        <div className="col-sm-12 col-md-6">
+          <div className='card' style={{backgroundColor:'transparent'}}>
+            <h3 className="display-5 text-uppercase mb-4 fw-bold">{data.title}</h3>
+            <ul className="list-unstyled mb-4">
+              <li className="mb-3">
+                <strong>Actor:</strong> {data.actor}
+              </li>
+              <li className="mb-3">
+                <strong>Director:</strong> {data.director}
+              </li>
+              <li className="mb-3">
+                <strong>Genre:</strong> {data.genre}
+              </li>
+              <li className="mb-3">
+                <strong>Release date:</strong> {data.year}
+              </li>
+            </ul>
+
+            <div className="description mb-4">
+              <p className="text-justify">{data.description}</p>
+            </div>
+
+            <div className="trailer">
+              <h5 className="mb-3">Watch Trailer</h5>
+              <ReactPlayer
+                url={data.trailer}
+                controls
+                width="100%"
+                height="300px"
+                className="rounded shadow-lg"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="col-sm-12 col-md-6">  
+          <button className='btn btn-warning'>Edit</button>        
+        </div>
+        <div className="col-sm-12 col-md-6">          
+        <button className='btn btn-warning'>Delete</button>        
+
+        </div>
+      </div>
     </div>
+
     
     </>
   )
