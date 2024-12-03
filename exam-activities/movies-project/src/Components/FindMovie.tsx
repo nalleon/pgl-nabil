@@ -17,38 +17,29 @@ type MovieType = {
 }
 
 const FindMovie = (props: Props) => { 
-  const [movieList, setMovieList] = useState<MovieType[]>([]);
+  const [moviesList, setMovieList] = useState<MovieType[]>([]);
   const [typeSearch, setTypeSearch] = useState('title');
 
   const [search, setSearch] = useState('');
-
+  const url = `http://localhost:3000/`;
 
 
   
   useEffect(() => {
-  
+    findMovieFromAPI();
     
   }, [search, typeSearch])
   
 
-  const findMovieFromAPI = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const findMovieFromAPI = async () => {
     if (!typeSearch || !search.trim()) {
       console.error('Search type or query is missing.');
       setMovieList([]);
       return;
     }
   
-    //const url = `http://localhost:3000/movies?${typeSearch}=${encodeURIComponent(search)}`;
-    const url = `http://localhost:3000/movies`;
-    
-    //console.log(`Fetching movies from: ${url}`);
-    
     try{
-      const response = await axios.get(url);
-
-
+      const response = await axios.get(url+"movies");
       const filteredMovies = response.data.filter((movie: { [x: string]: string; }) =>
         movie[typeSearch].toLowerCase().includes(search.toLowerCase())
       );
@@ -104,23 +95,24 @@ const FindMovie = (props: Props) => {
 
           <div className="mt-5">
           {
-            movieList.length > 0 && (
-              <div className="row">
-                {movieList.map((movie, index) => (
-                  <Link to={`/movies/${movie.id}`}>
-                    <div key={index} className="col-md-4 mb-4">
-                      <div className="card">
+            moviesList.length > 0 && (
+              <div className="row flex-wrap">
+                {moviesList.map((movie, index) => (
+                  <div key={index} className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-2 mb-3">
+                    <div className="custom-card">
+                      <Link to={`/movies/${movie.id}`} 
+                            className='link-offset-2 link-underline link-underline-opacity-0'>
                         <img
-                          src={`http://localhost:3000/${movie.image}`}
-                          className="img-animation"
-                          alt={movie.title}
+                          src={`${url}${movie.image}`} 
+                          alt={movie.title} 
+                          className="custom-img" 
                         />
-                        <div className="card-body">
-                          <h5 className="card-title text-center text-primary">{movie.title}</h5>
+                        <div className="custom-title">
+                            {movie.title}
                         </div>
-                      </div>
+                      </Link>
                     </div>
-                    </Link>
+                  </div>
                 ))}
               </div>
             )

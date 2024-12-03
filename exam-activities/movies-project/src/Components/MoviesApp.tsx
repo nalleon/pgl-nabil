@@ -36,6 +36,7 @@ const MoviesApp = (props: Props) => {
                         <Route path="/movies/modify/:movieId" element={<UpdateMovie/>}/>
                         <Route path="/movies/delete/:movieId" element={<DeleteMovie/>}/>
                     </Routes>
+                    <Footer/>
                 </AppThemeContextProvider>
             </AppContextProvider>
 
@@ -84,6 +85,20 @@ const MoviesApp = (props: Props) => {
         </nav>
         )
     }
+
+    function Footer(){
+        const context = useContext(AppThemeContext);
+
+        return (
+            <footer className={`${context.theme === 'dark' ? 'navbar-dark-theme' : 'navbar-light-theme'}
+                text-center text-light-hover`}>
+                <div className="container p-4">
+                    <span>Copyright © 2024 - MoviesApp</span>
+                </div>
+            </footer>
+        )
+    }
+
 }
 
 export default MoviesApp
