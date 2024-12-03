@@ -19,7 +19,7 @@ type DataCircle = {
  *  Type definition for the flex directions values 
  */
 
-type Direction = "row" | "row-reverse" | "column" | "column-reverse";
+type DirectionType = "row" | "row-reverse" | "column" | "column-reverse";
 
 /**
  *  Type definition for the wrap values 
@@ -31,7 +31,7 @@ const Practice08Screen = (props: Props) => {
   /**
    * UseStates
    */
-  const [direction, setDirection] = useState<Direction>("row");
+  const [direction, setDirection] = useState<DirectionType>("row");
   const [wrap, setWrap] = useState<WrapType>("wrap");
   const [circleArr, setCircleArr] = useState<DataCircle[]>([]);
 
@@ -48,7 +48,7 @@ const Practice08Screen = (props: Props) => {
 
     setCircleArr([...circleArr, 
       {
-        name: 'b'+(circleArr.length+1),
+        name: 'B'+(circleArr.length+1),
         red: (lastCircle.red + 25) % 256,
         green: (lastCircle.green + 35) % 256,
         blue: (lastCircle.blue + 55) % 256,
@@ -70,13 +70,15 @@ const Practice08Screen = (props: Props) => {
    * Function to change the flex direction property of the container
    */
   const changeRow = () => {
-    const options: Direction[] = ["row", "column", "row-reverse", "column-reverse"];
+    const options: DirectionType[] = ["row", "column", "row-reverse", "column-reverse"];
     const nextOptionPos = (options.indexOf(direction!) + 1) % options.length;
     setDirection(options[nextOptionPos]);
   };
 
   return (
     <View style={styles.mainContainer}>
+      
+
       <Button title='Add circle' onPress={addCircle}/>
       <TouchableOpacity onPress={()=> changeWrap()}> 
         <Text style={styles.btnwrap}>Change Wrap (Click here)</Text>
@@ -84,22 +86,19 @@ const Practice08Screen = (props: Props) => {
       <TouchableOpacity onPress={()=> changeRow()}> 
         <Text style={styles.btnrow}>Change Row (Click here)</Text>
       </TouchableOpacity>
-      <View>
+ 
       <View
-        style={[
-          styles.container,
-          {
-            flexDirection: direction ?? "row",
-            flexWrap: wrap === "no-wrap" ? "nowrap" : wrap ?? "wrap",
-          },
-        ]}
+        style={{...styles.container,
+                  flexDirection: direction ?? "row",
+                  flexWrap: wrap === "no-wrap" ? "nowrap" : wrap ?? "wrap",
+        }}
       >
         {circleArr.map((circle, index) => (
-            <Box08 key={index} nameBox={'B'+circleArr.length+1} red={circle.red} green={circle.green} blue={circle.blue}/>
+            <Box08 key={index} nameBox={circle.name} red={circle.red} green={circle.green} blue={circle.blue}/>
         ))}
         
       </View>
-      </View>
+
     </View>
   )
 }
