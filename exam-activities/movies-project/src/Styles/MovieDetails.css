@@ -1,46 +1,76 @@
-.container {
-    padding-top: 30px;
-    padding-bottom: 30px;
+.custom-bg {
+    flex: 1;
+    background: transparent; 
+    border: 3px solid rgb(30, 30, 30);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 15px 15px 20px rgb(25, 25, 25),
+                -15px -15px 20px rgb(60, 60, 60);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-h3.display-5 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: rgb(106, 151, 219);;
+.card {
+    border: 2px solid rgb(60, 60, 60);
+    border-radius: 10px;
+    padding: 15px 20px;
+    color: #ffffff; 
 }
 
-ul li {
-    font-size: 1.1rem;
-    color: #cb7474;
+.card h3, .trailer {
+    color: #f9c74f; 
+    text-transform: uppercase;
+    text-shadow: 1px 1px 3px rgb(97, 49, 23);
 }
 
-ul li strong {
-    color: rgb(106, 151, 219);;
+.card ul {
+    padding: 0;
+    list-style: none;
+    font-size: 1rem;
+    color: #b3b3b3; 
 }
 
-.description {
-    font-size: 1.2rem;
+.card ul li strong {
+    color: #ffffff;
+}
+
+.description p {
+    color: #dcdcdc;
     line-height: 1.6;
-    color: #cb7474;
 }
 
-.trailer {
-    color: #cb7474;
-    margin-top: 20px;
+
+.btn-primary {
+    background-color: #4f7ff9;
+    border: none;
+    color: #212121;
+    font-weight: bold;
+    border-radius: 30px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.card{
-    background-color: transparent;
-    border-color: 2px solid  rgb(106, 151, 219);
-    width: 100%;
-    height: auto;
-}
-
-.img-animation {
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
-}
-¡
-.img-animation:hover {
+.btn-primary:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
+}
+
+
+.btn-danger {
+    background-color: #f94f4f;
+    border: none;
+    color: #212121;
+    font-weight: bold;
+    border-radius: 30px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-danger:hover {
+    transform: scale(1.05);
+}
+
+
+.trailer h5 {
+    text-shadow: 1px 1px 3px rgb(0, 0, 0);
+}
+
+.custom-bg:hover {
+    transform: translateY(-5px);
 }

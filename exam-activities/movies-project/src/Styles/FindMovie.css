@@ -30,7 +30,7 @@
 }
 
 .custom-button {
-    background-color: rgb(60, 60, 60);
+    background-color: transparent;
     color: #ffffff;
     border: 2px solid rgb(80, 80, 80);
     padding: 10px 20px;

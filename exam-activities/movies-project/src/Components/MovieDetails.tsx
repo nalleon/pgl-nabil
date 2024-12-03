@@ -46,59 +46,60 @@ const MovieDetails = (props: Props) => {
 
   return (
     <>
-<div className="container py-5">
-      <div className="row align-items-center custom-bg">
-        <div className="col-sm-12 col-md-6 d-flex justify-content-center mb-4 mb-md-0">
-          <img
-            src={uri + data.image}
-            alt={data.title}
-            className="img-fluid rounded shadow-lg"
-            style={{ maxWidth: '100%', height: 'auto' }}
-          />
-        </div>
-
-        <div className="col-sm-12 col-md-6">
-          <div className='card' style={{backgroundColor:'transparent'}}>
-            <h3 className="display-5 text-uppercase mb-4 fw-bold">{data.title}</h3>
-            <ul className="list-unstyled mb-4">
-              <li className="mb-3">
-                <strong>Actor:</strong> {data.actor}
-              </li>
-              <li className="mb-3">
-                <strong>Director:</strong> {data.director}
-              </li>
-              <li className="mb-3">
-                <strong>Genre:</strong> {data.genre}
-              </li>
-              <li className="mb-3">
-                <strong>Release date:</strong> {data.year}
-              </li>
-            </ul>
-
-            <div className="description mb-4">
-              <p className="text-justify">{data.description}</p>
-            </div>
-
-            <div className="trailer">
-              <h5 className="mb-3">Watch Trailer</h5>
-              <ReactPlayer
-                url={data.trailer}
-                controls
-                width="100%"
-                height="300px"
-                className="rounded shadow-lg"
-              />
+      <div className="container py-5">
+        <div className="row align-items-center custom-bg">
+          <div className="col-sm-12 col-md-6 ">
+            <img
+              src={uri + data.image}
+              alt={data.title}
+              className="img-fluid rounded shadow-lg"
+            />
+            <div className="row mt-5 ms-3">  
+              <div className="col-6">
+                <button className='btn btn-primary w-75'>Edit</button>               
+              </div>
+              <div className="col-6">
+                <button className='btn btn-danger w-75'>Delete</button>               
+              </div>
             </div>
           </div>
-        </div>
-        <div className="w-ms-auto">  
-          <button className='btn btn-warning'>Edit</button>               
-          <button className='btn btn-warning'>Delete</button>        
+          <div className="col-sm-12 col-md-6">
+            <div className='card' style={{backgroundColor:'transparent'}}>
+              <h3 className="display-5 text-uppercase mb-4 fw-bold">{data.title}</h3>
+              <ul className="list-unstyled mb-4">
+                <li className="mb-3">
+                  <strong>Actor:</strong> {data.actor}
+                </li>
+                <li className="mb-3">
+                  <strong>Director:</strong> {data.director}
+                </li>
+                <li className="mb-3">
+                  <strong>Genre:</strong> {data.genre}
+                </li>
+                <li className="mb-3">
+                  <strong>Release date:</strong> {data.year}
+                </li>
+              </ul>
+
+              <div className="description mb-4">
+                <p className="text-justify">{data.description}</p>
+              </div>
+
+              <div className="trailer">
+                <h5 className="mb-3">Watch Trailer</h5>
+                <ReactPlayer
+                  url={data.trailer}
+                  controls
+                  width="100%"
+                  height="300px"
+                  className="rounded shadow-lg"
+                />
+              </div>
+            </div>
+          </div>
+          
         </div>
       </div>
-    </div>
-
-    
     </>
   )
 }
