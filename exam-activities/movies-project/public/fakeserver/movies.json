@@ -331,15 +331,15 @@
       "trailer": "https://www.youtube.com/watch?v=OeaUokzE9fI"
     },
     {
-      "id": 31,
-      "title": "Arcadion",
-      "actor": "WoL",
-      "director": "Yoshi-P",
-      "genre": "Action",
+      "id": "31",
+      "title": "Arcadion Floor 4",
+      "actor": "WoL, Wicked Thunder",
+      "director": "Yoshi-P, SQENIX",
+      "genre": "Action, MMORPG",
       "year": 2024,
-      "description": "Have you heard of the critically acclaimed MMORPG Final Fantasy XIV? With an expanded free trial which you can play through the entirety of A Realm Reborn and the award-winning Heavensward, and thrilling Stormblood expansions up to level 70 for free with no restrictions on playtime. ",
-      "image": "default.jpg",
-      "trailer": "https://youtu.be/_htiXfLqXxU?si=MZp0o1GEhpL5_hkj"
+      "description": "Have you heard of the critically acclaimed MMORPG Final Fantasy XIV? With an expanded free trial which you can play through the entirety of A Realm Reborn and the award-winning Heavensward, and thrilling Stormblood expansions up to level 70 for free with no restrictions on playtime.  Dawntrail is actually good",
+      "image": "avatar.jpg",
+      "trailer": "https://youtu.be/rsX6nxwCZ1o?si=olNm56A4bl2dUlug"
     }
   ]
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -19,7 +20,9 @@ type MovieType = {
 }
 
 const CreateMovie = (props: Props) => {
-  const [movie, setMovie] = useState<MovieType>({} as MovieType);
+  /**
+   * UseStates
+   */  
   const [title, setTitle] = useState('');
   const [actor, setActor] = useState('');
   const [director, setDirector] = useState('');
@@ -29,7 +32,15 @@ const CreateMovie = (props: Props) => {
   const [trailer, setTrailer] = useState('https://youtu.be/_htiXfLqXxU?si=MZp0o1GEhpL5_hkj');
   const [image, setImage] = useState('default.jpg');
 
+
+  /**
+   * Other properties
+   */
+
+  let navigate = useNavigate();
   const uri: string = "http://localhost:3000/movies"
+
+
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -62,6 +73,7 @@ const CreateMovie = (props: Props) => {
       console.error("Error creating the movie:", error);
     }
 
+    navigate('/movies');
   }
 
 

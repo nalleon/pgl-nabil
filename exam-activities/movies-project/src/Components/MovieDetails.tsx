@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player';
 import { Link, useParams } from 'react-router-dom'
 import '../Styles/MovieDetails.css';
@@ -26,7 +26,7 @@ type MovieType = {
 
 const MovieDetails = (props: Props) => {
   const { movieId } = useParams();
-  const [data, setData] = React.useState<MovieType>({} as MovieType);
+  const [data, setData] = useState<MovieType>({} as MovieType);
   const uri: string = "http://localhost:3000/"
 
   useEffect(() => {
