@@ -39,15 +39,7 @@ const UpdateMovie = (props: Props) => {
    * UseStates
    */
   const [data, setData] = useState<MovieType>({} as MovieType);
-  const [id, setId] = useState(0);
-  const [title, setTitle] = useState('');
-  const [actor, setActor] = useState('');
-  const [director, setDirector] = useState('');
-  const [genre, setGenre] = useState('');
-  const [year, setYear] = useState(0);
-  const [description, setDescription] = useState('');
-  const [trailer, setTrailer] = useState('');
-  const [image, setImage] = useState('');
+
 
 
   let navigate = useNavigate();
@@ -60,6 +52,17 @@ const UpdateMovie = (props: Props) => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+
+    let form = event.currentTarget;
+    const id = movieId ? parseInt(movieId) : 0; 
+    const title = form.title.value;
+    const actor = form.actor.value;
+    const director = form.director.value;
+    const genre = form.genre.value;
+    const year = parseInt(form.year.value);
+    const description = form.description.value;
+    const image = form.image.value;
+    const trailer = form.trailer.value;
 
     const updatedMovie: MovieType = {
       id,
@@ -79,7 +82,7 @@ const UpdateMovie = (props: Props) => {
       console.error("Error updating the movie:", error);
     }
 
-    navigate(`/movies/${movieId}`);
+    navigate(`/movies`);
   }
 
   /**
@@ -89,15 +92,7 @@ const UpdateMovie = (props: Props) => {
     try {
       const response = await axios.get(uri);
       setData(response.data);
-      setId(data.id);
-      setTitle(data.title);
-      setActor(data.actor);
-      setDirector(data.director);
-      setGenre(data.genre);
-      setYear(data.year);
-      setDescription(data.description);
-      setTrailer(data.trailer);
-      setImage(data.image);
+
 
     } catch (error) {
       console.error("Error fetching selected movie:", error);
@@ -123,8 +118,7 @@ const UpdateMovie = (props: Props) => {
                   name="title"
                   placeholder="Enter the title"
                   className="custom-input"
-                  onChange={(e) => setTitle(e.target.value)}
-                  value={title} 
+                  defaultValue={data.title} 
                   required
                 />
               </div>
@@ -137,8 +131,7 @@ const UpdateMovie = (props: Props) => {
                   name="director"
                   placeholder="Enter the director's name"
                   className="custom-input"
-                  onChange={(e) => setDirector(e.target.value)}
-                  value={director}
+                  defaultValue={data.director}
                   required
                 />
               </div>
@@ -152,8 +145,7 @@ const UpdateMovie = (props: Props) => {
                   name="actor"
                   placeholder="Enter the director's name"
                   className="custom-input"
-                  onChange={(e) => setActor(e.target.value)}
-                  value={actor}
+                  defaultValue={data.actor}
                   required
                 />
               </div>
@@ -167,8 +159,7 @@ const UpdateMovie = (props: Props) => {
                   name="year"
                   placeholder="Enter the year of realease"
                   className="custom-input"
-                  onChange={(e) => setYear(parseInt(e.target.value))}
-                  value={year}
+                  defaultValue={data.year}
                   required
                 />
               </div>
@@ -179,11 +170,10 @@ const UpdateMovie = (props: Props) => {
                 </label>
                 <input
                   type="text"
-                  name="year"
+                  name="genre"
                   placeholder="Enter the genres of the movie"
                   className="custom-input"
-                  onChange={(e) => setGenre(e.target.value)}
-                  value={genre}
+                  defaultValue={data.genre}
                   required
                 />
               </div>
@@ -198,8 +188,7 @@ const UpdateMovie = (props: Props) => {
                   placeholder="Enter a brief description of the movie"
                   rows={4} cols={50}
                   className="custom-input"
-                  onChange={(e) => setDescription(e.target.value)}
-                  value={description}
+                  defaultValue={data.description}
                   
                   required
                 />
@@ -211,11 +200,10 @@ const UpdateMovie = (props: Props) => {
                 </label>
                 <input
                   type="text"
-                  name="year"
+                  name="trailer"
                   placeholder="Youtube URL"
                   className="custom-input"
-                  onChange={(e) => setTrailer(e.target.value)}
-                  value={trailer}
+                  defaultValue={data.trailer}
                 />
               </div>
 
@@ -228,14 +216,13 @@ const UpdateMovie = (props: Props) => {
                   name="image"
                   placeholder="Image URL"
                   className="custom-input"
-                  onChange={(e) => setImage(e.target.value)}
-                  value={image}
+                  defaultValue={data.image}
                 />
               </div>
 
               <div className='col-12'>
                 <button type="submit" className="custom-button w-100 ">
-                    Create
+                    Update
                 </button>
               </div>
 

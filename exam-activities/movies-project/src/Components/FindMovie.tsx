@@ -64,7 +64,7 @@ const FindMovie = (props: Props) => {
                   placeholder="Enter your search"
                   className="custom-input"
                   onChange={(e) => setSearch(e.target.value)}
-                  value={search}
+                  defaultValue={search}
                 />
               </div>
 

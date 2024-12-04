@@ -93,7 +93,7 @@ const CreateMovie = (props: Props) => {
                   placeholder="Enter the title"
                   className="custom-input"
                   onChange={(e) => setTitle(e.target.value)}
-                  value={title} 
+                  defaultValue={title} 
                   required
                 />
               </div>
@@ -107,7 +107,7 @@ const CreateMovie = (props: Props) => {
                   placeholder="Enter the director's name"
                   className="custom-input"
                   onChange={(e) => setDirector(e.target.value)}
-                  value={director}
+                  defaultValue={director}
                   required
                 />
               </div>
@@ -122,7 +122,7 @@ const CreateMovie = (props: Props) => {
                   placeholder="Enter the director's name"
                   className="custom-input"
                   onChange={(e) => setActor(e.target.value)}
-                  value={actor}
+                  defaultValue={actor}
                   required
                 />
               </div>
@@ -137,7 +137,7 @@ const CreateMovie = (props: Props) => {
                   placeholder="Enter the year of realease"
                   className="custom-input"
                   onChange={(e) => setYear(parseInt(e.target.value))}
-                  value={year}
+                  defaultValue={year}
                   required
                 />
               </div>
@@ -152,7 +152,7 @@ const CreateMovie = (props: Props) => {
                   placeholder="Enter the genres of the movie"
                   className="custom-input"
                   onChange={(e) => setGenre(e.target.value)}
-                  value={genre}
+                  defaultValue={genre}
                   required
                 />
               </div>
@@ -184,7 +184,7 @@ const CreateMovie = (props: Props) => {
                   placeholder="Youtube URL"
                   className="custom-input"
                   onChange={(e) => setTrailer(e.target.value)}
-                  value={trailer}
+                  defaultValue={trailer}
                 />
               </div>
 
@@ -198,7 +198,7 @@ const CreateMovie = (props: Props) => {
                   placeholder="Image URL"
                   className="custom-input"
                   onChange={(e) => setImage(e.target.value)}
-                  value={image}
+                  defaultValue={image}
                 />
               </div>
 
