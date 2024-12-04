@@ -60,7 +60,7 @@ const MoviesApp = (props: Props) => {
                             <ul className="d-flex align-items-start navbar-nav me-auto mb-2 mb-lg-0 ms-5">
                                 <li className="list-group-item m-1"><Link to="/movies" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3 '> Movies </Link></li>
                                 <li className="list-group-item m-1"><Link to="/movies/find-movie" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Find movie </Link></li>
-                                <li className="list-group-item m-1"><Link to="/movies/create/:movieId" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Create </Link></li>                       
+                                <li className="list-group-item m-1"><Link to="/movies/create/" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Create </Link></li>                       
                                 <li className="list-group-item m-1"><Link to="/login" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Login </Link></li>
                             </ul>
                         </div>
