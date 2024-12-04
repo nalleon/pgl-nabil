@@ -32,7 +32,7 @@ const MovieDetails = (props: Props) => {
   useEffect(() => {
 
     fetchMovie();
-    
+    console.log(data);
   }, [movieId])
   
 
