@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import AppContextProvider, { AppContext } from './Context/AppContextProvider';
 import CreateMovie from './CreateMovie';
 import UpdateMovie from './UpdateMovie';
-import DeleteMovie from './DeleteMovie';
 import FindMovie from './FindMovie';
 import Login from './Login';
 import { BrowserRouter, Route, Link, Routes } from 'react-router-dom';
@@ -34,7 +33,6 @@ const MoviesApp = (props: Props) => {
                         <Route path="/movies/create" element={<CreateMovie/>}/>
                         <Route path="/movies/:movieId" element={<MovieDetails/>}/>
                         <Route path="/movies/modify/:movieId" element={<UpdateMovie/>}/>
-                        <Route path="/movies/delete/:movieId" element={<DeleteMovie/>}/>
                     </Routes>
                     <Footer/>
                 </AppThemeContextProvider>

@@ -1,6 +1,17 @@
 {
   "movies": [
     {
+      "id": "1",
+      "title": "Inception",
+      "actor": "Leonardo DiCaprio",
+      "director": "Christopher Nolan",
+      "genre": "Sci-Fi",
+      "year": 2010,
+      "description": "A skilled thief is given a chance at redemption if he is able to successfully perform an inception, planting an idea into a target's subconscious.",
+      "image": "inception-poster.jpg",
+      "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0"
+    },
+    {
       "id": "2",
       "title": "The Dark Knight",
       "actor": "Christian Bale",
@@ -318,17 +329,6 @@
       "description": "A reporter and her cameraman are trapped inside a building quarantined by the authorities after an outbreak of a deadly virus.",
       "image": "rec.jpg",
       "trailer": "https://www.youtube.com/watch?v=OeaUokzE9fI"
-    },
-    {
-      "id": "31",
-      "title": "Arcadion Floor 4",
-      "actor": "WoL, Wicked Thunder",
-      "director": "Yoshi-P, SQENIX",
-      "genre": "Action, MMORPG",
-      "year": 2024,
-      "description": "Have you heard of the critically acclaimed MMORPG Final Fantasy XIV? With an expanded free trial which you can play through the entirety of A Realm Reborn and the award-winning Heavensward, and thrilling Stormblood expansions up to level 70 for free with no restrictions on playtime.  Dawntrail is actually good. Midwalker",
-      "image": "black-panther.jpg",
-      "trailer": "https://youtu.be/rsX6nxwCZ1o?si=olNm56Az4bl2dUlug"
     }
   ]
 }

@@ -41,7 +41,6 @@ const CreateMovie = (props: Props) => {
   const uri: string = "http://localhost:3000/movies"
 
 
-
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
@@ -54,9 +53,13 @@ const CreateMovie = (props: Props) => {
       console.error("Error fetching all movies:", error);
     }
 
+    console.log("Fetched Movies:", auxMovies.length);
+
+    const nextId = getNextId(auxMovies);
+    console.log(nextId);
 
     const newMovie: MovieType = {
-      id: auxMovies.length + 1,
+      id: nextId,
       title,
       actor,
       director,
@@ -75,6 +78,13 @@ const CreateMovie = (props: Props) => {
 
     navigate('/movies');
   }
+
+  const getNextId = (moviesList : MovieType[]) => {
+    const lastMovie = moviesList[moviesList.length - 1];
+    const id = parseInt(lastMovie.id.toString()) + 1;
+    return id;
+  }
+
 
 
   return (

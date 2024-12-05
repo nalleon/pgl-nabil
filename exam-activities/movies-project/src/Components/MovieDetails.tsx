@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player';
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import '../Styles/MovieDetails.css';
-import DeleteConfimation from './DeleteConfimation';
+import DeleteMovie from './DeleteMovie';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -29,7 +29,6 @@ const MovieDetails = (props: Props) => {
   const [data, setData] = useState<MovieType>({} as MovieType);
   const uri: string = "http://localhost:3000/"
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
 
@@ -40,7 +39,7 @@ const MovieDetails = (props: Props) => {
 
   const fetchMovie = async () => {
     try {
-      const response = await axios.get(`${uri}/movies/${movieId}`);
+      const response = await axios.get(`${uri}movies/${movieId}`);
       setData(response.data);
     } catch (error) {
       console.error("Error fetching the movie:", error);
@@ -107,7 +106,7 @@ const MovieDetails = (props: Props) => {
         </div>
         <div className='align-items-center'>
             {showConfirmation && (
-              <DeleteConfimation movieId={movieId} onCancel={() => setShowConfirmation(false)}/>
+              <DeleteMovie movieId={movieId} onCancel={() => setShowConfirmation(false)}/>
           )}
         </div>
     
