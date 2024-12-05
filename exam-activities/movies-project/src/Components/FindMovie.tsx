@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import '../Styles/FindMovie.css'
+import '../Styles/MoviesList.css';
+
 type Props = {}
 
 type MovieType = {
@@ -27,14 +29,13 @@ const FindMovie = (props: Props) => {
   
   useEffect(() => {
     findMovieFromAPI();
-    
   }, [search, typeSearch])
   
 
   const findMovieFromAPI = async () => {
     if (!typeSearch || !search.trim()) {
-      console.error('Search type or query is missing.');
-      setMovieList([]);
+      const response = await axios.get(url+"movies");
+      setMovieList(response.data);
       return;
     }
   
@@ -95,7 +96,7 @@ const FindMovie = (props: Props) => {
             moviesList.length > 0 && (
               <div className="row flex-wrap">
                 {moviesList.map((movie, index) => (
-                  <div key={index} className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-2 mb-3">
+                  <div key={index} className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-3">
                     <div className="custom-card">
                       <Link to={`/movies/${movie.id}`} 
                             className='link-offset-2 link-underline link-underline-opacity-0'>

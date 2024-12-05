@@ -12,7 +12,6 @@ import '../Styles/Theme.css';
 
 import ThemeSwitcher from './ThemeSwitcher';
 import AppThemeContextProvider, { AppThemeContext } from './Context/AppThemeContextProvider';
-import MoviesList from './MoviesList';
 import MovieDetails from './MovieDetails';
 
 
@@ -24,12 +23,11 @@ const MoviesApp = (props: Props) => {
             <AppContextProvider>
                 <AppThemeContextProvider>
                     <Navbar />
-                    <BreadCrumb/>
+                    <ShowContextButtons/>
                     <Routes>
                         <Route path="/" element={<Login />} />
                         <Route path="/login" element={<Login />} />
-                        <Route path="/movies" element={<MoviesList/>}/>
-                        <Route path="/movies/find-movie" element={<FindMovie/>}/>
+                        <Route path="/movies" element={<FindMovie/>}/>
                         <Route path="/movies/create" element={<CreateMovie/>}/>
                         <Route path="/movies/:movieId" element={<MovieDetails/>}/>
                         <Route path="/movies/modify/:movieId" element={<UpdateMovie/>}/>
@@ -57,7 +55,6 @@ const MoviesApp = (props: Props) => {
                         <div id="navBar" className="collapse navbar-collapse">
                             <ul className="d-flex align-items-start navbar-nav me-auto mb-2 mb-lg-0 ms-5">
                                 <li className="list-group-item m-1"><Link to="/movies" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3 '> Movies </Link></li>
-                                <li className="list-group-item m-1"><Link to="/movies/find-movie" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Find movie </Link></li>
                                 <li className="list-group-item m-1"><Link to="/movies/create/" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Create </Link></li>                       
                                 <li className="list-group-item m-1"><Link to="/login" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Login </Link></li>
                             </ul>
@@ -67,7 +64,7 @@ const MoviesApp = (props: Props) => {
         );
     }
 
-    function BreadCrumb(){
+    function ShowContextButtons(){
         const context = useContext(AppContext);
         return (
             <nav aria-label="breadcrumb" className="d-flex justify-content-between breadcrumb-custom">

@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom';
  */
 type Props = {}
 
+/**
+ * Type of the movies json object
+ */
 type MovieType = {
   id: number;
   title: string;
@@ -41,6 +44,10 @@ const CreateMovie = (props: Props) => {
   const uri: string = "http://localhost:3000/movies"
 
 
+  /**
+   * Function to hanlde the creation de una nueva pelicula
+   * @param event submit button of the form
+   */
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
@@ -53,10 +60,7 @@ const CreateMovie = (props: Props) => {
       console.error("Error fetching all movies:", error);
     }
 
-    console.log("Fetched Movies:", auxMovies.length);
-
     const nextId = getNextId(auxMovies);
-    console.log(nextId);
 
     const newMovie: MovieType = {
       id: nextId,
@@ -79,6 +83,11 @@ const CreateMovie = (props: Props) => {
     navigate('/movies');
   }
 
+  /**
+   * Function to get the next Id for the new Movie
+   * @param moviesList to retrieve the last id at the moment
+   * @returns next id 
+   */
   const getNextId = (moviesList : MovieType[]) => {
     const lastMovie = moviesList[moviesList.length - 1];
     const id = parseInt(lastMovie.id.toString()) + 1;
