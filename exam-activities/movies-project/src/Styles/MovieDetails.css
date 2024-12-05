@@ -67,6 +67,20 @@
 }
 
 
+.btn-secondary {
+    background-color: #9e9d9d;
+    border: none;
+    color: #212121;
+    font-weight: bold;
+    border-radius: 30px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-secondary:hover {
+    transform: scale(1.05);
+}
+
+
 .trailer h5 {
     text-shadow: 1px 1px 3px rgb(0, 0, 0);
 }

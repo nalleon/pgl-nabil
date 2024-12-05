@@ -1,17 +1,6 @@
 {
   "movies": [
     {
-      "id": "1",
-      "title": "Inception",
-      "actor": "Leonardo DiCaprio",
-      "director": "Christopher Nolan",
-      "genre": "Sci-Fi",
-      "year": 2010,
-      "description": "A skilled thief is given a chance at redemption if he is able to successfully perform an inception, planting an idea into a target's subconscious.",
-      "image": "inception-poster.jpg",
-      "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0"
-    },
-    {
       "id": "2",
       "title": "The Dark Knight",
       "actor": "Christian Bale",

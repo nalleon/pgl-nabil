@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player';
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import '../Styles/MovieDetails.css';
-import DeleteMovie from './DeleteMovie';
+import DeleteConfimation from './DeleteConfimation';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -28,6 +28,8 @@ const MovieDetails = (props: Props) => {
   const { movieId } = useParams();
   const [data, setData] = useState<MovieType>({} as MovieType);
   const uri: string = "http://localhost:3000/"
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
 
@@ -38,7 +40,7 @@ const MovieDetails = (props: Props) => {
 
   const fetchMovie = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/movies/${movieId}`);
+      const response = await axios.get(`${uri}/movies/${movieId}`);
       setData(response.data);
     } catch (error) {
       console.error("Error fetching the movie:", error);
@@ -97,12 +99,18 @@ const MovieDetails = (props: Props) => {
               </Link>               
             </div>
             <div className="col-12 col-md-6">
-              <Link to={`/movies/delete/${data.id}`} className="btn btn-danger w-75">
-                Delete
-              </Link>               
+              <button className="btn btn-danger w-75" onClick={() => setShowConfirmation(true)}>
+                  Delete
+              </button>
             </div>
           </div>
         </div>
+        <div className='align-items-center'>
+            {showConfirmation && (
+              <DeleteConfimation movieId={movieId} onCancel={() => setShowConfirmation(false)}/>
+          )}
+        </div>
+    
       </div>
     </>
   )
