@@ -19,10 +19,20 @@ type MovieType = {
 }
 
 const FindMovie = (props: Props) => { 
+  /**
+   * UseStates for search
+   */
   const [moviesList, setMovieList] = useState<MovieType[]>([]);
   const [typeSearch, setTypeSearch] = useState('title');
-
   const [search, setSearch] = useState('');
+
+  /**
+   * UseState for pagination
+   */
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const maxMoviesPerPage = 10;
   const url = `http://localhost:3000/`;
 
 
@@ -36,8 +46,8 @@ const FindMovie = (props: Props) => {
     if (!typeSearch || !search.trim()) {
       const response = await axios.get(url+"movies");
       setMovieList(response.data);
-      return;
     }
+
   
     try{
       const response = await axios.get(url+"movies");
@@ -55,7 +65,7 @@ const FindMovie = (props: Props) => {
 
   return (
       <>
-        <div className='container mt-5'>
+        <div className='container mt-3'>
           <form onSubmit={findMovieFromAPI} className='custom-form'>
             <div className="row g-3 align-items-center ">
               <div className="col-md-8">
