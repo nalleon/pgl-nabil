@@ -1,4 +1,36 @@
 {
+  "categories": [
+    {
+      "id": "1",
+      "name": "Family",
+      "description": "Movies suitable for all ages and family viewing."
+    },
+    {
+      "id": "2",
+      "name": "Action",
+      "description": "Adrenaline-pumping action movies full of excitement."
+    },
+    {
+      "id": "3",
+      "name": "Sci-Fi",
+      "description": "Science fiction movies exploring futuristic themes."
+    },
+    {
+      "id": "4",
+      "name": "Drama",
+      "description": "Emotional, character-driven stories."
+    },
+    {
+      "id": "5",
+      "name": "Horror",
+      "description": "Terrifying movies that will keep you on edge."
+    },
+    {
+      "id": "6",
+      "name": "Adventure",
+      "description": "Movies that involve exciting and often dangerous experiences."
+    }
+  ],
   "movies": [
     {
       "id": "1",
@@ -9,7 +41,8 @@
       "year": 2010,
       "description": "A skilled thief is given a chance at redemption if he is able to successfully perform an inception, planting an idea into a target's subconscious.",
       "image": "inception-poster.jpg",
-      "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0"
+      "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0",
+      "categories": ["Sci-Fi"]
     },
     {
       "id": "2",
@@ -167,7 +200,7 @@
     },
     {
       "id": "16",
-      "title": "Frozen",
+      "title": "Frozen2",
       "actor": "Idina Menzel",
       "director": "Chris Buck, Jennifer Lee",
       "genre": "Animation, Fantasy",
