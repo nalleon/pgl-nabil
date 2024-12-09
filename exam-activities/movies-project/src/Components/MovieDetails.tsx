@@ -31,14 +31,30 @@ const MovieDetails = (props: Props) => {
   const uri: string = "http://localhost:3000/"
   const [showConfirmation, setShowConfirmation] = useState(false);
 
+  /**
+   * Context and useState for favourites
+   */
   const context = useContext(FavouriteMovieContext);
+  const [isFavourite, setIsFavourite] = useState<boolean>(false)
 
   useEffect(() => {
-
     fetchMovie();
-    console.log(data);
-  }, [movieId])
-  
+    checkIfFavourite();
+  }, [movieId]);
+
+
+  /**
+   * Function to check if the movie is in favourite
+   */
+  const checkIfFavourite = () => {
+    const isFav = context.favourites.find((favourite) => favourite.id === data.id);
+
+    if (isFav !== null){
+      setIsFavourite(true);
+    }
+
+  };
+
 
   const fetchMovie = async () => {
     try {
@@ -49,14 +65,19 @@ const MovieDetails = (props: Props) => {
     }
   };
 
+  /**
+   * Function to handle the favourite add/remove 
+   */
   const handleAddFavourite = () => {
-  
     const added = context.addFavourite(data);
 
     if (!added){
       context.removeFavourite(data.id);
+      setIsFavourite(false);
+      return;
     }
 
+    setIsFavourite(true);
   }
 
   return (
@@ -104,8 +125,8 @@ const MovieDetails = (props: Props) => {
               </div>
               <div className="row mt-3">
                 <div className="col-12 d-flex justify-content-center align-items-center">
-                  <button className='custom-button' onClick={handleAddFavourite}>  
-                    <i className="bi bi-star-fill"></i>
+                  <button className={`custom-button${isFavourite ? '-fav' : ''}`} onClick={handleAddFavourite}>  
+                    <i className={`bi bi-star${isFavourite ? '-fill' : ''}`}></i>
                   </button> 
                 </div>
               </div>

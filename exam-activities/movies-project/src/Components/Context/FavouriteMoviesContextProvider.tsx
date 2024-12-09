@@ -70,6 +70,7 @@ function FavouriteMovieContextProvider(props: any) {
     }
 
     setFavourites([...favourites, movie]);
+    localStorage.setItem('favourites', JSON.stringify(favourites));
     return true;
   }
 
@@ -80,6 +81,7 @@ function FavouriteMovieContextProvider(props: any) {
   const removeFavourite = (id: number) => {
     const auxArr = favourites.filter((movie) => movie.id !== id); 
     setFavourites(auxArr);
+    localStorage.setItem('favourites', JSON.stringify(favourites));
   }
   /**
    * Context values 
