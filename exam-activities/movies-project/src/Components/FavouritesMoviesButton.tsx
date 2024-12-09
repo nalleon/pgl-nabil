@@ -12,20 +12,11 @@ type Props = {}
 const FavouritesMoviesButton = (props: Props) => {
     const context = useContext(FavouriteMovieContext);
 
-    const showMovies = () => {
-        return context.favourites.map((movie) =>
-            <div key={movie.id}>{movie.title}</div>
-        );
-    };
-
-    
-
     return (
         <>
             <Link to='/favourites' className='custom-button'>  
                 <i className="bi bi-star-fill"></i>
             </Link>
-          
         </>
     )
 }

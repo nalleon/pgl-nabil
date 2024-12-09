@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ReactPlayer from 'react-player';
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import '../Styles/MovieDetails.css';
 import DeleteMovie from './DeleteMovie';
+import { FavouriteMovieContext } from './Context/FavouriteMoviesContextProvider';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -30,6 +31,8 @@ const MovieDetails = (props: Props) => {
   const uri: string = "http://localhost:3000/"
   const [showConfirmation, setShowConfirmation] = useState(false);
 
+  const context = useContext(FavouriteMovieContext);
+
   useEffect(() => {
 
     fetchMovie();
@@ -45,6 +48,10 @@ const MovieDetails = (props: Props) => {
       console.error("Error fetching the movie:", error);
     }
   };
+
+  const handleAddFavourite = () => {
+    context.addFavourite(data);
+  }
 
   return (
     <>
@@ -88,6 +95,13 @@ const MovieDetails = (props: Props) => {
                   height="300px"
                   className="rounded shadow-lg"
                 />
+              </div>
+              <div className="row mt-3">
+                <div className="col-12 d-flex justify-content-center align-items-center">
+                  <button className='custom-button' onClick={handleAddFavourite}>  
+                    <i className="bi bi-star-fill"></i>
+                  </button> 
+                </div>
               </div>
             </div>
           </div>
