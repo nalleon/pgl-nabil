@@ -11,7 +11,7 @@ type CategoryType = {
 const MoviesPerCategory = (props: Props) => {
     const [categories, setCategories] = useState<CategoryType[]>([]);
 
-    const uri = 'http://localhost:3000/categories';
+    const uri = 'http://localhost:3000/';
 
     useEffect(() => {
         fetchCategories();
@@ -22,7 +22,7 @@ const MoviesPerCategory = (props: Props) => {
      */
     const fetchCategories = async () => {
         try {
-            const response = await axios.get(uri);
+            const response = await axios.get(uri+'categories');
             setCategories(response.data);
         } catch (error) {
             console.error('Error fetching categories:', error);
