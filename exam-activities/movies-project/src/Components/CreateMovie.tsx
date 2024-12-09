@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 /**
@@ -20,7 +20,14 @@ type MovieType = {
   description: string;
   image: string;
   trailer: string;
+  categories: number[];
 }
+
+type CategoryType = {
+  id: number;
+  name: string;
+  description: string;
+};
 
 const CreateMovie = (props: Props) => {
   /**
@@ -34,7 +41,8 @@ const CreateMovie = (props: Props) => {
   const [description, setDescription] = useState('');
   const [trailer, setTrailer] = useState('https://youtu.be/_htiXfLqXxU?si=MZp0o1GEhpL5_hkj');
   const [image, setImage] = useState('default.jpg');
-
+  const [categories, setCategories] = useState<number[]>([]);
+  const [allCategories, setAllCategories] = useState<CategoryType[]>([]);
 
   /**
    * Other properties
@@ -43,6 +51,20 @@ const CreateMovie = (props: Props) => {
   let navigate = useNavigate();
   const uri: string = "http://localhost:3000/movies"
 
+
+  useEffect(() => {
+    fetchCategories();
+  }, [])
+
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/categories'); 
+      setAllCategories(response.data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
 
   /**
    * Function to hanlde the creation de una nueva pelicula
@@ -71,7 +93,8 @@ const CreateMovie = (props: Props) => {
       year,
       description,
       image,
-      trailer
+      trailer,
+      categories
     };
 
     try {
@@ -94,6 +117,12 @@ const CreateMovie = (props: Props) => {
     return id;
   }
 
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValues = Array.from(event.target.selectedOptions, (option) => Number(option.value));
+    setCategories(selectedValues);
+  
+    console.log(categories);
+  };
 
 
   return (
@@ -138,7 +167,7 @@ const CreateMovie = (props: Props) => {
                 <input
                   type="text"
                   name="actor"
-                  placeholder="Enter the director's name"
+                  placeholder="Enter the actors/actresses' names"
                   className="custom-input"
                   onChange={(e) => setActor(e.target.value)}
                   defaultValue={actor}
@@ -146,7 +175,7 @@ const CreateMovie = (props: Props) => {
                 />
               </div>
 
-              <div className="col-12 col-md-6">
+              <div className="col-12 col-md-4">
                 <label>
                   <strong>Year of release</strong>
                 </label>
@@ -161,7 +190,7 @@ const CreateMovie = (props: Props) => {
                 />
               </div>
 
-              <div className="col-12 col-md-6">
+              <div className="col-12 col-md-4">
                 <label>
                   <strong>Genres</strong>
                 </label>
@@ -176,19 +205,38 @@ const CreateMovie = (props: Props) => {
                 />
               </div>
 
+
+              <div className="col-12 col-md-4">
+                <label>
+                  <strong>Categories</strong>
+                </label>
+                  <select
+                    multiple
+                    className="custom-select"
+                    onChange={handleCategoryChange}
+                    size={allCategories.length} 
+                  >
+                    {allCategories.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+              </div>
+
               <div className="col-12">
                 <label>
                   <strong>Description</strong>
                 </label>
                 <textarea
-  
+
                   name="description"
                   placeholder="Enter a brief description of the movie"
                   rows={4} cols={50}
                   className="custom-input"
                   onChange={(e) => setDescription(e.target.value)}
                   value={description}
-                  
+
                   required
                 />
               </div>
@@ -228,7 +276,7 @@ const CreateMovie = (props: Props) => {
               </div>
 
           </div>
-          
+
         </form>    
         </div>
       </div>
