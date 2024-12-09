@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { FavouriteMovieContext } from './Context/FavouriteMoviesContextProvider';
 import { Link } from 'react-router-dom';
+import '../Styles/Favourites.css';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -21,15 +22,15 @@ const FavouritesMovies = (props: Props) => {
                         <div className="row flex-wrap">
                             {context.favourites.map((movie, index) => (
                             <div key={index} className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-3">
-                                <div className="custom-card">
+                                <div className="fav-custom-card">
                                 <Link to={`/movies/${movie.id}`} 
                                         className='link-offset-2 link-underline link-underline-opacity-0'>
                                     <img
                                     src={`${url}${movie.image}`} 
                                     alt={movie.title} 
-                                    className="custom-img" 
+                                    className="fav-custom-img" 
                                     />
-                                    <div className="custom-title">
+                                    <div className="fav-custom-title">
                                         {movie.title}
                                     </div>
                                 </Link>
