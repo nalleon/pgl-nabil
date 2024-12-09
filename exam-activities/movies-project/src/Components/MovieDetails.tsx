@@ -35,27 +35,29 @@ const MovieDetails = (props: Props) => {
    * Context and useState for favourites
    */
   const context = useContext(FavouriteMovieContext);
-  const [isFavourite, setIsFavourite] = useState<boolean>(false)
+  const [isFavourite, setIsFavourite] = useState<boolean>(() => 
+    {
+      if (movieId != null) {
+        const isFav = context.favourites.some((favourite) => favourite.id == parseInt(movieId));
+        return isFav ? true : false;
+      }
+      return false; 
+    }
+  );
+
+  /**
+   * UseEfect 
+   */
 
   useEffect(() => {
     fetchMovie();
-    checkIfFavourite();
-  }, [movieId]);
+  }, [movieId, context.favourites]);
+
 
 
   /**
-   * Function to check if the movie is in favourite
+   * Function to fetch the movie from the api
    */
-  const checkIfFavourite = () => {
-    const isFav = context.favourites.find((favourite) => favourite.id === data.id);
-
-    if (isFav !== null){
-      setIsFavourite(true);
-    }
-
-  };
-
-
   const fetchMovie = async () => {
     try {
       const response = await axios.get(`${uri}movies/${movieId}`);
@@ -70,6 +72,7 @@ const MovieDetails = (props: Props) => {
    */
   const handleAddFavourite = () => {
     const added = context.addFavourite(data);
+    setIsFavourite(true);
 
     if (!added){
       context.removeFavourite(data.id);
@@ -77,7 +80,6 @@ const MovieDetails = (props: Props) => {
       return;
     }
 
-    setIsFavourite(true);
   }
 
   return (
@@ -125,8 +127,8 @@ const MovieDetails = (props: Props) => {
               </div>
               <div className="row mt-3">
                 <div className="col-12 d-flex justify-content-center align-items-center">
-                  <button className={`custom-button${isFavourite ? '-fav' : ''}`} onClick={handleAddFavourite}>  
-                    <i className={`bi bi-star${isFavourite ? '-fill' : ''}`}></i>
+                  <button className={`custom-button${isFavourite === true ? '-fav' : ''}`} onClick={handleAddFavourite}>  
+                    <i className={`bi bi-star${isFavourite === true ? '-fill' : ''}`}></i>
                   </button> 
                 </div>
               </div>

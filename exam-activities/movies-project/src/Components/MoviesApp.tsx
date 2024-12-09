@@ -14,7 +14,6 @@ import ThemeSwitcher from './ThemeSwitcher';
 import AppThemeContextProvider, { AppThemeContext } from './Context/AppThemeContextProvider';
 import MovieDetails from './MovieDetails';
 import FavouriteMovieContextProvider from './Context/FavouriteMoviesContextProvider';
-import FavouritesMoviesButton from './FavouritesMoviesButton';
 import FavouritesMovies from './FavouritesMovies';
 
 
@@ -62,6 +61,8 @@ const MoviesApp = (props: Props) => {
                                 <li className="list-group-item m-1"><Link to="/movies" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3 '> Movies </Link></li>
                                 <li className="list-group-item m-1"><Link to="/movies/create/" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Create </Link></li>                       
                                 <li className="list-group-item m-1"><Link to="/login" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Login </Link></li>
+                                <li className="list-group-item m-1"><Link to="/favourites" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Favourites </Link></li>
+
                             </ul>
                         </div>
                 </div>
@@ -75,7 +76,7 @@ const MoviesApp = (props: Props) => {
             <nav aria-label="breadcrumb" className="d-flex justify-content-between breadcrumb-custom">
                 <span className='ms-3'></span>
                 <div className='row d-inline'>
-                    <div className="col-12 col-md-6">
+                    <div className="col-12 col-md-">
                         <ThemeSwitcher />
                     </div>
 
@@ -83,8 +84,6 @@ const MoviesApp = (props: Props) => {
                         { context.username !== ''  &&
                             <span><i className="bi bi-person-circle"></i>{context.username}</span>
                         }
-
-                        <FavouritesMoviesButton/>
                     </div>
                 </div>
         </nav>

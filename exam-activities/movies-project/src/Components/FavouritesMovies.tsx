@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { FavouriteMovieContext } from './Context/FavouriteMoviesContextProvider';
 import { Link } from 'react-router-dom';
-import '../Styles/FavouritesMovies.css'
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
