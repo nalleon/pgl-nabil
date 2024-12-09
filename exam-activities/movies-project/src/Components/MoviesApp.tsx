@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import AppContextProvider, { AppContext } from './Context/AppContextProvider';
 import CreateMovie from './CreateMovie';
 import UpdateMovie from './UpdateMovie';
 import FindMovie from './FindMovie';
@@ -15,6 +14,7 @@ import AppThemeContextProvider, { AppThemeContext } from './Context/AppThemeCont
 import MovieDetails from './MovieDetails';
 import FavouriteMovieContextProvider from './Context/FavouriteMoviesContextProvider';
 import FavouritesMovies from './FavouritesMovies';
+import AppLoginContextProvider, { UserContext } from './Context/AppLoginContextProvider';
 
 
 type Props = {}
@@ -22,7 +22,7 @@ type Props = {}
 const MoviesApp = (props: Props) => {
     return (
         <BrowserRouter>
-            <AppContextProvider>
+            <AppLoginContextProvider>
                     <AppThemeContextProvider>
                         <FavouriteMovieContextProvider>
                             <Navbar />
@@ -39,7 +39,7 @@ const MoviesApp = (props: Props) => {
                             <Footer/>
                         </FavouriteMovieContextProvider>
                     </AppThemeContextProvider>
-            </AppContextProvider>
+            </AppLoginContextProvider>
         </BrowserRouter>
     )
 
@@ -71,19 +71,18 @@ const MoviesApp = (props: Props) => {
     }
 
     function ShowContextButtons(){
-        const context = useContext(AppContext);
+        const context = useContext(UserContext);
         return (
             <nav aria-label="breadcrumb" className="d-flex justify-content-between breadcrumb-custom">
                 <span className='ms-3'></span>
                 <div className='row d-inline'>
-                    <div className="col-12 col-md-">
-                        <ThemeSwitcher />
-                    </div>
-
-                    <div className="col-12 col-md-6 mt-3">
-                        { context.username !== ''  &&
-                            <span><i className="bi bi-person-circle"></i>{context.username}</span>
+                    <div className="col-12">
+                        { context.user?.username !== ''  &&
+                            <Link to={'/favourites'} className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3'> 
+                                <i className="bi bi-person-circle me-2"></i>{context.user?.username} 
+                            </Link>
                         }
+                        <ThemeSwitcher />
                     </div>
                 </div>
         </nav>

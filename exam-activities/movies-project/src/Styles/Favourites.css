@@ -50,3 +50,8 @@
     opacity: 1; 
     transform: translateY(0);
 }
+
+.title {
+    color: #f9c74f; 
+    text-shadow: 1px 1.5px 1px rgb(97, 49, 23);
+}

@@ -32,7 +32,7 @@ const MovieDetails = (props: Props) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   /**
-   * Context and useState for favourites
+   * Context and useState for favourites / user's favorites
    */
   const context = useContext(FavouriteMovieContext);
   const [isFavourite, setIsFavourite] = useState<boolean>(() => 
