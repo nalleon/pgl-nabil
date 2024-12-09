@@ -13,6 +13,9 @@ import '../Styles/Theme.css';
 import ThemeSwitcher from './ThemeSwitcher';
 import AppThemeContextProvider, { AppThemeContext } from './Context/AppThemeContextProvider';
 import MovieDetails from './MovieDetails';
+import FavouriteMovieContextProvider from './Context/FavouriteMoviesContextProvider';
+import FavouritesMoviesButton from './FavouritesMoviesButton';
+import FavouritesMovies from './FavouritesMovies';
 
 
 type Props = {}
@@ -21,21 +24,23 @@ const MoviesApp = (props: Props) => {
     return (
         <BrowserRouter>
             <AppContextProvider>
-                <AppThemeContextProvider>
-                    <Navbar />
-                    <ShowContextButtons/>
-                    <Routes>
-                        <Route path="/" element={<Login />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/movies" element={<FindMovie/>}/>
-                        <Route path="/movies/create" element={<CreateMovie/>}/>
-                        <Route path="/movies/:movieId" element={<MovieDetails/>}/>
-                        <Route path="/movies/modify/:movieId" element={<UpdateMovie/>}/>
-                    </Routes>
-                    <Footer/>
-                </AppThemeContextProvider>
+                    <AppThemeContextProvider>
+                        <FavouriteMovieContextProvider>
+                            <Navbar />
+                            <ShowContextButtons/>
+                            <Routes>
+                                <Route path="/" element={<Login />} />
+                                <Route path="/login" element={<Login />} />
+                                <Route path="/movies" element={<FindMovie/>}/>
+                                <Route path="/movies/create" element={<CreateMovie/>}/>
+                                <Route path="/movies/:movieId" element={<MovieDetails/>}/>
+                                <Route path="/movies/modify/:movieId" element={<UpdateMovie/>}/>
+                                <Route path="/favourites" element={<FavouritesMovies/>}/>
+                            </Routes>
+                            <Footer/>
+                        </FavouriteMovieContextProvider>
+                    </AppThemeContextProvider>
             </AppContextProvider>
-
         </BrowserRouter>
     )
 
@@ -48,7 +53,7 @@ const MoviesApp = (props: Props) => {
                             }`}>
                 <div className="container-fluid">
                     <h3 className="mt-2 me-2 ms-2"><Link to="/movies" className='link-light link-offset-2 link-underline link-underline-opacity-0 m-3'><i className="ms-3 bi bi-film text-light me-2"></i>Movies </Link></h3>
-                    <button className="navbar-toggler" style={{ backgroundColor: 'rgb(106, 151, 219)' }}
+                    <button className="navbar-toggler" style={{  backgroundColor: 'rgb(223, 164, 62)'}}
                             type="button" data-bs-toggle="collapse" data-bs-target="#navBar" aria-controls="navBar" aria-expanded="true" aria-label="Toggle navigation" >
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -69,11 +74,18 @@ const MoviesApp = (props: Props) => {
         return (
             <nav aria-label="breadcrumb" className="d-flex justify-content-between breadcrumb-custom">
                 <span className='ms-3'></span>
-                <div>
+                <div className='row d-inline'>
+                    <div className="col-12 col-md-6">
+                        <ThemeSwitcher />
+                    </div>
+
+                    <div className="col-12 col-md-6 mt-3">
                         { context.username !== ''  &&
                             <span><i className="bi bi-person-circle"></i>{context.username}</span>
                         }
-                    <ThemeSwitcher />
+
+                        <FavouritesMoviesButton/>
+                    </div>
                 </div>
         </nav>
         )

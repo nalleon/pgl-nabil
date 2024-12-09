@@ -9,7 +9,7 @@ import '../Styles/FavouritesMovies.css'
 
 type Props = {}
 
-const FavouritesMovies = (props: Props) => {
+const FavouritesMoviesButton = (props: Props) => {
     const context = useContext(FavouriteMovieContext);
 
     const showMovies = () => {
@@ -22,12 +22,12 @@ const FavouritesMovies = (props: Props) => {
 
     return (
         <>
-            {
-                showMovies()
-            }
+            <Link to='/favourites' className='custom-button'>  
+                <i className="bi bi-star-fill"></i>
+            </Link>
           
         </>
     )
 }
 
-export default FavouritesMovies
+export default FavouritesMoviesButton
