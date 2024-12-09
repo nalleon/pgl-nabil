@@ -59,6 +59,10 @@ function FavouriteMovieContextProvider(props: any) {
   }, [favourites])
   
 
+  /**
+   * Function to add a new movie to the favorites list
+   * @param movie to add
+   */
   const addFavourite = (movie: MovieType) => {
     if(favourites.find(element => element.id === movie.id)){
       return;
@@ -67,6 +71,10 @@ function FavouriteMovieContextProvider(props: any) {
     setFavourites([...favourites, movie]);
   }
 
+  /**
+   * Function to remove a movie from the favorites list
+   * @param id of the movie to remove
+   */
   const removeFavourite = (id: number) => {
     const auxArr = favourites.filter((movie) => movie.id !== id); 
     setFavourites(auxArr);
