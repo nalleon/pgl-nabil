@@ -15,6 +15,7 @@ import MovieDetails from './MovieDetails';
 import FavouriteMovieContextProvider from './Context/FavouriteMoviesContextProvider';
 import FavouritesMovies from './FavouritesMovies';
 import AppLoginContextProvider, { UserContext } from './Context/AppLoginContextProvider';
+import MoviesPerCategory from './MoviesPerCategory';
 
 
 type Props = {}
@@ -35,6 +36,7 @@ const MoviesApp = (props: Props) => {
                                 <Route path="/movies/:movieId" element={<MovieDetails/>}/>
                                 <Route path="/movies/modify/:movieId" element={<UpdateMovie/>}/>
                                 <Route path="/favourites" element={<FavouritesMovies/>}/>
+                                <Route path="/movies/categories" element={<MoviesPerCategory/>}/>
                             </Routes>
                             <Footer/>
                         </FavouriteMovieContextProvider>
@@ -60,9 +62,9 @@ const MoviesApp = (props: Props) => {
                             <ul className="d-flex align-items-start navbar-nav me-auto mb-2 mb-lg-0 ms-5">
                                 <li className="list-group-item m-1"><Link to="/movies" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3 '> Movies </Link></li>
                                 <li className="list-group-item m-1"><Link to="/movies/create/" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Create </Link></li>                       
-                                <li className="list-group-item m-1"><Link to="/login" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Login </Link></li>
                                 <li className="list-group-item m-1"><Link to="/favourites" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Favourites </Link></li>
-
+                                <li className="list-group-item m-1"><Link to="/movies/categories" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Categories </Link></li>
+                                <li className="list-group-item m-1"><Link to="/login" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Login/Logout </Link></li>
                             </ul>
                         </div>
                 </div>

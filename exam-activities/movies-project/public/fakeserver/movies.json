@@ -214,7 +214,7 @@
     },
     {
       "id": "16",
-      "title": "Frozen 2",
+      "title": "Frozen",
       "actor": "Idina Menzel",
       "director": "Chris Buck, Jennifer Lee",
       "genre": "Animation, Fantasy",
@@ -292,7 +292,7 @@
       "genre": "Animation, Family",
       "year": 1994,
       "description": "Lion prince Simba and his father are targeted by his wicked uncle, who wants to rule the kingdom.",
-      "image": "lion-king.jpg",
+      "image": "the-lion-king.jpg",
       "trailer": "https://www.youtube.com/watch?v=4sj1MT05lAA",
       "categories": [1, 5]
     },
