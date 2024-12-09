@@ -14,7 +14,7 @@ import React, { Dispatch, SetStateAction, createContext, useContext, useEffect, 
 
 type FavouriteMovieContextType  = {
   favourites: MovieType[];
-  addFavourite: (movie: MovieType) => void;
+  addFavourite: (movie: MovieType) => boolean;
   removeFavourite: (id: number) => void;
 }
 
@@ -62,13 +62,15 @@ function FavouriteMovieContextProvider(props: any) {
   /**
    * Function to add a new movie to the favorites list
    * @param movie to add
+   * @return false if the movie already exists, otherwise true
    */
   const addFavourite = (movie: MovieType) => {
     if(favourites.find(element => element.id === movie.id)){
-      return;
+      return false;
     }
 
     setFavourites([...favourites, movie]);
+    return true;
   }
 
   /**

@@ -15,7 +15,7 @@ const FavouritesMoviesButton = (props: Props) => {
     return (
         <>
             <Link to='/favourites' className='custom-button'>  
-                <i className="bi bi-star-fill"></i>
+                <span>Favourites<i className="bi bi-star-fill"></i></span>
             </Link>
         </>
     )

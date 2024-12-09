@@ -50,7 +50,13 @@ const MovieDetails = (props: Props) => {
   };
 
   const handleAddFavourite = () => {
-    context.addFavourite(data);
+  
+    const added = context.addFavourite(data);
+
+    if (!added){
+      context.removeFavourite(data.id);
+    }
+
   }
 
   return (
