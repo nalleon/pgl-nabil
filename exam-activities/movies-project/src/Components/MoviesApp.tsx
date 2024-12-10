@@ -16,6 +16,7 @@ import FavouriteMovieContextProvider from './Context/FavouriteMoviesContextProvi
 import FavouritesMovies from './FavouritesMovies';
 import AppLoginContextProvider, { UserContext } from './Context/AppLoginContextProvider';
 import MoviesPerCategory from './MoviesPerCategory';
+import CreateCategory from './CreateCategory';
 
 
 type Props = {}
@@ -37,6 +38,7 @@ const MoviesApp = (props: Props) => {
                                 <Route path="/movies/modify/:movieId" element={<UpdateMovie/>}/>
                                 <Route path="/favourites" element={<FavouritesMovies/>}/>
                                 <Route path="/movies/categories" element={<MoviesPerCategory/>}/>
+                                <Route path="/create-category" element={<CreateCategory/>}/>
                             </Routes>
                             <Footer/>
                         </FavouriteMovieContextProvider>
@@ -47,7 +49,6 @@ const MoviesApp = (props: Props) => {
 
     function Navbar() {
         const context = useContext(AppThemeContext);
-
         return (
             <nav className={`d-flex justify-content-center navbar navbar-expand-lg 
                                 ${context.theme === 'dark' ? 'navbar-dark-theme' : 'navbar-light-theme'
@@ -65,6 +66,8 @@ const MoviesApp = (props: Props) => {
                                 <li className="list-group-item m-1"><Link to="/favourites" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Favourites </Link></li>
                                 <li className="list-group-item m-1"><Link to="/movies/categories" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Categories </Link></li>
                                 <li className="list-group-item m-1"><Link to="/login" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Login/Logout </Link></li>
+                                <li className="list-group-item m-1"><Link to="/create-category" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Create category </Link></li>
+
                             </ul>
                         </div>
                 </div>

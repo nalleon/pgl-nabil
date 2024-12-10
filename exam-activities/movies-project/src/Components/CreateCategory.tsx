@@ -81,6 +81,52 @@ const CreateCategory = (props: Props) => {
 
     return (
         <>
+        <div className="container py-5">
+        <div className='card card-custom'>
+        <form onSubmit={handleSubmit}>
+        <div className="row g-3 align-items-center ">
+              <div className="col-12">
+                <label>
+                  <strong>Title</strong>
+                </label>
+                <input
+                  type="text"
+                  name="title"
+                  placeholder="Enter the title"
+                  className="custom-input"
+                  onChange={(e) => setName(e.target.value)}
+                  defaultValue={name} 
+                  required
+                />
+                
+              </div>
+
+              <div className="col-12">
+                <label>
+                  <strong>Main actors/actress</strong>
+                </label>
+                <input
+                  type="text"
+                  name="actor"
+                  placeholder="Enter the actors/actresses' names"
+                  className="custom-input"
+                  onChange={(e) => setDescription(e.target.value)}
+                  defaultValue={description}
+                  required
+                />
+              </div>
+
+              <div className='col-12'>
+                <button type="submit" className="custom-button w-100 ">
+                    Create
+                </button>
+              </div>
+
+          </div>
+
+        </form>    
+        </div>
+      </div>
         </>
     )
 }

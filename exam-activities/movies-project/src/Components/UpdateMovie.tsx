@@ -1,6 +1,7 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
+import { FavouriteMovieContext } from './Context/FavouriteMoviesContextProvider';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -53,11 +54,12 @@ const UpdateMovie = (props: Props) => {
   let navigate = useNavigate();
   const uri: string = `http://localhost:3000/movies/${movieId}`;
   const uriCategories: string = `http://localhost:3000/categories`;
+  const context = useContext(FavouriteMovieContext);
   
   useEffect(() => {
     fetchCategories();
     fetchMovie();
-    
+
   }, [movieId]);
 
   const handleSubmit = async (event: any) => {
@@ -93,9 +95,29 @@ const UpdateMovie = (props: Props) => {
       console.error("Error updating the movie:", error);
     }
 
+    const checkDeleted = updatedFavouritesContext(id);
+
+    if (checkDeleted){
+      console.log('test');
+      context.addFavourite(updatedMovie);
+      console.log(context.favourites);
+
+    }
+
     navigate(`/movies`);
   }
 
+
+  const updatedFavouritesContext = (id : number) => {
+    for(let i=0; i<context.favourites.length; i++) {
+
+      if(context.favourites[i].id == id){
+          context.removeFavourite(id);
+          return true;
+      }
+    }
+    return false;
+  }
 
   /**
    * Function to fetch the selected movie to edit from the api

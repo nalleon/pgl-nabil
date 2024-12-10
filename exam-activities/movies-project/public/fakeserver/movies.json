@@ -29,9 +29,30 @@
       "id": "6",
       "name": "Blockbusters",
       "description": "Movies with mass appeal, often with huge box office success."
+    },
+    {
+      "id": 7,
+      "name": "cine",
+      "description": "es cine me atrapastes"
     }
   ],
   "movies": [
+    {
+      "id": "1",
+      "title": "Inception",
+      "actor": "Leonardo DiCaprio",
+      "director": "Christopher Nolan",
+      "genre": "Sci-Fi",
+      "year": 2010,
+      "description": "A skilled thief is given a chance at redemption if he is able to successfully perform an inception, planting an idea into a target's subconscious.",
+      "image": "inception-poster.jpg",
+      "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0",
+      "categories": [
+        2,
+        3,
+        4
+      ]
+    },
     {
       "id": "2",
       "title": "The Dark Knight",
@@ -78,6 +99,22 @@
         2,
         6,
         4
+      ]
+    },
+    {
+      "id": "5",
+      "title": "The Matrix Resurrections",
+      "actor": "Keanu Reeves",
+      "director": "Lana Wachowski",
+      "genre": "Action, Sci-Fi",
+      "year": 2021,
+      "description": "Neo lives a seemingly normal life until he is pulled back into the Matrix and has to confront his past once again.",
+      "image": "matrix-resurrections.jpg",
+      "trailer": "https://www.youtube.com/watch?v=fA8o66rBWG4",
+      "categories": [
+        2,
+        3,
+        6
       ]
     },
     {
@@ -456,21 +493,6 @@
       "categories": [
         3,
         6
-      ]
-    },
-    {
-      "id": "31",
-      "title": "Xenogears",
-      "actor": "Fei Fong Wong",
-      "director": "Tetsuya Takahashi",
-      "genre": "Cinema",
-      "year": 1998,
-      "description": "You shall be as gods",
-      "image": "https://mediaproxy.tvtropes.org/width/1200/https://static.tvtropes.org/pmwiki/pub/images/938c90da_95fc_4314_95da_630aae67f4d7.jpeg",
-      "trailer": "https://youtu.be/_htiXfLqXxU?si=MZp0o1GEhpL5_hkj",
-      "categories": [
-        1,
-        3
       ]
     }
   ]
