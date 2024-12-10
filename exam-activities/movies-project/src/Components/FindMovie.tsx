@@ -51,7 +51,8 @@ const FindMovie = (props: Props) => {
   
     try{
       const response = await axios.get(url+"movies");
-      const filteredMovies = response.data.filter((movie: { [x: string]: string; }) =>
+      
+      const filteredMovies = response.data.filter((movie: { [element: string]: string; }) =>
         movie[typeSearch].toLowerCase().includes(search.toLowerCase())
       );
       

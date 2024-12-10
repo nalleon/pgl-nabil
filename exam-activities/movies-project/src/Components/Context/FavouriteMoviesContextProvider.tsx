@@ -13,25 +13,12 @@ import React, { Dispatch, SetStateAction, createContext, useContext, useEffect, 
  */
 
 type FavouriteMovieContextType  = {
-  favourites: MovieType[];
-  addFavourite: (movie: MovieType) => boolean;
+  favourites: number[];
+  addFavourite: (id: number) => boolean;
   removeFavourite: (id: number) => void;
 }
 
-/**
- * Movie type definition
- */
-type MovieType = {
-  id: number;
-  title: string;
-  actor: string;
-  director: string;
-  genre: string;
-  year: number;
-  description: string;
-  image: string;
-  trailer: string;
-}
+
 
 
 export const FavouriteMovieContext = createContext<FavouriteMovieContextType >({} as FavouriteMovieContextType );
@@ -45,7 +32,7 @@ function FavouriteMovieContextProvider(props: any) {
   /**
    * UseState for the movies
    */
-  const [favourites, setFavourites] = useState<MovieType[]>(() => {
+  const [favourites, setFavourites] = useState<number[]>(() => {
       const storedFavourites =  localStorage.getItem('favourites');
       return storedFavourites ? JSON.parse(storedFavourites) : [];
     }
@@ -64,12 +51,12 @@ function FavouriteMovieContextProvider(props: any) {
    * @param movie to add
    * @return false if the movie already exists, otherwise true
    */
-  const addFavourite = (movie: MovieType) => {
-    if(favourites.find(element => element.id === movie.id)){
+  const addFavourite = (id: number) => {
+    if(favourites.find(element => element === id)){
       return false;
     }
 
-    setFavourites([...favourites, movie]);
+    setFavourites([...favourites, id]);
     localStorage.setItem('favourites', JSON.stringify(favourites));
     return true;
   }
@@ -79,7 +66,7 @@ function FavouriteMovieContextProvider(props: any) {
    * @param id of the movie to remove
    */
   const removeFavourite = (id: number) => {
-    const auxArr = favourites.filter((movie) => movie.id != id); 
+    const auxArr = favourites.filter((element) => element != id); 
     console.log(auxArr);
     localStorage.setItem('favourites', JSON.stringify([...auxArr]));
     setFavourites([...auxArr]);

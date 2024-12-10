@@ -8,31 +8,16 @@ type UserContextType = {
   user: UserType | null;
   login: (username: string) => void;
   logout: () => void;
-  addFavourites: (movie : MovieType) => void;
+  addFavourites: (movie : number) => void;
   updateTheme: () => void;
 };
 
 type UserType = {
   username: string;
-  favourites: MovieType[];
+  favourites: number[];
   theme: string;
 }
 
-
-/**
- * Movie type definition
- */
-type MovieType = {
-  id: number;
-  title: string;
-  actor: string;
-  director: string;
-  genre: string;
-  year: number;
-  description: string;
-  image: string;
-  trailer: string;
-}
 
 export const UserContext = createContext<UserContextType>({} as UserContextType);
 
@@ -74,7 +59,7 @@ const AppLoginContextProvider = (props: any) => {
   };
 
 
-  const addFavourites = (movie : MovieType) => {
+  const addFavourites = (movie : number) => {
     contextFavourites.addFavourite(movie);
   }
 

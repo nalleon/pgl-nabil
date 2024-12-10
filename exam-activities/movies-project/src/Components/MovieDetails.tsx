@@ -23,6 +23,7 @@ type MovieType = {
   description: string;
   image: string;
   trailer: string;
+  
 }
 
 const MovieDetails = (props: Props) => {
@@ -39,7 +40,7 @@ const MovieDetails = (props: Props) => {
   const [isFavourite, setIsFavourite] = useState<boolean>(() => 
     {
       if (movieId != null) {
-        const isFav = context.favourites.some((favourite) => favourite.id == parseInt(movieId));
+        const isFav = context.favourites.some((favourite) => favourite == parseInt(movieId));
         return isFav ? true : false;
       }
       return false; 
@@ -52,7 +53,6 @@ const MovieDetails = (props: Props) => {
 
   useEffect(() => {
     fetchMovie();
-    console.log(uri + data.image);
   }, [movieId, context.favourites]);
 
 
@@ -73,7 +73,7 @@ const MovieDetails = (props: Props) => {
    * Function to handle the favourite add/remove 
    */
   const handleAddFavourite = () => {
-    const added = context.addFavourite(data);
+    const added = context.addFavourite(data.id);
     setIsFavourite(true);
 
     if (!added){

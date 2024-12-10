@@ -1,7 +1,8 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FavouriteMovieContext } from './Context/FavouriteMoviesContextProvider';
 import { Link } from 'react-router-dom';
 import '../Styles/Favourites.css';
+import axios, { all } from 'axios';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -9,18 +10,81 @@ import '../Styles/Favourites.css';
 
 type Props = {}
 
+
+type MovieType = {
+    id: number;
+    title: string;
+    actor: string;
+    director: string;
+    genre: string;
+    year: number;
+    description: string;
+    image: string;
+    trailer: string;
+    
+}
 const FavouritesMovies = (props: Props) => {
+    const [allMovies, setAllMovies] = useState<MovieType[]>([]);
+    const [movies, setMovies] = useState<MovieType[]>([]);
     const context = useContext(FavouriteMovieContext);
     const url = `http://localhost:3000/`;    
 
     //const favourites = context.user && context.user.favourites ? context.user.favourites : [];
+
+    /**
+     * UseEffect to fetch all movies from the api
+     */
+    useEffect(() => {
+        fetchMovies();
+    }, []);
+
+
+    /**
+     * UseEffect to filter the movies 
+     */
+    useEffect(() => {
+        filterMovies();
+    }, [allMovies, context.favourites]);
+
+
+    /**
+     * Function to fetch all movies from the api
+     */
+    const fetchMovies = async () => {
+        try{
+            const response = await axios.get(url+'movies');
+            setAllMovies(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
+
+    /**
+     * Function to filter the movies based on the user's favourites
+     */
+    const filterMovies = async () => {
+        if(allMovies.length <= 0){
+            return;
+        }
+
+        let filteredMovies: MovieType[] = [];
+        for(let i=0; i< allMovies.length; i++){
+            if(context.favourites.includes(allMovies[i].id)){
+                filteredMovies.push(allMovies[i]);
+            }
+        }
+        
+        setMovies(filteredMovies);
+    }
+
+    
 
 
     return (
         <>
             <div className="container">
                     {
-                        
                         context.favourites.length > 0 ? (
                         <div className="mt-5">
                             <div className='justify-content-center align-items-center'>
@@ -28,7 +92,7 @@ const FavouritesMovies = (props: Props) => {
                                 <h2 className='text-center mb-5 text-uppercase fw-bold title'><i className="bi bi-award-fill text-center"></i></h2>   
                             </div>
                             <div className="row g-3 flex-wrap">
-                                {context.favourites.map((movie, index) => (
+                                {movies.map((movie, index) => (
                                 <div key={index} className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-3">
                                     <div className="fav-custom-card">
                                         <Link to={`/movies/${movie.id}`} 

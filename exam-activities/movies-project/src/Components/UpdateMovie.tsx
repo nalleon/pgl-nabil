@@ -99,7 +99,7 @@ const UpdateMovie = (props: Props) => {
 
     if (checkDeleted){
       console.log('test');
-      context.addFavourite(updatedMovie);
+      context.addFavourite(updatedMovie.id);
       console.log(context.favourites);
 
     }
@@ -111,7 +111,7 @@ const UpdateMovie = (props: Props) => {
   const updatedFavouritesContext = (id : number) => {
     for(let i=0; i<context.favourites.length; i++) {
 
-      if(context.favourites[i].id == id){
+      if(context.favourites[i] == id){
           context.removeFavourite(id);
           return true;
       }
@@ -131,7 +131,7 @@ const UpdateMovie = (props: Props) => {
     } catch (error) {
       console.error("Error fetching selected movie:", error);
     }
-   
+
   } 
 
   /**
