@@ -7,6 +7,10 @@ import { useNavigate, useParams } from 'react-router-dom';
  */
 type Props = {}
 
+
+/**
+ * Type definition for the movie
+ */
 type MovieType = {
   id: number;
   title: string;
@@ -17,6 +21,16 @@ type MovieType = {
   description: string;
   image: string;
   trailer: string;
+  categories: number[];
+}
+
+/**
+ * Type definition for the category
+ */
+type CategoryType = {
+  id: number;
+  name: string;
+  description: string;
 }
 
 const UpdateMovie = (props: Props) => {
@@ -30,15 +44,20 @@ const UpdateMovie = (props: Props) => {
    * UseStates
    */
   const [data, setData] = useState<MovieType>({} as MovieType);
+  const [categories, setCategories] = useState<number[]>([]);
+  const [allCategories, setAllCategories] = useState<CategoryType[]>([]);
 
-
-
+  /**
+   * Other properties
+   */
   let navigate = useNavigate();
   const uri: string = `http://localhost:3000/movies/${movieId}`;
-  
+  const uriCategories: string = `http://localhost:3000/categories`;
   
   useEffect(() => {
+    fetchCategories();
     fetchMovie();
+    console.log(categories, data.categories);
   }, [movieId]);
 
   const handleSubmit = async (event: any) => {
@@ -64,7 +83,8 @@ const UpdateMovie = (props: Props) => {
       year,
       description,
       image,
-      trailer
+      trailer,
+      categories
     };
 
     try {
@@ -76,6 +96,7 @@ const UpdateMovie = (props: Props) => {
     navigate(`/movies`);
   }
 
+
   /**
    * Function to fetch the selected movie to edit from the api
    */
@@ -83,15 +104,34 @@ const UpdateMovie = (props: Props) => {
     try {
       const response = await axios.get(uri);
       setData(response.data);
-
-
+      setCategories(data.categories || []);
     } catch (error) {
       console.error("Error fetching selected movie:", error);
     }
 
     console.log(data);
-
   } 
+
+  /**
+   * Function to fetch all the categories from the api
+   */
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(uriCategories);
+      setAllCategories(response.data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  /**
+   * Function to handle the update of the categories from a movie
+   * @param event 
+   */
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValues = Array.from(event.target.selectedOptions, (option) => Number(option.value));
+    setCategories(selectedValues);
+    };
 
   return (
     <>
@@ -167,6 +207,25 @@ const UpdateMovie = (props: Props) => {
                   defaultValue={data.genre}
                   required
                 />
+              </div>
+
+              <div className="col-12">
+                <label>
+                  <strong>Categories</strong>
+                </label>
+                  <select
+                    name='categories'
+                    multiple
+                    className="custom-select"
+                    onChange={handleCategoryChange}
+                    size={allCategories.length} 
+                  >
+                    {allCategories.map((category) => (
+                      <option key={category.id} value={category.id}  selected={categories.includes(category.id)}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
               </div>
 
               <div className="col-12">

@@ -43,9 +43,7 @@
       "image": "inception-poster.jpg",
       "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0",
       "categories": [
-        2,
-        3,
-        4
+        6
       ]
     },
     {
@@ -491,7 +489,7 @@
       ]
     },
     {
-      "id": 31,
+      "id": "31",
       "title": "Arcadion",
       "actor": "WoL, Wicked Thunder",
       "director": "Yoshi-P, SQENIX",
