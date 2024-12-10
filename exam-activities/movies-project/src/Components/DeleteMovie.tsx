@@ -18,12 +18,13 @@ const DeleteMovie = (props: Props) => {
         if (auxId){
             context.removeFavourite(parseInt(auxId));
         }
+        
         try {
             await axios.delete(`http://localhost:3000/movies/${movieId}`);
-            
-            navigate('/movies');
             } catch (error) {
             console.error("Error deleting the movie:", error);
+        } finally {
+            navigate('/movies/');
         }
     };
 
