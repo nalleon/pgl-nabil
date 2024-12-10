@@ -43,7 +43,7 @@ const UpdateMovie = (props: Props) => {
   /**
    * UseStates
    */
-  const [data, setData] = useState<MovieType>({} as MovieType);
+  const [movie, setMovie] = useState<MovieType>({} as MovieType);
   const [categories, setCategories] = useState<number[]>([]);
   const [allCategories, setAllCategories] = useState<CategoryType[]>([]);
 
@@ -57,7 +57,7 @@ const UpdateMovie = (props: Props) => {
   useEffect(() => {
     fetchCategories();
     fetchMovie();
-    console.log(categories, data.categories);
+    
   }, [movieId]);
 
   const handleSubmit = async (event: any) => {
@@ -103,13 +103,13 @@ const UpdateMovie = (props: Props) => {
   const fetchMovie = async () => {
     try {
       const response = await axios.get(uri);
-      setData(response.data);
-      setCategories(data.categories || []);
+      setMovie(response.data);
+      setCategories(response.data.categories);
+      console.log(response.data.categories);
     } catch (error) {
       console.error("Error fetching selected movie:", error);
     }
-
-    console.log(data);
+   
   } 
 
   /**
@@ -129,8 +129,8 @@ const UpdateMovie = (props: Props) => {
    * @param event 
    */
   const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValues = Array.from(event.target.selectedOptions, (option) => Number(option.value));
-    setCategories(selectedValues);
+      const selectedValues = Array.from(event.target.selectedOptions, (option) => Number(option.value));
+      setCategories(selectedValues);
     };
 
   return (
@@ -149,7 +149,7 @@ const UpdateMovie = (props: Props) => {
                   name="title"
                   placeholder="Enter the title"
                   className="custom-input"
-                  defaultValue={data.title} 
+                  defaultValue={movie.title} 
                   required
                 />
               </div>
@@ -162,7 +162,7 @@ const UpdateMovie = (props: Props) => {
                   name="director"
                   placeholder="Enter the director's name"
                   className="custom-input"
-                  defaultValue={data.director}
+                  defaultValue={movie.director}
                   required
                 />
               </div>
@@ -176,7 +176,7 @@ const UpdateMovie = (props: Props) => {
                   name="actor"
                   placeholder="Enter the director's name"
                   className="custom-input"
-                  defaultValue={data.actor}
+                  defaultValue={movie.actor}
                   required
                 />
               </div>
@@ -190,7 +190,7 @@ const UpdateMovie = (props: Props) => {
                   name="year"
                   placeholder="Enter the year of realease"
                   className="custom-input"
-                  defaultValue={data.year}
+                  defaultValue={movie.year}
                   required
                 />
               </div>
@@ -204,7 +204,7 @@ const UpdateMovie = (props: Props) => {
                   name="genre"
                   placeholder="Enter the genres of the movie"
                   className="custom-input"
-                  defaultValue={data.genre}
+                  defaultValue={movie.genre}
                   required
                 />
               </div>
@@ -221,9 +221,18 @@ const UpdateMovie = (props: Props) => {
                     size={allCategories.length} 
                   >
                     {allCategories.map((category) => (
-                      <option key={category.id} value={category.id}  selected={categories.includes(category.id)}>
-                        {category.name}
-                      </option>
+
+                      categories.includes(category.id) ? ( 
+                        
+                        <option key={category.id} value={category.id} selected>
+                          {category.name}
+                        </option>
+                      ) :
+                      (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      )
                     ))}
                   </select>
               </div>
@@ -238,7 +247,7 @@ const UpdateMovie = (props: Props) => {
                   placeholder="Enter a brief description of the movie"
                   rows={4} cols={50}
                   className="custom-input"
-                  defaultValue={data.description}
+                  defaultValue={movie.description}
                   
                   required
                 />
@@ -253,7 +262,7 @@ const UpdateMovie = (props: Props) => {
                   name="trailer"
                   placeholder="Youtube URL"
                   className="custom-input"
-                  defaultValue={data.trailer}
+                  defaultValue={movie.trailer}
                 />
               </div>
 
@@ -266,7 +275,7 @@ const UpdateMovie = (props: Props) => {
                   name="image"
                   placeholder="Image URL"
                   className="custom-input"
-                  defaultValue={data.image}
+                  defaultValue={movie.image}
                 />
               </div>
 

@@ -27,7 +27,6 @@ const ImageComponent = (props: Props) => {
                         name="image"
                         placeholder="Image URL. Leave blank for default thumbnail"
                         className="custom-input"
-                        value={imageUrl}
                         onChange={handleUrlChange}
                     />
                 </div>
@@ -37,7 +36,7 @@ const ImageComponent = (props: Props) => {
                         {imageUrl && (imageUrl !== '' && (imageUrl.startsWith('https://') || imageUrl.startsWith('http://'))) ? 
                             <img src={imageUrl} alt="Preview" className="preview-custom-img" />
                             : 
-                            <h3 className='text-center'>Preview</h3>
+                            <h3 className='text-center mt-5'>Preview</h3>
                         }
 
                     </div>

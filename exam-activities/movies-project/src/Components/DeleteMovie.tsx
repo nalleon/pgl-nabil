@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../Styles/MovieDetails.css';
+import { useContext } from 'react';
+import { FavouriteMovieContext } from './Context/FavouriteMoviesContextProvider';
 type Props = {
     movieId : string | undefined
     onCancel: () => void;
@@ -9,10 +11,16 @@ type Props = {
 const DeleteMovie = (props: Props) => {
     const { movieId, onCancel } = props;
     const navigate = useNavigate();
+    const context = useContext(FavouriteMovieContext);
 
     const handleDelete = async () => {
+        const auxId = movieId;
+        if (auxId){
+            context.removeFavourite(parseInt(auxId));
+        }
         try {
             await axios.delete(`http://localhost:3000/movies/${movieId}`);
+            
             navigate('/movies');
             } catch (error) {
             console.error("Error deleting the movie:", error);

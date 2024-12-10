@@ -33,20 +33,6 @@
   ],
   "movies": [
     {
-      "id": "1",
-      "title": "Inception",
-      "actor": "Leonardo DiCaprio",
-      "director": "Christopher Nolan",
-      "genre": "Sci-Fi",
-      "year": 2010,
-      "description": "A skilled thief is given a chance at redemption if he is able to successfully perform an inception, planting an idea into a target's subconscious.",
-      "image": "inception-poster.jpg",
-      "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0",
-      "categories": [
-        6
-      ]
-    },
-    {
       "id": "2",
       "title": "The Dark Knight",
       "actor": "Christian Bale",
@@ -88,22 +74,10 @@
       "description": "A young nobleman becomes embroiled in a war over a valuable spice on the desert planet Arrakis.",
       "image": "dune-poster.jpg",
       "trailer": "https://www.youtube.com/watch?v=n9xhJrPXop4",
-      "categories": []
-    },
-    {
-      "id": "5",
-      "title": "The Matrix Resurrections",
-      "actor": "Keanu Reeves",
-      "director": "Lana Wachowski",
-      "genre": "Action, Sci-Fi",
-      "year": 2021,
-      "description": "Neo lives a seemingly normal life until he is pulled back into the Matrix and has to confront his past once again.",
-      "image": "matrix-resurrections.jpg",
-      "trailer": "https://www.youtube.com/watch?v=fA8o66rBWG4",
       "categories": [
         2,
-        3,
-        6
+        6,
+        4
       ]
     },
     {
@@ -486,31 +460,18 @@
     },
     {
       "id": "31",
-      "title": "Arcadion",
-      "actor": "WoL, Wicked Thunder",
-      "director": "Yoshi-P, SQENIX",
-      "genre": "Action, MMORPG",
-      "year": 2024,
-      "description": "dawntrial > endwalker",
-      "image": "default.jpg",
+      "title": "Xenogears",
+      "actor": "Fei Fong Wong",
+      "director": "Tetsuya Takahashi",
+      "genre": "Cinema",
+      "year": 1998,
+      "description": "You shall be as gods",
+      "image": "https://mediaproxy.tvtropes.org/width/1200/https://static.tvtropes.org/pmwiki/pub/images/938c90da_95fc_4314_95da_630aae67f4d7.jpeg",
       "trailer": "https://youtu.be/_htiXfLqXxU?si=MZp0o1GEhpL5_hkj",
       "categories": [
-        2,
-        3,
-        4
+        1,
+        3
       ]
-    },
-    {
-      "id": "32",
-      "title": "Shadowbringers",
-      "actor": "WoL, Emet-Selch",
-      "director": "Yoshi-P",
-      "genre": "Action, MMORPG",
-      "year": 2019,
-      "description": "peak",
-      "image": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.redd.it%2Fk3dckf0zgq531.jpg&f=1&nofb=1&ipt=6bb2248d9122394cf9f8c1b4c1b730ae3ac383b8efa42f4047169edf20fe4d61&ipo=images",
-      "trailer": "https://www.youtube.com/watch?v=hmugOOeh1aU&list=PL06MatH6YnQSza5n5_nsPZUCpBvcKSU-w&index=8",
-      "categories": []
     }
   ]
 }

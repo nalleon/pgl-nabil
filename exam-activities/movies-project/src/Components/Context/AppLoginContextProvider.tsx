@@ -39,18 +39,19 @@ export const UserContext = createContext<UserContextType>({} as UserContextType)
 const AppLoginContextProvider = (props: any) => {
   const contextTheme  = useContext(AppThemeContext);
   const contextFavourites = useContext(FavouriteMovieContext);
-
-  const [user, setUser] = useState<UserType>(() => {
-    const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser) : defaultUser;
-  });
-
+  
   const defaultUser: UserType = {
     username: 'anonymous',
     favourites: [],
     theme: 'dark'
   };
   
+  const [user, setUser] = useState<UserType>(() => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : defaultUser;
+  });
+
+
   
   useEffect(() => {
     if (user && user.username !== 'anonymous') {

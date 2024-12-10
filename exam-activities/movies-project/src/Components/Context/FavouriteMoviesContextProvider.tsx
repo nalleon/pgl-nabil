@@ -79,10 +79,23 @@ function FavouriteMovieContextProvider(props: any) {
    * @param id of the movie to remove
    */
   const removeFavourite = (id: number) => {
-    const auxArr = favourites.filter((movie) => movie.id !== id); 
+    const auxArr = favourites.filter((movie) => movie.id != id); 
+    console.log(auxArr);
+    localStorage.setItem('favourites', JSON.stringify([...auxArr]));
     setFavourites([...auxArr]);
-    localStorage.setItem('favourites', JSON.stringify(favourites));
   }
+
+
+  /**
+   * Function to remove a movie from the favorites list
+   * @param id of the movie to remove
+   */
+  const updateFavourite = (id: number) => {
+    const auxArr = favourites.filter((movie) => movie.id != id); 
+    localStorage.setItem('favourites', JSON.stringify([...auxArr]));
+    setFavourites([...auxArr]);
+  }
+
   /**
    * Context values 
    */
