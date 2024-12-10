@@ -29,7 +29,7 @@ const MoviesPerCategory = (props: Props) => {
     const [movies, setMovies] = useState<MovieType[]>([]);
     const [filteredMovies, setFilteredMovies] = useState<MovieType[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-    const uri = 'http://localhost:3000/';
+    const url = 'http://localhost:3000/';
 
     useEffect(() => {
         fetchCategories();
@@ -41,7 +41,7 @@ const MoviesPerCategory = (props: Props) => {
      */
     const fetchCategories = async () => {
         try {
-            const response = await axios.get(uri+'categories');
+            const response = await axios.get(url+'categories');
             setCategories(response.data);
         } catch (error) {
             console.error('Error fetching categories:', error);
@@ -53,7 +53,7 @@ const MoviesPerCategory = (props: Props) => {
      */
     const fetchMovies = async () => {
         try {
-            const response = await axios.get(uri + 'movies');
+            const response = await axios.get(url + 'movies');
             setMovies(response.data);
         } catch (error) {
             console.error('Error fetching movies:', error);
@@ -110,11 +110,27 @@ const MoviesPerCategory = (props: Props) => {
                                 <div className="category-custom-card">
                                 <Link to={`/movies/${movie.id}`} 
                                         className='link-offset-2 link-underline link-underline-opacity-0'>
-                                    <img
-                                    src={`${uri}${movie.image}`} 
-                                    alt={movie.title} 
-                                    className="category-custom-img" 
-                                    />
+                                    {movie.image ? (
+                                            movie.image.startsWith("http://") || movie.image.startsWith("https://") ? (
+                                            <img
+                                                src={movie.image}
+                                                alt={movie.title}
+                                                className="img-fluid"
+                                            />
+                                            ) : (
+                                            <img
+                                                src={url + movie.image}
+                                                alt={movie.title}
+                                                className="img-fluid"
+                                            />
+                                            )
+                                        ) : (
+                                            <img
+                                            src={url + 'default,jpg'}  
+                                            alt="default"
+                                            className="img-fluid"
+                                            />
+                                        )}
                                     <div className="category-custom-title">
                                         {movie.title}
                                     </div>

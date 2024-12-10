@@ -31,6 +31,7 @@ const MovieDetails = (props: Props) => {
   const uri: string = "http://localhost:3000/"
   const [showConfirmation, setShowConfirmation] = useState(false);
 
+
   /**
    * Context and useState for favourites / user's favorites
    */
@@ -51,6 +52,7 @@ const MovieDetails = (props: Props) => {
 
   useEffect(() => {
     fetchMovie();
+    console.log(uri + data.image);
   }, [movieId, context.favourites]);
 
 
@@ -87,13 +89,31 @@ const MovieDetails = (props: Props) => {
       <div className="container py-5">
         <div className="row align-items-center custom-bg">
           <div className="col-sm-12 col-md-6 ">
-            <img
-              src={uri + data.image}
-              alt={data.title}
-              className="img-fluid"
-            />
+            {data.image ? (
+                data.image.startsWith("http://") || data.image.startsWith("https://") ? (
+                  <img
+                    src={data.image}
+                    alt={data.title}
+                    className="img-fluid"
+                  />
+                ) : (
+                  <img
+                    src={uri + data.image}
+                    alt={data.title}
+                    className="img-fluid"
+                  />
+                )
+              ) : (
+                <img
+                  src={uri + 'default,jpg'}  
+                  alt="default"
+                  className="img-fluid"
+                />
+              )}
           </div>
-          <div className="col-sm-12 col-md-6">
+
+            
+                    <div className="col-sm-12 col-md-6">
             <div className='card card-custom'>
               <h3 className="display-5 text-uppercase mb-4 fw-bold">{data.title}</h3>
               <ul className="list-unstyled mb-4">
@@ -147,7 +167,7 @@ const MovieDetails = (props: Props) => {
             </div>
           </div>
         </div>
-        <div className='align-items-center'>
+        <div className='d-flex justify-content-center align-items-center mt-3'>
             {showConfirmation && (
               <DeleteMovie movieId={movieId} onCancel={() => setShowConfirmation(false)}/>
           )}

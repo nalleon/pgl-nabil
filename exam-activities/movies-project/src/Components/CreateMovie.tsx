@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import ImageComponent from './ImageComponent';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -40,7 +41,7 @@ const CreateMovie = (props: Props) => {
   const [year, setYear] = useState(0);
   const [description, setDescription] = useState('');
   const [trailer, setTrailer] = useState('https://youtu.be/_htiXfLqXxU?si=MZp0o1GEhpL5_hkj');
-  const [image, setImage] = useState('default.jpg');
+  const [image, setImage] = useState('');
   const [categories, setCategories] = useState<number[]>([]);
   const [allCategories, setAllCategories] = useState<CategoryType[]>([]);
 
@@ -83,6 +84,10 @@ const CreateMovie = (props: Props) => {
     }
 
     const nextId = getNextId(auxMovies);
+
+    if (image.trim().length < 0){
+      setImage('default.jpg');
+    }
 
     const newMovie: MovieType = {
       id: nextId,
@@ -144,6 +149,11 @@ const CreateMovie = (props: Props) => {
                   defaultValue={title} 
                   required
                 />
+                
+              <div className="col-12 mt-3">
+                  <ImageComponent value={image}
+                                  onChange={(newUrl) => setImage(newUrl)}/>
+              </div>
               </div>
               <div className="col-12 col-md-6">
                 <label>
@@ -175,8 +185,8 @@ const CreateMovie = (props: Props) => {
                 />
               </div>
 
-              <div className="col-12 col-md-4">
-                <label>
+              <div className="col-12 col-md-6">
+                <label className='mt-2'>
                   <strong>Year of release</strong>
                 </label>
                 <input
@@ -188,10 +198,7 @@ const CreateMovie = (props: Props) => {
                   defaultValue={year}
                   required
                 />
-              </div>
-
-              <div className="col-12 col-md-4">
-                <label>
+                <label className='mt-2'>
                   <strong>Genres</strong>
                 </label>
                 <input
@@ -203,11 +210,21 @@ const CreateMovie = (props: Props) => {
                   defaultValue={genre}
                   required
                 />
+                  <label className='mt-2'>
+                  <strong>Trailer</strong>
+                </label>
+                <input
+                  type="text"
+                  name="year"
+                  placeholder="Youtube URL"
+                  className="custom-input"
+                  onChange={(e) => setTrailer(e.target.value)}
+                  defaultValue={trailer}
+                />
               </div>
 
-
-              <div className="col-12 col-md-4">
-                <label>
+              <div className="col-12 col-md-6">
+                <label className='mt-2'>
                   <strong>Categories</strong>
                 </label>
                   <select
@@ -224,6 +241,8 @@ const CreateMovie = (props: Props) => {
                   </select>
               </div>
 
+
+
               <div className="col-12">
                 <label>
                   <strong>Description</strong>
@@ -238,34 +257,6 @@ const CreateMovie = (props: Props) => {
                   value={description}
 
                   required
-                />
-              </div>
-
-              <div className="col-12 col-md-6">
-                <label>
-                  <strong>Trailer</strong>
-                </label>
-                <input
-                  type="text"
-                  name="year"
-                  placeholder="Youtube URL"
-                  className="custom-input"
-                  onChange={(e) => setTrailer(e.target.value)}
-                  defaultValue={trailer}
-                />
-              </div>
-
-              <div className="col-12 col-md-6">
-                <label>
-                  <strong>Movie thumbail</strong>
-                </label>
-                <input
-                  type="text"
-                  name="image"
-                  placeholder="Image URL"
-                  className="custom-input"
-                  onChange={(e) => setImage(e.target.value)}
-                  defaultValue={image}
                 />
               </div>
 

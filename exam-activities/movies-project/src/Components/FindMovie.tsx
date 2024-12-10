@@ -110,11 +110,27 @@ const FindMovie = (props: Props) => {
                     <div className="custom-card">
                       <Link to={`/movies/${movie.id}`} 
                             className='link-offset-2 link-underline link-underline-opacity-0'>
-                        <img
-                          src={`${url}${movie.image}`} 
-                          alt={movie.title} 
-                          className="custom-img" 
-                        />
+                        {movie.image ? (
+                            movie.image.startsWith("http://") || movie.image.startsWith("https://") ? (
+                              <img
+                                src={movie.image}
+                                alt={movie.title}
+                                className="img-fluid"
+                              />
+                            ) : (
+                              <img
+                                src={url + movie.image}
+                                alt={movie.title}
+                                className="img-fluid"
+                              />
+                            )
+                          ) : (
+                            <img
+                              src={url + 'default,jpg'}  
+                              alt="default"
+                              className="img-fluid"
+                            />
+                          )}
                         <div className="custom-title">
                             {movie.title}
                         </div>

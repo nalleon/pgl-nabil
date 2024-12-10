@@ -259,7 +259,7 @@ const UpdateMovie = (props: Props) => {
 
               <div className="col-12 col-md-6">
                 <label>
-                  <strong>Movie thumbail</strong>
+                  <strong>Poster</strong>
                 </label>
                 <input
                   type="text"
