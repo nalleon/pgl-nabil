@@ -510,41 +510,7 @@
       "description": "peak",
       "image": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.redd.it%2Fk3dckf0zgq531.jpg&f=1&nofb=1&ipt=6bb2248d9122394cf9f8c1b4c1b730ae3ac383b8efa42f4047169edf20fe4d61&ipo=images",
       "trailer": "https://www.youtube.com/watch?v=hmugOOeh1aU&list=PL06MatH6YnQSza5n5_nsPZUCpBvcKSU-w&index=8",
-      "categories": [
-        2,
-        3,
-        4,
-        6
-      ]
-    },
-    {
-      "id": "33",
-      "title": "Heavensward",
-      "actor": "WoL",
-      "director": "Yoshi-P, SQENIX",
-      "genre": "Action, MMORPG",
-      "year": 2016,
-      "description": "peak also",
-      "image": "default.jpg",
-      "trailer": "https://www.youtube.com/watch?v=EQmQOSu_cJ4",
       "categories": []
-    },
-    {
-      "id": 34,
-      "title": "Arcadion2",
-      "actor": "WoL, Wicked Thunder",
-      "director": "Yoshi-P, SQENIX",
-      "genre": "Action, MMORPG",
-      "year": 2024,
-      "description": "cine",
-      "image": "",
-      "trailer": "https://youtu.be/_htiXfLqXxU?si=MZp0o1GEhpL5_hkj",
-      "categories": [
-        2,
-        3,
-        4,
-        6
-      ]
     }
   ]
 }

@@ -31,33 +31,33 @@ const FavouritesMovies = (props: Props) => {
                                 {context.favourites.map((movie, index) => (
                                 <div key={index} className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-3">
                                     <div className="fav-custom-card">
-                                    <Link to={`/movies/${movie.id}`} 
-                                            className='link-offset-2 link-underline link-underline-opacity-0'>
-                                        {movie.image ? (
-                                            movie.image.startsWith("http://") || movie.image.startsWith("https://") ? (
-                                            <img
-                                                src={movie.image}
-                                                alt={movie.title}
-                                                className="img-fluid"
-                                            />
+                                        <Link to={`/movies/${movie.id}`} 
+                                                className='link-offset-2 link-underline link-underline-opacity-0'>
+                                            {movie.image ? (
+                                                movie.image.startsWith("http://") || movie.image.startsWith("https://") ? (
+                                                <img
+                                                    src={movie.image}
+                                                    alt={movie.title}
+                                                    className="img-fluid"
+                                                />
+                                                ) : (
+                                                <img
+                                                    src={url + movie.image}
+                                                    alt={movie.title}
+                                                    className="img-fluid"
+                                                />
+                                                )
                                             ) : (
-                                            <img
-                                                src={url + movie.image}
-                                                alt={movie.title}
+                                                <img
+                                                src={url + 'default,jpg'}  
+                                                alt="default"
                                                 className="img-fluid"
-                                            />
-                                            )
-                                        ) : (
-                                            <img
-                                            src={url + 'default,jpg'}  
-                                            alt="default"
-                                            className="img-fluid"
-                                            />
-                                        )}
-                                        <div className="fav-custom-title">
-                                            {movie.title}
-                                        </div>
-                                    </Link>
+                                                />
+                                            )}
+                                            <div className="fav-custom-title">
+                                                {movie.title}
+                                            </div>
+                                        </Link>
                                     </div>
                                 </div>
                                 ))}

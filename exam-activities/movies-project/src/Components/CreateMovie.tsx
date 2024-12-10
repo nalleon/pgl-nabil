@@ -85,10 +85,6 @@ const CreateMovie = (props: Props) => {
 
     const nextId = getNextId(auxMovies);
 
-    if (image.trim().length < 0){
-      setImage('default.jpg');
-    }
-
     const newMovie: MovieType = {
       id: nextId,
       title,
@@ -97,7 +93,7 @@ const CreateMovie = (props: Props) => {
       genre,
       year,
       description,
-      image,
+      image: image ? image : 'default.jpg',
       trailer,
       categories
     };

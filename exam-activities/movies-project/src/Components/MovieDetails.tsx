@@ -105,7 +105,7 @@ const MovieDetails = (props: Props) => {
                 )
               ) : (
                 <img
-                  src={uri + 'default,jpg'}  
+                  src={uri + 'default.jpg'}  
                   alt="default"
                   className="img-fluid"
                 />
