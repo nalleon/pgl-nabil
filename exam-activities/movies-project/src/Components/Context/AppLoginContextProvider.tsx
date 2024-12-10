@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { AppThemeContext } from './AppThemeContextProvider';
+import AppThemeContextProvider, { AppThemeContext } from './AppThemeContextProvider';
 import { FavouriteMovieContext } from './FavouriteMoviesContextProvider';
+import FavouriteMovieContextProvider from './FavouriteMoviesContextProvider';
 
 type Props = {}
 
@@ -8,8 +9,6 @@ type UserContextType = {
   user: UserType | null;
   login: (username: string) => void;
   logout: () => void;
-  addFavourites: (movie : number) => void;
-  updateTheme: () => void;
 };
 
 type UserType = {
@@ -59,28 +58,26 @@ const AppLoginContextProvider = (props: any) => {
   };
 
 
-  const addFavourites = (movie : number) => {
-    contextFavourites.addFavourite(movie);
-  }
-
-  const updateTheme = () => {
-    contextTheme.toggleTheme();
-  }
-
   /**
    * Context values 
    */
     const contextValues: UserContextType  = {
       user,
       login,
-      logout,
-      addFavourites,
-      updateTheme
+      logout
     }
     
   return (
     <UserContext.Provider value={contextValues}>
-      {props.children}
+      {user && user.username !== 'anonymous' ? (
+        <AppThemeContextProvider>
+          <FavouriteMovieContextProvider>
+            {props.children}
+          </FavouriteMovieContextProvider>
+        </AppThemeContextProvider>
+      ) : (
+        props.children
+      )}
     </UserContext.Provider>
   )
 }
