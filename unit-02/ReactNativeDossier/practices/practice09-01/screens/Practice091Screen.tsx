@@ -50,7 +50,7 @@ const Practice091Screen = (props: Props) => {
             getRequire(rndIndex)
             }
             style={{ minWidth: 50, height: 50, width: 'auto'}}
-             alt='not found'/>
+            alt='not found'/>
     </View>
   )
 }
