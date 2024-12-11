@@ -30,27 +30,24 @@ const AppLoginContextProvider = (props: any) => {
     theme: 'dark'
   };
   
-  const [user, setUser] = useState<UserType>(() => {
-    const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser) : defaultUser;
-  });
+  const [user, setUser] = useState<UserType>(defaultUser);
 
-
-  
-  useEffect(() => {
-    if (user && user.username !== 'anonymous') {
-      localStorage.setItem(user.username, JSON.stringify(user));
-    }
-  }, [user])
 
 
   const login = (username: string) => {
-    setUser({
-      username: username,
-      favourites: contextFavourites.favourites, 
-      theme: contextTheme.theme,          
-    });
-
+    const storedUser = localStorage.getItem(username);
+    if(storedUser){
+      setUser(JSON.parse(storedUser));
+    } else {
+      setUser(
+        {
+          username: username,
+          favourites: [],
+          theme: 'dark',          
+        }
+      );
+    
+    }
   };
 
   const logout = () => {
@@ -70,8 +67,8 @@ const AppLoginContextProvider = (props: any) => {
   return (
     <UserContext.Provider value={contextValues}>
       {user && user.username !== 'anonymous' ? (
-        <AppThemeContextProvider>
-          <FavouriteMovieContextProvider>
+        <AppThemeContextProvider initialTheme={user.theme}>
+          <FavouriteMovieContextProvider initialFavourites={user.favourites}>
             {props.children}
           </FavouriteMovieContextProvider>
         </AppThemeContextProvider>

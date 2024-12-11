@@ -8,6 +8,8 @@ import React, { Dispatch, SetStateAction, createContext, useContext, useEffect, 
  * Favourites movies context provider
  */
 
+
+
 /**
  * FavouriteMovie type definition
  */
@@ -18,16 +20,19 @@ type FavouriteMovieContextType  = {
   removeFavourite: (id: number) => void;
 }
 
-
+type Props = {
+  initialFavourites?: number[];
+  children: React.ReactNode;
+}
 
 
 export const FavouriteMovieContext = createContext<FavouriteMovieContextType >({} as FavouriteMovieContextType );
 
 /**
  * Function to create the app theme context provider
- * @param {any} props - Props for the context provider
+ * @param {Props} props - Props for the context provider
  */
-function FavouriteMovieContextProvider(props: any) {
+function FavouriteMovieContextProvider(props: Props) {
 
   /**
    * UseState for the movies

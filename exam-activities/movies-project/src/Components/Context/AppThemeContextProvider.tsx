@@ -14,19 +14,26 @@ type ThemeContextType = {
 }
 
 
+
+type Props = {
+  initialTheme?: string;
+  children : React.ReactNode;
+}
+
 export const AppThemeContext = createContext<ThemeContextType>({} as ThemeContextType);
 
 /**
  * Function to create the app theme context provider
- * @param {any} props - Props for the context provider
+ * @param {Props} props - Props for the context provider
  */
-function AppThemeContextProvider(props: any) {
+function AppThemeContextProvider(props: Props) {
 
   /**
    * UseState for the theme
    */
   const [theme, setTheme] = useState<string>(() =>{
-    return localStorage.getItem('theme') || 'dark';
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    return props.initialTheme || savedTheme;
   });
 
   /**
