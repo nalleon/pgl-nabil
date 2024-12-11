@@ -42,6 +42,9 @@ const MoviesPerCategory = (props: Props) => {
     const url = 'http://localhost:3000/';
     const context = useContext(AppThemeContext);
 
+    /**
+     * UseEffect for fetching movies and categories
+     */
     useEffect(() => {
         fetchCategories();
         fetchMovies();    
@@ -71,6 +74,11 @@ const MoviesPerCategory = (props: Props) => {
         }
     };
 
+    /**
+     * Function to handle the click of a cetegory
+     * @param categoryId 
+     */
+
     const handleCategoryClick = (categoryId: number) => {
         setSelectedCategory(categoryId);
 
@@ -87,7 +95,6 @@ const MoviesPerCategory = (props: Props) => {
         setFilteredMovies(filteredMoviesAux); 
     };
 
-        
     return (
         <>
             <div className="container" style={{minHeight:'100vh'}}>

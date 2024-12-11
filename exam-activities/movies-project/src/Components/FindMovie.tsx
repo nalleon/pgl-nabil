@@ -33,6 +33,10 @@ const FindMovie = (props: Props) => {
   const [totalPages, setTotalPages] = useState(0);
 
   const maxMoviesPerPage = 10;
+
+  /**
+   * Other properties
+   */
   const url = `http://localhost:3000/`;
 
 
@@ -43,20 +47,32 @@ const FindMovie = (props: Props) => {
   
 
   const findMovieFromAPI = async () => {
-    if (!typeSearch || !search.trim()) {
-      const response = await axios.get(url+"movies");
-      setMovieList(response.data);
-    }
+    try {
+      const response = await axios.get(`${url}movies`);
+      const movies = response.data;
 
-  
-    try{
-      const response = await axios.get(url+"movies");
-      
-      const filteredMovies = response.data.filter((movie: { [element: string]: string; }) =>
-        movie[typeSearch].toLowerCase().includes(search.toLowerCase())
-      );
-      
-      setMovieList(filteredMovies);
+      if (!typeSearch || !search.trim()) {
+          setMovieList(movies);
+          return;
+      }
+
+      let auxFilteredMovies : MovieType[] = [];
+
+      for (const movie of movies) {
+        if (typeSearch === 'year') {
+          if (String(movie[typeSearch]).includes(search)) {
+            auxFilteredMovies.push(movie);
+          }
+        } else {
+            if (movie[typeSearch]?.toLowerCase().includes(search.toLowerCase())) {
+              auxFilteredMovies.push(movie);
+            }
+        }
+      }
+
+
+      setMovieList(auxFilteredMovies);
+
     } catch (error) {
       console.error(error);
       setMovieList([]);
@@ -91,7 +107,7 @@ const FindMovie = (props: Props) => {
                   <option value="title">Title</option>
                   <option value="actor">Actor</option>
                   <option value="director">Director</option>
-                  <option value="genre">Year</option>
+                  <option value="year">Year</option>
                   <option value="genre">Genre</option>
                 </select>
 
