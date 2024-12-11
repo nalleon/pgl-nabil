@@ -135,3 +135,7 @@
     transform: scale(1.05);
 }
 
+.img-custom{
+    border: 3px solid  rgb(223, 164, 62);
+    border-radius: 10px;
+}

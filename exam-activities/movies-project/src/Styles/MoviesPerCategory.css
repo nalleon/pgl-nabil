@@ -17,6 +17,25 @@
     margin: 0 auto; 
 }
 
+
+.category-name-custom-card-light{
+    position: relative;
+    width: 15rem;
+    height: 10rem;
+    margin: 1rem;
+    padding: 1rem;
+    cursor: pointer;
+    color: rgb(30, 30, 30);
+    aspect-ratio: 3 / 4; 
+
+    border-radius: 10px;
+    background: transparent;
+    border: 3px solid  rgb(210, 210, 210);
+    overflow: hidden; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 0 auto; 
+}
+
 .category-name-custom-card:hover {
     transform: translateY(-10px);
 }

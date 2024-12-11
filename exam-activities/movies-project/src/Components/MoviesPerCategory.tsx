@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import '../Styles/MoviesPerCategory.css';
 import CreateCategory from './CreateCategory';
+import { AppThemeContext } from './Context/AppThemeContextProvider';
 
 type Props = {}
 
@@ -26,12 +27,20 @@ type MovieType = {
 };
 
 const MoviesPerCategory = (props: Props) => {
+    /**
+     * UseStates
+     */
     const [categories, setCategories] = useState<CategoryType[]>([]);
     const [movies, setMovies] = useState<MovieType[]>([]);
     const [filteredMovies, setFilteredMovies] = useState<MovieType[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [confirmation, setConfirmation] = useState<boolean>(false);
+
+    /**
+     * Other properties
+     */
     const url = 'http://localhost:3000/';
+    const context = useContext(AppThemeContext);
 
     useEffect(() => {
         fetchCategories();
@@ -102,7 +111,9 @@ const MoviesPerCategory = (props: Props) => {
                             <div className="col-12 col-md-4">
                                 <div
                                     key={category.id}
-                                    className={`col-4 mt-4 category-name-custom-card${selectedCategory === category.id ? '-selected' : ''}`}
+                                    className={`col-4 mt-4 ${context.theme === 'dark' ? 'category-name-custom-card' : 'category-name-custom-card-light'} 
+                                                category-name-custom-card${selectedCategory === category.id ? '-selected' : ''} 
+                                                `}
                                     onClick={() => handleCategoryClick(category.id)}
                                 >
                                     <h5 className='fw-bold text-uppercase'>{category.name}</h5>

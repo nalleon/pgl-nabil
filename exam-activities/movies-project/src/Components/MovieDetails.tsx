@@ -100,7 +100,7 @@ const MovieDetails = (props: Props) => {
                   <img
                     src={uri + data.image}
                     alt={data.title}
-                    className="img-fluid"
+                    className="img-fluid img-custom"
                   />
                 )
               ) : (
@@ -113,8 +113,8 @@ const MovieDetails = (props: Props) => {
           </div>
 
             
-                    <div className="col-sm-12 col-md-6">
-            <div className='card card-custom'>
+          <div className="col-sm-12 col-md-6">
+            <div className='card card-custom mt-3'>
               <h3 className="display-5 text-uppercase mb-4 fw-bold">{data.title}</h3>
               <ul className="list-unstyled mb-4">
                 <li className="mb-3">
@@ -156,7 +156,7 @@ const MovieDetails = (props: Props) => {
           </div>
           <div className="row mt-5 ms-5 me-5">
             <div className="col-12 col-md-6">
-              <Link to={`/movies/modify/${data.id}`} className="btn btn-primary w-75">
+              <Link to={`/movies/modify/${data.id}`} className="btn btn-primary w-75 mb-3">
                 Edit
               </Link>               
             </div>

@@ -23,13 +23,13 @@ body, .light, .dark {
 
 .navbar-light-theme{
     background-color: #f0f0f0;
-    border: 1px solid #1f1f1f;
+    border-bottom: 1px solid #1f1f1f;
     color: #1f1f1f;
 }
 
 .navbar-dark-theme{
     background-color: #0b0b0b;
-    border: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     color: #f0f0f0;
 }
 
@@ -54,11 +54,36 @@ body, .light, .dark {
     border: 1px solid #555;
 }
 
-
 .breadcrumb-custom {
     padding: 10px;
 }
 
 .bg-custom {
     background-color: rgb(223, 164, 62);
+}
+
+.footer-light-theme{
+    background-color: #f0f0f0;
+    border-top: 1px solid #1f1f1f;
+    color: #1f1f1f;
+}
+
+.footer-dark-theme{
+    background-color: #0b0b0b;
+    border-top: 1px solid #f0f0f0;;
+    color: #f0f0f0;;
+}
+
+.icon-light-theme{
+    color: #1f1f1f;
+    font-weight: bold;
+}
+
+.icon-dark-theme{
+    color: #f0f0f0;
+    font-weight: bold;
+}
+
+.icon-light-theme:hover, .icon-dark-theme:hover{
+    color: rgb(223, 164, 62);;
 }

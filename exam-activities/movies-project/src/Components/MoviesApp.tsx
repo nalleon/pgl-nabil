@@ -54,20 +54,61 @@ const MoviesApp = (props: Props) => {
                                 ${context.theme === 'dark' ? 'navbar-dark-theme' : 'navbar-light-theme'
                             }`}>
                 <div className="container-fluid">
-                    <h3 className="mt-2 me-2 ms-2"><Link to="/movies" className='link-light link-offset-2 link-underline link-underline-opacity-0 m-3'><i className="ms-3 bi bi-film text-light me-2"></i>Movies </Link></h3>
+                    <h3 className="mt-2 me-2 ms-2">
+                        <Link to="/movies" className="link-light link-offset-2 link-underline link-underline-opacity-0 m-3">
+                            <i
+                                className={`ms-3 bi bi-film me-2 ${
+                                    context.theme === 'dark' ? 'icon-dark-theme' : 'icon-light-theme'
+                                }`}
+                            ></i>
+                            <i
+                                className={`bi bi-camera-reels-fill ${
+                                    context.theme === 'dark' ? 'icon-dark-theme' : 'icon-light-theme'
+                                }`}
+                            ></i>
+                        </Link>
+                    </h3>
                     <button className="navbar-toggler" style={{  backgroundColor: 'rgb(223, 164, 62)'}}
                             type="button" data-bs-toggle="collapse" data-bs-target="#navBar" aria-controls="navBar" aria-expanded="true" aria-label="Toggle navigation" >
                         <span className="navbar-toggler-icon"></span>
                     </button>
                         <div id="navBar" className="collapse navbar-collapse">
                             <ul className="d-flex align-items-start navbar-nav me-auto mb-2 mb-lg-0 ms-5">
-                                <li className="list-group-item m-1"><Link to="/movies" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3 '> Movies </Link></li>
-                                <li className="list-group-item m-1"><Link to="/movies/create/" className='link-secondary link-offset-2 link-underline link-underline-opacity-0 m-3'> Create </Link></li>                       
-                                <li className="list-group-item m-1"><Link to="/favourites" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Favourites </Link></li>
-                                <li className="list-group-item m-1"><Link to="/movies/categories" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Categories </Link></li>
-                                <li className="list-group-item m-1"><Link to="/login" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Login/Logout </Link></li>
-                                <li className="list-group-item m-1"><Link to="/create-category" className='link-secondary link-light-hover link-offset-2 link-underline link-underline-opacity-0 m-3' >Create category </Link></li>
-
+                                <li className="list-group-item m-1">
+                                    <Link to="/movies" className={`link-offset-2 link-underline link-underline-opacity-0 m-3 ${
+                                        context.theme === 'dark' ? 'icon-dark-theme' : 'icon-light-theme'
+                                    }`}>
+                                        Movies 
+                                    </Link>
+                                </li>
+                                <li className="list-group-item m-1">
+                                    <Link to="/movies/create/" className={`link-offset-2 link-underline link-underline-opacity-0 m-3 ${
+                                        context.theme === 'dark' ? 'icon-dark-theme' : 'icon-light-theme'
+                                    }`}>
+                                        Create 
+                                    </Link>
+                                </li>                       
+                                <li className="list-group-item m-1">
+                                    <Link to="/favourites" className={`link-offset-2 link-underline link-underline-opacity-0 m-3 ${
+                                        context.theme === 'dark' ? 'icon-dark-theme' : 'icon-light-theme'
+                                    }`}>
+                                        Favourites 
+                                    </Link>
+                                </li>
+                                <li className="list-group-item m-1">
+                                    <Link to="/movies/categories" className={`link-offset-2 link-underline link-underline-opacity-0 m-3 ${
+                                        context.theme === 'dark' ? 'icon-dark-theme' : 'icon-light-theme'
+                                    }`}>
+                                        Categories 
+                                    </Link>
+                                </li>
+                                <li className="list-group-item m-1">
+                                    <Link to="/login" className={`link-offset-2 link-underline link-underline-opacity-0 m-3 ${
+                                            context.theme === 'dark' ? 'icon-dark-theme' : 'icon-light-theme'
+                                    }`}>
+                                        Login/Logout 
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
                 </div>
@@ -98,7 +139,7 @@ const MoviesApp = (props: Props) => {
         const context = useContext(AppThemeContext);
 
         return (
-            <footer className={`${context.theme === 'dark' ? 'navbar-dark-theme' : 'navbar-light-theme'}
+            <footer className={`${context.theme === 'dark' ? 'footer-dark-theme' : 'footer-light-theme'}
                 text-center text-light-hover`}>
                 <div className="container p-4">
                     <span>Copyright © 2024 - MoviesApp</span>
