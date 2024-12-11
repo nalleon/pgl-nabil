@@ -86,7 +86,7 @@ const MovieDetails = (props: Props) => {
 
   return (
     <>
-      <div className="container py-5">
+      <div className="container py-5 " style={{minHeight:'100vh'}}>
         <div className="row align-items-center custom-bg">
           <div className="col-sm-12 col-md-6 ">
             {data.image ? (

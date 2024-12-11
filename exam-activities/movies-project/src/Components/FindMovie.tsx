@@ -66,7 +66,7 @@ const FindMovie = (props: Props) => {
 
   return (
       <>
-        <div className='container mt-3'>
+        <div className='container mt-3' style={{minHeight:'100vh'}}>
           <form onSubmit={findMovieFromAPI} className='custom-form'>
             <div className="row g-3 align-items-center ">
               <div className="col-md-8">

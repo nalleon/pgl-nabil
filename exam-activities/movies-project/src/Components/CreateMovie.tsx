@@ -128,7 +128,7 @@ const CreateMovie = (props: Props) => {
 
   return (
     <>
-      <div className="container py-5">
+      <div className="container py-5" style={{minHeight:'100vh'}}>
         <div className='card card-custom'>
         <form onSubmit={handleSubmit}>
         <div className="row g-3 align-items-center ">

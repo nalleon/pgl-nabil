@@ -81,7 +81,7 @@ const CreateCategory = (props: Props) => {
 
     return (
         <>
-        <div className="container py-5">
+        <div className="container py-5 " >
         <div className='card card-custom'>
         <form onSubmit={handleSubmit}>
         <div className="row g-3 align-items-center ">
@@ -92,7 +92,7 @@ const CreateCategory = (props: Props) => {
                 <input
                   type="text"
                   name="title"
-                  placeholder="Enter the title"
+                  placeholder="Enter the category's title"
                   className="custom-input"
                   onChange={(e) => setName(e.target.value)}
                   defaultValue={name} 
@@ -103,12 +103,12 @@ const CreateCategory = (props: Props) => {
 
               <div className="col-12">
                 <label>
-                  <strong>Main actors/actress</strong>
+                  <strong>Description</strong>
                 </label>
                 <input
                   type="text"
-                  name="actor"
-                  placeholder="Enter the actors/actresses' names"
+                  name="description"
+                  placeholder="Enter a short description about the category"
                   className="custom-input"
                   onChange={(e) => setDescription(e.target.value)}
                   defaultValue={description}

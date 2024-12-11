@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import '../Styles/MoviesPerCategory.css';
+import CreateCategory from './CreateCategory';
 
 type Props = {}
 
@@ -29,6 +30,7 @@ const MoviesPerCategory = (props: Props) => {
     const [movies, setMovies] = useState<MovieType[]>([]);
     const [filteredMovies, setFilteredMovies] = useState<MovieType[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+    const [confirmation, setConfirmation] = useState<boolean>(false);
     const url = 'http://localhost:3000/';
 
     useEffect(() => {
@@ -74,15 +76,25 @@ const MoviesPerCategory = (props: Props) => {
         }
 
         setFilteredMovies(filteredMoviesAux); 
-        console.log(filteredMoviesAux);
     };
 
         
     return (
         <>
-            <div className="container">
-                <div className='justify-content-center align-items-center'>
-                    <h2 className='text-center text-uppercase fw-bold title'>Categories</h2>
+            <div className="container" style={{minHeight:'100vh'}}>
+                <div className="justify-content-center align-items-center">
+                    <h2 className="text-center text-uppercase fw-bold title">Categories</h2>
+                    <h6 className="text-center text-uppercase fw-bold title mt-5 mb-3">
+                        <span onClick={()=> setConfirmation(!confirmation)}>Think something is missing? Create a new category</span>
+                    </h6>
+                    <div className="col-12 d-flex justify-content-center align-items-center mb-4">
+                        <button className="btn btn-warning" onClick={() => setConfirmation(!confirmation)}>CREATE</button>
+                    </div>
+                        {confirmation &&
+                            <div className="col-12 d-flex justify-content-center align-items-center mb-3">
+                                <CreateCategory />
+                            </div>
+                        }
                 </div>
                 <div className="row flex-wrap">
                     <div className="row">
@@ -91,7 +103,6 @@ const MoviesPerCategory = (props: Props) => {
                                 <div
                                     key={category.id}
                                     className={`col-4 mt-4 category-name-custom-card${selectedCategory === category.id ? '-selected' : ''}`}
-    
                                     onClick={() => handleCategoryClick(category.id)}
                                 >
                                     <h5 className='fw-bold text-uppercase'>{category.name}</h5>

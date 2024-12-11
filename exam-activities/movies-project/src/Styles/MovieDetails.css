@@ -120,3 +120,18 @@
 .custom-bg:hover {
     transform: translateY(-5px);
 }
+
+
+.btn-warning {
+    background-color: rgb(223, 164, 62);
+    border: none;
+    color: #212121;
+    font-weight: bold;
+    border-radius: 30px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-warning:hover {
+    transform: scale(1.05);
+}
+

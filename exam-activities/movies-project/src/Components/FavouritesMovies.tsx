@@ -83,7 +83,7 @@ const FavouritesMovies = (props: Props) => {
 
     return (
         <>
-            <div className="container">
+            <div className="container" style={{minHeight:'100vh'}}>
                     {
                         context.favourites.length > 0 ? (
                         <div className="mt-5">
@@ -129,7 +129,7 @@ const FavouritesMovies = (props: Props) => {
                         </div>
 
                         ) : (
-                            <h5 className='text-center text-uppercase fw-bold mb-5'>No favourite movies yet.</h5>
+                            <h2 className='text-center text-uppercase fw-bold mb-5'>No favourite movies yet.</h2>
                         )
                     }
             </div>

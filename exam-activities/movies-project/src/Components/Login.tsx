@@ -14,7 +14,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="container py-5">
+      <div className="container py-5" style={{minHeight:'100vh'}}>
           {!context.user || context.user.username === 'anonymous' ? (
             <div className="card card-custom">
               <form onSubmit={handleLogin}>

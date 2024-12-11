@@ -30,7 +30,7 @@ const MoviesApp = (props: Props) => {
                             <Navbar />
                             <ShowContextButtons/>
                             <Routes>
-                                <Route path="/" element={<Login />} />
+                                <Route path="/" element={<FindMovie />} />
                                 <Route path="/login" element={<Login />} />
                                 <Route path="/movies" element={<FindMovie/>}/>
                                 <Route path="/movies/create" element={<CreateMovie/>}/>
