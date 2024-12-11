@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
 
+/**
+ * @author Nabil Leon Alvarez <@nalleon>
+ */
+
 type Props = {
     currentPage: number;
     totalPages: number;
@@ -7,6 +11,9 @@ type Props = {
 }
 
 const Pagination = (props: Props) => {
+    /**
+     * Props for pagination
+     */
     const { currentPage, totalPages, onPageChange } = props;
 
     return (   

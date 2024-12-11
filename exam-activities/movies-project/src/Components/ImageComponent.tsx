@@ -1,13 +1,25 @@
 import React, { useState } from 'react'
 import '../Styles/ImageComponent.css'
+
+/**
+ * @author Nabil Leon Alvarez <@nalleon>
+ */
+
 type Props = {
     value: string; 
     onChange: (newValue: string) => void; 
 }
 
 const ImageComponent = (props: Props) => {
+
+    /**
+     * UseState
+     */
     const [imageUrl, setImageUrl] = useState(props.value);
 
+    /**
+     * Event handler for url image input change
+     */
     const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const url = event.target.value;
         setImageUrl(url);

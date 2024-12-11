@@ -10,7 +10,9 @@ import axios, { all } from 'axios';
 
 type Props = {}
 
-
+/**
+ * Type definition for the movie
+ */
 type MovieType = {
     id: number;
     title: string;
@@ -24,12 +26,22 @@ type MovieType = {
     
 }
 const FavouritesMovies = (props: Props) => {
+    /**
+     * UseStatea
+     */
     const [allMovies, setAllMovies] = useState<MovieType[]>([]);
     const [movies, setMovies] = useState<MovieType[]>([]);
+
+    /**
+     * Conext for favourite movies
+     */
     const context = useContext(FavouriteMovieContext);
+
+    /**
+     * Other properties
+     */
     const url = `http://localhost:3000/`;    
 
-    //const favourites = context.user && context.user.favourites ? context.user.favourites : [];
 
     /**
      * UseEffect to fetch all movies from the api
@@ -77,8 +89,6 @@ const FavouritesMovies = (props: Props) => {
         
         setMovies(filteredMovies);
     }
-
-    
 
 
     return (

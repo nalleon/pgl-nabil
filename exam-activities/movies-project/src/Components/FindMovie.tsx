@@ -3,9 +3,15 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import '../Styles/FindMovie.css'
 import '../Styles/MoviesList.css';
+/**
+ * @author Nabil Leon Alvarez <@nalleon>
+ */
 
 type Props = {}
 
+/**
+ * Type definition for the movie
+ */
 type MovieType = {
   id: number;
   title: string;
@@ -40,12 +46,18 @@ const FindMovie = (props: Props) => {
   const url = `http://localhost:3000/`;
 
 
-  
+  /**
+   * UseEffect for fetching the movies
+   */
   useEffect(() => {
     findMovieFromAPI();
   }, [search, typeSearch])
   
 
+  /**
+   * Fucntion to fetch a list of movies from the API following an specified filter criteria
+   * @returns if there's no filter applied
+   */
   const findMovieFromAPI = async () => {
     try {
       const response = await axios.get(`${url}movies`);

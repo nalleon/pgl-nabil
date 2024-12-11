@@ -1,12 +1,28 @@
 import React, { useState, useContext } from 'react';
 import { UserContext } from './Context/AppLoginContextProvider';
 
+
+/**
+ * @author Nabil Leon Alvarez <@nalleon>
+ */
+
 const Login = () => {
+  /**
+   * UseState
+   */
   const [username, setUsername] = useState('');
+  
+  /**
+   * Context for user/login
+   */
   const context = useContext(UserContext);
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
+  /**
+   * Function to handle the login
+   * @param event 
+   */
+  const handleLogin = (event: React.FormEvent) => {
+    event.preventDefault();
     if (username.trim()) {
       context.login(username);
     }

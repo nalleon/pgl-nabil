@@ -11,6 +11,9 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 type Props = {}
 
 const ThemeSwitcher: React.FC = () => {
+    /**
+     * Context for the theme
+     */
     const context = useContext(AppThemeContext);
     return (
         <button

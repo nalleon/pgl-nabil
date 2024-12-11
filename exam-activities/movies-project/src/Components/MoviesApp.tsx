@@ -18,6 +18,9 @@ import AppLoginContextProvider, { UserContext } from './Context/AppLoginContextP
 import MoviesPerCategory from './MoviesPerCategory';
 import CreateCategory from './CreateCategory';
 
+/**
+ * @author Nabil Leon Alvarez <@nalleon>
+ */
 
 type Props = {}
 

@@ -13,6 +13,9 @@ type Props = {
 
 }
 
+/**
+ * Type definition for the movie
+ */
 type MovieType = {
   id: number;
   title: string;
@@ -27,11 +30,15 @@ type MovieType = {
 }
 
 const MovieDetails = (props: Props) => {
+  /**
+   * UseParam
+   */
   const { movieId } = useParams();
+  /**
+   * UseStates
+   */
   const [data, setData] = useState<MovieType>({} as MovieType);
-  const uri: string = "http://localhost:3000/"
   const [showConfirmation, setShowConfirmation] = useState(false);
-
 
   /**
    * Context and useState for favourites / user's favorites
@@ -46,6 +53,13 @@ const MovieDetails = (props: Props) => {
       return false; 
     }
   );
+
+  /**
+   * Other properties
+   */
+  const uri: string = "http://localhost:3000/"
+
+
 
   /**
    * UseEfect 

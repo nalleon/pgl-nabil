@@ -24,6 +24,9 @@ type MovieType = {
   categories: number[];
 }
 
+/**
+ * Type definition for the category
+ */
 type CategoryType = {
   id: number;
   name: string;
@@ -53,11 +56,17 @@ const CreateMovie = (props: Props) => {
   const uri: string = "http://localhost:3000/movies"
 
 
+  /**
+   * UseEffect for fetching the categories
+   */
   useEffect(() => {
     fetchCategories();
   }, [])
 
 
+  /**
+   * Function to fetch all categories from the API
+   */
   const fetchCategories = async () => {
     try {
       const response = await axios.get('http://localhost:3000/categories'); 
@@ -104,7 +113,7 @@ const CreateMovie = (props: Props) => {
       console.error("Error creating the movie:", error);
     }
 
-    navigate('/movies');
+    navigate('/movies/' + nextId);
   }
 
   /**
@@ -118,13 +127,23 @@ const CreateMovie = (props: Props) => {
     return id;
   }
 
+  /**
+   * Function to handle the categories selected changes for a movie
+   * @param event 
+   */
   const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValues = Array.from(event.target.selectedOptions, (option) => Number(option.value));
+    const selectedValues = getSelectedValues(event.target.selectedOptions);
     setCategories(selectedValues);
-  
-    console.log(categories);
   };
 
+  /**
+   * Function to get the selected values
+   * @param options of the select input
+   * @returns an array with the values of the options
+   */
+  const getSelectedValues = (options: HTMLCollectionOf<HTMLOptionElement>): number[] => {
+    return Array.from(options, option => Number(option.value));
+  };
 
   return (
     <>

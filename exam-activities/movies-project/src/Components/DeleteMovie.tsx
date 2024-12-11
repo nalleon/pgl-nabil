@@ -3,16 +3,35 @@ import { useNavigate } from 'react-router-dom';
 import '../Styles/MovieDetails.css';
 import { useContext } from 'react';
 import { FavouriteMovieContext } from './Context/FavouriteMoviesContextProvider';
+
+/**
+ * @author Nabil Leon Alvarez <@nalleon>
+ */
+
 type Props = {
     movieId : string | undefined
     onCancel: () => void;
 }
 
 const DeleteMovie = (props: Props) => {
+    /**
+     * Parent properties
+     */
     const { movieId, onCancel } = props;
+
+    /**
+     * Other properties
+     */
     const navigate = useNavigate();
+
+    /**
+     * Context for favorite movies
+     */
     const context = useContext(FavouriteMovieContext);
 
+    /**
+     * Function to handle the deleting of a movie
+     */
     const handleDelete = async () => {
         const auxId = movieId;
         if (auxId){

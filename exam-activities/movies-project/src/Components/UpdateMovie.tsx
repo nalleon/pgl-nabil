@@ -6,8 +6,8 @@ import { FavouriteMovieContext } from './Context/FavouriteMoviesContextProvider'
 /**
  * @author Nabil Leon Alvarez <@nalleon>
  */
-type Props = {}
 
+type Props = {}
 
 /**
  * Type definition for the movie
@@ -146,14 +146,24 @@ const UpdateMovie = (props: Props) => {
     }
   };
 
+
   /**
-   * Function to handle the update of the categories from a movie
+   * Function to handle the categories selected changes for a movie
    * @param event 
    */
   const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-      const selectedValues = Array.from(event.target.selectedOptions, (option) => Number(option.value));
-      setCategories(selectedValues);
-    };
+    const selectedValues = getSelectedValues(event.target.selectedOptions);
+    setCategories(selectedValues);
+  };
+
+  /**
+   * Function to get the selected values
+   * @param options of the select input
+   * @returns an array with the values of the options
+   */
+  const getSelectedValues = (options: HTMLCollectionOf<HTMLOptionElement>): number[] => {
+    return Array.from(options, option => Number(option.value));
+  };
 
   return (
     <>

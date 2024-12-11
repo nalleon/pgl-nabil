@@ -5,14 +5,25 @@ import '../Styles/MoviesPerCategory.css';
 import CreateCategory from './CreateCategory';
 import { AppThemeContext } from './Context/AppThemeContextProvider';
 
+
+/**
+ * @author Nabil Leon Alvarez <@nalleon>
+ */
+
 type Props = {}
 
+/**
+ * Type definition for the category
+ */
 type CategoryType = {
     id: number;
     name: string;
     description: string;
 }
 
+/**
+ * Type definition for the movie
+ */
 type MovieType = {
     id: string;
     title: string;
