@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { UserContext } from './Context/AppLoginContextProvider';
+import { AppThemeContext } from './Context/AppThemeContextProvider';
 
 
 /**
@@ -13,9 +14,10 @@ const Login = () => {
   const [username, setUsername] = useState('');
   
   /**
-   * Context for user/login
+   * Context for user/login and theme
    */
   const context = useContext(UserContext);
+  const contextTheme = useContext(AppThemeContext);
 
   /**
    * Function to handle the login
@@ -32,7 +34,7 @@ const Login = () => {
     <>
       <div className="container py-5" style={{minHeight:'100vh'}}>
           {!context.user || context.user.username === 'anonymous' ? (
-            <div className="card card-custom">
+          <div className={`card card-custom${contextTheme.theme === 'dark' ? '' : '-light'}`}>
               <form onSubmit={handleLogin}>
                 <div className="row g-3  d-flex justify-content-center align-items-center">
                   <div className="col-12 col-md-9">
@@ -41,24 +43,25 @@ const Login = () => {
                         id="username"
                         name="username"
                         placeholder="Enter your username"
-                        className="custom-input w-100"
+                        className={`custom-input${contextTheme.theme === 'dark' ? '' : '-light'}`}
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
                       />  
                   </div>
                   <div className="col-12 col-md-3">
-                    <button type="submit" className="custom-button w-100">
-                      Login
+                  <button type="submit" className={`custom-button${contextTheme.theme === 'dark' ? '' : '-create-light'} w-100`}>
+                  Login
                     </button>
                   </div>
                 </div>
               </form>
             </div>
             ) : (
-              <div className="card card-custom">
+              <div className={`card card-custom${contextTheme.theme === 'dark' ? '' : '-light'}`}>
                 <div className="row g-3  d-flex justify-content-center align-items-center">
-                  <button className="custom-button w-25" onClick={() => context.logout()}> Logout</button>
+                  
+                  <button  className={`custom-button${contextTheme.theme === 'dark' ? '' : '-create-light'} w-25`} onClick={() => context.logout()}> Logout</button>
                 </div>
               </div>
             )
