@@ -42,7 +42,7 @@
       "title": "Inception",
       "actor": "Leonardo DiCaprio",
       "director": "Christopher Nolan",
-      "genre": "Sci-Fi",
+      "genre": "Inception",
       "year": 2010,
       "description": "A skilled thief is given a chance at redemption if he is able to successfully perform an inception, planting an idea into a target's subconscious.",
       "image": "inception-poster.jpg",
@@ -58,14 +58,12 @@
       "title": "The Dark Knight",
       "actor": "Christian Bale",
       "director": "Christopher Nolan",
-      "genre": "Action",
+      "genre": "Xenogears",
       "year": 2008,
       "description": "Batman faces a new enemy, the Joker, who wants to plunge Gotham City into anarchy and chaos.",
       "image": "dark-knight-poster.jpg",
       "trailer": "https://youtu.be/EXeTwQWrcwY?si=eSXV9Q7vrGgxKEj7",
       "categories": [
-        2,
-        4,
         6
       ]
     },

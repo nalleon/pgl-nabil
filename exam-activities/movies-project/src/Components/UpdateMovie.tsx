@@ -64,11 +64,20 @@ const UpdateMovie = (props: Props) => {
   const uri: string = `http://localhost:3000/movies/${movieId}`;
   const uriCategories: string = `http://localhost:3000/categories`;
   
+  /**
+   * UseEffect for fetching the movie and all categories
+   */
   useEffect(() => {
     fetchCategories();
     fetchMovie();
 
   }, [movieId]);
+
+
+  /**
+   * Function to submit the changes in a movie 
+   * @param event submit of the form
+   */
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -99,26 +108,28 @@ const UpdateMovie = (props: Props) => {
 
     try {
       await axios.put(uri, updatedMovie);
+      
     } catch (error) {
       console.error("Error updating the movie:", error);
+    } finally {
+      navigate(`/movies/${movieId}`);
     }
 
     const checkDeleted = updatedFavouritesContext(id);
 
     if (checkDeleted){
-      console.log('test');
       context.addFavourite(updatedMovie.id);
-      console.log(context.favourites);
-
     }
 
-    navigate(`/movies`);
   }
 
-
+  /**
+   * Function to update the favourite list when updating the movie
+   * @param id of the movie
+   * @returns  true if movie was in favorites and successfully removed, false otherwise
+   */
   const updatedFavouritesContext = (id : number) => {
     for(let i=0; i<context.favourites.length; i++) {
-
       if(context.favourites[i] == id){
           context.removeFavourite(id);
           return true;
@@ -135,7 +146,6 @@ const UpdateMovie = (props: Props) => {
       const response = await axios.get(uri);
       setMovie(response.data);
       setCategories(response.data.categories);
-      console.log(response.data.categories);
     } catch (error) {
       console.error("Error fetching selected movie:", error);
     }
@@ -160,7 +170,8 @@ const UpdateMovie = (props: Props) => {
    * @param event 
    */
   const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValues = getSelectedValues(event.target.selectedOptions);
+    event.preventDefault();
+    const selectedValues : number[] = getSelectedValues(event.target.selectedOptions);
     setCategories(selectedValues);
   };
 
