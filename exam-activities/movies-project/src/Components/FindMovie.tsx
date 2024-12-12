@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import '../Styles/FindMovie.css'
 import '../Styles/MoviesList.css';
+import { AppThemeContext } from './Context/AppThemeContextProvider';
 /**
  * @author Nabil Leon Alvarez <@nalleon>
  */
@@ -45,6 +46,7 @@ const FindMovie = (props: Props) => {
    */
   const url = `http://localhost:3000/`;
 
+  const context = useContext(AppThemeContext);
 
   /**
    * UseEffect for fetching the movies
@@ -95,14 +97,14 @@ const FindMovie = (props: Props) => {
   return (
       <>
         <div className='container mt-3' style={{minHeight:'100vh'}}>
-          <form onSubmit={findMovieFromAPI} className='custom-form'>
+          <form onSubmit={findMovieFromAPI} className={`custom-form${context.theme === 'dark' ? '' : '-light'}`}>
             <div className="row g-3 align-items-center ">
               <div className="col-md-8">
                 <input
                   type="text"
                   name="nameSearch"
                   placeholder="Enter your search"
-                  className="custom-input"
+                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
                   onChange={(e) => setSearch(e.target.value)}
                   defaultValue={search}
                 />
@@ -112,7 +114,7 @@ const FindMovie = (props: Props) => {
                 <select
                   id="type_search"
                   name="type_search"
-                  className="custom-input w-30"
+                  className={`custom-input${context.theme === 'dark' ? '' : '-light'} w-30`}
                   onChange={(e) => setTypeSearch(e.target.value)}
                   value={typeSearch}
                 >
@@ -123,8 +125,10 @@ const FindMovie = (props: Props) => {
                   <option value="genre">Genre</option>
                 </select>
 
-                <button type="submit" className="custom-button w-50 ms-2 ">
-                  <i className="bi bi-search"></i> 
+                <button type="submit" className={`custom-button${context.theme === 'dark' ? '' : '-light'} w-50 ms-2 `}>
+                  <i className={`bi bi-search
+                      ${context.theme === 'dark' ? 'icon-dark-theme-search' : 'icon-light-theme-search'}
+                    `}></i> 
                 </button>
                 </div>
             </div>
