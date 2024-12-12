@@ -4,16 +4,16 @@ import ReactPlayer from 'react-player';
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import '../Styles/MovieDetails.css';
 import DeleteMovie from './DeleteMovie';
-import { FavouriteMovieContext } from './Context/FavouriteMoviesContextProvider';
+import { FavouriteMoviesContext } from './Context/FavouriteMoviesContextProvider';
 import BackButton from './BackButton';
 import { AppThemeContext } from './Context/AppThemeContextProvider';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
  */
-type Props = {
 
-}
+
+type Props = {}
 
 /**
  * Type definition for the movie
@@ -45,7 +45,7 @@ const MovieDetails = (props: Props) => {
   /**
    * Context and useState for favourites / user's favorites and context for theme
    */
-  const context = useContext(FavouriteMovieContext);
+  const context = useContext(FavouriteMoviesContext);
   const [isFavourite, setIsFavourite] = useState<boolean>(() => 
     {
       if (movieId != null) {

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { FavouriteMovieContext } from './Context/FavouriteMoviesContextProvider';
+import { FavouriteMoviesContext } from './Context/FavouriteMoviesContextProvider';
 import { Link } from 'react-router-dom';
 import '../Styles/Favourites.css';
 import axios, { all } from 'axios';
@@ -35,7 +35,7 @@ const FavouritesMovies = (props: Props) => {
     /**
      * Conext for favourite movies
      */
-    const context = useContext(FavouriteMovieContext);
+    const context = useContext(FavouriteMoviesContext);
 
     /**
      * Other properties

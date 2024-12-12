@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { FavouriteMovieContext } from './Context/FavouriteMoviesContextProvider';
+import { FavouriteMoviesContext } from './Context/FavouriteMoviesContextProvider';
 import { AppThemeContext } from './Context/AppThemeContextProvider';
 
 /**
@@ -53,7 +53,7 @@ const UpdateMovie = (props: Props) => {
     /**
      * Context for favourtites and theme
      */
-    const context = useContext(FavouriteMovieContext);
+    const context = useContext(FavouriteMoviesContext);
     const contextTheme = useContext(AppThemeContext);
   
 

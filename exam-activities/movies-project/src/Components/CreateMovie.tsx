@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import ImageComponent from './ImageComponent';
 import { AppThemeContext } from './Context/AppThemeContextProvider';
+import BackButton from './BackButton';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -155,141 +156,137 @@ const CreateMovie = (props: Props) => {
     <>
       <div className="container py-5" style={{minHeight:'100vh'}}>
         <div className={`card card-custom${context.theme === 'dark' ? '' : '-light'}`}>
-        <form onSubmit={handleSubmit}>
-        <div className="row g-3 align-items-center ">
-              <div className="col-12">
-                <label className={`${context.theme === 'dark' ? '' : 'label-light'}`}>
-                  <strong>Title</strong>
-                </label>
-                <input
-                  type="text"
-                  name="title"
-                  placeholder="Enter the title"
-                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
-                  onChange={(e) => setTitle(e.target.value)}
-                  defaultValue={title} 
-                  required
-                />
-                
-              <div className="col-12 mt-3">
-                  <ImageComponent value={image}
-                                  onChange={(newUrl) => setImage(newUrl)}/>
-              </div>
-              </div>
-              <div className="col-12 col-md-6">
-                <label className={`${context.theme === 'dark' ? '' : 'label-light'}`}>
-                  <strong>Director</strong>
-                </label>
-                <input
-                  type="text"
-                  name="director"
-                  placeholder="Enter the director's name"
-                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
-                  onChange={(e) => setDirector(e.target.value)}
-                  defaultValue={director}
-                  required
-                />
-              </div>
+          <form onSubmit={handleSubmit}>
+            <div className="row g-3 align-items-center ">
+                <div className="col-12">
+                  <label className={`${context.theme === 'dark' ? '' : 'label-light'}`}>
+                    <strong>Title</strong>
+                  </label>
+                  <input
+                    type="text"
+                    name="title"
+                    placeholder="Enter the title"
+                    className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
+                    onChange={(e) => setTitle(e.target.value)}
+                    defaultValue={title} 
+                    required
+                  />
+                  
+                <div className="col-12 mt-3">
+                    <ImageComponent value={image}
+                                    onChange={(newUrl) => setImage(newUrl)}/>
+                </div>
+                </div>
+                <div className="col-12 col-md-6">
+                  <label className={`${context.theme === 'dark' ? '' : 'label-light'}`}>
+                    <strong>Director</strong>
+                  </label>
+                  <input
+                    type="text"
+                    name="director"
+                    placeholder="Enter the director's name"
+                    className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
+                    onChange={(e) => setDirector(e.target.value)}
+                    defaultValue={director}
+                    required
+                  />
+                </div>
 
-              <div className="col-12 col-md-6">
-                <label className={`${context.theme === 'dark' ? '' : 'label-light'}`}>
-                  <strong>Main actors/actress</strong>
-                </label>
-                <input
-                  type="text"
-                  name="actor"
-                  placeholder="Enter the actors/actresses' names"
-                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
-                  onChange={(e) => setActor(e.target.value)}
-                  defaultValue={actor}
-                  required
-                />
-              </div>
+                <div className="col-12 col-md-6">
+                  <label className={`${context.theme === 'dark' ? '' : 'label-light'}`}>
+                    <strong>Main actors/actress</strong>
+                  </label>
+                  <input
+                    type="text"
+                    name="actor"
+                    placeholder="Enter the actors/actresses' names"
+                    className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
+                    onChange={(e) => setActor(e.target.value)}
+                    defaultValue={actor}
+                    required
+                  />
+                </div>
 
-              <div className="col-12 col-md-6">
-                <label className={`mt-2 ${context.theme === 'dark' ? '' : 'label-light'}`}>
-                  <strong>Year of release</strong>
-                </label>
-                <input
-                  type="number"
-                  name="year"
-                  placeholder="Enter the year of realease"
-                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
-                  onChange={(e) => setYear(parseInt(e.target.value))}
-                  defaultValue={year}
-                  required
-                />
-                <label className={`mt-2 ${context.theme === 'dark' ? '' : 'label-light'}`}>
-                  <strong>Genres</strong>
-                </label>
-                <input
-                  type="text"
-                  name="year"
-                  placeholder="Enter the genres of the movie"
-                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
-                  onChange={(e) => setGenre(e.target.value)}
-                  defaultValue={genre}
-                  required
-                />
-                <label className={`mt-2 ${context.theme === 'dark' ? '' : 'label-light'}`}>
-                  <strong>Trailer</strong>
-                </label>
-                <input
-                  type="text"
-                  name="year"
-                  placeholder="Youtube URL"
-                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
-                  onChange={(e) => setTrailer(e.target.value)}
-                  defaultValue={trailer}
-                />
-              </div>
+                <div className="col-12 col-md-6">
+                  <label className={`mt-2 ${context.theme === 'dark' ? '' : 'label-light'}`}>
+                    <strong>Year of release</strong>
+                  </label>
+                  <input
+                    type="number"
+                    name="year"
+                    placeholder="Enter the year of realease"
+                    className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
+                    onChange={(e) => setYear(parseInt(e.target.value))}
+                    defaultValue={year}
+                    required
+                  />
+                  <label className={`mt-2 ${context.theme === 'dark' ? '' : 'label-light'}`}>
+                    <strong>Genres</strong>
+                  </label>
+                  <input
+                    type="text"
+                    name="year"
+                    placeholder="Enter the genres of the movie"
+                    className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
+                    onChange={(e) => setGenre(e.target.value)}
+                    defaultValue={genre}
+                    required
+                  />
+                  <label className={`mt-2 ${context.theme === 'dark' ? '' : 'label-light'}`}>
+                    <strong>Trailer</strong>
+                  </label>
+                  <input
+                    type="text"
+                    name="year"
+                    placeholder="Youtube URL"
+                    className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
+                    onChange={(e) => setTrailer(e.target.value)}
+                    defaultValue={trailer}
+                  />
+                </div>
 
-              <div className="col-12 col-md-6">
-                <label className={`mt-2 ${context.theme === 'dark' ? '' : 'label-light'}`}>
-                  <strong>Categories</strong>
-                </label>
-                  <select
-                    multiple
-                    className={`custom-select${context.theme === 'dark' ? '' : '-light'}`}
-                    onChange={handleCategoryChange}
-                    size={allCategories.length} 
-                  >
-                    {allCategories.map((category) => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </select>
-              </div>
+                <div className="col-12 col-md-6">
+                  <label className={`mt-2 ${context.theme === 'dark' ? '' : 'label-light'}`}>
+                    <strong>Categories</strong>
+                  </label>
+                    <select
+                      multiple
+                      className={`custom-select${context.theme === 'dark' ? '' : '-light'}`}
+                      onChange={handleCategoryChange}
+                      size={allCategories.length} 
+                    >
+                      {allCategories.map((category) => (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      ))}
+                    </select>
+                </div>
 
+                <div className="col-12">
+                  <label className={`${context.theme === 'dark' ? '' : 'label-light'}`}>
+                    <strong>Description</strong>
+                  </label>
+                  <textarea
 
+                    name="description"
+                    placeholder="Enter a brief description of the movie"
+                    rows={4} cols={50}
+                    className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
+                    onChange={(e) => setDescription(e.target.value)}
+                    value={description}
 
-              <div className="col-12">
-                <label className={`${context.theme === 'dark' ? '' : 'label-light'}`}>
-                  <strong>Description</strong>
-                </label>
-                <textarea
+                    required
+                  />
+                </div>
 
-                  name="description"
-                  placeholder="Enter a brief description of the movie"
-                  rows={4} cols={50}
-                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
-                  onChange={(e) => setDescription(e.target.value)}
-                  value={description}
-
-                  required
-                />
-              </div>
-
-              <div className='col-12'>
-                <button type="submit" className={`custom-button${context.theme === 'dark' ? '' : '-create-light'} w-100`}>
-                    Create
-                </button>
-              </div>
-
-          </div>
-
-        </form>    
+                <div className='col-12'>
+                  <button type="submit" className={`custom-button${context.theme === 'dark' ? '' : '-create-light'} w-100`}>
+                      Create
+                  </button>
+                </div>
+            </div>
+          </form>    
         </div>
       </div>
     </>

@@ -5,6 +5,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
  * @author Nabil Leon Alvarez <@nalleon>
  */
 const BackButton = () => {
+    /**
+     * UseNavigate 
+     */
     const navigate = useNavigate();
 
     /**

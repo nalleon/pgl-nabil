@@ -14,12 +14,17 @@ type ThemeContextType = {
 }
 
 
-
+/**
+ * Props (initialTheme and children)
+ */
 type Props = {
   initialTheme?: string;
   children : React.ReactNode;
 }
 
+/**
+ * Context for Theme
+ */
 export const AppThemeContext = createContext<ThemeContextType>({} as ThemeContextType);
 
 /**

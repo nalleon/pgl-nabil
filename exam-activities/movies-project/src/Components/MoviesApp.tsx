@@ -12,7 +12,7 @@ import '../Styles/Theme.css';
 import ThemeSwitcher from './ThemeSwitcher';
 import AppThemeContextProvider, { AppThemeContext } from './Context/AppThemeContextProvider';
 import MovieDetails from './MovieDetails';
-import FavouriteMovieContextProvider from './Context/FavouriteMoviesContextProvider';
+import FavouriteMoviesContextProvider from './Context/FavouriteMoviesContextProvider';
 import FavouritesMovies from './FavouritesMovies';
 import AppLoginContextProvider, { UserContext } from './Context/AppLoginContextProvider';
 import MoviesPerCategory from './MoviesPerCategory';
@@ -29,7 +29,7 @@ const MoviesApp = (props: Props) => {
         <BrowserRouter>
             <AppLoginContextProvider>
                     <AppThemeContextProvider>
-                        <FavouriteMovieContextProvider>
+                        <FavouriteMoviesContextProvider>
                             <Navbar />
                             <ShowContextButtons/>
                             <Routes>
@@ -44,12 +44,16 @@ const MoviesApp = (props: Props) => {
                                 <Route path="/create-category" element={<CreateCategory/>}/>
                             </Routes>
                             <Footer/>
-                        </FavouriteMovieContextProvider>
+                        </FavouriteMoviesContextProvider>
                     </AppThemeContextProvider>
             </AppLoginContextProvider>
         </BrowserRouter>
     )
 
+    /**
+     * Function to generate the navbar
+     * @returns the navbar
+     */
     function Navbar() {
         const context = useContext(AppThemeContext);
         return (
@@ -119,6 +123,10 @@ const MoviesApp = (props: Props) => {
         );
     }
 
+    /**
+     * Function to show the buttons for changing theme and user profile/favourite movies
+     * @returns 
+     */
     function ShowContextButtons(){
         const context = useContext(UserContext);
         return (
@@ -138,6 +146,10 @@ const MoviesApp = (props: Props) => {
         )
     }
 
+    /**
+     * Function to create/show the footer
+     * @returns the footer
+     */
     function Footer(){
         const context = useContext(AppThemeContext);
 

@@ -4,35 +4,35 @@ import React, { Dispatch, SetStateAction, createContext, useContext, useEffect, 
  * @author Nabil Leon Alvarez <@nalleon>
  */
 
-/**
- * Favourites movies context provider
- */
-
-
 
 /**
  * FavouriteMovie type definition
  */
-
 type FavouriteMovieContextType  = {
   favourites: number[];
   addFavourite: (id: number) => boolean;
   removeFavourite: (id: number) => void;
 }
 
+/**
+ * Props (initialFavourites, children)
+ */
 type Props = {
   initialFavourites?: number[];
   children: React.ReactNode;
 }
 
 
-export const FavouriteMovieContext = createContext<FavouriteMovieContextType >({} as FavouriteMovieContextType );
+/**
+ * Context for favourite movies
+ */
+export const FavouriteMoviesContext = createContext<FavouriteMovieContextType >({} as FavouriteMovieContextType );
 
 /**
  * Function to create the app theme context provider
  * @param {Props} props - Props for the context provider
  */
-function FavouriteMovieContextProvider(props: Props) {
+function FavouriteMoviesContextProvider(props: Props) {
 
   /**
    * UseState for the movies
@@ -87,10 +87,10 @@ function FavouriteMovieContextProvider(props: Props) {
   }
 
   return (
-      <FavouriteMovieContext.Provider value={contextValues}>
+      <FavouriteMoviesContext.Provider value={contextValues}>
           {props.children}
-      </FavouriteMovieContext.Provider>
+      </FavouriteMoviesContext.Provider>
   )
 }
 
-export default FavouriteMovieContextProvider
+export default FavouriteMoviesContextProvider

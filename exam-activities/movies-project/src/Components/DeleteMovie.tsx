@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../Styles/MovieDetails.css';
 import { useContext } from 'react';
-import { FavouriteMovieContext } from './Context/FavouriteMoviesContextProvider';
+import { FavouriteMoviesContext } from './Context/FavouriteMoviesContextProvider';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -27,7 +27,7 @@ const DeleteMovie = (props: Props) => {
     /**
      * Context for favorite movies
      */
-    const context = useContext(FavouriteMovieContext);
+    const context = useContext(FavouriteMoviesContext);
 
     /**
      * Function to handle the deleting of a movie
