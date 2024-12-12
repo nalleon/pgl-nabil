@@ -116,9 +116,13 @@
     transform: translateY(-2px);
 }
 
-
 .trailer h5 {
     text-shadow: 1px 1px 2px rgb(0, 0, 0);
+    
+}
+
+.trailer div{
+    overflow-y: hidden;
 }
 
 .custom-bg:hover {

@@ -157,14 +157,16 @@ const MovieDetails = (props: Props) => {
               </div>
 
               <div className="trailer">
-                <h5 className="mb-3">Watch Trailer</h5>
-                <ReactPlayer
-                  url={data.trailer}
-                  controls
-                  width="100%"
-                  height="300px"
-                  className="rounded shadow-lg"
-                />
+                <div>
+                  <h5 className="mb-3">Watch Trailer</h5>
+                  <ReactPlayer
+                    url={data.trailer}
+                    controls
+                    width="100%"
+                    height="300px"
+                    className="trailer2 rounded shadow-lg"
+                  />
+                </div>
               </div>
               <div className="row mt-3">
                 <div className="col-12 d-flex justify-content-center align-items-center">
