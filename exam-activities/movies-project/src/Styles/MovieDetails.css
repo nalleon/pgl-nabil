@@ -139,3 +139,82 @@
     border: 3px solid  rgb(223, 164, 62);
     border-radius: 10px;
 }
+
+/**
+* Light theme
+*/
+
+.custom-button-fav-light {
+    background-color: rgb(223, 164, 62);
+    color: #ffffff;
+    border: 3px solid  rgb(210, 210, 210);
+    padding: 6px 35px;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.custom-button-fav-light:hover {
+    background-color: transparent;
+    transform: translateY(-2px);
+}
+
+
+.custom-button-light {
+    background-color: transparent;
+    color: #ffffff;
+    border: 3px solid   rgb(223, 164, 62);;
+    padding: 6px 35px;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.custom-button-light:hover {
+    background-color: rgb(223, 164, 62);
+    transform: translateY(-2px);
+}
+
+.custom-bg-light {
+    flex: 1;
+    border: 3px solid  rgb(210, 210, 210);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 15px 15px 20px rgb(25, 25, 25),
+                -15px -15px 20px rgb(60, 60, 60);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-custom-light {
+    background: transparent; 
+    border: 3px solid  rgb(210, 210, 210);
+    border-radius: 10px;
+    padding: 15px 20px;
+    color: #ffffff; 
+}
+
+.card-custom-light h3, .trailer {
+    color: #f9c74f; 
+    text-transform: uppercase;
+    text-shadow: 1px 1px 3px rgb(97, 49, 23);
+}
+
+.card-custom-light ul {
+    padding: 0;
+    list-style: none;
+    font-size: 1rem;
+    color: #1b1b1b; 
+}
+
+.card-custom-light ul li strong {
+    color:  #f9c74f; ;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 3px rgb(97, 49, 23);
+}
+
+.description-light p {
+    color: #1b1b1b;
+    line-height: 1.6;
+}

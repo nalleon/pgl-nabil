@@ -46,6 +46,9 @@ const FindMovie = (props: Props) => {
    */
   const url = `http://localhost:3000/`;
 
+  /**
+   * Context for theme
+   */
   const context = useContext(AppThemeContext);
 
   /**

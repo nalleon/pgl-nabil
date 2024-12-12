@@ -6,6 +6,7 @@ import '../Styles/MovieDetails.css';
 import DeleteMovie from './DeleteMovie';
 import { FavouriteMovieContext } from './Context/FavouriteMoviesContextProvider';
 import BackButton from './BackButton';
+import { AppThemeContext } from './Context/AppThemeContextProvider';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -42,7 +43,7 @@ const MovieDetails = (props: Props) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   /**
-   * Context and useState for favourites / user's favorites
+   * Context and useState for favourites / user's favorites and context for theme
    */
   const context = useContext(FavouriteMovieContext);
   const [isFavourite, setIsFavourite] = useState<boolean>(() => 
@@ -55,6 +56,8 @@ const MovieDetails = (props: Props) => {
     }
   );
 
+    const contextTheme = useContext(AppThemeContext);
+  
   /**
    * Other properties
    */
@@ -102,7 +105,7 @@ const MovieDetails = (props: Props) => {
   return (
     <>
       <div className="container py-5 " style={{minHeight:'100vh'}}>
-        <div className="row align-items-center custom-bg">
+        <div className={`row align-items-center custom-bg${contextTheme.theme === 'dark' ? '' : '-light'}`}>
           <div className="col-12 align-items-start mb-2">
             <BackButton/>
           </div>
@@ -132,7 +135,7 @@ const MovieDetails = (props: Props) => {
 
             
           <div className="col-sm-12 col-md-6">
-            <div className='card card-custom mt-3'>
+            <div className={`card card-custom${contextTheme.theme === 'dark' ? '' : '-light'} mt-3`}>
               <h3 className="display-5 text-uppercase mb-4 fw-bold">{data.title}</h3>
               <ul className="list-unstyled mb-4">
                 <li className="mb-3">
@@ -149,7 +152,7 @@ const MovieDetails = (props: Props) => {
                 </li>
               </ul>
 
-              <div className="description mb-4">
+              <div className={`description${contextTheme.theme === 'dark' ? '' : '-light'} mb-4`}>
                 <p className="text-justify">{data.description}</p>
               </div>
 
@@ -165,7 +168,7 @@ const MovieDetails = (props: Props) => {
               </div>
               <div className="row mt-3">
                 <div className="col-12 d-flex justify-content-center align-items-center">
-                  <button className={`custom-button${isFavourite === true ? '-fav' : ''}`} onClick={handleAddFavourite}>  
+                  <button className={`custom-button${isFavourite === true ? '-fav' : ''}${contextTheme.theme === 'dark' ? '' : '-light'}`} onClick={handleAddFavourite}>  
                     <i className={`bi bi-star${isFavourite === true ? '-fill' : ''}`}></i>
                   </button> 
                 </div>
