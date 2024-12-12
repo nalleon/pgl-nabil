@@ -34,14 +34,6 @@ const FindMovie = (props: Props) => {
   const [search, setSearch] = useState('');
 
   /**
-   * UseState for pagination
-   */
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-
-  const maxMoviesPerPage = 10;
-
-  /**
    * Other properties
    */
   const url = `http://localhost:3000/`;
@@ -86,8 +78,7 @@ const FindMovie = (props: Props) => {
             }
         }
       }
-
-
+      
       setMovieList(auxFilteredMovies);
 
     } catch (error) {

@@ -45,7 +45,7 @@ const CreateMovie = (props: Props) => {
   const [genre, setGenre] = useState('');
   const [year, setYear] = useState(0);
   const [description, setDescription] = useState('');
-  const [trailer, setTrailer] = useState('https://youtu.be/_htiXfLqXxU?si=MZp0o1GEhpL5_hkj');
+  const [trailer, setTrailer] = useState('');
   const [image, setImage] = useState('');
   const [categories, setCategories] = useState<number[]>([]);
   const [allCategories, setAllCategories] = useState<CategoryType[]>([]);
@@ -110,7 +110,7 @@ const CreateMovie = (props: Props) => {
       year,
       description,
       image: image ? image : 'default.jpg',
-      trailer,
+      trailer: trailer ? trailer : 'https://youtu.be/_htiXfLqXxU?si=MZp0o1GEhpL5_hkj',
       categories
     };
 

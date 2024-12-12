@@ -90,8 +90,8 @@ const UpdateMovie = (props: Props) => {
     const genre = form.genre.value;
     const year = parseInt(form.year.value);
     const description = form.description.value;
-    const image = form.image.value;
-    const trailer = form.trailer.value;
+    const image = form.image.value ? form.image.value : 'default.jpg';
+    const trailer = form.trailer.value ? form.trailer.value : 'https://youtu.be/_htiXfLqXxU?si=MZp0o1GEhpL5_hkj';
 
     const updatedMovie: MovieType = {
       id,

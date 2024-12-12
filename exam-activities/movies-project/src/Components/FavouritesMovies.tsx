@@ -27,7 +27,7 @@ type MovieType = {
 }
 const FavouritesMovies = (props: Props) => {
     /**
-     * UseStatea
+     * UseStates
      */
     const [allMovies, setAllMovies] = useState<MovieType[]>([]);
     const [movies, setMovies] = useState<MovieType[]>([]);

@@ -10,7 +10,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 type Props = {}
 
-const ThemeSwitcher: React.FC = () => {
+const ThemeSwitcher = (props: Props) => {
     /**
      * Context for the theme
      */
