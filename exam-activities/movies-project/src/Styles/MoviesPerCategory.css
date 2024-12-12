@@ -11,7 +11,7 @@
 
     border-radius: 10px;
     background: transparent;
-    border: 3px solid  rgb(30, 30, 30);
+    border: 2px solid  rgb(30, 30, 30);
     overflow: hidden; 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin: 0 auto; 
@@ -30,7 +30,7 @@
 
     border-radius: 10px;
     background: transparent;
-    border: 3px solid  rgb(210, 210, 210);
+    border: 2px solid  rgb(210, 210, 210);
     overflow: hidden; 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin: 0 auto; 
@@ -48,7 +48,7 @@
     padding: 1rem;
     cursor: pointer;
     aspect-ratio: 3 / 4; 
-    border: 3px solid  rgb(30, 30, 30);
+    border: 2px solid  rgb(181, 117, 77);
     border-radius: 10px;
     overflow: hidden; 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -59,14 +59,28 @@
 
 }
 
+
+
 .category-custom-card{
     position: relative;
     width: 100%; 
     aspect-ratio: 3 / 4; 
     border-radius: 10px;
     background: #212121;
-    border: 3px solid  rgb(30, 30, 30);
+    border: 2px solid  rgb(30, 30, 30);
 
+    overflow: hidden; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 0 auto; 
+}
+
+.category-custom-card-light{
+    position: relative;
+    width: 100%; 
+    aspect-ratio: 3 / 4; 
+    border-radius: 10px;
+    background: #212121;
+    border: 2px solid  rgb(210, 210, 210);
     overflow: hidden; 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin: 0 auto; 

@@ -1,7 +1,7 @@
 
 .custom-form {
     background: transparent;
-    border: 3px solid rgb(30, 30, 30);
+    border: 2px solid rgb(30, 30, 30);
     border-radius: 10px;
     padding: 15px 20px;
 
@@ -93,7 +93,7 @@
 
 .custom-form-light {
     background: transparent;
-    border: 3px solid  rgb(210, 210, 210);
+    border: 2px solid  rgb(210, 210, 210);
     border-radius: 10px;
     padding: 15px 20px;
 
@@ -106,7 +106,7 @@
 
 .custom-input-light {
     background-color:transparent;
-    border: 3px solid  rgb(210, 210, 210);
+    border: 2px solid  rgb(210, 210, 210);
     color: rgb(16, 15, 15); 
     padding: 10px 15px;
     border-radius: 5px;
@@ -123,7 +123,7 @@
 
 .custom-button-light {
     background-color: transparent;
-    border: 3px solid  rgb(210, 210, 210);
+    border: 2px solid  rgb(210, 210, 210);
     padding: 10px 20px;
     border-radius: 50px;
     font-size: 1rem;
@@ -154,7 +154,7 @@
 
 .custom-select-light {
     background-color: transparent;
-    border: 3px solid  rgb(210, 210, 210);
+    border: 2px solid  rgb(210, 210, 210);
     color: #1f1f1f; 
     padding: 10px 15px;
     border-radius: 5px;
@@ -191,7 +191,7 @@
     background-color: transparent;
     color: #1f1f1f;
     font-weight: bold;
-    border: 3px solid  rgb(210, 210, 210);
+    border: 2px solid  rgb(210, 210, 210);
     padding: 10px 20px;
     border-radius: 50px;
     font-size: 1rem;

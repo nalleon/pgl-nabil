@@ -147,7 +147,7 @@ const MoviesPerCategory = (props: Props) => {
                         <div className="row flex-wrap">
                             {filteredMovies.map((movie, index) => (
                             <div key={index} className="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2 mb-3">
-                                <div className="category-custom-card">
+                                <div className={`category-custom-card${context.theme === 'dark' ? '' : '-light'}`}>
                                 <Link to={`/movies/${movie.id}`} 
                                         className='link-offset-2 link-underline link-underline-opacity-0'>
                                     {movie.image ? (

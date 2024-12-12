@@ -1,6 +1,6 @@
 .custom-bg {
     flex: 1;
-    border: 3px solid rgb(30, 30, 30);
+    border: 2px solid rgb(30, 30, 30);
     border-radius: 10px;
     padding: 20px;
     box-shadow: 15px 15px 20px rgb(25, 25, 25),
@@ -19,7 +19,7 @@
 .card-custom h3, .trailer {
     color: #f9c74f; 
     text-transform: uppercase;
-    text-shadow: 1px 1px 3px rgb(97, 49, 23);
+    text-shadow: 1px 1px 2px rgb(97, 49, 23);
 }
 
 .card-custom ul {
@@ -114,7 +114,7 @@
 
 
 .trailer h5 {
-    text-shadow: 1px 1px 3px rgb(0, 0, 0);
+    text-shadow: 1px 1px 2px rgb(0, 0, 0);
 }
 
 .custom-bg:hover {
@@ -136,7 +136,7 @@
 }
 
 .img-custom{
-    border: 3px solid  rgb(223, 164, 62);
+    border: 2px solid  rgb(223, 164, 62);
     border-radius: 10px;
 }
 
@@ -147,7 +147,7 @@
 .custom-button-fav-light {
     background-color: rgb(223, 164, 62);
     color: #ffffff;
-    border: 3px solid  rgb(210, 210, 210);
+    border: 2px solid  rgb(210, 210, 210);
     padding: 6px 35px;
     border-radius: 50px;
     font-size: 1rem;
@@ -164,7 +164,7 @@
 .custom-button-light {
     background-color: transparent;
     color: #ffffff;
-    border: 3px solid   rgb(223, 164, 62);;
+    border: 2px solid   rgb(223, 164, 62);;
     padding: 6px 35px;
     border-radius: 50px;
     font-size: 1rem;
@@ -179,7 +179,7 @@
 
 .custom-bg-light {
     flex: 1;
-    border: 3px solid  rgb(210, 210, 210);
+    border: 2px solid  rgb(210, 210, 210);
     border-radius: 10px;
     padding: 20px;
     box-shadow: 15px 15px 20px rgb(25, 25, 25),
@@ -189,7 +189,7 @@
 
 .card-custom-light {
     background: transparent; 
-    border: 3px solid  rgb(210, 210, 210);
+    border: 2px solid  rgb(210, 210, 210);
     border-radius: 10px;
     padding: 15px 20px;
     color: #ffffff; 
@@ -198,7 +198,7 @@
 .card-custom-light h3, .trailer {
     color: #f9c74f; 
     text-transform: uppercase;
-    text-shadow: 1px 1px 3px rgb(97, 49, 23);
+    text-shadow: 1px 1px 2px rgb(97, 49, 23);
 }
 
 .card-custom-light ul {
@@ -211,7 +211,7 @@
 .card-custom-light ul li strong {
     color:  #f9c74f; ;
     text-transform: uppercase;
-    text-shadow: 1px 1px 3px rgb(97, 49, 23);
+    text-shadow: 1px 1px 2px rgb(97, 49, 23);
 }
 
 .description-light p {

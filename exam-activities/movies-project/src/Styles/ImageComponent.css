@@ -5,7 +5,7 @@
     aspect-ratio: 3 / 4; 
     border-radius: 10px;
     background: #212121;
-    border: 3px solid  rgb(30, 30, 30);
+    border: 2px solid  rgb(30, 30, 30);
 
     overflow: hidden; 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -18,7 +18,7 @@
     aspect-ratio: 3 / 4; 
     border-radius: 10px;
     background: #b3b3b3;
-    border: 3px solid  rgb(210, 210, 210);
+    border: 2px solid  rgb(210, 210, 210);
 
     overflow: hidden; 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
