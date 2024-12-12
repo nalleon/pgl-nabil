@@ -12,7 +12,7 @@ type Props = {}
  * Type of the movies json object
  */
 type MovieType = {
-  id: number;
+  id: string;
   title: string;
   actor: string;
   director: string;
@@ -72,7 +72,7 @@ const CreateMovie = (props: Props) => {
       const response = await axios.get('http://localhost:3000/categories'); 
       setAllCategories(response.data);
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      console.error(error);
     }
   };
 
@@ -95,7 +95,7 @@ const CreateMovie = (props: Props) => {
     const nextId = getNextId(auxMovies);
 
     const newMovie: MovieType = {
-      id: nextId,
+      id: ""+nextId,
       title,
       actor,
       director,
