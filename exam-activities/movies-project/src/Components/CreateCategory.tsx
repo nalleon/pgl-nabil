@@ -12,7 +12,7 @@ type Props = {}
  */
 
 type CategoryType = {
-    id: number;
+    id: string;
     name: string;
     description: string;
 };
@@ -54,7 +54,7 @@ const CreateCategory = (props: Props) => {
     const handleSubmit = async (event : React.FormEvent) => {
         event.preventDefault();
 
-        const id = getNextId(allCategories);
+        const id = "" + getNextId(allCategories);
         const newCategory: CategoryType = {
             id,
             name,

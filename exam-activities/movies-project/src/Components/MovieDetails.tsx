@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import '../Styles/MovieDetails.css';
 import DeleteMovie from './DeleteMovie';
 import { FavouriteMovieContext } from './Context/FavouriteMoviesContextProvider';
+import BackButton from './BackButton';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -102,6 +103,9 @@ const MovieDetails = (props: Props) => {
     <>
       <div className="container py-5 " style={{minHeight:'100vh'}}>
         <div className="row align-items-center custom-bg">
+          <div className="col-12 align-items-start mb-2">
+            <BackButton/>
+          </div>
           <div className="col-sm-12 col-md-6 ">
             {data.image ? (
                 data.image.startsWith("http://") || data.image.startsWith("https://") ? (
