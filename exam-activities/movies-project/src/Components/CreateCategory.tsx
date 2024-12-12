@@ -1,6 +1,7 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { AppThemeContext } from './Context/AppThemeContextProvider';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -24,6 +25,13 @@ const CreateCategory = (props: Props) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [allCategories, setAllCategories] = useState<CategoryType[]>([])
+
+  /**
+   * Context for theme
+   */
+  const context = useContext(AppThemeContext);
+
+
     /**
      * Other properties
      */
@@ -85,18 +93,18 @@ const CreateCategory = (props: Props) => {
     return (
         <>
         <div className="container py-5 " >
-        <div className='card card-custom'>
+        <div className={`card card-custom${context.theme === 'dark' ? '' : '-light'}`}>
         <form onSubmit={handleSubmit}>
         <div className="row g-3 align-items-center ">
               <div className="col-12">
-                <label>
+                <label className={`${context.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Title</strong>
                 </label>
                 <input
                   type="text"
                   name="title"
                   placeholder="Enter the category's title"
-                  className="custom-input"
+                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
                   onChange={(e) => setName(e.target.value)}
                   defaultValue={name} 
                   required
@@ -105,14 +113,14 @@ const CreateCategory = (props: Props) => {
               </div>
 
               <div className="col-12">
-                <label>
+                <label className={`${context.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Description</strong>
                 </label>
                 <input
                   type="text"
                   name="description"
                   placeholder="Enter a short description about the category"
-                  className="custom-input"
+                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
                   onChange={(e) => setDescription(e.target.value)}
                   defaultValue={description}
                   required
@@ -120,8 +128,8 @@ const CreateCategory = (props: Props) => {
               </div>
 
               <div className='col-12'>
-                <button type="submit" className="custom-button w-100 ">
-                    Create
+                <button type="submit" className={`custom-button${context.theme === 'dark' ? '' : '-create-light'} w-100`}>
+                Create
                 </button>
               </div>
 

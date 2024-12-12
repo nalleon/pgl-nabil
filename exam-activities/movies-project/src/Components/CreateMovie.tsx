@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import ImageComponent from './ImageComponent';
+import { AppThemeContext } from './Context/AppThemeContextProvider';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -47,6 +48,11 @@ const CreateMovie = (props: Props) => {
   const [image, setImage] = useState('');
   const [categories, setCategories] = useState<number[]>([]);
   const [allCategories, setAllCategories] = useState<CategoryType[]>([]);
+
+  /**
+   * Context for theme
+   */
+  const context = useContext(AppThemeContext);
 
   /**
    * Other properties
@@ -148,18 +154,18 @@ const CreateMovie = (props: Props) => {
   return (
     <>
       <div className="container py-5" style={{minHeight:'100vh'}}>
-        <div className='card card-custom'>
+        <div className={`card card-custom${context.theme === 'dark' ? '' : '-light'}`}>
         <form onSubmit={handleSubmit}>
         <div className="row g-3 align-items-center ">
               <div className="col-12">
-                <label>
+                <label className={`${context.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Title</strong>
                 </label>
                 <input
                   type="text"
                   name="title"
                   placeholder="Enter the title"
-                  className="custom-input"
+                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
                   onChange={(e) => setTitle(e.target.value)}
                   defaultValue={title} 
                   required
@@ -171,14 +177,14 @@ const CreateMovie = (props: Props) => {
               </div>
               </div>
               <div className="col-12 col-md-6">
-                <label>
+                <label className={`${context.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Director</strong>
                 </label>
                 <input
                   type="text"
                   name="director"
                   placeholder="Enter the director's name"
-                  className="custom-input"
+                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
                   onChange={(e) => setDirector(e.target.value)}
                   defaultValue={director}
                   required
@@ -186,14 +192,14 @@ const CreateMovie = (props: Props) => {
               </div>
 
               <div className="col-12 col-md-6">
-                <label>
+                <label className={`${context.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Main actors/actress</strong>
                 </label>
                 <input
                   type="text"
                   name="actor"
                   placeholder="Enter the actors/actresses' names"
-                  className="custom-input"
+                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
                   onChange={(e) => setActor(e.target.value)}
                   defaultValue={actor}
                   required
@@ -201,50 +207,50 @@ const CreateMovie = (props: Props) => {
               </div>
 
               <div className="col-12 col-md-6">
-                <label className='mt-2'>
+                <label className={`mt-2 ${context.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Year of release</strong>
                 </label>
                 <input
                   type="number"
                   name="year"
                   placeholder="Enter the year of realease"
-                  className="custom-input"
+                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
                   onChange={(e) => setYear(parseInt(e.target.value))}
                   defaultValue={year}
                   required
                 />
-                <label className='mt-2'>
+                <label className={`mt-2 ${context.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Genres</strong>
                 </label>
                 <input
                   type="text"
                   name="year"
                   placeholder="Enter the genres of the movie"
-                  className="custom-input"
+                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
                   onChange={(e) => setGenre(e.target.value)}
                   defaultValue={genre}
                   required
                 />
-                  <label className='mt-2'>
+                <label className={`mt-2 ${context.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Trailer</strong>
                 </label>
                 <input
                   type="text"
                   name="year"
                   placeholder="Youtube URL"
-                  className="custom-input"
+                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
                   onChange={(e) => setTrailer(e.target.value)}
                   defaultValue={trailer}
                 />
               </div>
 
               <div className="col-12 col-md-6">
-                <label className='mt-2'>
+                <label className={`mt-2 ${context.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Categories</strong>
                 </label>
                   <select
                     multiple
-                    className="custom-select"
+                    className={`custom-select${context.theme === 'dark' ? '' : '-light'}`}
                     onChange={handleCategoryChange}
                     size={allCategories.length} 
                   >
@@ -259,7 +265,7 @@ const CreateMovie = (props: Props) => {
 
 
               <div className="col-12">
-                <label>
+                <label className={`${context.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Description</strong>
                 </label>
                 <textarea
@@ -267,7 +273,7 @@ const CreateMovie = (props: Props) => {
                   name="description"
                   placeholder="Enter a brief description of the movie"
                   rows={4} cols={50}
-                  className="custom-input"
+                  className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
                   onChange={(e) => setDescription(e.target.value)}
                   value={description}
 
@@ -276,7 +282,7 @@ const CreateMovie = (props: Props) => {
               </div>
 
               <div className='col-12'>
-                <button type="submit" className="custom-button w-100 ">
+                <button type="submit" className={`custom-button${context.theme === 'dark' ? '' : '-create-light'} w-100`}>
                     Create
                 </button>
               </div>

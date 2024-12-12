@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import '../Styles/ImageComponent.css'
+import { AppThemeContext } from './Context/AppThemeContextProvider';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -17,6 +18,12 @@ const ImageComponent = (props: Props) => {
      */
     const [imageUrl, setImageUrl] = useState(props.value);
 
+    
+    /**
+     * Context for theme
+     */
+    const context = useContext(AppThemeContext);
+    
     /**
      * Event handler for url image input change
      */
@@ -27,33 +34,33 @@ const ImageComponent = (props: Props) => {
     };
 
     return (
-    <>
+        <>
             <div className="row">
                 <div className="col-12 col-md-6 align-content-center">
-                <label>
+                <label className={`${context.theme === 'dark' ? '' : 'label-light'}`}>
                     <strong>Poster</strong>
                 </label>
                     <input
                         type="text"
                         name="image"
                         placeholder="Image URL. Leave blank for default thumbnail"
-                        className="custom-input"
+                        className={`custom-input${context.theme === 'dark' ? '' : '-light'}`}
                         onChange={handleUrlChange}
                     />
                 </div>
 
                 <div className="col-12 col-md-6 mt-4">
-                    <div className="preview-custom-card align-content-center">
+                    <div className={`preview-custom-card${context.theme === 'dark' ? '' : '-light'} align-content-center`}>
                         {imageUrl && (imageUrl !== '' && (imageUrl.startsWith('https://') || imageUrl.startsWith('http://'))) ? 
-                            <img src={imageUrl} alt="Preview" className="preview-custom-img" />
+                            <img src={imageUrl} alt="Preview" className={`preview-custom-img${context.theme === 'dark' ? '' : '-light'}`} />
                             : 
-                            <h3 className='text-center mt-5'>Preview</h3>
+                            <h3 className='text-center'>Preview</h3>
                         }
 
                     </div>
                 </div>
-        </div>
-    </>
+            </div>
+        </>
     )   
 }
 

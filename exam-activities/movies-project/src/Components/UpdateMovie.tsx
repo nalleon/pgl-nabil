@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { FavouriteMovieContext } from './Context/FavouriteMoviesContextProvider';
+import { AppThemeContext } from './Context/AppThemeContextProvider';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -48,13 +49,20 @@ const UpdateMovie = (props: Props) => {
   const [categories, setCategories] = useState<number[]>([]);
   const [allCategories, setAllCategories] = useState<CategoryType[]>([]);
 
+  
+    /**
+     * Context for favourtites and theme
+     */
+    const context = useContext(FavouriteMovieContext);
+    const contextTheme = useContext(AppThemeContext);
+  
+
   /**
    * Other properties
    */
   let navigate = useNavigate();
   const uri: string = `http://localhost:3000/movies/${movieId}`;
   const uriCategories: string = `http://localhost:3000/categories`;
-  const context = useContext(FavouriteMovieContext);
   
   useEffect(() => {
     fetchCategories();
@@ -169,86 +177,86 @@ const UpdateMovie = (props: Props) => {
     <>
       
       <div className="container py-5">
-        <div className='card card-custom'>
+      <div className={`card card-custom${contextTheme.theme === 'dark' ? '' : '-light'}`}>
         <form onSubmit={handleSubmit}>
         <div className="row g-3 align-items-center ">
               <div className="col-12">
-                <label>
-                  <strong>Title</strong>
-                </label>
+              <label className={`${contextTheme.theme === 'dark' ? '' : 'label-light'}`}>
+                <strong>Title</strong>
+              </label>
                 <input
                   type="text"
                   name="title"
                   placeholder="Enter the title"
-                  className="custom-input"
+                  className={`custom-input${contextTheme.theme === 'dark' ? '' : '-light'}`}
                   defaultValue={movie.title} 
                   required
                 />
               </div>
               <div className="col-12 col-md-6">
-                <label>
+              <label className={`${contextTheme.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Director</strong>
                 </label>
                 <input
                   type="text"
                   name="director"
                   placeholder="Enter the director's name"
-                  className="custom-input"
+                  className={`custom-input${contextTheme.theme === 'dark' ? '' : '-light'}`}
                   defaultValue={movie.director}
                   required
                 />
               </div>
 
               <div className="col-12 col-md-6">
-                <label>
+              <label className={`${contextTheme.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Main actors/actress</strong>
                 </label>
                 <input
                   type="text"
                   name="actor"
                   placeholder="Enter the director's name"
-                  className="custom-input"
+                  className={`custom-input${contextTheme.theme === 'dark' ? '' : '-light'}`}
                   defaultValue={movie.actor}
                   required
                 />
               </div>
 
               <div className="col-12 col-md-6">
-                <label>
+              <label className={`${contextTheme.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Year of release</strong>
                 </label>
                 <input
                   type="number"
                   name="year"
                   placeholder="Enter the year of realease"
-                  className="custom-input"
+                  className={`custom-input${contextTheme.theme === 'dark' ? '' : '-light'}`}
                   defaultValue={movie.year}
                   required
                 />
               </div>
 
               <div className="col-12 col-md-6">
-                <label>
+              <label className={`${contextTheme.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Genres</strong>
                 </label>
                 <input
                   type="text"
                   name="genre"
                   placeholder="Enter the genres of the movie"
-                  className="custom-input"
+                  className={`custom-input${contextTheme.theme === 'dark' ? '' : '-light'}`}
                   defaultValue={movie.genre}
                   required
                 />
               </div>
 
               <div className="col-12">
-                <label>
+              <label className={`${contextTheme.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Categories</strong>
                 </label>
                   <select
                     name='categories'
                     multiple
-                    className="custom-select"
+                    className={`custom-select${contextTheme.theme === 'dark' ? '' : '-light'}`}
                     onChange={handleCategoryChange}
                     size={allCategories.length} 
                   >
@@ -270,7 +278,7 @@ const UpdateMovie = (props: Props) => {
               </div>
 
               <div className="col-12">
-                <label>
+                <label className={`${contextTheme.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Description</strong>
                 </label>
                 <textarea
@@ -278,7 +286,7 @@ const UpdateMovie = (props: Props) => {
                   name="description"
                   placeholder="Enter a brief description of the movie"
                   rows={4} cols={50}
-                  className="custom-input"
+                  className={`custom-input${contextTheme.theme === 'dark' ? '' : '-light'}`}
                   defaultValue={movie.description}
                   
                   required
@@ -286,33 +294,33 @@ const UpdateMovie = (props: Props) => {
               </div>
 
               <div className="col-12 col-md-6">
-                <label>
+              <label className={`${contextTheme.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Trailer</strong>
                 </label>
                 <input
                   type="text"
                   name="trailer"
                   placeholder="Youtube URL"
-                  className="custom-input"
+                  className={`custom-input${contextTheme.theme === 'dark' ? '' : '-light'}`}
                   defaultValue={movie.trailer}
                 />
               </div>
 
               <div className="col-12 col-md-6">
-                <label>
+              <label className={`${contextTheme.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Poster</strong>
                 </label>
                 <input
                   type="text"
                   name="image"
                   placeholder="Image URL"
-                  className="custom-input"
+                  className={`custom-input${contextTheme.theme === 'dark' ? '' : '-light'}`}
                   defaultValue={movie.image}
                 />
               </div>
 
               <div className='col-12'>
-                <button type="submit" className="custom-button w-100 ">
+                <button type="submit" className={`custom-button${contextTheme.theme === 'dark' ? '' : '-create-light'} w-100`}>
                     Update
                 </button>
               </div>
