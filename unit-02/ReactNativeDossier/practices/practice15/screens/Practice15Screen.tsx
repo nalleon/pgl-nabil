@@ -26,22 +26,21 @@ const Practice15Screen = (props: Props) => {
     return (
         <SafeAreaView style={{flex:1}}>
             <View style={{flex:1}}>
-                <Text>Jubilado: {formData.jubilado? 'Si' : 'No'}
+                <Text style={{color:'white'}}>Jubilado: {formData.jubilado? 'Si' : 'No'}
                     <Switch
                         onValueChange={()=> fillFormData(!formData.jubilado, 'jubilado')}
                         value={formData.jubilado}
                     />
                 </Text>
-                <Text>Casado: {formData.casado? 'Si' : 'No'}
-
+                <Text style={{color:'white'}}>Casado: {formData.casado? 'Si' : 'No'}
                     <Switch
                         onValueChange={()=> fillFormData(!formData.casado, 'casado')}
                         value={formData.casado}
                     />
                 </Text>
-
                 <TextInput placeholder='nombre' onChangeText={(text)=>fillFormData(text, 'nombre')}/>
                 <TextInput placeholder='edad' onChangeText={(text)=>fillFormData(text, 'edad')}/>
+                <Text style={{color:'white'}}>{JSON.stringify(formData)}</Text>
             </View>
         </SafeAreaView>
     )   
