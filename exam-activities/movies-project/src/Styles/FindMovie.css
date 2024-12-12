@@ -1,4 +1,6 @@
-
+*{
+    overflow-x: hidden  
+}
 .custom-form {
     background: transparent;
     border: 2px solid rgb(30, 30, 30);

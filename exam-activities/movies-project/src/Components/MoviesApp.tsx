@@ -57,7 +57,7 @@ const MoviesApp = (props: Props) => {
     function Navbar() {
         const context = useContext(AppThemeContext);
         return (
-            <nav className={`d-flex justify-content-center navbar navbar-expand-lg 
+            <nav className={`d-flex fixed-top justify-content-center navbar navbar-expand-lg 
                                 ${context.theme === 'dark' ? 'navbar-dark-theme' : 'navbar-light-theme'
                             }`}>
                 <div className="container-fluid">
@@ -130,7 +130,7 @@ const MoviesApp = (props: Props) => {
     function ShowContextButtons(){
         const context = useContext(UserContext);
         return (
-            <nav aria-label="breadcrumb" className="d-flex justify-content-between breadcrumb-custom">
+            <nav aria-label="breadcrumb" className="d-flex mt-5 pt-4 justify-content-between breadcrumb-custom">
                 <span className='ms-3'></span>
                 <div className='row d-inline'>
                     <div className="col-12">
