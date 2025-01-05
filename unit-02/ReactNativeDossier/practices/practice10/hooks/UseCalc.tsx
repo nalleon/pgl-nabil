@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, Alert } from 'react-native'
 import React, { useState } from 'react'
 
 type Props = {}
@@ -10,6 +10,7 @@ const UseCalc = () => {
      */
     const [result, setResult] = useState<string>("0");
     const [history, setHistory] = useState<string>("")
+    const [auxHistory, setAuxHistory] = useState<string>("");
     const [operatorChosen, setOperator] = useState<string>("");
 
     /**
@@ -44,6 +45,7 @@ const UseCalc = () => {
         switch (operator) {
             case 'AC':
                 setHistory('');
+                setAuxHistory('');
                 setResult('0');
                 return;
             case '+/-':
@@ -53,16 +55,13 @@ const UseCalc = () => {
                 handleDelete();
                 return;
             case '/':
-
                 if (operatorChosedBefore()) {
                     return;
                 }
-
                 setHistory(result);
-                setResult('');
+                setAuxHistory(result);
+                setResult('0');
                 setOperator(operator);
-
-
                 return;
             case 'x':
                 if (operatorChosedBefore()) {
@@ -70,7 +69,8 @@ const UseCalc = () => {
                 }
 
                 setHistory(result);
-                setResult('');
+                setAuxHistory(result);
+                setResult('0');
                 setOperator("x");
                 return;
             case '+':
@@ -79,7 +79,8 @@ const UseCalc = () => {
                 }
 
                 setHistory(result);
-                setResult('');
+                setAuxHistory(result);
+                setResult('0');
                 setOperator("+");
                 return;
             case '-':
@@ -88,7 +89,8 @@ const UseCalc = () => {
                 }
 
                 setHistory(result);
-                setResult('');
+                setAuxHistory(result);
+                setResult('0');
                 setOperator("-");
                 return;
 
@@ -96,9 +98,17 @@ const UseCalc = () => {
                 if (operatorChosen === '') {
                     return;
                 }
+
                 const operationResult = calculateResult(operatorChosen);
-                setResult(operationResult.toString());
-                setHistory("");
+                
+                if (operationResult !== 0){
+                    setHistory(operationResult.toString());
+                    setAuxHistory(history + " " + operatorChosen+ " " + result + " = " + operationResult.toString());
+                    setResult(operationResult.toString());
+                } else {
+                    setHistory("");
+                }
+
                 setOperator("");
                 return;
         }
@@ -106,9 +116,14 @@ const UseCalc = () => {
         function operatorChosedBefore() {
             if (operatorChosen !== '') {
                 const operationResult = calculateResult(operatorChosen);
-                setHistory(operationResult.toString());
-                setResult(operationResult.toString());
-                setOperator('');
+
+                if (operationResult !== 0 || isNaN(operationResult)){
+                    setHistory(operationResult.toString());
+                    setAuxHistory(history + " " + operatorChosen+ " " + result + " = " + operationResult.toString());
+                    setResult(operationResult.toString());
+                    setOperator('');
+                } 
+
                 return true;
             }
 
@@ -133,8 +148,14 @@ const UseCalc = () => {
                     auxFinal = auxResult;
                     break;
                 case "/":
-                    auxResult = (parseFloat(history)) / (parseFloat(result));
-                    auxFinal = auxResult;
+                    if (parseFloat(result) === 0){
+                        Alert.alert("Invalid operation");
+                        auxFinal = parseFloat(result);
+                    } else {
+                        auxResult = (parseFloat(history)) / (parseFloat(result));
+                        auxFinal = auxResult;
+                    }
+
                     break;
             }
 
@@ -160,6 +181,7 @@ const UseCalc = () => {
     return {
         result,
         history,
+        auxHistory,
         modify
     }
 
