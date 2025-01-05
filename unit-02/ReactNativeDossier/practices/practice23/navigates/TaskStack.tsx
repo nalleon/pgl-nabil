@@ -16,8 +16,9 @@ const Stack = createNativeStackNavigator<PrincipalStackParamList>();
 const TaskStack = (props: Props) => {
     return (
         <Stack.Navigator
-            //screenOptions={{contentStyle:{backgroundColor:'darkblue'}}}
+            screenOptions={{contentStyle:{backgroundColor:'darkblue'}}}
         >
+            
             <Stack.Screen name="ToDoList" component={ToDoListScreen} />
             <Stack.Screen name="Task" component={TaskScreen} />
         </Stack.Navigator>

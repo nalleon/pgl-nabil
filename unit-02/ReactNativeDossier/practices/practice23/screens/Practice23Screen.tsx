@@ -20,4 +20,6 @@ const Practice23Screen = (props: Props) => {
 
 export default Practice23Screen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+
+})

@@ -18,6 +18,7 @@ import Practice04Screen from './practices/practice04/screens/Practice04Screen';
 import Practice05Screen from './practices/practice05/screens/Practice05Screen';
 import Practice06Screen from './practices/practice06/screens/Practice06Screen';
 import Practice10Screen from './practices/practice10/screens/Practice10Screen';
+import Practice23Screen from './practices/practice23/screens/Practice23Screen';
 
 type SectionProps = PropsWithChildren<{
   title: string;
