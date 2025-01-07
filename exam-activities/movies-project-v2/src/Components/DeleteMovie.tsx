@@ -39,7 +39,16 @@ const DeleteMovie = (props: Props) => {
         }
         
         try {
-            await axios.delete(`http://localhost:8088/movies/${movieId}`);
+            const token = localStorage.getItem('authToken');
+            await axios.delete(`http://localhost:8088/api/movies/${movieId}`,  
+            
+                { headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            console.log('deleted');
+
             } catch (error) {
             console.error("Error deleting the movie:", error);
         } finally {

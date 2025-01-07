@@ -308,12 +308,12 @@ const UpdateMovie = (props: Props) => {
                       selectedActors.includes(director) ? ( 
                         
                         <option key={director.id} value={director.id} selected>
-                          {director.nombre}
+                          {director.nombre} {director.apellidos}
                         </option>
                       ) :
                       (
                         <option key={director.id} value={director.id}>
-                          {director.nombre}
+                          {director.nombre} {director.apellidos}
                         </option>
                       )
                     ))}
@@ -336,12 +336,12 @@ const UpdateMovie = (props: Props) => {
                       selectedActors.includes(actor) ? ( 
                         
                         <option key={actor.id} value={actor.id} selected>
-                          {actor.nombre}
+                          {actor.nombre} {actor.apellidos}
                         </option>
                       ) :
                       (
                         <option key={actor.id} value={actor.id}>
-                          {actor.nombre}
+                          {actor.nombre} {actor.apellidos}
                         </option>
                       )
                     ))}
