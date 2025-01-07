@@ -247,7 +247,7 @@ const CreateMovie = (props: Props) => {
                     defaultValue={title} 
                     required
                   />
-                  
+
                 <div className="col-12 mt-3">
                     <ImageComponent value={image}
                                     onChange={(newUrl) => setImage(newUrl)}/>
