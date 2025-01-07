@@ -32,6 +32,7 @@ type UserType = {
   username: string;
   favourites: number[];
   theme: string;
+  token: string;
 }
 
 
@@ -49,7 +50,8 @@ const AppLoginContextProvider = (props: Props) => {
   const defaultUser: UserType = {
     username: 'anonymous',
     favourites: [],
-    theme: 'dark'
+    theme: 'dark',
+    token: ''
   };
 
   /**
@@ -64,19 +66,36 @@ const AppLoginContextProvider = (props: Props) => {
    */
   const login = (username: string) => {
     let storedUser = localStorage.getItem(username);
+
     if(storedUser){
+    
       setUser(JSON.parse(storedUser));
+      let auxUser = user;
+      auxUser.token = localStorage.getItem('authToken') || '';
     } else {
       setUser(
         {
           username: username,
           favourites: [],
-          theme: 'dark',          
+          theme: 'dark',       
+          token: localStorage.getItem('authToken') || ''
         }
       );
     
     }
   };
+
+
+  const register = (username : string, email : string, password : string) => {
+    setUser({
+      username: username,
+      favourites: [],
+      theme: 'dark',
+      token: localStorage.getItem('authToken') || ''
+    });
+
+    localStorage.setItem(username, JSON.stringify(user));
+  }
 
   /**
    * Function to logout the current user and go into the default

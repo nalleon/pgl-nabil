@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { UserContext } from './Context/AppLoginContextProvider';
 import { AppThemeContext } from './Context/AppThemeContextProvider';
+import axios from 'axios';
 
 
 /**
@@ -12,22 +13,40 @@ const Login = () => {
    * UseState
    */
   const [username, setUsername] = useState('');
-  
+  const [password, setPassword] = useState('');
   /**
    * Context for user/login and theme
    */
   const context = useContext(UserContext);
   const contextTheme = useContext(AppThemeContext);
 
+
+  const url = `http://localhost:8088/api/login`;
+
   /**
    * Function to handle the login
    * @param event 
    */
-  const handleLogin = (event: React.FormEvent) => {
+  const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (username.trim()) {
-      context.login(username);
-    }
+    if (username.trim() && password.trim()) {
+      
+        try {
+            const response = await axios.post(url, {
+              name: username,
+              password: password
+            });
+
+            const token = response.data;
+            localStorage.setItem('authToken', token);
+
+            console.log("token:"+  token);
+
+            context.login(username);
+          } catch (error) {
+            console.error("Error login:", error);
+          }
+      }
   };
 
   return (
@@ -48,10 +67,20 @@ const Login = () => {
                         onChange={(e) => setUsername(e.target.value)}
                         required
                       />  
+                      <input
+                        type="text"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        className={`custom-input${contextTheme.theme === 'dark' ? '' : '-light'} mt-3`}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                      />
                   </div>
                   <div className="col-12 col-md-3">
                   <button type="submit" className={`custom-button${contextTheme.theme === 'dark' ? '' : '-create-light'} w-100`}>
-                  Login
+                      Login
                     </button>
                   </div>
                 </div>

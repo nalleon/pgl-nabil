@@ -162,6 +162,8 @@ const CreateMovie = (props: Props) => {
     }
 
 
+    console.log(selectedActors);
+
     const newMovie: MovieType = {
       titulo: title,
       year: year,
@@ -173,8 +175,16 @@ const CreateMovie = (props: Props) => {
       trailer: trailer ? trailer : 'https://youtu.be/_htiXfLqXxU?si=MZp0o1GEhpL5_hkj',
     };
 
+    console.log(newMovie);
+
     try {
-      await axios.post(uri, newMovie);
+      const token = localStorage.getItem('authToken');
+      console.log(token);
+      await axios.post(uri, newMovie, 
+        { headers: {
+          Authorization: `Bearer ${token}`,
+        }},
+      );
     } catch (error) {
       console.error("Error creating the movie:", error);
     }
@@ -190,6 +200,7 @@ const CreateMovie = (props: Props) => {
   const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValues = getSelectedValues(event.target.selectedOptions);
     setCategories(selectedValues);
+    getSelectedCategories();
   };
 
   /**
@@ -208,13 +219,40 @@ const CreateMovie = (props: Props) => {
   const handleActorListChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValues = getSelectedValues(event.target.selectedOptions);
     setActorList(selectedValues);
+    getSelectedActors();
   };
 
   const handleDirectorListChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValues = getSelectedValues(event.target.selectedOptions);
     setDirectorsList(selectedValues);
+    getSelectedDirectors();
   };
 
+  const getSelectedActors = () => {
+    for (const option of allActors) {
+      if (actorsList.includes(option.id)) {
+          setSelectedActors([...selectedActors, option]);
+      }
+    }
+  }
+
+  
+  const getSelectedDirectors = () => {
+    for (const option of allDirectors) {
+      if (directorsList.includes(option.id)) {
+          setSelectedDirectors([...selectedDirectors, option]);
+      }
+    }
+  }
+
+  
+  const getSelectedCategories = () => {
+    for (const option of allCategories) {
+      if (categories.includes(option.id)) {
+          setselectedCategories([...selectedCategories, option]);
+      }
+    }
+  }
   return (
     <>
       <div className="container py-5" style={{minHeight:'100vh'}}>
