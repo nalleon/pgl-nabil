@@ -20,7 +20,6 @@ const Login = () => {
   const context = useContext(UserContext);
   const contextTheme = useContext(AppThemeContext);
 
-
   const url = `http://localhost:8088/api/login`;
 
   /**
@@ -32,6 +31,7 @@ const Login = () => {
     if (username.trim() && password.trim()) {
       
         try {
+          console.log("·");
             const response = await axios.post(url, {
               name: username,
               password: password

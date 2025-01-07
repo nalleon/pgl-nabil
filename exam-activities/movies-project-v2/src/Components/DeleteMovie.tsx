@@ -39,7 +39,7 @@ const DeleteMovie = (props: Props) => {
         }
         
         try {
-            await axios.delete(`http://localhost:3000/movies/${movieId}`);
+            await axios.delete(`http://localhost:8088/movies/${movieId}`);
             } catch (error) {
             console.error("Error deleting the movie:", error);
         } finally {

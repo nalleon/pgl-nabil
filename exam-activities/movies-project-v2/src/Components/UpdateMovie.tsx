@@ -13,26 +13,27 @@ type Props = {}
 /**
  * Type definition for the movie
  */
-type MovieType = {
-  id: number;
-  title: string;
-  actor: string;
-  director: string;
-  genre: string;
-  year: number;
-  description: string;
-  image: string;
+interface MovieType {
+  id : number,
+  titulo: string;
+  year: string;
+  directores: DireccionActores[];
+  actores: DireccionActores[];
+  categorias: Categoria[];
+  descripcion: string;
+  caratula: string;
   trailer: string;
-  categories: number[];
 }
 
-/**
- * Type definition for the category
- */
-type CategoryType = {
-  id: number;
-  name: string;
-  description: string;
+interface Categoria {
+  id : number,
+  nombre: string;
+}
+
+interface DireccionActores {
+  id : number,
+  nombre: string;
+  apellidos: string;
 }
 
 const UpdateMovie = (props: Props) => {
@@ -46,9 +47,16 @@ const UpdateMovie = (props: Props) => {
    * UseStates
    */
   const [movie, setMovie] = useState<MovieType>({} as MovieType);
-  const [categories, setCategories] = useState<number[]>([]);
-  const [allCategories, setAllCategories] = useState<CategoryType[]>([]);
 
+  
+  const [allCategories, setAllCategories] = useState<Categoria[]>([]);
+  const [allActors, setallActors] = useState<DireccionActores[]>([]);
+  const [allDirectors, setallDirectors] =useState<DireccionActores[]>([]);
+
+  const [selectedCategories, setSelectedCategories] = useState<Categoria[]>([]);
+  const [selectedActors, setSelectedActors] = useState<DireccionActores[]>([]);
+  const [selectedDirectors, setSelectedDirectors] = useState<DireccionActores[]>([]);
+  
   
     /**
      * Context for favourtites and theme
@@ -61,17 +69,79 @@ const UpdateMovie = (props: Props) => {
    * Other properties
    */
   let navigate = useNavigate();
-  const uri: string = `http://localhost:3000/movies/${movieId}`;
-  const uriCategories: string = `http://localhost:3000/categories`;
+  const uri: string = `http://localhost:8088/api/movies/${movieId}`;
   
   /**
    * UseEffect for fetching the movie and all categories
    */
   useEffect(() => {
-    fetchCategories();
     fetchMovie();
 
   }, [movieId]);
+
+
+  /**
+     * UseEffect for fetching the categories
+     */
+    useEffect(() => {
+      fetchCategories();
+    }, [])
+  
+    
+    /**
+     * UseEffect for fetching the actors
+     */
+    useEffect(() => {
+      fetchActors();
+    }, [])
+  
+    
+    /**
+     * UseEffect for fetching the directors
+     */
+    useEffect(() => {
+      fetchDirectors();
+    }, [])
+  
+  
+    /**
+     * Function to fetch all categories from the API
+     */
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get('http://localhost:8088/api/categories'); 
+        setAllCategories(response.data.data);
+      } catch (error) {
+        console.error('error:' + error);
+      }
+  
+    };
+  
+      /**
+     * Function to fetch all directors from the API
+     */
+      const fetchDirectors = async () => {
+        try {
+          const response = await axios.get('http://localhost:8088/api/directors'); 
+          setallDirectors(response.data.data);
+        } catch (error) {
+          console.error('error:' + error);
+        }
+    
+      };
+  
+  
+    /**
+     * Function to fetch all actors from the API
+     */
+    const fetchActors = async () => {
+      try {
+        const response = await axios.get('http://localhost:8088/api/actors'); 
+        setallActors(response.data.data);
+      } catch (error) {
+        console.error('error:' + error);
+      }
+    };
 
 
   /**
@@ -85,29 +155,30 @@ const UpdateMovie = (props: Props) => {
     let form = event.currentTarget;
     const id = movieId ? parseInt(movieId) : 0; 
     const title = form.title.value;
-    const actor = form.actor.value;
-    const director = form.director.value;
-    const genre = form.genre.value;
-    const year = parseInt(form.year.value);
+    const year = form.year.value;
     const description = form.description.value;
     const image = form.image.value ? form.image.value : 'default.jpg';
     const trailer = form.trailer.value ? form.trailer.value : 'https://youtu.be/_htiXfLqXxU?si=MZp0o1GEhpL5_hkj';
 
     const updatedMovie: MovieType = {
-      id,
-      title,
-      actor,
-      director,
-      genre,
-      year,
-      description,
-      image,
-      trailer,
-      categories
+      id: id,
+      titulo: title,
+      year: year,
+      directores: selectedDirectors,
+      actores: selectedActors,
+      categorias: selectedCategories,
+      descripcion: description? description : 'TBA',
+      caratula: image ? image : 'default.jpg',
+      trailer: trailer ? trailer : 'https://youtu.be/_htiXfLqXxU?si=MZp0o1GEhpL5_hkj',
     };
 
     try {
-      await axios.put(uri, updatedMovie);
+      const token = localStorage.getItem('authToken');
+      await axios.put(uri, updatedMovie,
+        { headers: {
+          Authorization: `Bearer ${token}`,
+      }},
+    );
       
     } catch (error) {
       console.error("Error updating the movie:", error);
@@ -144,35 +215,26 @@ const UpdateMovie = (props: Props) => {
   const fetchMovie = async () => {
     try {
       const response = await axios.get(uri);
-      setMovie(response.data);
-      setCategories(response.data.categories);
+      setMovie(response.data.data);
     } catch (error) {
       console.error("Error fetching selected movie:", error);
     }
 
   } 
 
-  /**
-   * Function to fetch all the categories from the api
-   */
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get(uriCategories);
-      setAllCategories(response.data);
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    }
-  };
-
-
-  /**
+/**
    * Function to handle the categories selected changes for a movie
    * @param event 
    */
   const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    event.preventDefault();
-    const selectedValues : number[] = getSelectedValues(event.target.selectedOptions);
-    setCategories(selectedValues);
+    const selectedValues = getSelectedValues(event.target.selectedOptions);
+    //setCategories(selectedValues);
+
+    const selection = allCategories.filter(category =>
+      selectedValues.includes(category.id)
+    );
+    
+    setSelectedCategories(selection);
   };
 
   /**
@@ -184,6 +246,32 @@ const UpdateMovie = (props: Props) => {
     return Array.from(options, option => Number(option.value));
   };
 
+
+  /**
+   * Handle actor and director changes
+   */
+  const handleActorListChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValues = getSelectedValues(event.target.selectedOptions);
+    //setActorList(selectedValues);
+
+    const selection = allActors.filter(actor =>
+      selectedValues.includes(actor.id)
+    );
+    
+    setSelectedActors(selection);
+  };
+
+  const handleDirectorListChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValues = getSelectedValues(event.target.selectedOptions);
+    //setDirectorsList(selectedValues);
+
+    const selection = allActors.filter(director =>
+      selectedValues.includes(director.id)
+    );
+    
+    setSelectedDirectors(selection);
+  };
+
   return (
     <>
       
@@ -191,7 +279,7 @@ const UpdateMovie = (props: Props) => {
       <div className={`card card-custom${contextTheme.theme === 'dark' ? '' : '-light'}`}>
         <form onSubmit={handleSubmit}>
         <div className="row g-3 align-items-center ">
-              <div className="col-12">
+            <div className="col-12">
               <label className={`${contextTheme.theme === 'dark' ? '' : 'label-light'}`}>
                 <strong>Title</strong>
               </label>
@@ -200,7 +288,7 @@ const UpdateMovie = (props: Props) => {
                   name="title"
                   placeholder="Enter the title"
                   className={`custom-input${contextTheme.theme === 'dark' ? '' : '-light'}`}
-                  defaultValue={movie.title} 
+                  defaultValue={movie.titulo} 
                   required
                 />
               </div>
@@ -208,31 +296,60 @@ const UpdateMovie = (props: Props) => {
               <label className={`${contextTheme.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Director</strong>
                 </label>
-                <input
-                  type="text"
-                  name="director"
-                  placeholder="Enter the director's name"
-                  className={`custom-input${contextTheme.theme === 'dark' ? '' : '-light'}`}
-                  defaultValue={movie.director}
-                  required
-                />
+                <select
+                    name='categories'
+                    multiple
+                    className={`custom-select${contextTheme.theme === 'dark' ? '' : '-light'}`}
+                    onChange={handleDirectorListChange}
+                    size={allDirectors.length} 
+                  >
+                    {allDirectors.map((director) => (
+
+                      selectedActors.includes(director) ? ( 
+                        
+                        <option key={director.id} value={director.id} selected>
+                          {director.nombre}
+                        </option>
+                      ) :
+                      (
+                        <option key={director.id} value={director.id}>
+                          {director.nombre}
+                        </option>
+                      )
+                    ))}
+                  </select>
               </div>
 
               <div className="col-12 col-md-6">
               <label className={`${contextTheme.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Main actors/actress</strong>
                 </label>
-                <input
-                  type="text"
-                  name="actor"
-                  placeholder="Enter the director's name"
-                  className={`custom-input${contextTheme.theme === 'dark' ? '' : '-light'}`}
-                  defaultValue={movie.actor}
-                  required
-                />
+                <select
+                    name='categories'
+                    multiple
+                    className={`custom-select${contextTheme.theme === 'dark' ? '' : '-light'}`}
+                    onChange={handleActorListChange}
+                    size={allActors.length} 
+                  >
+                    {allActors.map((actor) => (
+
+                      selectedActors.includes(actor) ? ( 
+                        
+                        <option key={actor.id} value={actor.id} selected>
+                          {actor.nombre}
+                        </option>
+                      ) :
+                      (
+                        <option key={actor.id} value={actor.id}>
+                          {actor.nombre}
+                        </option>
+                      )
+                    ))}
+                  </select>
+
               </div>
 
-              <div className="col-12 col-md-6">
+              <div className="col-12">
               <label className={`${contextTheme.theme === 'dark' ? '' : 'label-light'}`}>
                   <strong>Year of release</strong>
                 </label>
@@ -246,19 +363,6 @@ const UpdateMovie = (props: Props) => {
                 />
               </div>
 
-              <div className="col-12 col-md-6">
-              <label className={`${contextTheme.theme === 'dark' ? '' : 'label-light'}`}>
-                  <strong>Genres</strong>
-                </label>
-                <input
-                  type="text"
-                  name="genre"
-                  placeholder="Enter the genres of the movie"
-                  className={`custom-input${contextTheme.theme === 'dark' ? '' : '-light'}`}
-                  defaultValue={movie.genre}
-                  required
-                />
-              </div>
 
               <div className="col-12">
               <label className={`${contextTheme.theme === 'dark' ? '' : 'label-light'}`}>
@@ -273,15 +377,15 @@ const UpdateMovie = (props: Props) => {
                   >
                     {allCategories.map((category) => (
 
-                      categories.includes(category.id) ? ( 
+                      selectedCategories.includes(category) ? ( 
                         
                         <option key={category.id} value={category.id} selected>
-                          {category.name}
+                          {category.nombre}
                         </option>
                       ) :
                       (
                         <option key={category.id} value={category.id}>
-                          {category.name}
+                          {category.nombre}
                         </option>
                       )
                     ))}
@@ -298,7 +402,7 @@ const UpdateMovie = (props: Props) => {
                   placeholder="Enter a brief description of the movie"
                   rows={4} cols={50}
                   className={`custom-input${contextTheme.theme === 'dark' ? '' : '-light'}`}
-                  defaultValue={movie.description}
+                  defaultValue={movie.descripcion}
                   
                   required
                 />
@@ -326,7 +430,7 @@ const UpdateMovie = (props: Props) => {
                   name="image"
                   placeholder="Image URL"
                   className={`custom-input${contextTheme.theme === 'dark' ? '' : '-light'}`}
-                  defaultValue={movie.image}
+                  defaultValue={movie.caratula}
                 />
               </div>
 
@@ -334,8 +438,7 @@ const UpdateMovie = (props: Props) => {
                 <button type="submit" className={`custom-button${contextTheme.theme === 'dark' ? '' : '-create-light'} w-100`}>
                     Update
                 </button>
-              </div>
-
+            </div>
           </div>
           
         </form>    

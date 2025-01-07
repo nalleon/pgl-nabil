@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ImageComponent from './ImageComponent';
 import { AppThemeContext } from './Context/AppThemeContextProvider';
 import BackButton from './BackButton';
+import { UserContext } from './Context/AppLoginContextProvider';
 
 /**
  * @author Nabil Leon Alvarez <@nalleon>
@@ -16,7 +17,7 @@ type Props = {}
 interface MovieType {
   titulo: string;
   year: string;
-  direccion: DireccionActores[];
+  directores: DireccionActores[];
   actores: DireccionActores[];
   categorias: Categoria[];
   descripcion: string;
@@ -39,10 +40,7 @@ interface DireccionActores {
 /**
  * Type definition for the category
  */
-type CategoryType = {
-  id: number;
-  name: string;
-};
+
 
 const CreateMovie = (props: Props) => {
   /**
@@ -55,15 +53,11 @@ const CreateMovie = (props: Props) => {
   const [trailer, setTrailer] = useState('');
   const [image, setImage] = useState('');
 
-  const [categories, setCategories] = useState<number[]>([]);
-  const [actorsList, setActorList] = useState<number[]>([])
-  const [directorsList, setDirectorsList] = useState<number[]>([]);
-
   const [allCategories, setAllCategories] = useState<Categoria[]>([]);
   const [allActors, setallActors] = useState<DireccionActores[]>([]);
   const [allDirectors, setallDirectors] =useState<DireccionActores[]>([]);
 
-  const [selectedCategories, setselectedCategories] = useState<Categoria[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<Categoria[]>([]);
   const [selectedActors, setSelectedActors] = useState<DireccionActores[]>([]);
   const [selectedDirectors, setSelectedDirectors] = useState<DireccionActores[]>([]);
 
@@ -72,6 +66,7 @@ const CreateMovie = (props: Props) => {
    * Context for theme
    */
   const context = useContext(AppThemeContext);
+  const token = useContext(UserContext).user?.token;
 
   /**
    * Other properties
@@ -142,7 +137,6 @@ const CreateMovie = (props: Props) => {
     } catch (error) {
       console.error('error:' + error);
     }
-
   };
 
   /**
@@ -152,22 +146,13 @@ const CreateMovie = (props: Props) => {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
-    let auxMovies: MovieType[] = [];
 
-    try {
-      const response = await axios.get(uri);
-      auxMovies = response.data;
-    } catch (error) {
-      console.error("Error fetching all movies:", error);
-    }
-
-
-    console.log(selectedActors);
+    console.log(JSON.stringify(selectedActors));
 
     const newMovie: MovieType = {
       titulo: title,
       year: year,
-      direccion: selectedDirectors,
+      directores: selectedDirectors,
       actores: selectedActors,
       categorias: selectedCategories,
       descripcion: description? description : 'TBA',
@@ -175,11 +160,10 @@ const CreateMovie = (props: Props) => {
       trailer: trailer ? trailer : 'https://youtu.be/_htiXfLqXxU?si=MZp0o1GEhpL5_hkj',
     };
 
-    console.log(newMovie);
 
     try {
       const token = localStorage.getItem('authToken');
-      console.log(token);
+      console.log("token: "+token);
       await axios.post(uri, newMovie, 
         { headers: {
           Authorization: `Bearer ${token}`,
@@ -199,8 +183,13 @@ const CreateMovie = (props: Props) => {
    */
   const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValues = getSelectedValues(event.target.selectedOptions);
-    setCategories(selectedValues);
-    getSelectedCategories();
+    //setCategories(selectedValues);
+
+    const selection = allCategories.filter(category =>
+      selectedValues.includes(category.id)
+    );
+    
+    setSelectedCategories(selection);
   };
 
   /**
@@ -218,41 +207,27 @@ const CreateMovie = (props: Props) => {
    */
   const handleActorListChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValues = getSelectedValues(event.target.selectedOptions);
-    setActorList(selectedValues);
-    getSelectedActors();
+    //setActorList(selectedValues);
+
+    const selection = allActors.filter(actor =>
+      selectedValues.includes(actor.id)
+    );
+    
+    setSelectedActors(selection);
   };
 
   const handleDirectorListChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValues = getSelectedValues(event.target.selectedOptions);
-    setDirectorsList(selectedValues);
-    getSelectedDirectors();
+    //setDirectorsList(selectedValues);
+
+    const selection = allActors.filter(director =>
+      selectedValues.includes(director.id)
+    );
+    
+    setSelectedDirectors(selection);
   };
 
-  const getSelectedActors = () => {
-    for (const option of allActors) {
-      if (actorsList.includes(option.id)) {
-          setSelectedActors([...selectedActors, option]);
-      }
-    }
-  }
 
-  
-  const getSelectedDirectors = () => {
-    for (const option of allDirectors) {
-      if (directorsList.includes(option.id)) {
-          setSelectedDirectors([...selectedDirectors, option]);
-      }
-    }
-  }
-
-  
-  const getSelectedCategories = () => {
-    for (const option of allCategories) {
-      if (categories.includes(option.id)) {
-          setselectedCategories([...selectedCategories, option]);
-      }
-    }
-  }
   return (
     <>
       <div className="container py-5" style={{minHeight:'100vh'}}>
@@ -280,16 +255,16 @@ const CreateMovie = (props: Props) => {
                 </div>
                 <div className="col-12 col-md-6">
                   <label className={`${context.theme === 'dark' ? '' : 'label-light'}`}>
-                    <strong>Director</strong>
+                    <strong>Direction</strong>
                   </label>
                   <select
                       multiple
                       className={`custom-select${context.theme === 'dark' ? '' : '-light'}`}
-                      onChange={handleDirectorListChange}
+                      onChange={(e) => handleDirectorListChange(e)}
                       size={allDirectors.length} 
                     >
-                      {allDirectors.map((director, index) => (
-                        <option key={index} value={index}>
+                      {allDirectors.map((director) => (
+                        <option key={director.id} value={director.id}>
                           {director.nombre} {director.apellidos}
                         </option>
                       ))}
@@ -303,11 +278,11 @@ const CreateMovie = (props: Props) => {
                   <select
                       multiple
                       className={`custom-select${context.theme === 'dark' ? '' : '-light'}`}
-                      onChange={handleActorListChange}
+                      onChange={(e) => handleActorListChange(e)}
                       size={allActors.length} 
                     >
-                      {allActors.map((actors, index) => (
-                        <option key={index} value={index}>
+                      {allActors.map((actors) => (
+                        <option key={actors.id} value={actors.id}>
                           {actors.nombre} {actors.apellidos}
                         </option>
                       ))}
@@ -348,11 +323,11 @@ const CreateMovie = (props: Props) => {
                     <select
                       multiple
                       className={`custom-select${context.theme === 'dark' ? '' : '-light'}`}
-                      onChange={handleCategoryChange}
+                      onChange={(e) => handleCategoryChange(e)}
                       size={allCategories.length} 
                     >
-                      {allCategories.map((category, index) => (
-                        <option key={index} value={index}>
+                      {allCategories.map((category) => (
+                        <option key={category.id} value={category.id}>
                           {category.nombre}
                         </option>
                       ))}
