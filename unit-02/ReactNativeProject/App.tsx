@@ -13,6 +13,7 @@ import {
 
 
 import Practice10Screen from './practices/practice10/screens/Practice10Screen';
+import Practice23Screen from './practices/practice23/screens/Practice23Screen';
 
 
 
@@ -21,7 +22,7 @@ function App(): React.JSX.Element {
 
   return (
     <SafeAreaView style={{flex:1}}>
-      <Practice10Screen/>
+      <Practice23Screen/>
     </SafeAreaView>
   );
 }

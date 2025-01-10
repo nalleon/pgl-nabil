@@ -8,7 +8,7 @@ type Props = {
 type TaskListContextType ={
     tasks: Task[],
     setTasks: (tasks: Task[]) => void,
-    nextId: () => void,
+    nextId: () => number,
 }
 
 type Task = {
@@ -26,7 +26,13 @@ const TaskListContext = (props: Props) => {
 
 
     function nextId(){
-        return tasks.length+1;
+        if (tasks.length === 0){
+            return 1;
+        }
+
+        let lastTask = tasks[tasks.length - 1];
+
+        return lastTask.id+1;
     }
 
     const contextValues: TaskListContextType  = {
