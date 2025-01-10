@@ -1,5 +1,5 @@
-import { StyleSheet, Text, TouchableOpacity, View, Touchable } from 'react-native';
-import React, { useContext, useState } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View, Touchable, FlatList, FlatListComponent } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import TaskListContext, { TasksContext } from '../components/TaskListContext'
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -23,11 +23,10 @@ type PropsToDoList = NativeStackScreenProps<PrincipalStackParamList, 'ToDoList'>
 const ToDoListScreen = (props: PropsToDoList) => {
 
     const context = useContext(TasksContext);
-    const [nextId, setNextId] = useState(1);
 
     function createTask (){
-        const taskId = context.nextId();
-        props.navigation.navigate('Task', {id: taskId} );
+        context.getNextId();
+        props.navigation.navigate('Task', {id: context.nextID} );
     }
     
     function changeStatus(taskId : number){
@@ -58,27 +57,38 @@ const ToDoListScreen = (props: PropsToDoList) => {
     return (
         <View style={{flex:1}}>            
             <View>
-                { context.tasks.map((task, index) => 
-                    <View key={index} style={styles.task}>
-                        <TouchableOpacity onPress={() => changeStatus(task.id)} style={styles.taskLeftIcon}>
-                            <Icon name={!task.completed ? `square-outline` : `checkbox-outline`} size={25} color={'#e3c181'}></Icon>
-                        </TouchableOpacity>
+                <FlatList
+                    data={context.tasks}
+                    renderItem={(task) => {
+                    return (
+                        <View key={task.index} style={styles.task}>
 
-                        <TouchableOpacity onPress={() => props.navigation.navigate('Task', {id: task.id})} style={styles.taskContent}>
-                            <Text style={task.completed ? styles.taskTextCompleted : styles.taskText}>{task.content}</Text>
-                        </TouchableOpacity>
-                        
-                        <View style={styles.taskActions}>
-                            <TouchableOpacity onPress={() => props.navigation.navigate('Task', {id: task.id})} style={styles.taskActionIcon}>
-                                <Icon name='pencil' size={25} color={'grey'}></Icon>
+                            <TouchableOpacity onPress={() => changeStatus(task.item.id)} style={styles.taskLeftIcon}>
+                                <Icon name={!task.item.completed ? `square-outline` : `checkbox-outline`} size={25} color={'#e3c181'}></Icon>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => deleteTask(task.id)} style={styles.taskActionIcon}>
-                                <Icon name='trash' size={25} color={'grey'} />
+                            <TouchableOpacity onPress={() => props.navigation.navigate('Task', {id: task.item.id})} style={styles.taskContent}>
+                                <Text style={task.item.completed ? styles.taskTextCompleted : styles.taskText}>{task.item.content}</Text>
                             </TouchableOpacity>
+                            
+                            <View style={styles.taskActions}>
+                                <TouchableOpacity onPress={() => props.navigation.navigate('Task', {id: task.item.id})} style={styles.taskActionIcon}>
+                                    <Icon name='pencil' size={25} color={'grey'}></Icon>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => deleteTask(task.item.id)} style={styles.taskActionIcon}>
+                                    <Icon name='trash' size={25} color={'grey'} />
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                    </View>
-                )}
+                        )
+                        }}
+                    keyExtractor={(task, index) => task.content + index}
+                    ListHeaderComponent={() => <Text>TO DO LIST</Text>}
+                />
+            </View>
+            <View>
+                <Text>{JSON.stringify(context.tasks)}</Text>
             </View>
             <View style={styles.container}>
                 <TouchableOpacity onPress={() => createTask()}>

@@ -27,14 +27,27 @@ const TaskScreen = (props: PropsTask) => {
 
     useEffect(() => {
         getSelectedTask(props.route.params.id);
+
     }, [props.route.params.id]);
 
     function getSelectedTask(id:number){
+        let found = false;
         for (let i=0; i < context.tasks.length; i++){
-            if(context.tasks[i].id==id){
+            if(context.tasks[i].id===id){
                 setTaskData(context.tasks[i]);
+                found = true;
                 break;
             }
+        }
+
+        if (!found){
+            setTaskData(
+                {
+                    id: props.route.params.id,
+                    content: '',
+                    completed: false
+                }
+            );
         }
     }
 
@@ -49,12 +62,11 @@ const TaskScreen = (props: PropsTask) => {
 
     function handleOnPress(){
         if (!taskData.content){
-            props.navigation.navigate('ToDoList');
+            props.navigation.goBack();
             return;
         }
 
         let found = false;
-
         let auxTaskList = [...context.tasks];
 
         for (let i=0; i < auxTaskList.length; i++){
@@ -69,8 +81,8 @@ const TaskScreen = (props: PropsTask) => {
             auxTaskList.push(taskData);
         }
 
-        context.setTasks(auxTaskList);
-        props.navigation.navigate('ToDoList');
+        context.setTasks([...auxTaskList]);
+        props.navigation.goBack();
     }
 
 
