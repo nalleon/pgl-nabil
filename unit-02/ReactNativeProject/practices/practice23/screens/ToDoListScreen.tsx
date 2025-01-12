@@ -25,8 +25,16 @@ const ToDoListScreen = (props: PropsToDoList) => {
     const context = useContext(TasksContext);
 
     function createTask (){
-        context.getNextId();
-        props.navigation.navigate('Task', {id: context.nextID} );
+        const newTask = {
+            id: context.nextID,
+            content: '',
+            completed: false,
+        };
+    
+        context.setTasks([...context.tasks, newTask]);
+        context.setNextID(context.nextID + 1); 
+    
+        props.navigation.navigate('Task', { id: newTask.id });
     }
     
     function changeStatus(taskId : number){
@@ -84,12 +92,13 @@ const ToDoListScreen = (props: PropsToDoList) => {
                         )
                         }}
                     keyExtractor={(task, index) => task.content + index}
-                    ListHeaderComponent={() => <Text>TO DO LIST</Text>}
                 />
             </View>
-            <View>
-                <Text>{JSON.stringify(context.tasks)}</Text>
-            </View>
+            {
+                /**<View>
+                    <Text>{JSON.stringify(context.tasks)}</Text>
+                </View>*/
+            }
             <View style={styles.container}>
                 <TouchableOpacity onPress={() => createTask()}>
                     <Text style={styles.btnText}>+</Text>
@@ -156,6 +165,15 @@ const styles = StyleSheet.create({
 
     taskContent: {
         flex: 1,
+    },
+
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginTop: 20,
+        marginLeft: 10,
+        marginBottom: 10,
+        textAlign: 'center'
     }
 
     

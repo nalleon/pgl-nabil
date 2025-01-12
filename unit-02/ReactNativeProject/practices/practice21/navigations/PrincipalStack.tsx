@@ -1,16 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import HomeScreen from '../screens/HomeScreen'
-import ProfileScreen from '../screens/ProfileScreen'
-import ExtraScreen from '../screens/ExtraScreen'
+import FirstScreen21 from '../screens/FirstScreen21';
+import SecondScreen21 from '../screens/SecondScreen21'
+import ThirdScreen21 from '../screens/ThirdScreen21'
 
 type Props = {}
 
 type PrincipalStackParamList = {
-    Home: undefined,
-    Profile: undefined,
-    Extra: {message : string, icon:string},
+    FirstScreen: undefined,
+    SecondScreen: undefined,
+    ThirdScreen: {message : string, icon:string},
 }
 
 const Stack = createNativeStackNavigator<PrincipalStackParamList>();
@@ -21,9 +21,9 @@ const PrincipalStack = (props: Props) => {
             screenOptions={{headerShown: false,contentStyle:{backgroundColor:'lightblue'}}}
         
         >
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Profile" component={ProfileScreen} />
-            <Stack.Screen name="Extra" component={ExtraScreen} />
+            <Stack.Screen name="FirstScreen" component={FirstScreen21} />
+            <Stack.Screen name="SecondScreen" component={SecondScreen21} />
+            <Stack.Screen name="ThirdScreen" component={ThirdScreen21} />
         </Stack.Navigator>
     )
 }

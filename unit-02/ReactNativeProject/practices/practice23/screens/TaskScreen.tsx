@@ -1,5 +1,5 @@
 import { StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Touchable } from 'react-native';
 import { TasksContext } from '../components/TaskListContext';
@@ -24,30 +24,15 @@ const TaskScreen = (props: PropsTask) => {
     const [taskData, setTaskData] = useState<Task>({} as Task);
     const context = useContext(TasksContext);
 
-
     useEffect(() => {
         getSelectedTask(props.route.params.id);
-
     }, [props.route.params.id]);
 
     function getSelectedTask(id:number){
-        let found = false;
-        for (let i=0; i < context.tasks.length; i++){
-            if(context.tasks[i].id===id){
-                setTaskData(context.tasks[i]);
-                found = true;
-                break;
-            }
-        }
+        const task = context.tasks.find(task => task.id === id); 
 
-        if (!found){
-            setTaskData(
-                {
-                    id: props.route.params.id,
-                    content: '',
-                    completed: false
-                }
-            );
+        if (task) {
+            setTaskData(task); 
         }
     }
 
@@ -61,20 +46,30 @@ const TaskScreen = (props: PropsTask) => {
     }
 
     function handleOnPress(){
-        if (!taskData.content){
+        if (!taskData.content || taskData.content.trim() === '') {
+            const task = context.tasks.find(task => task.id === props.route.params.id);
+
+            if(task){
+                let auxList = context.tasks;
+                auxList = auxList.filter(item => item.id!== task.id);
+                context.setTasks([...auxList]);
+            }
+
             props.navigation.goBack();
             return;
         }
 
         let found = false;
+        let arrPos = 0;
         let auxTaskList = [...context.tasks];
-
-        for (let i=0; i < auxTaskList.length; i++){
-            if(auxTaskList[i].id === taskData.id){
-                auxTaskList[i] = taskData;
+ 
+        while (!found && arrPos <= auxTaskList.length-1){
+            if(auxTaskList[arrPos].id === taskData.id){
+                auxTaskList[arrPos] = taskData;
                 found = true;
                 break;
             }
+            arrPos++;
         }
 
         if(!found){

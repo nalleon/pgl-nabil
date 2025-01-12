@@ -19,8 +19,36 @@ const TaskStack = (props: Props) => {
         <Stack.Navigator
             screenOptions={{contentStyle:{backgroundColor:'white'}}}
         >
-            <Stack.Screen name="ToDoList" component={ToDoListScreen} />
-            <Stack.Screen name="Task" component={TaskScreen} />
+            <Stack.Screen 
+                name="ToDoList" 
+                component={ToDoListScreen} 
+                options={{ title: 'Tasks',  headerTitleAlign: 'center', 
+                    headerStyle: {
+                        backgroundColor: '#e3c181', 
+                    },
+                    headerTintColor: 'white', 
+                    headerTitleStyle: {
+                        fontWeight: 'bold',    
+                        fontSize: 20,                
+                    }
+                }}
+            />
+            
+            <Stack.Screen 
+                name="Task" 
+                component={TaskScreen} 
+                options={({ route }) => ({
+                    title: `Editing task ${route.params.id}`,  headerTitleAlign: 'center',
+                    headerStyle: {
+                        backgroundColor: '#e3c181', 
+                    },
+                    headerTintColor: 'white', 
+                    headerTitleStyle: {
+                        fontWeight: 'bold',    
+                        fontSize: 20,                
+                    }
+                })} 
+            />
         </Stack.Navigator>
     )
 }
