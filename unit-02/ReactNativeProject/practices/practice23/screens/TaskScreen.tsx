@@ -62,7 +62,7 @@ const TaskScreen = (props: PropsTask) => {
         let found = false;
         let arrPos = 0;
         let auxTaskList = [...context.tasks];
- 
+
         while (!found && arrPos <= auxTaskList.length-1){
             if(auxTaskList[arrPos].id === taskData.id){
                 auxTaskList[arrPos] = taskData;

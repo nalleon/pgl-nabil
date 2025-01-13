@@ -18,9 +18,9 @@ type Task = {
 const Practice23Screen = (props: Props) => {
     return (
             <TaskListContext>
-                { /**<NavigationContainer> */}
+                <NavigationContainer>
                     <TaskStack />
-                { /**</NavigationContainer>*/}
+                </NavigationContainer>
             </TaskListContext>
     )
 }
