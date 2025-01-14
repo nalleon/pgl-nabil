@@ -4,7 +4,9 @@ import React from 'react'
 import StackNavigation24 from './StackNavigation24';
 import AboutScreen from '../screens/AboutScreen';
 
-type Props = {}
+type Props = {
+    
+}
 
 const Drawer = createDrawerNavigator();
 

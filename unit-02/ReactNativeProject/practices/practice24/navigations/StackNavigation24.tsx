@@ -12,7 +12,7 @@ export type PrincipalStackParamList = {
     CalcScreen: undefined;
     ToDoScreen : undefined;
 };
-
+    
 const Stack = createNativeStackNavigator<PrincipalStackParamList>();
 
 const StackNavigation24 = (props: Props) => {
