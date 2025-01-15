@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { FlatList } from 'react-native-gesture-handler';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import styles from '../themes/PokedexStyle'
 
 type Props = {}
 
@@ -98,50 +99,4 @@ const Pokedex = (props: PropsPokedex) => {
 
 export default Pokedex
 
-const styles = StyleSheet.create({
-    container: {
-        marginTop: 10,
-    },
-    row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 10,
-    },
 
-    item: {
-        padding: 10,
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 5,
-        marginBottom: 5,
-        backgroundColor: '#eeeeee',
-        flexDirection: 'row',
-        borderRadius: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-        elevation: 2,
-        textAlign: 'center',
-        alignItems: 'center',  
-        justifyContent: 'center',    
-        flex: 1,
-    },
-
-    text: {
-        fontSize: 17,
-        color: '#333',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        textTransform: 'uppercase',
-        fontFamily: 'Times New Roman',
-        fontStyle: 'italic',
-    },
-
-    sprite: {
-        width: 30,
-        height: 40,
-        alignSelf: 'center',  
-    },
-});

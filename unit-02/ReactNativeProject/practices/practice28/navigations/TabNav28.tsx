@@ -8,12 +8,7 @@ import StackNavTabSearch from './StackNavTabSearch';
 
 type Props = {}
 const Tab = createBottomTabNavigator();
-type PokedexStackParamList = {
-    Pokedex: undefined,
-    Pokemon: {name : string},
-}
 
-type PropsPokedex = NativeStackScreenProps<PokedexStackParamList, 'Pokedex'>;
 
 const TabNav28 = (props: Props) => {
 
@@ -28,7 +23,7 @@ const TabNav28 = (props: Props) => {
 
             }/>
             
-            <Tab.Screen name='PokemonSearch' component={StackNavTabSearch}
+            <Tab.Screen name='Search' component={StackNavTabSearch}
                 options={ {tabBarIcon: ({focused}) => 
                     <Icon name={(focused) ? 'search' : 'search-outline'} size={30}/>
                 }
@@ -40,4 +35,3 @@ const TabNav28 = (props: Props) => {
 
 export default TabNav28
 
-const styles = StyleSheet.create({})
