@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     mainImg:{
-    marginTop: 20,
     width: 200,
     height: 200,
     borderRadius: 100,
@@ -26,7 +25,7 @@ const styles = StyleSheet.create({
     color: '#008080'
     },
     typeContainer: {
-    padding: 5,
+    marginBottom: 5,
     paddingHorizontal: 10,
     },
     typeText: {
@@ -45,7 +44,6 @@ const styles = StyleSheet.create({
     height: 80,
     marginHorizontal: 10,
     marginBottom: 10,
-    marginTop: 10,
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
@@ -72,7 +70,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',      
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 6,
+    paddingVertical: 2,
     borderBottomWidth: 1,     
     borderBottomColor: '#DDD',
     },

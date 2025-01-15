@@ -17,8 +17,6 @@ type PokemonType = {
   id: number;
 }
 
-
-
 type SearchPokedexStackParamList = {
   SearchPokedex: undefined,
   Pokemon: {name : string, url: string, id : number},
