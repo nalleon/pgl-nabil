@@ -17,8 +17,15 @@ type PokedexStackParamList = {
 type PropsPokedex = NativeStackScreenProps<PokedexStackParamList, 'Pokemon'>;
 
 const Pokemon = (props: PropsPokedex) => {
+  /**
+   * UseStates
+   */
   const [data, setData] = useState<PokemonDetails>({} as PokemonDetails);
   const [sprites, setSprites] = useState<String[]>();
+  
+  /**
+   * Other properties
+   */
   const pokemon = props.route.params;
 
   useEffect(() => {
@@ -30,6 +37,10 @@ const Pokemon = (props: PropsPokedex) => {
     getSprites();
   }, [data]);
 
+
+  /**
+   * Function to fetch the pokemon data from the api
+   */
   const fetchData = async () => {
     const response = await axios.get(pokemon.url);
     let dataPkmn = response.data as PokemonDetails;
@@ -37,34 +48,30 @@ const Pokemon = (props: PropsPokedex) => {
   }
 
 
+  /**
+   * Function to get the sprites of the pokemon
+   */
   const getSprites = async () => {
     const auxSprites: string[] = [];
+
+    const typeOfSprites : string []= [
+      'front_default',
+      'front_shiny',
+      'back_default',
+      'back_shiny',
+      'front_female',
+      'front_shiny_female',
+      'back_female',
+      'back_shiny_female',
+    ]
   
-    if (data.sprites?.front_default) {
-      auxSprites.push(data.sprites.front_default);
+    for (const key of typeOfSprites) {
+      const spriteExists = data.sprites?.[key as keyof typeof data.sprites];
+      if (spriteExists && typeof spriteExists=== 'string') {
+        auxSprites.push(spriteExists);
+      }
     }
-    if (data.sprites?.front_shiny) {
-      auxSprites.push(data.sprites.front_shiny);
-    }
-    if (data.sprites?.back_default) {
-      auxSprites.push(data.sprites.back_default);
-    }
-    if (data.sprites?.back_shiny) {
-      auxSprites.push(data.sprites.back_shiny);
-    }
-    if (data.sprites?.front_female) {
-      auxSprites.push(data.sprites.front_female);
-    }
-    if (data.sprites?.front_shiny_female) {
-      auxSprites.push(data.sprites.front_shiny_female);
-    }
-    if (data.sprites?.back_female) {
-      auxSprites.push(data.sprites.back_female);
-    }
-    if (data.sprites?.back_shiny_female) {
-      auxSprites.push(data.sprites.back_shiny_female);
-    }
-  
+
     setSprites(auxSprites);  
   }
   
@@ -138,6 +145,7 @@ const Pokemon = (props: PropsPokedex) => {
             keyExtractor={(item, index) => item+index.toString()}
             horizontal={true} 
             showsHorizontalScrollIndicator={false} 
+            style={styles.spriteRow}
           />       
     </View>
   )

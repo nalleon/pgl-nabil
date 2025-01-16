@@ -17,6 +17,8 @@ type PokemonType = {
   id: number;
 }
 
+
+
 type SearchPokedexStackParamList = {
   SearchPokedex: undefined,
   Pokemon: {name : string, url: string, id : number},
@@ -33,16 +35,19 @@ const SearchPokemon = (props: PropsSearchPokedex) => {
 
   }, [pokemonMatching]);
 
+  
+    /**
+     * Async function to fetch list of pokemon from the api
+     * @param url of the api
+     */
   const searchForPokemon = async (search: string) => {
     const response = await axios.get(uri);
     let list = response.data as PokedexType
 
-    const aux = list.results.map((pokemon) => {
-        const urlParts = pokemon.url.split('/');
-        const id = urlParts[urlParts.length - 2]; 
-        
-        return { ...pokemon, id: Number(id) }; 
-    });
+    const aux = list.results.map((pokemon) => ({
+      ...pokemon,
+      id: Number(pokemon.url.split('/').at(-2)), 
+    }));
 
     setPokemonMatching(
       aux.filter(

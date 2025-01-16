@@ -26,13 +26,16 @@ type PokedexStackParamList = {
 type PropsPokedex = NativeStackScreenProps<PokedexStackParamList, 'Pokedex'>;
 
 
-/**
- * https://pokeapi.co/api/v2/pokemon?offset=20&limit=20
- * @param props 
- * @returns 
- */
+
 const Pokedex = (props: PropsPokedex) => {
+    /**
+     * UseStates
+     */
     const [pokedex, setPokedex] = useState<PokemonType[]>([]);
+
+    /**
+     * Other properties
+     */
     const uri: string = "https://pokeapi.co/api/v2/pokemon?offset=151&limit=99"
 
     useEffect(() => {
@@ -40,7 +43,7 @@ const Pokedex = (props: PropsPokedex) => {
     }, []);
 
     /**
-     * Async function to fetch pokemon card from the api
+     * Async function to fetch list of pokemon from the api
      * @param url of the api
      */
     async function fetchPokemon(url: string) {
