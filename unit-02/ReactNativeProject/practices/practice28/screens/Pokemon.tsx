@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import axios, { spread } from 'axios';
@@ -65,8 +65,8 @@ const Pokemon = (props: PropsPokedex) => {
       'back_shiny_female',
     ]
   
-    for (const key of typeOfSprites) {
-      const spriteExists = data.sprites?.[key as keyof typeof data.sprites];
+    for (const typeSprite of typeOfSprites) {
+      const spriteExists = data.sprites?.[typeSprite as keyof typeof data.sprites];
       if (spriteExists && typeof spriteExists=== 'string') {
         auxSprites.push(spriteExists);
       }
@@ -77,7 +77,8 @@ const Pokemon = (props: PropsPokedex) => {
   
   
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      <View style={styles.secondContainer}>
         <View>
           <Image
             source={
@@ -94,7 +95,7 @@ const Pokemon = (props: PropsPokedex) => {
           <Text style={styles.title}>{data.name}</Text>
         </View>
         
-        <Text>
+        <Text style={styles.typeText}>
             {data.weight/10} KG 
             <Icon name='arrow-forward-outline'/>
             {data.height/10} M
@@ -108,6 +109,8 @@ const Pokemon = (props: PropsPokedex) => {
             
             keyExtractor={(item, index) => item.type.name + index}
             horizontal
+            ItemSeparatorComponent={() => 
+              <Icon name='remove' style={styles.separator} size={10}/>} 
             style={styles.typeContainer}
           />
         
@@ -147,7 +150,8 @@ const Pokemon = (props: PropsPokedex) => {
             showsHorizontalScrollIndicator={false} 
             style={styles.spriteRow}
           />       
-    </View>
+      </View>
+    </ScrollView>
   )
 }
 

@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'transparent',
         padding: 10,
-        justifyContent: 'center',
+        //justifyContent: 'center',
         alignContent: 'center',
         borderRadius: 10,
     },

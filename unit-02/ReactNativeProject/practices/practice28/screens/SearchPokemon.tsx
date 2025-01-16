@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { FlatList, TextInput } from 'react-native-gesture-handler'
 import axios from 'axios'
@@ -16,8 +16,6 @@ type PokemonType = {
   url: string;
   id: number;
 }
-
-
 
 type SearchPokedexStackParamList = {
   SearchPokedex: undefined,
@@ -92,8 +90,8 @@ const SearchPokemon = (props: PropsSearchPokedex) => {
                   )
                   }}
           keyExtractor={(pokemon, index) => pokemon.name + index}
-      />
-                  
+          style={styles.container}
+        />
     </View>
   )
 }

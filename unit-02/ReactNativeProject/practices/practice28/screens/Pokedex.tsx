@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, Image, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { FlatList } from 'react-native-gesture-handler';
@@ -50,24 +50,20 @@ const Pokedex = (props: PropsPokedex) => {
         const response = await axios.get(url);
         let list = response.data as PokedexType
 
-        const aux = list.results.map((pokemon) => {
-            const urlParts = pokemon.url.split('/');
-            const id = urlParts[urlParts.length - 2]; 
-            
-            return { ...pokemon, id: Number(id) }; 
-        });
+        const aux = list.results.map((pokemon) => ({
+            ...pokemon,
+            id: Number(pokemon.url.split('/').at(-2)), 
+        }));
 
         setPokedex(aux);
     }
 
 
     return (
-        <View style={styles.container}>
             <FlatList
                 data={pokedex}
                 renderItem={(pokemon) => {
                     return (
-                        <View key={pokemon.index} style={styles.item}>
                             <TouchableOpacity onPress={() => props.navigation.navigate
                                     ('Pokemon',
                                         {   name: pokemon.item.name, 
@@ -75,6 +71,7 @@ const Pokedex = (props: PropsPokedex) => {
                                         }
                                     )
                                 }
+                                style={styles.item}
                                 >
                                 <View>
                                     <Text style={styles.text}>{pokemon.item.name}</Text>
@@ -90,13 +87,11 @@ const Pokedex = (props: PropsPokedex) => {
                                     />
                                 </View>
                             </TouchableOpacity>
-                        </View>
                         )
                         }}
                 keyExtractor={(pokemon, index) => pokemon.name + index}
+                style={styles.container}
             />
-                
-        </View>
     )
 }
 

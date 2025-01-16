@@ -3,12 +3,15 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 20,
+
+        padding: 10,
         flex: 1,
         width: '100%',
         height: '100%',
+    },
+    secondContainer:{
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     mainImg:{
         marginTop: 20,
@@ -19,6 +22,7 @@ const styles = StyleSheet.create({
         borderWidth:3
     },
     title:{
+        textAlign: 'center',
         textTransform: 'uppercase',
         marginTop: 20,
         fontSize: 20,
@@ -26,8 +30,8 @@ const styles = StyleSheet.create({
         color: '#008080'
     },
     typeContainer: {
-        padding: 5,
-        paddingHorizontal: 10,
+        margin: 5,
+        marginHorizontal: 10,
     },
     typeText: {
         fontSize: 14,
@@ -35,33 +39,30 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
     },
-    statText: {
-        fontSize: 16,
-        color: '#333',
-        textAlign: 'center',
-    },
     spriteRow:{
-        borderWidth: 1,
-        borderColor: '#008080',
-        borderRadius: 4,
         marginTop:4
     },
     spriteContainer: {
         width: 80,
         height: 80,
         marginHorizontal: 10,
-        marginBottom: 10,
-        marginTop: 10,
+        marginBottom: 15,
+        marginTop: 5,
         justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden',
     },
     spriteImage: {
+        borderWidth: 2,
+        borderColor: '#008080',
+        borderRadius: 100,
         width: '100%',
         height: '100%',
         resizeMode: 'contain',
+        backgroundColor: '#f0f0f0',
     },
     statName: {
+        fontSize: 14,
         fontWeight: 'bold',
         color: '#008080',  
         textTransform: 'uppercase',
@@ -74,7 +75,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',      
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: 6,
         borderBottomWidth: 1,     
         borderBottomColor: '#DDD',
     },
