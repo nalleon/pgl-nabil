@@ -1,9 +1,9 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Alert, Button, StyleSheet, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState } from 'react'
 import {PERMISSIONS, PermissionStatus, check, request } from 'react-native-permissions'
 import Geolocation from 'react-native-geolocation-service'
-import { ScrollView } from 'react-native-gesture-handler'
+import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler'
 type Props = {}
 
 
@@ -21,14 +21,17 @@ const Practice30Screen = (props: Props) => {
      * Async function to request the location permissions
      */
     const requestLocationPermission = async () => {
-        let ps: PermissionStatus;
-        ps = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
-        if (ps == 'granted'){
-            return true;
-        } 
-
-        return false;
-    };
+      let ps: PermissionStatus;
+      ps = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+  
+      if (ps === 'granted') {
+          return true;
+      } else{
+        ps = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+        return ps === 'granted';
+      }
+  };
+  
 
     /**
      * Async function to save the current location to AsyncStorage
@@ -72,20 +75,22 @@ const Practice30Screen = (props: Props) => {
     };
   
     return (
-      <View style={{ flex: 1, padding: 20 }}>
-      <Button title="Save location" onPress={saveLocation} />
-      {location && (
-        <Text>{`Location: Lat ${location.latitude}, Long ${location.longitude}, Timestamp: ${location.timestamp}`}</Text>
-      )}
-      <Button title="Show history" onPress={showHistory} />
-      <ScrollView>
-        {history.map((item, index) => (
-          <Text key={index}>
-            {`Lat: ${item.latitude}, Long: ${item.longitude}, Timestamp: ${item.timestamp}`}
-          </Text>
-        ))}
-      </ScrollView>
-    </View>
+      <GestureHandlerRootView>
+        <View style={{ flex: 1, padding: 20 }}>
+          <Button title="Save location" onPress={saveLocation} />
+          {location && (
+            <Text>{`Location: Lat ${location.latitude}, Long ${location.longitude}, Timestamp: ${location.timestamp}`}</Text>
+          )}
+          <Button title="Show history" onPress={showHistory} />
+          <ScrollView>
+            {history.map((item, index) => (
+              <Text key={index}>
+                {`Lat: ${item.latitude}, Long: ${item.longitude}, Timestamp: ${item.timestamp}`}
+              </Text>
+            ))}
+          </ScrollView>
+      </View>
+    </GestureHandlerRootView>
   )
 }
 
