@@ -57,22 +57,16 @@ const ArticleDetail = (props: PropsArticle) => {
         }
     }
 
-    if (!content) {
-        return (
-            <View style={styles.loader}>
-            <ActivityIndicator size="large" color="#000" />
-            </View>
-        );
+    if (content) {
+        return <WebView source={{html: content}} style={styles.article}/>;
     }
-        return <WebView source={{html: content}} />;
-    };
+    
+};
 
 export default ArticleDetail;
 
 const styles = StyleSheet.create({
-    loader: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',   
+    article: {
+        fontSize: 89
     },
 });

@@ -27,7 +27,7 @@ const FeedScreen = (props: PropsFeed) => {
      * UseStates
      */
     const [articles, setArticles] = useState<Article[]>([]);
-    const [visited, setVisited] = useState([]);
+    const [visited, setVisited] = useState<string[]>([]);
 
     /**
      * Other properties
@@ -39,9 +39,33 @@ const FeedScreen = (props: PropsFeed) => {
      * UseEffect
      */
     useEffect(() => {
-        fetchFeed();
-      }, []);
+        const check = checkAsyncStorage();
+        if(!check){
+            fetchFeed();
+        }
+    }, []);
 
+
+    /**
+     * Function to check the asyncStorage
+     */
+
+    const checkAsyncStorage = async () =>{
+        const articles = await AsyncStorage.getItem('articles');
+        const visited  = await AsyncStorage.getItem('visited');
+
+        if(articles  && visited){
+            setArticles(JSON.parse(articles));
+            setVisited(JSON.parse(visited));
+            return true;
+        } else if(articles && !visited){
+            setArticles(JSON.parse(articles));
+            return true;
+        } else {
+            return false;
+        }
+
+    }
     /**
      * Function to fetch the articles from the feed
      */
@@ -62,17 +86,22 @@ const FeedScreen = (props: PropsFeed) => {
 
         } catch (error) {
             console.error('Error fetching articles:', error);
-            const cachedArticles = await AsyncStorage.getItem('articles');
+            const storageCache = await AsyncStorage.getItem('articles');
 
-            if (cachedArticles) {
-                setArticles(JSON.parse(cachedArticles));
+            if (storageCache) {
+                setArticles(JSON.parse(storageCache));
             }
         } 
     };
 
+    /***
+     * Function to handle the on press on an article
+     */
     const handlePress = async (article : Article) => {
-        setVisited({ ...visited, [article.id]: true });
-        await AsyncStorage.setItem(article.id, article.description || article.link);
+        let aux : string[] = visited;
+        aux.push(article.id);
+        setVisited([...aux]);
+        await AsyncStorage.setItem("visited", JSON.stringify(aux));
         props.navigation.navigate('ArticleDetail', { article });
     };
 
@@ -85,7 +114,7 @@ const FeedScreen = (props: PropsFeed) => {
                     <TouchableOpacity
                         onPress={() => handlePress(item)}
                         style={[
-                            visited[parseInt(item.id)] ? styles.visited : styles.articleContainer
+                            visited.includes(item.id) ? styles.visited : styles.articleContainer
                         ]}
                     >
                         <Text style={styles.title}>{item.title}</Text>
@@ -114,7 +143,6 @@ const styles = StyleSheet.create({
         color: '#333',
     },
     visited: {
-        backgroundColor: '#0d5d5d',
-        color: '#a2310d',
+        backgroundColor: '#e0e0e0',
     },
 })

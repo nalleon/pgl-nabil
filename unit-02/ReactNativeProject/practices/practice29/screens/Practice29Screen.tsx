@@ -25,8 +25,7 @@ const [message, setMessage] = useState<string>("");
         <View>
         <Text>TravelScreen</Text>
         <Button title="Permisos gps" onPress={showPosition}/>
-            <Text>            {message}
-¡</Text>
+            <Text>{message}</Text>
         </View>
     )
 }

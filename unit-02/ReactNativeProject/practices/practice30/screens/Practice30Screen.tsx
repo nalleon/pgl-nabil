@@ -30,7 +30,7 @@ const Practice30Screen = (props: Props) => {
         ps = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
         return ps === 'granted';
       }
-  };
+    };
   
 
     /**
@@ -46,17 +46,17 @@ const Practice30Screen = (props: Props) => {
       Geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-          const timestamp = new Date().toISOString();
+          const timestamp = new Date().toDateString();
           const newLocation = { latitude, longitude, timestamp };
 
           try {
 
-          const storedHistory = await AsyncStorage.getItem('location-history');
-          const parsedHistory = storedHistory ? JSON.parse(storedHistory) : [];
-          const updatedHistory = [...parsedHistory, newLocation];
+            const storedHistory = await AsyncStorage.getItem('location-history');
+            const parsedHistory = storedHistory ? JSON.parse(storedHistory) : [];
+            const updatedHistory = [...parsedHistory, newLocation];
 
-          await AsyncStorage.setItem('location-history', JSON.stringify(updatedHistory));
-          setLocation(newLocation);
+            await AsyncStorage.setItem('location-history', JSON.stringify(updatedHistory));
+            setLocation(newLocation);
 
           } catch (error) {
             console.error('Error saving location', error);
