@@ -8,7 +8,7 @@ type Props = {}
 
 type FeedStackParamList = {
     FeedScreen: undefined,
-    ArticleDetail: {article : Article},
+    ArticleDetail: undefined,
 }
 
 type Article = {
@@ -43,18 +43,16 @@ const Practice31StackNav = (props: Props) => {
         <Stack.Screen 
             name="ArticleDetail"  
             component={ArticleDetail} 
-            options={({ route }) => ({
-                title: `${route.params.article.title.toUpperCase()}`,
-                headerTitleAlign: 'center',
+            options={{ title: 'FeedScreen',  headerTitleAlign: 'center', 
                 headerStyle: {
                     backgroundColor: '#008080', 
                 },
                 headerTintColor: 'white', 
                 headerTitleStyle: {
                     fontWeight: 'bold',    
-                    fontSize: 20,      
+                    fontSize: 20,                
                 }
-            })} 
+            }}
         />
     </Stack.Navigator>
     )

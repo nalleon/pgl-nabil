@@ -6,6 +6,7 @@ import * as rssParser from 'react-native-rss-parser';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import Practice31StackNav from '../navigations/Practice31StackNav';
+import ArticleContext from '../context/ArticleContext';
 type Props = {}
 
 
@@ -14,7 +15,9 @@ const Practice31Screen = (props: Props) => {
   return (
     <GestureHandlerRootView>
         <NavigationContainer>
+          <ArticleContext>
             <Practice31StackNav/>
+          </ArticleContext>
         </NavigationContainer>
     </GestureHandlerRootView>
   )

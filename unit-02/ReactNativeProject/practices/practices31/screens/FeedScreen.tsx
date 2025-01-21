@@ -1,10 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import * as rssParser from 'react-native-rss-parser';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FlatList } from 'react-native-gesture-handler';
+import ArticleContext, { ArticlesContext } from '../context/ArticleContext';
 type Props = {}
 
 type Article = {
@@ -17,22 +18,18 @@ type Article = {
 
 type FeedStackParamList = {
     FeedScreen: undefined,
-    ArticleDetail: {article : Article},
+    ArticleDetail: undefined,
 }
 
 type PropsFeed = NativeStackScreenProps<FeedStackParamList, 'FeedScreen'>;
 
 const FeedScreen = (props: PropsFeed) => {
-    /**
-     * UseStates
-     */
-    const [articles, setArticles] = useState<Article[]>([]);
-    const [visited, setVisited] = useState<string[]>([]);
 
     /**
      * Other properties
      */
     const url = 'https://www.xataka.com/feedburner.xml';
+    const context = useContext(ArticlesContext);
 
 
     /**
@@ -55,41 +52,47 @@ const FeedScreen = (props: PropsFeed) => {
         const visited  = await AsyncStorage.getItem('visited');
 
         if(articles  && visited){
-            setArticles(JSON.parse(articles));
-            setVisited(JSON.parse(visited));
+            context.setArticles(JSON.parse(articles));
+            context.setVisited(JSON.parse(visited));
             return true;
         } else if(articles && !visited){
-            setArticles(JSON.parse(articles));
+            context.setArticles(JSON.parse(articles));
             return true;
         } else {
             return false;
         }
-
     }
+
     /**
      * Function to fetch the articles from the feed
      */
     const fetchFeed = async () => {
-    try {
-        const response = await axios.get(url);
-        const parsed = await rssParser.parse(response.data);
+        try {
+            const response = await axios.get(url);
+            const parsed = await rssParser.parse(response.data);
 
-        const articlesData = parsed.items.map((item) => ({
-            title: item.title,
-            link: item.links[0].url,
-            id: item.id,
-            description: item.description,
-        }));
+            const articlesData: Article[] = parsed.items.map((item): Article => ({
+                title: item.title || 'Untitled',
+                link: item.links?.[0]?.url || '#', 
+                id: item.id || 'Aa0',
+                description: item.description || 'No description available',
+            }));
 
-        setArticles(articlesData);
-        await AsyncStorage.setItem('articles', JSON.stringify(articlesData));
-
+            context.setArticles([...articlesData]);
+            context.saveArticlesAsyncStorage(articlesData);
+            
         } catch (error) {
             console.error('Error fetching articles:', error);
+
             const storageCache = await AsyncStorage.getItem('articles');
+            const storageCacheVisted = await AsyncStorage.getItem('vistedArticles');
 
             if (storageCache) {
-                setArticles(JSON.parse(storageCache));
+                context.setArticles(JSON.parse(storageCache));
+            } 
+
+            if (storageCacheVisted) {
+                context.setVisited(JSON.parse(storageCacheVisted));
             }
         } 
     };
@@ -98,23 +101,23 @@ const FeedScreen = (props: PropsFeed) => {
      * Function to handle the on press on an article
      */
     const handlePress = async (article : Article) => {
-        let aux : string[] = visited;
-        aux.push(article.id);
-        setVisited([...aux]);
-        await AsyncStorage.setItem("visited", JSON.stringify(aux));
-        props.navigation.navigate('ArticleDetail', { article });
+        const aux = [...context.visited, article.id];
+        context.setVisited(aux);
+        context.saveVisitedPagesAsyncStorage(aux);
+        context.setCurrentArticle({...article});
+        props.navigation.navigate('ArticleDetail');
     };
 
     return (
         <View style={styles.container}>
             <FlatList
-                data={articles}
-                keyExtractor={(item) => item.id}
+                data={context.articles}
+                keyExtractor={(item, index) => item.id+index}
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         onPress={() => handlePress(item)}
                         style={[
-                            visited.includes(item.id) ? styles.visited : styles.articleContainer
+                            context.visited.includes(item.id) ? styles.visited : styles.articleContainer
                         ]}
                     >
                         <Text style={styles.title}>{item.title}</Text>
@@ -145,4 +148,8 @@ const styles = StyleSheet.create({
     visited: {
         backgroundColor: '#e0e0e0',
     },
+    debug:{
+        color: 'red',
+        marginBottom: 10,
+    }
 })

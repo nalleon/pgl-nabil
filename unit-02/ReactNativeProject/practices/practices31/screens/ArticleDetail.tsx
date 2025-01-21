@@ -1,15 +1,16 @@
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import WebView from 'react-native-webview';
 import axios from 'axios';
+import { ArticlesContext } from '../context/ArticleContext';
 
 type Props = {}
 
 type FeedStackParamList = {
     FeedScreen: undefined,
-    ArticleDetail: {article : Article},
+    ArticleDetail: undefined,
 }
 type Article = {
     title: string;
@@ -20,17 +21,18 @@ type Article = {
 
 type PropsArticle = NativeStackScreenProps<FeedStackParamList, 'ArticleDetail'>;
 const ArticleDetail = (props: PropsArticle) => {
-    const { article } = props.route.params;
 
     const [content, setContent] = useState<string | null>(null);
 
+    const context = useContext(ArticlesContext);
+    
     useEffect(() => {
         loadContent();
     }, []);
 
     const loadContent = async () => {
         try {
-            const cachedContent = await getCache(article.link);
+            const cachedContent = await getCache(context.currentArticle.link);
             if (cachedContent) {
                 setContent(cachedContent);
                 return;
