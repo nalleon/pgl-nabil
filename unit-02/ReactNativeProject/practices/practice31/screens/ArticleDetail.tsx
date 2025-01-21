@@ -32,32 +32,12 @@ const ArticleDetail = (props: PropsArticle) => {
 
     const loadContent = async () => {
         try {
-            const cachedContent = await getCache(context.currentArticle.link);
-            if (cachedContent) {
-                setContent(cachedContent);
-                return;
-            }
-            
+            setContent(context.currentArticle.description);
         } catch (error) {
             console.error('Error loading content:', error);
         }
     };
 
-    async function getCache(uri:string){
-        try{
-            const response = await axios.get(uri);
-            const data = response.data;
-            AsyncStorage.setItem(uri, JSON.stringify(data))
-            return data;
-        }catch( error){
-            const localData = await AsyncStorage.getItem(uri);
-            if(localData){
-                return localData;
-            }
-
-            return null;
-        }
-    }
 
     if (content) {
         return <WebView source={{html: content}} style={styles.article}/>;

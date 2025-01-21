@@ -37,9 +37,40 @@ const FeedScreen = (props: PropsFeed) => {
      */
     useEffect(() => {
         const check = checkAsyncStorage();
+        console.log(check);
         if(!check){
+            /**
+             * Function to fetch the articles from the feed
+             */
+            const fetchFeed = async () => {
+                try {
+                    const response = await axios.get(url);
+                    if(response.status === 200){
+                        const parsed = await rssParser.parse(response.data);
+
+                        const articlesData: Article[] = parsed.items.map((item): Article => ({
+                            title: item.title || 'Untitled',
+                            link: item.links?.[0]?.url || '#', 
+                            id: item.id || 'Aa0',
+                            description: item.description || 'No description available',
+                        }));
+
+                        context.setArticles([...articlesData]);
+                        context.saveArticlesAsyncStorage(articlesData);
+                    }
+                } catch (error) {
+                    console.error('Error fetching articles:', error);
+
+                    const storageCache = await AsyncStorage.getItem('articles');
+                    const storageCacheVisted = await AsyncStorage.getItem('vistedArticles');
+                    context.setArticles(JSON.parse(storageCache ?? '[]') as Article[]);
+                    context.setVisited(JSON.parse(storageCacheVisted ?? '[]') as string[]);
+                    
+                } 
+            };
             fetchFeed();
         }
+
     }, []);
 
 
@@ -51,7 +82,7 @@ const FeedScreen = (props: PropsFeed) => {
         const articles = await AsyncStorage.getItem('articles');
         const visited  = await AsyncStorage.getItem('visited');
 
-        if(articles  && visited){
+        if(articles && visited){
             context.setArticles(JSON.parse(articles));
             context.setVisited(JSON.parse(visited));
             return true;
@@ -62,40 +93,6 @@ const FeedScreen = (props: PropsFeed) => {
             return false;
         }
     }
-
-    /**
-     * Function to fetch the articles from the feed
-     */
-    const fetchFeed = async () => {
-        try {
-            const response = await axios.get(url);
-            const parsed = await rssParser.parse(response.data);
-
-            const articlesData: Article[] = parsed.items.map((item): Article => ({
-                title: item.title || 'Untitled',
-                link: item.links?.[0]?.url || '#', 
-                id: item.id || 'Aa0',
-                description: item.description || 'No description available',
-            }));
-
-            context.setArticles([...articlesData]);
-            context.saveArticlesAsyncStorage(articlesData);
-            
-        } catch (error) {
-            console.error('Error fetching articles:', error);
-
-            const storageCache = await AsyncStorage.getItem('articles');
-            const storageCacheVisted = await AsyncStorage.getItem('vistedArticles');
-
-            if (storageCache) {
-                context.setArticles(JSON.parse(storageCache));
-            } 
-
-            if (storageCacheVisted) {
-                context.setVisited(JSON.parse(storageCacheVisted));
-            }
-        } 
-    };
 
     /***
      * Function to handle the on press on an article
