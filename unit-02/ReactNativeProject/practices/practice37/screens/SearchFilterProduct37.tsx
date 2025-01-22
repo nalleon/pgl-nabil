@@ -19,7 +19,7 @@ type Category = {
     id: number,
     name: string,
 }
-const SearchFilterProduct36 = (props: Props) => {
+const SearchFilterProduct37 = (props: Props) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [subName, setSubName] = useState<string>(""); 
     const [minPrice, setMinPrice] = useState<number>(); 
@@ -135,7 +135,7 @@ const SearchFilterProduct36 = (props: Props) => {
     )
 }
 
-export default SearchFilterProduct36
+export default SearchFilterProduct37
 
 const styles = StyleSheet.create({
     mainContainer:{

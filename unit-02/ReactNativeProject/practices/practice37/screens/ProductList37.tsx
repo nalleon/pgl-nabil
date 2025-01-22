@@ -17,7 +17,7 @@ type Category = {
     id: number,
     name: string,
 }
-const ProductList36 = (props: Props) => {
+const ProductList37 = (props: Props) => {
 
     const [products, setProducts] = useState<Product[]>({} as Product[]);
     const [name, setName] = useState<string>("");
@@ -150,7 +150,7 @@ const ProductList36 = (props: Props) => {
     )
 }
 
-export default ProductList36
+export default ProductList37
 
 const styles = StyleSheet.create({
     mainContainer:{

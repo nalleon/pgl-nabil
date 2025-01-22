@@ -5,11 +5,25 @@ import { FlatList, Switch, TextInput } from 'react-native-gesture-handler';
 
 type Props = {}
 
-type Category = {
+type CategoryCreate = {
     name: string,
 }
 
-const CategoryList36 = (props: Props) => {
+type Product = {
+    name: string,
+    price: number,
+    stock: number,
+    discontinued: boolean,
+    category: Category,
+}
+
+type Category = {
+    id: number,
+    name: string,
+    products: Product[],
+}
+
+const CategoryList37 = (props: Props) => {
 
     const [categories, setCategories] = useState<Category[]>({} as Category[]);
     const [name, setName] = useState<string>("");
@@ -33,7 +47,7 @@ const CategoryList36 = (props: Props) => {
                 return;
             }
     
-            const newProduct : Category = {
+            const newProduct : CategoryCreate = {
                 name: name,
             }
     
@@ -58,12 +72,14 @@ const CategoryList36 = (props: Props) => {
                 renderItem={({item}) => (
                     <View style={styles.rowContainer}>
                     <Text style={styles.rowText}>{item.name}</Text>
+                    <Text style={styles.rowText}>{JSON.stringify(item.products.map(product => product.name))}</Text>
                 </View>
                 )}
                 keyExtractor={(item, index) => item.name+ "_" + index}
                 ListHeaderComponent={
                     <View style={styles.headerContainer}>
                         <Text style={styles.headerText}>Name</Text>
+                        <Text style={styles.headerText}>Products</Text>
                     </View>
                 }
                 />
@@ -72,7 +88,7 @@ const CategoryList36 = (props: Props) => {
     )
 }
 
-export default CategoryList36
+export default CategoryList37
 
 const styles = StyleSheet.create({
     mainContainer:{
