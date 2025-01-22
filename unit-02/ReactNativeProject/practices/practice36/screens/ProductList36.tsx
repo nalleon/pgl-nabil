@@ -12,7 +12,7 @@ type Product = {
     discontinued: boolean,
 }
 
-const ProductList = (props: Props) => {
+const ProductList36 = (props: Props) => {
 
     const [products, setProducts] = useState<Product[]>({} as Product[]);
     const [name, setName] = useState<string>("");
@@ -101,8 +101,8 @@ const ProductList = (props: Props) => {
                 keyExtractor={(item, index) => item.name+ "_" + index}
                 ListHeaderComponent={
                     <View style={styles.headerContainer}>
-                        <Text style={styles.headerText}>Name</Text>
-                        <Text style={styles.headerText}>Price</Text>
+                        <Text style={styles.headerText}>Nombre</Text>
+                        <Text style={styles.headerText}>Precio</Text>
                         <Text style={styles.headerText}>Stock</Text>
                         <Text style={styles.headerText}>Discontinued</Text>
                     </View>
@@ -113,7 +113,7 @@ const ProductList = (props: Props) => {
     )
 }
 
-export default ProductList
+export default ProductList36
 
 const styles = StyleSheet.create({
     mainContainer:{
