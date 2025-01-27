@@ -12,6 +12,8 @@ import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
 } from 'react-native';
+import DrawerNav from './src/navigation/DrawerNav';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 
@@ -19,7 +21,9 @@ function App(): React.JSX.Element {
   
   return (
     <SafeAreaView style={{flex:1}}>
-      
+      <NavigationContainer>
+        <DrawerNav/>
+      </NavigationContainer>
     </SafeAreaView>
   );
 }
