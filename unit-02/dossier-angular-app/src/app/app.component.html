@@ -1,0 +1,11 @@
+<main>
+  {{nombre + " " + apellido}}
+  <input type="number" #inputdato placeholder="pon un numero"/>
+  <button (click)="ejecutar(inputdato.valueAsNumber)" type="button">Click me!</button>
+  <br>
+    <ul>
+      <li **ngFor="let item of tableResult">
+        {{item}}
+      </li>
+    </ul>
+</main>
