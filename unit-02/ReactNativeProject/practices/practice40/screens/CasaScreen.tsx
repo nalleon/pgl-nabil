@@ -2,27 +2,34 @@ import { Button, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { CasaRepository } from '../data/Database';
+import { Casa } from '../data/entities/Casa';
 
 type Props = {}
-type Casa = {
-  refCastatal: string,
-  metros: number,
-}
+
 const CasaScreen = (props: Props) => {
-      const [refCastatal, setRefCastatal] = useState<string>("");
-      const [metros, setMetros] = useState<number>(0);
+    const [refCastatal, setRefCastatal] = useState<string>("");
+    const [metros, setMetros] = useState<number>(0);
 
         const save = async () => {
             if(refCastatal.trim() === "" || metros <= 0){
                 return;
             }
             
-            const casa : Casa = {
-                refCastatal: refCastatal,
-                metros: metros,
-            }
+            const casa = new Casa ();
+            casa.refCastatal = refCastatal;
+            casa.metros = metros;
+
+
+            const casa2 = new Casa ();
+            casa.refCastatal = refCastatal+2;
+            casa.metros = metros+1;
             
-            await CasaRepository.save(casa);
+            
+            let casas = [];
+            casas.push(casa);
+            casas.push(casa2);
+
+            await CasaRepository.saveAtOnce(casas);
             setRefCastatal("");
             setMetros(0);
         }
