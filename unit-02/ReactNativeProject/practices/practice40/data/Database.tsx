@@ -15,10 +15,14 @@ export const dataSource = new DataSource({
 
 
 export const CasaRepository = dataSource.getRepository(Casa).extend({
-    async saveAtOnce(casas: Casa[]): Promise<void> {
+    async saveAtOnce(casas: Casa[]) {
         await dataSource.transaction(async (transactionalEntityManager) => {
             for (const casa of casas) {
-            await transactionalEntityManager.getRepository(Casa).save(casa);
+                try{
+                    await transactionalEntityManager.getRepository(Casa).save(casa);
+                } catch (error){
+                    console.error(error);
+                }
             }
         });
         },
