@@ -483,10 +483,7 @@ const BoxContainer07 = () => {
 
 
 
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
+
 
 ***
 </br>
@@ -1227,10 +1224,7 @@ const Practice13Screen = (props: Props) => {
 
 
 
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
+
 
 ***
 </br>
@@ -1410,10 +1404,7 @@ const Practice16Screen = (props: Props) => {
 
 
 
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
+
 
 ***
 </br>
@@ -1535,10 +1526,7 @@ const Practice17Screen = (props: Props) => {
 
 
 
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
+
 
 ***
 </br>
@@ -1758,10 +1746,7 @@ const ProfileScreen = (props: PropsProfile) => {
 ```
 
 
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
+
 
 ***
 </br>
@@ -1865,10 +1850,7 @@ const ThirdScreen21 = (props: PropsProfile) => {
 
 
 
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
+
 
 ***
 </br>
@@ -1941,13 +1923,6 @@ const SecondScreen22 = (props: PropsProfile) => {
 }
 ```
 
-
-
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
-
 ***
 </br>
 
@@ -1984,14 +1959,289 @@ correspondiente setter.
 
 ```tsx
 
+type TaskListContextType ={
+    tasks: Task[],
+    setTasks: (tasks: Task[]) => void,
+    nextID: number,
+    setNextID: (num : number) => void
+}
+
+type Task = {
+    id: number,
+    content: string,
+    completed: boolean,
+}
+
+
+
+export const TasksContext = createContext<TaskListContextType >({} as TaskListContextType );
+
+const TaskListContext = (props: Props) => {
+    const [tasks, setTasks] = useState<Task[]>([]);
+    const [nextID, setNextID] = useState(1)
+
+    const contextValues: TaskListContextType  = {
+        tasks,
+        setTasks,
+        nextID,
+        setNextID
+    }
+
+    
+    return (
+        <TasksContext.Provider value={contextValues}>
+            {props.children}
+        </TasksContext.Provider>
+    )
+}
+
+type PrincipalStackParamList = {
+    ToDoList: undefined,
+    Task: {id : number},
+}
+
+const Stack = createNativeStackNavigator<PrincipalStackParamList>();
+
+const TaskStack = (props: Props) => {
+    return (
+        <Stack.Navigator
+            screenOptions={{contentStyle:{backgroundColor:'white'}}}
+        >
+            <Stack.Screen 
+                name="ToDoList" 
+                component={ToDoListScreen} 
+                options={{ title: 'Tasks',  headerTitleAlign: 'center', 
+                    headerStyle: {
+                        backgroundColor: '#e3c181', 
+                    },
+                    headerTintColor: 'white', 
+                    headerTitleStyle: {
+                        fontWeight: 'bold',    
+                        fontSize: 20,                
+                    }
+                }}
+            />
+            
+            <Stack.Screen 
+                name="Task" 
+                component={TaskScreen} 
+                options={({ route }) => ({
+                    title: `Editing task ${route.params.id}`,  headerTitleAlign: 'center',
+                    headerStyle: {
+                        backgroundColor: '#e3c181', 
+                    },
+                    headerTintColor: 'white', 
+                    headerTitleStyle: {
+                        fontWeight: 'bold',    
+                        fontSize: 20,                
+                    }
+                })} 
+            />
+        </Stack.Navigator>
+    )
+}
+
+type PrincipalStackParamList = {
+    ToDoList: undefined,
+    Task: {id : number},
+}
+
+type Task = {
+    id: number,
+    content: string,
+    completed: boolean,
+}
+
+type PropsTask = NativeStackScreenProps<PrincipalStackParamList, 'Task'>;
+
+
+const TaskScreen = (props: PropsTask) => {
+    const [taskData, setTaskData] = useState<Task>({} as Task);
+    const context = useContext(TasksContext);
+
+    useEffect(() => {
+        getSelectedTask(props.route.params.id);
+    }, [props.route.params.id]);
+
+    function getSelectedTask(id:number){
+        const task = context.tasks.find(task => task.id === id); 
+
+        if (task) {
+            setTaskData(task); 
+        }
+    }
+
+    function updateTask(value: string|boolean, field: keyof Task){
+        setTaskData(
+            {
+                ...taskData,
+                [field]: value
+            }
+        );
+    }
+
+    function handleOnPress(){
+        if (!taskData.content || taskData.content.trim() === '') {
+            const task = context.tasks.find(task => task.id === props.route.params.id);
+
+            if(task){
+                let auxList = context.tasks;
+                auxList = auxList.filter(item => item.id!== task.id);
+                context.setTasks([...auxList]);
+            }
+
+            props.navigation.goBack();
+            return;
+        }
+
+        let found = false;
+        let arrPos = 0;
+        let auxTaskList = [...context.tasks];
+ 
+        while (!found && arrPos <= auxTaskList.length-1){
+            if(auxTaskList[arrPos].id === taskData.id){
+                auxTaskList[arrPos] = taskData;
+                found = true;
+                break;
+            }
+            arrPos++;
+        }
+
+        if(!found){
+            auxTaskList.push(taskData);
+        }
+
+        context.setTasks([...auxTaskList]);
+        props.navigation.goBack();
+    }
+
+
+    return (
+        <View style={{flex:1}}>
+            <View style={styles.active}>
+                <Text style={styles.activeText}>Completed:</Text>
+                    <Switch
+                        onValueChange={()=> updateTask(!taskData.completed, 'completed')}
+                        value={taskData.completed}
+                    />
+            </View>
+
+            <View>
+                <TextInput placeholder='Task content here' 
+                value={taskData.content}
+                onChangeText={(e) => updateTask(e, 'content')}/>
+            </View>
+            
+            <TouchableOpacity onPress={handleOnPress} style={styles.container}>
+                <Text style={styles.btntext}>Finish editing</Text>
+            </TouchableOpacity>
+        </View>
+    )
+}
+
+type PrincipalStackParamList = {
+    ToDoList: undefined,
+    Task: {id : number},
+}
+
+type Task = {
+    id: number,
+    content: string,
+    completed: boolean,
+}
+
+type PropsToDoList = NativeStackScreenProps<PrincipalStackParamList, 'ToDoList'>;
+
+
+const ToDoListScreen = (props: PropsToDoList) => {
+
+    const context = useContext(TasksContext);
+
+    function createTask (){
+        const newTask = {
+            id: context.nextID,
+            content: '',
+            completed: false,
+        };
+    
+        context.setTasks([...context.tasks, newTask]);
+        context.setNextID(context.nextID + 1); 
+    
+        props.navigation.navigate('Task', { id: newTask.id });
+    }
+    
+    function changeStatus(taskId : number){
+        let updatedList = context.tasks;
+
+        for (let i = 0; i < updatedList.length; i++){
+            if (updatedList[i].id === taskId){
+                updatedList[i].completed =!updatedList[i].completed;
+                break;
+            }
+        }
+
+        context.setTasks([...updatedList]);
+    }
+
+    function deleteTask(taskId : number){
+        let updatedList = [];
+
+        for (let i = 0; i < context.tasks.length; i++){
+            if (context.tasks[i].id !== taskId){
+                updatedList.push(context.tasks[i]);
+            }
+        }
+
+        context.setTasks(updatedList);
+    }
+
+    return (
+        <View style={{flex:1}}>            
+            <View>
+                <FlatList
+                    data={context.tasks}
+                    renderItem={(task) => {
+                    return (
+                        <View key={task.index} style={styles.task}>
+
+                            <TouchableOpacity onPress={() => changeStatus(task.item.id)} style={styles.taskLeftIcon}>
+                                <Icon name={!task.item.completed ? `square-outline` : `checkbox-outline`} size={25} color={'#e3c181'}></Icon>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={() => props.navigation.navigate('Task', {id: task.item.id})} style={styles.taskContent}>
+                                <Text style={task.item.completed ? styles.taskTextCompleted : styles.taskText}>{task.item.content}</Text>
+                            </TouchableOpacity>
+                            
+                            <View style={styles.taskActions}>
+                                <TouchableOpacity onPress={() => props.navigation.navigate('Task', {id: task.item.id})} style={styles.taskActionIcon}>
+                                    <Icon name='pencil' size={25} color={'grey'}></Icon>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => deleteTask(task.item.id)} style={styles.taskActionIcon}>
+                                    <Icon name='trash' size={25} color={'grey'} />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        )
+                        }}
+                    keyExtractor={(task, index) => task.content + index}
+                />
+            </View>
+            {
+                /**<View>
+                    <Text>{JSON.stringify(context.tasks)}</Text>
+                </View>*/
+            }
+            <View style={styles.container}>
+                <TouchableOpacity onPress={() => createTask()}>
+                    <Text style={styles.btnText}>+</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    )
+}
+
 ```
-
-
-
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
 
 ***
 </br>
@@ -2014,14 +2264,98 @@ Pon en la carpeta navigation tanto MenuLateral.tsx como StackNavigation.tsx
 
 ```tsx
 
+const Drawer = createDrawerNavigator();
+
+const SideMenu24 = (props: Props) => {
+    return (
+        <Drawer.Navigator
+        screenOptions={{
+            headerStyle: { backgroundColor: '#008080' },
+            headerTintColor: 'white',
+            drawerActiveTintColor: '#1E90FF',
+        }}
+        >
+            <Drawer.Screen 
+                name="StackNavigation" 
+                component={StackNavigation24} 
+                options={{ title: 'StackNav' }} 
+            />
+            <Drawer.Screen 
+                name="AboutScreen" 
+                component={AboutScreen} 
+                options={{ title: 'About me' }} 
+            />
+        </Drawer.Navigator>
+    )
+}
+
+export type PrincipalStackParamList = {
+    LinksScreen: undefined;
+    CalcScreen: undefined;
+    ToDoScreen : undefined;
+};
+    
+const Stack = createNativeStackNavigator<PrincipalStackParamList>();
+
+const StackNavigation24 = (props: Props) => {
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerStyle: { backgroundColor: '#008080' },
+                headerTintColor: 'white',
+                headerTitleAlign: 'center',
+            }}
+            >
+            <Stack.Screen 
+                name="LinksScreen" 
+                component={LinksScreen24} 
+                options={{ title: 'Links' }} 
+            />
+            <Stack.Screen 
+                name="CalcScreen" 
+                component={Practice10Screen} 
+                options={{ title: 'Calc' }} 
+            />
+            
+            <Stack.Screen 
+                name="ToDoScreen" 
+                component={Practice23Screen} 
+                options={{ title: 'To Do List' }} 
+            />
+        </Stack.Navigator>
+    )
+}
+
+const AboutScreen = (props: Props) => {
+    return (
+            <View style={styles.container}>
+                <Text style={styles.title}>About me</Text>
+                <Text style={styles.text}>Name: Nabil León Álvarez</Text>
+                <Text style={styles.text}>Class: 2DAM</Text>
+            </View>
+    )
+}
+
+
+type Props = NativeStackScreenProps<PrincipalStackParamList, 'LinksScreen'>;
+const LinksScreen24 = (props: Props) => {
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>Link to other activities</Text>
+            <Button 
+                title="Calc" 
+                onPress={() => props.navigation.navigate('CalcScreen')} 
+            />
+            <Button 
+                title="To Do List" 
+                onPress={() => props.navigation.navigate('ToDoScreen')} 
+            />
+            
+        </View>
+    )
+}
 ```
 
-
-
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
 
 ***
 </br>
@@ -2030,24 +2364,90 @@ Pon en la carpeta navigation tanto MenuLateral.tsx como StackNavigation.tsx
 ### Práctica 25
 
 > 📂
-> Reproducir el ejemplo anterior. Girar la pantalla ¿ quéda el menú visible ?
+> Reproducir el ejemplo anterior. Girar la pantalla.
 Cambiar el color de fondo del menú lateral y poner que tenga un ancho de 200. Prueba a
-comentar y descomentar la línea del drawerContent ¿ Cuándo lo activas siguen
-mostrándose los enlaces a las pantallas ?
-Vamos a personalizar el menú.
+comentar y descomentar la línea del drawerContent. Vamos a personalizar el menú.
 
 - Código:
 
 ```tsx
 
+const Drawer = createDrawerNavigator();
+
+
+const Practice25SideMenu = (props :Props) => {
+    const dimensions  = Dimensions.get("window");
+
+    function customDrawer(props: DrawerContentComponentProps){
+        return  (
+            <DrawerContentScrollView {...props}>
+                <View>
+                    <Text>Pets</Text>
+                </View>
+                <DrawerItem label={"Home"} 
+                    onPress={
+                        () => props.navigation.navigate('Home')
+                    }
+                />
+                <DrawerItem label={"Hello World!"} 
+                    onPress={
+                        () => props.navigation.navigate('HelloWorld')
+                    }
+                />
+                <DrawerItem label={"Second Screen"} 
+                    onPress={
+                        () => props.navigation.navigate('SecondScreen')
+                    }
+                />
+            </DrawerContentScrollView>
+        )
+    }
+
+    return (
+        <Drawer.Navigator 
+            
+            screenOptions={{
+                drawerStyle:{
+                    backgroundColor: "#008080",
+                    width: 250,
+                },
+                drawerType: dimensions.width >= 768 ? "permanent" : "front",
+            }}
+
+            drawerContent={(props) => customDrawer(props)}>
+            <Drawer.Screen name="HelloWorld" options={{title: 'Hello World!'}} component={HelloWorldScreen} />
+            <Drawer.Screen name="SecondScreen"  options={{title: 'Second Screen'}} component={SecondScreen25} />
+            <Drawer.Screen name="Home"  options={{title: 'Home'}} component={StackNavigation25} />
+        </Drawer.Navigator>
+    )
+}
+
+export type PrincipalStackParamList = {
+    HomeScreen25: undefined;
+};
+    
+const Stack = createNativeStackNavigator<PrincipalStackParamList>();
+
+const StackNavigation25 = (props: Props) => {
+    return (
+        <Stack.Navigator
+        screenOptions={{
+            headerStyle: { backgroundColor: '#008080' },
+            headerTintColor: 'white',
+            headerTitleAlign: 'center',
+        }}
+        >
+        <Stack.Screen 
+            name="HomeScreen25" 
+            component={HomeScreen25} 
+            options={{ title: 'Home' }} 
+        />
+
+        </Stack.Navigator>
+    )
+}
 ```
 
-
-
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
 
 ***
 </br>
@@ -2061,15 +2461,157 @@ Vamos a personalizar el menú.
 - Código:
 
 ```tsx
+type Props = {
+    children: React.ReactNode;
+}
 
+type PetListContextType ={
+    cats: Pet[],
+    dogs: Pet[],
+    setCats: (cats: Pet[]) => void,
+    setDogs: (dogs: Pet[]) => void,
+}
+
+type Pet = {
+    breed: string,
+    img: string,
+    description: string,
+}
+
+
+export const PetsContext = createContext<PetListContextType >({} as PetListContextType );
+
+const Practice26Context = (props: Props) => {
+    const defaultCats: Pet[] = [
+        {
+        breed: 'Persian',
+        img: 'https://www.thesprucepets.com/thmb/qP6SYSoepyKZaDzJKcRDPB1yDV4=/960x0/filters:no_upscale():max_bytes(150000):strip_icc()/50122757_393198351489429_2336461074070557448_n-5c4cf69f46e0fb00014a2b9f.jpg',
+        description: 'description',
+        },
+        {
+        breed: 'Siamese',
+        img: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.thesprucepets.com%2Fthmb%2F_nHqoWVVwDSkPlqKI9gbDay5jI0%3D%2F4608x3072%2Ffilters%3Ano_upscale()%3Amax_bytes(150000)%3Astrip_icc()%2Fclose-up-portrait-of-cat-901825714-5c8bf4a9c9e77c00010e967d.jpg&f=1&nofb=1&ipt=48469c26499d981a3a3386736c026fbe223e7526d677f817a482015fe000a63d&ipo=images',
+        description: 'description.',
+        },
+    ];
+    
+    const defaultDogs: Pet[] = [
+        {
+        breed: 'Cocker Spaniel',
+        img: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.bNi4LCFptV9eTLTSon8O5AHaFt%26pid%3DApi&f=1&ipt=3be1716aeb3370eaeac6166f37c1c27c990851b77d5785935888ae2a2182570e&ipo=images',
+        description: 'description',
+        },
+        {
+        breed: 'Labrador Retriever',
+        img: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.thesprucepets.com%2Fthmb%2FET8IKk28ByTK3zgXiKMxu1OlKH0%3D%2F4984x3323%2Ffilters%3Ano_upscale()%3Amax_bytes(150000)%3Astrip_icc()%2F1_BlackPuppy-5ba50070c9e77c0082221c54.jpg&f=1&nofb=1&ipt=5456579b76b4fbfbfa619da87faf69f91376dc4bd43e724f74ffb41d5103d509&ipo=images',
+        description: 'description',
+        },
+    ];
+    
+    const [cats, setCats] = useState<Pet[]>(defaultCats);
+    const [dogs, setDogs] = useState<Pet[]>(defaultDogs);
+
+
+    const contextValues: PetListContextType  = {
+        cats: cats,
+        dogs: dogs,
+        setCats: setCats,
+        setDogs: setDogs
+    }
+
+    
+    return (
+        <PetsContext.Provider value={contextValues}>
+            {props.children}
+        </PetsContext.Provider>
+    )
+}
+
+export type PrincipalStackParamList = {
+  PetScreen: undefined;
+  Breed: {name : string},
+};
+
+const Stack = createNativeStackNavigator<PrincipalStackParamList>();
+
+const StackNav26 = (props: Props) => {
+  return (
+    <Stack.Navigator
+    screenOptions={{
+        headerStyle: { backgroundColor: '#008080' },
+        headerTintColor: 'white',
+        headerTitleAlign: 'center',
+    }}
+    >
+    <Stack.Screen 
+        name="PetScreen" 
+        component={PetScreen} 
+        options={{ title: 'Home' }} 
+        
+    />
+
+    </Stack.Navigator>
+  )
+}
+
+type PrincipalStackParamList = {
+    SelectBreed: { category: string }; 
+    Pet: { category: string, breed: string };
+};
+
+type PropsSelectBreedScreen = NativeStackScreenProps<PrincipalStackParamList, 'SelectBreed'>;
+
+const BreedScreen = (props: PropsSelectBreedScreen) => {
+    const context = useContext(PetsContext);
+    const { category } = props.route.params;
+
+    const pets = category === 'dogs' ? context.dogs : context.cats;
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}> Select breed {category === 'cats' ? 'gatos' : 'perros'}</Text>
+
+            {pets.map((pet, index) => (
+                <TouchableOpacity key={index}
+                    onPress={() => props.navigation.navigate('Pet', { category, breed: pet.breed })}
+                    style={styles.breedItem}>
+                <Text>{pet.breed}</Text>
+                </TouchableOpacity>
+            ))}
+        </View>
+    )
+}
+
+type PrincipalStackParamList = {
+    Cats: { category: string }; 
+    Dogs: { category: string };
+};
+
+type PetScreenProps = DrawerScreenProps<PrincipalStackParamList, 'Cats' | 'Dogs'>;
+
+const PetScreen = (props: PetScreenProps) => {
+    const context = useContext(PetsContext);
+    const { category } = props.route.params;
+
+    const pets = category === 'dogs' ? context.dogs : context.cats;
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}> {category === 'dogs' ? 'Dogs' : 'Cats'}</Text>
+                <FlatList
+                    data={pets}
+                    renderItem={({ item }) => (
+                        <View style={styles.petCard}>
+                            <Image source={{ uri: item.img }} style={styles.petImage} />
+                            <Text style={styles.petText}>{item.breed}</Text>
+                            <Text>{item.description}</Text>
+                        </View>
+                    )}
+                    keyExtractor={(item) => item.breed}
+                />
+
+        </View>
+    ) 
+}
 ```
-
-
-
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
 
 ***
 </br>
@@ -2086,15 +2628,57 @@ La otra tab tendrá el About.tsx que mostrará tu nombre, curso, aficione
 - Código:
 
 ```tsx
+export type PrincipalStackParamList = {
+    CalcScreen: undefined;
+};
+    
+const Stack = createNativeStackNavigator<PrincipalStackParamList>();
 
+
+const StackNav27 = (props: Props) => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="CalcScreen" component={Practice10Screen} />
+        </Stack.Navigator>
+    )
+}
+
+
+const Tab = createBottomTabNavigator();
+
+const TabNav27 = (props: Props) => {
+    return (
+            <Tab.Navigator 
+                screenOptions={{headerShown:false}}>
+
+                <Tab.Screen name='Operations' component={StackNav27}
+                    options={ {tabBarIcon: ({focused}) => 
+                        <Icon name={(focused) ? 'calculator' : 'calculator-outline'} size={30}/>
+                    }
+                }
+                
+                />
+                <Tab.Screen name='About' component={About27}
+                    options={ {tabBarIcon: ({focused}) => 
+                            <Icon name={(focused) ? 'person' : 'person-outline'} size={30}/>
+                        }
+                    }
+                />
+
+            </Tab.Navigator>
+    )
+}
+
+const About27 = (props: Props) => {
+  return (
+        <View style={styles.container}>
+                      <Text style={styles.title}>About me</Text>
+                      <Text style={styles.text}>Name: Nabil León Álvarez</Text>
+                      <Text style={styles.text}>Class: 2DAM</Text>
+      </View>
+  )
+}
 ```
-
-
-
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
 
 ***
 </br>
@@ -2120,14 +2704,464 @@ obtenida nos lleva a la Screen con todos los datos del pokemon.
 - Código:
 
 ```tsx
+const Tab = createBottomTabNavigator();
 
+
+const TabNav28 = (props: Props) => {
+
+    const { width, height} = useWindowDimensions();
+    const isHorizontal = width > height;
+    return (
+        <Tab.Navigator
+            screenOptions={{
+                headerShown:false,
+                tabBarShowLabel: false,
+                tabBarPosition: isHorizontal ? 'left' : 'bottom',
+                tabBarVariant: isHorizontal ? 'material' : 'uikit',
+                tabBarLabelPosition: 'below-icon'
+            }}>   
+                
+            <Tab.Screen name='Pokedex' component={StackNavTabPokedex}
+                options={ {tabBarIcon: ({focused}) => 
+                    <Icon name={(focused) ? 'list' : 'list-outline'} size={30}/>
+                }
+            }/>
+            
+            <Tab.Screen name='Search' component={StackNavTabSearch}
+                options={ {tabBarIcon: ({focused}) => 
+                    <Icon name={(focused) ? 'search' : 'search-outline'} size={30}/>
+                }
+            }/>
+                
+        </Tab.Navigator>
+    )
+}
+
+type PokedexStackParamList = {
+    Pokedex: undefined,
+    Pokemon: {name : string, url: string, id : number},
+}
+
+const Stack = createNativeStackNavigator<PokedexStackParamList>();
+
+const StackNavTabPokedex = (props: Props) => {
+    return (
+        <Stack.Navigator
+            screenOptions={{contentStyle:{backgroundColor:'white'}}}
+        >
+            <Stack.Screen 
+                name="Pokedex" 
+                component={Pokedex} 
+                options={{ title: 'Pokedex',  headerTitleAlign: 'center', 
+                    headerStyle: {
+                        backgroundColor: '#008080', 
+                    },
+                    headerTintColor: 'white', 
+                    headerTitleStyle: {
+                        fontWeight: 'bold',    
+                        fontSize: 20,                
+                    }
+                }}
+            />
+            
+            <Stack.Screen 
+                name="Pokemon" 
+                component={Pokemon} 
+                options={({ route }) => ({
+                    title: `${route.params.name.toUpperCase()}`,
+                    headerTitleAlign: 'center',
+                    headerStyle: {
+                        backgroundColor: '#008080', 
+                    },
+                    headerTintColor: 'white', 
+                    headerTitleStyle: {
+                        fontWeight: 'bold',    
+                        fontSize: 20,      
+                    }
+                })} 
+            />
+        </Stack.Navigator>
+    )
+}
+
+
+type SearchPokedexStackParamList = {
+    SearchPokedex: undefined,
+    Pokemon: {name : string},
+}
+
+const Stack = createNativeStackNavigator<SearchPokedexStackParamList>();
+
+const StackNavTabSearch = (props: Props) => {
+    return (
+        <Stack.Navigator
+            screenOptions={{contentStyle:{backgroundColor:'white'}}}
+        >
+            <Stack.Screen 
+                name="SearchPokedex" 
+                component={SearchPokemon} 
+                options={{ title: 'Search in Pokedex',  headerTitleAlign: 'center', 
+                    headerStyle: {
+                        backgroundColor: '#008080', 
+                    },
+                    headerTintColor: 'white', 
+                    headerTitleStyle: {
+                        fontWeight: 'bold',    
+                        fontSize: 20,                
+                    }
+                }}
+            />
+            
+            <Stack.Screen 
+                name="Pokemon" 
+                component={Pokemon} 
+                options={({ route }) => ({
+                    title: `${route.params.name.toUpperCase()}`,  headerTitleAlign: 'center',
+                    headerStyle: {
+                        backgroundColor: '#008080', 
+                    },
+                    headerTintColor: 'white', 
+                    headerTitleStyle: {
+                        fontWeight: 'bold',    
+                        fontSize: 20,                
+                    }
+                })} 
+            />
+        </Stack.Navigator>
+    )
+}
+
+type PokedexType = {
+    results: PokemonType[];
+}
+
+type PokemonType = {
+    name: string;
+    url: string;
+    id: number;
+}
+
+type PokedexStackParamList = {
+    Pokedex: undefined,
+    Pokemon: {name : string, url : string, id : number},
+}
+
+type PropsPokedex = NativeStackScreenProps<PokedexStackParamList, 'Pokedex'>;
+
+
+
+const Pokedex = (props: PropsPokedex) => {
+    /**
+     * UseStates
+     */
+    const [pokedex, setPokedex] = useState<PokemonType[]>([]);
+
+    /**
+     * Other properties
+     */
+    const uri: string = "https://pokeapi.co/api/v2/pokemon?offset=151&limit=99"
+
+    useEffect(() => {
+        fetchPokemon(uri)
+    }, []);
+
+    /**
+     * Async function to fetch list of pokemon from the api
+     * @param url of the api
+     */
+    async function fetchPokemon(url: string) {
+        const response = await axios.get(url);
+        let list = response.data as PokedexType
+
+        const aux = list.results.map((pokemon) => ({
+            ...pokemon,
+            id: Number(pokemon.url.split('/').at(-2)), 
+        }));
+
+        setPokedex(aux);
+    }
+
+
+    return (
+            <FlatList
+                data={pokedex}
+                renderItem={(pokemon) => {
+                    return (
+                            <TouchableOpacity onPress={() => props.navigation.navigate
+                                    ('Pokemon',
+                                        {   name: pokemon.item.name, 
+                                            url: pokemon.item.url, id: pokemon.item.id 
+                                        }
+                                    )
+                                }
+                                style={styles.item}
+                                >
+                                <View>
+                                    <Text style={styles.text}>{pokemon.item.name}</Text>
+                                </View>
+                                <View>
+                                    <Image
+                                        source={
+                                            { 
+                                                uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/${pokemon.item.id}.png` 
+                                            }
+                                        }
+                                        style={styles.sprite}
+                                    />
+                                </View>
+                            </TouchableOpacity>
+                        )
+                        }}
+                keyExtractor={(pokemon, index) => pokemon.name + index}
+                style={styles.container}
+            />
+    )
+}
+
+type PokedexStackParamList = {
+    Pokedex: undefined,
+    Pokemon: {name : string, url : string, id : number},
+}
+
+type PropsPokedex = NativeStackScreenProps<PokedexStackParamList, 'Pokemon'>;
+
+const Pokemon = (props: PropsPokedex) => {
+  /**
+   * UseStates
+   */
+  const [data, setData] = useState<PokemonDetails>({} as PokemonDetails);
+  const [sprites, setSprites] = useState<String[]>();
+  
+  /**
+   * Other properties
+   */
+  const pokemon = props.route.params;
+
+  useEffect(() => {
+    fetchData();
+  }, [pokemon.id]);
+
+
+  useEffect(() => {
+    getSprites();
+  }, [data]);
+
+
+  /**
+   * Function to fetch the pokemon data from the api
+   */
+  const fetchData = async () => {
+    const response = await axios.get(pokemon.url);
+    let dataPkmn = response.data as PokemonDetails;
+    setData(dataPkmn);
+  }
+
+
+  /**
+   * Function to get the sprites of the pokemon
+   */
+  const getSprites = async () => {
+    const auxSprites: string[] = [];
+
+    const typeOfSprites : string []= [
+      'front_default',
+      'front_shiny',
+      'back_default',
+      'back_shiny',
+      'front_female',
+      'front_shiny_female',
+      'back_female',
+      'back_shiny_female',
+    ]
+  
+    for (const typeSprite of typeOfSprites) {
+      const spriteExists = data.sprites?.[typeSprite as keyof typeof data.sprites];
+      if (spriteExists && typeof spriteExists=== 'string') {
+        auxSprites.push(spriteExists);
+      }
+    }
+
+    setSprites(auxSprites);  
+  }
+  
+  
+  return (
+    <ScrollView style={styles.container}>
+      <View style={styles.secondContainer}>
+        <View>
+          <Image
+            source={
+              { 
+                uri: data.sprites?.other?.['official-artwork']?.front_default
+                ? data.sprites.other['official-artwork'].front_default
+                : data.sprites?.other?.home?.front_default,
+              }
+            }
+            style={styles.mainImg} 
+          />
+        </View>
+        <View>
+          <Text style={styles.title}>{data.name}</Text>
+        </View>
+        
+        <Text style={styles.typeText}>
+            {data.weight/10} KG 
+            <Icon name='arrow-forward-outline'/>
+            {data.height/10} M
+        </Text>
+
+        <FlatList
+            data={data.types}
+            renderItem={({ item }) => (
+                <Text style={styles.typeText}>{item.type.name} </Text>
+            )}
+            
+            keyExtractor={(item, index) => item.type.name + index}
+            horizontal
+            ItemSeparatorComponent={() => 
+              <Icon name='remove' style={styles.separator} size={10}/>} 
+            style={styles.typeContainer}
+          />
+        
+        <FlatList
+            data={data.abilities}
+            renderItem={({ item }) => (
+                <Text style={styles.typeText}>{item.ability.name} </Text>
+            )}
+            keyExtractor={(item, index) => item.ability.name + index}
+            horizontal
+            style={styles.typeContainer}
+            ItemSeparatorComponent={() => 
+              <Icon name='ellipse' style={styles.separator} size={10}/>} 
+          />
+        
+        <FlatList
+          data={data?.stats}
+          renderItem={({ item }) => (
+            <View style={styles.statRow}>
+              <Text style={styles.statName}>{item.stat.name}: </Text>
+              <Text style={styles.statValue}> {item.base_stat}</Text>
+            </View>
+          )}
+          keyExtractor={(item) => item.stat.name}
+        />
+        
+        <Text style={styles.title}>Sprites of {pokemon.name}</Text>
+          <FlatList
+            data={sprites} 
+            renderItem={({ item }) => (
+              <View style={styles.spriteContainer}>
+                <Image source={{ uri: item.trim() }} style={styles.spriteImage} />
+              </View>
+            )}
+            keyExtractor={(item, index) => item+index.toString()}
+            horizontal={true} 
+            showsHorizontalScrollIndicator={false} 
+            style={styles.spriteRow}
+          />       
+      </View>
+    </ScrollView>
+  )
+}
+
+
+type PokedexType = {
+  results: PokemonType[];
+}
+
+type PokemonType = {
+  name: string;
+  url: string;
+  id: number;
+}
+
+type SearchPokedexStackParamList = {
+  SearchPokedex: undefined,
+  Pokemon: {name : string, url: string, id : number},
+}
+
+type PropsSearchPokedex = NativeStackScreenProps<SearchPokedexStackParamList, 'SearchPokedex'>;
+
+const SearchPokemon = (props: PropsSearchPokedex) => {
+  const [pokemonMatching, setPokemonMatching] = useState<PokemonType[]>([]);
+  
+  const uri: string = "https://pokeapi.co/api/v2/pokemon?offset=151&limit=99"
+
+  useEffect(() => {
+
+  }, [pokemonMatching]);
+
+  
+    /**
+     * Async function to fetch list of pokemon from the api
+     * @param url of the api
+     */
+  const searchForPokemon = async (search: string) => {
+    const response = await axios.get(uri);
+    let list = response.data as PokedexType
+
+    const aux = list.results.map((pokemon) => ({
+      ...pokemon,
+      id: Number(pokemon.url.split('/').at(-2)), 
+    }));
+
+    setPokemonMatching(
+      aux.filter(
+        (pokemon) => pokemon.name.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+
+  }
+
+
+  return (
+    <View style={styles.container}>
+      <TextInput placeholder='Search for a pokemon' onChangeText={searchForPokemon} style={styles.textInput}></TextInput>
+      <FlatList
+          data={pokemonMatching}
+          renderItem={(pokemon) => {
+              return (
+                  <View key={pokemon.index} style={styles.item}>
+                      <TouchableOpacity onPress={() => props.navigation.navigate
+                              ('Pokemon',
+                                  {   name: pokemon.item.name, 
+                                      url: pokemon.item.url, id: pokemon.item.id 
+                                  }
+                              )
+                          }
+                          >
+                          <View>
+                              <Text style={styles.text}>{pokemon.item.name}</Text>
+                          </View>
+                          <View>
+                              <Image
+                                  source={
+                                      { 
+                                          uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/${pokemon.item.id}.png` 
+                                      }
+                                  }
+                                  style={styles.sprite}
+                              />
+                          </View>
+                      </TouchableOpacity>
+                  </View>
+                  )
+                  }}
+          keyExtractor={(pokemon, index) => pokemon.name + index}
+          style={styles.container}
+        />
+    </View>
+  )
+}
 ```
 
 
 
 - Captura:
 <div align="center">
-<img src="./img/p.png"/>
+<img src="./img/p28-01.png"/>
+<img src="./img/p28-02.png"/>
+<img src="./img/p28-03.png"/>
 </div>
 
 ***
@@ -2145,15 +3179,32 @@ eliminarlo, etc
 - Código:
 
 ```tsx
+const Practice29Screen = (props: Props) => {
+const [message, setMessage] = useState<string>("");
 
+    async function showPosition(){
+        let ps: PermissionStatus;
+        ps = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+        if (ps != 'granted') {
+            ps = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+        }
+        if (ps == 'granted'){
+            Geolocation.getCurrentPosition(info=> setMessage(JSON.stringify(info)));
+        } else {
+            setMessage("No se han obtenido los permisos");
+        }
+    }
+
+
+    return (
+        <View>
+        <Text>TravelScreen</Text>
+        <Button title="Permisos gps" onPress={showPosition}/>
+            <Text>{message}</Text>
+        </View>
+    )
+}
 ```
-
-
-
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
 
 ***
 </br>
@@ -2172,14 +3223,97 @@ del asyncstorage la lista de posiciones guardadas y las muestra en un <Text>
 
 ```tsx
 
+type Location = {
+  latitude: number,
+  longitude: number,
+  timestamp: string,
+}
+const Practice30Screen = (props: Props) => {
+  const [location, setLocation] = useState<Location>({} as Location);
+  const [history, setHistory] = useState<Location[]>([]);
+  
+
+    /**
+     * Async function to request the location permissions
+     */
+    const requestLocationPermission = async () => {
+      let ps: PermissionStatus;
+      ps = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+  
+      if (ps === 'granted') {
+          return true;
+      } else{
+        ps = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+        return ps === 'granted';
+      }
+    };
+  
+
+    /**
+     * Async function to save the current location to AsyncStorage
+     */
+    const saveLocation = async () => {
+      const permission = await requestLocationPermission();
+  
+      if (!permission) {
+        return;
+      }
+
+      Geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          const timestamp = new Date().toDateString();
+          const newLocation = { latitude, longitude, timestamp };
+
+          try {
+
+            const storedHistory = await AsyncStorage.getItem('location-history');
+            const parsedHistory = storedHistory ? JSON.parse(storedHistory) : [];
+            const updatedHistory = [...parsedHistory, newLocation];
+
+            await AsyncStorage.setItem('location-history', JSON.stringify(updatedHistory));
+            setLocation(newLocation);
+
+          } catch (error) {
+            console.error('Error saving location', error);
+          }
+        },
+      );
+    }
+
+    /**
+     * Async function to retrieve history of locations
+     */
+    const showHistory = async () => {
+      const storedHistory = await AsyncStorage.getItem('location-history');
+      const parsedHistory = storedHistory ? JSON.parse(storedHistory) : [];
+      setHistory(parsedHistory);
+    };
+  
+    return (
+      <GestureHandlerRootView>
+        <View style={{ flex: 1, padding: 20 }}>
+          <Button title="Save location" onPress={saveLocation} />
+          {location && (
+            <Text>{`Location: Lat ${location.latitude}, Long ${location.longitude}, Timestamp: ${location.timestamp}`}</Text>
+          )}
+          <Button title="Show history" onPress={showHistory} />
+          <ScrollView>
+            {history.map((item, index) => (
+              <Text key={index}>
+                {`Lat: ${item.latitude}, Long: ${item.longitude}, Timestamp: ${item.timestamp}`}
+              </Text>
+            ))}
+          </ScrollView>
+      </View>
+    </GestureHandlerRootView>
+  )
+}
 ```
 
 
 
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
+
 
 ***
 </br>
@@ -2195,14 +3329,309 @@ alguna de las noticias. Si todo está bien cargará la noticia del async storage
 
 ```tsx
 
+type Props = {
+    children: React.ReactNode;
+}
+
+type ArticlesListContextType ={
+    articles: Article[],
+    setArticles: (articles: Article[]) => void,
+    visited: string[],
+    setVisited: (visited: string[]) => void,
+    currentArticle: Article,
+    setCurrentArticle: (article: Article) => void,
+    saveArticlesAsyncStorage: (articles:Article[]) => Promise<void>,
+    saveVisitedPagesAsyncStorage: (visited:string[]) => Promise<void>,
+}
+
+type Article = {
+    title: string;
+    link: string;
+    id: string;
+    description: string;
+}
+
+export const ArticlesContext = createContext<ArticlesListContextType>({} as ArticlesListContextType );
+
+const ArticleContext = (props: Props) => {
+    const [articles, setArticles] = useState<Article[]>([]);
+    const [visited, setVisited] = useState<string[]>([]);
+    const [currentArticle, setCurrentArticle] = useState<Article>({} as Article);
+
+
+    /**
+     * Function to save the asyncStorage
+     */
+    const saveArticlesAsyncStorage = async (articles: Article[]) => {
+        try {
+            await AsyncStorage.setItem('articles', JSON.stringify(articles));
+        } catch (error) {
+            console.log('Error saving data', error);
+        }
+    }
+
+    /**
+     * Function to save the asyncStorage
+     */
+        const saveVisitedPagesAsyncStorage = async (visited : string[]) => {
+            try {
+                await AsyncStorage.setItem('visited', JSON.stringify(visited));
+            } catch (error) {
+                console.log('Error saving data', error);
+            }
+        }
+    
+    
+
+    const contextValues: ArticlesListContextType  = {
+        articles,
+        setArticles,
+        visited,
+        setVisited,
+        currentArticle,
+        setCurrentArticle,
+        saveArticlesAsyncStorage,
+        saveVisitedPagesAsyncStorage
+    }
+
+    
+    return (
+        <ArticlesContext.Provider value={contextValues}>
+            {props.children}
+        </ArticlesContext.Provider>
+    )
+}
+
+type FeedStackParamList = {
+    FeedScreen: undefined,
+    ArticleDetail: undefined,
+}
+
+type Article = {
+    title: string;
+    link: string;
+    id: string;
+    description: string;
+}
+
+const Stack = createNativeStackNavigator<FeedStackParamList>();
+
+const Practice31StackNav = (props: Props) => {
+    return (
+        <Stack.Navigator
+        screenOptions={{contentStyle:{backgroundColor:'white'}}}
+        >
+        <Stack.Screen 
+            name="FeedScreen" 
+            component={FeedScreen} 
+            options={{ title: 'FeedScreen',  headerTitleAlign: 'center', 
+                headerStyle: {
+                    backgroundColor: '#008080', 
+                },
+                headerTintColor: 'white', 
+                headerTitleStyle: {
+                    fontWeight: 'bold',    
+                    fontSize: 20,                
+                }
+            }}
+        />
+        
+        <Stack.Screen 
+            name="ArticleDetail"  
+            component={ArticleDetail} 
+            options={{ title: 'FeedScreen',  headerTitleAlign: 'center', 
+                headerStyle: {
+                    backgroundColor: '#008080', 
+                },
+                headerTintColor: 'white', 
+                headerTitleStyle: {
+                    fontWeight: 'bold',    
+                    fontSize: 20,                
+                }
+            }}
+        />
+    </Stack.Navigator>
+    )
+}
+
+
+type FeedStackParamList = {
+    FeedScreen: undefined,
+    ArticleDetail: undefined,
+}
+type Article = {
+    title: string;
+    link: string;
+    id: string;
+    description: string;
+}
+
+type PropsArticle = NativeStackScreenProps<FeedStackParamList, 'ArticleDetail'>;
+const ArticleDetail = (props: PropsArticle) => {
+
+    const [content, setContent] = useState<string | null>(null);
+
+    const context = useContext(ArticlesContext);
+    
+    useEffect(() => {
+        loadContent();
+    }, []);
+
+    const loadContent = async () => {
+        try {
+            const cachedContent = await getCache(context.currentArticle.link);
+            if (cachedContent) {
+                setContent(cachedContent);
+                return;
+            }
+            
+        } catch (error) {
+            console.error('Error loading content:', error);
+        }
+    };
+
+    async function getCache(uri:string){
+        try{
+            const response = await axios.get(uri);
+            const data = response.data;
+            AsyncStorage.setItem(uri, JSON.stringify(data))
+            return data;
+        }catch( error){
+            const localData = await AsyncStorage.getItem(uri);
+            if(localData){
+                return localData;
+            }
+
+            return null;
+        }
+    }
+
+    if (content) {
+        return <WebView source={{html: content}} style={styles.article}/>;
+    }
+    
+};
+
+type Article = {
+    title: string;
+    link: string;
+    id: string;
+    description: string;
+}
+
+
+type FeedStackParamList = {
+    FeedScreen: undefined,
+    ArticleDetail: undefined,
+}
+
+type PropsFeed = NativeStackScreenProps<FeedStackParamList, 'FeedScreen'>;
+
+const FeedScreen = (props: PropsFeed) => {
+
+    /**
+     * Other properties
+     */
+    const url = 'https://www.xataka.com/feedburner.xml';
+    const context = useContext(ArticlesContext);
+
+
+    /**
+     * UseEffect
+     */
+    useEffect(() => {
+        const check = checkAsyncStorage();
+        if(!check){
+            fetchFeed();
+        }
+    }, []);
+
+
+    /**
+     * Function to check the asyncStorage
+     */
+
+    const checkAsyncStorage = async () =>{
+        const articles = await AsyncStorage.getItem('articles');
+        const visited  = await AsyncStorage.getItem('visited');
+
+        if(articles  && visited){
+            context.setArticles(JSON.parse(articles));
+            context.setVisited(JSON.parse(visited));
+            return true;
+        } else if(articles && !visited){
+            context.setArticles(JSON.parse(articles));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Function to fetch the articles from the feed
+     */
+    const fetchFeed = async () => {
+        try {
+            const response = await axios.get(url);
+            const parsed = await rssParser.parse(response.data);
+
+            const articlesData: Article[] = parsed.items.map((item): Article => ({
+                title: item.title || 'Untitled',
+                link: item.links?.[0]?.url || '#', 
+                id: item.id || 'Aa0',
+                description: item.description || 'No description available',
+            }));
+
+            context.setArticles([...articlesData]);
+            context.saveArticlesAsyncStorage(articlesData);
+            
+        } catch (error) {
+            console.error('Error fetching articles:', error);
+
+            const storageCache = await AsyncStorage.getItem('articles');
+            const storageCacheVisted = await AsyncStorage.getItem('vistedArticles');
+
+            if (storageCache) {
+                context.setArticles(JSON.parse(storageCache));
+            } 
+
+            if (storageCacheVisted) {
+                context.setVisited(JSON.parse(storageCacheVisted));
+            }
+        } 
+    };
+
+    /***
+     * Function to handle the on press on an article
+     */
+    const handlePress = async (article : Article) => {
+        const aux = [...context.visited, article.id];
+        context.setVisited(aux);
+        context.saveVisitedPagesAsyncStorage(aux);
+        context.setCurrentArticle({...article});
+        props.navigation.navigate('ArticleDetail');
+    };
+
+    return (
+        <View style={styles.container}>
+            <FlatList
+                data={context.articles}
+                keyExtractor={(item, index) => item.id+index}
+                renderItem={({ item }) => (
+                    <TouchableOpacity
+                        onPress={() => handlePress(item)}
+                        style={[
+                            context.visited.includes(item.id) ? styles.visited : styles.articleContainer
+                        ]}
+                    >
+                        <Text style={styles.title}>{item.title}</Text>
+                    </TouchableOpacity>
+                )}
+            />
+        </View>
+    )
+}
 ```
-
-
-
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
 
 ***
 </br>
@@ -2220,15 +3649,50 @@ por el usuario
 - Código:
 
 ```tsx
+const Practice32Screen = (props: Props) => {
 
+    useEffect(() => {
+        async function initDB() {
+            await dataSource.initialize();
+        }
+        initDB();
+    }, []);
+
+    const [personas, setPersonas] = useState<Persona[]>([]);
+    const [currentName, setCurrentName] = useState("");
+    const [currentAge, setCurrentAge] = useState(0);
+
+    async function save() {
+        if (!currentName ||!currentAge){
+            return;
+        }
+
+        const newPerson = {
+            nombre: currentName,
+            edad: currentAge
+        }
+
+        await PersonaRepository.save(newPerson);
+        const newPersonas = await PersonaRepository.find();
+        setPersonas([...newPersonas]);
+    }
+
+return (
+    <View style={{flex: 1}}>
+        <TextInput placeholder='name' onChangeText={(text) => setCurrentName(text)}/>
+        <TextInput placeholder='age' onChangeText={(text) => setCurrentAge(parseInt(text))}/>
+        <FlatList
+            data={personas}
+            renderItem={({item}) => (
+                <Text style={styles.text}>{item.id}; {item.nombre}; {item.edad}</Text>
+            )}
+            keyExtractor={(item, index) => item.id + "" + index}
+        />
+        <Button title='Create person' onPress={save}/>
+    </View>
+    )
+}
 ```
-
-
-
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
 
 ***
 </br>
@@ -2248,15 +3712,201 @@ el update y el delete de la tarea, mejor usar el id como condición
 - Código:
 
 ```tsx
+@Entity('task')
+export class Task extends BaseEntity{
+    @PrimaryGeneratedColumn() id:number;
+    @Column('text') content: string;
+    @Column('boolean') completed: boolean;
+}
+
+
+type PrincipalStackParamList = {
+    ToDoList: undefined,
+    Task: {id : number},
+}
+
+type Task = {
+    id: number,
+    content: string,
+    completed: boolean,
+}
+
+type PropsTask = NativeStackScreenProps<PrincipalStackParamList, 'Task'>;
+
+
+const TaskScreen = (props: PropsTask) => {
+    const [taskData, setTaskData] = useState<Task>({} as Task);
+    const context = useContext(TasksContext33);
+
+    useEffect(() => {
+        async function getSelectedTask(id:number){
+            const task = await TaskRepository.findOneBy({id: id});
+            if (task) {
+                setTaskData(task); 
+            }
+        }
+        getSelectedTask(props.route.params.id);
+    }, [props.route.params.id]);
+
+
+
+    function updateTask(value: string|boolean, field: keyof Task){
+        setTaskData(
+            {
+                ...taskData,
+                [field]: value
+            }
+        );
+    }
+
+    async function handleOnPress(){
+        if (!taskData.content || taskData.content.trim() === '') {
+            await TaskRepository.delete({ id: taskData.id });
+            const updatedTaskList = await TaskRepository.find();
+            context.setTasks(updatedTaskList);
+            props.navigation.goBack();
+            return;
+        }
+        await TaskRepository.save({...taskData });
+        const updatedTaskList = await TaskRepository.find();
+        context.setTasks(updatedTaskList);
+
+        props.navigation.goBack();
+    }
+
+
+    return (
+        <View style={{flex:1}}>
+            <View style={styles.active}>
+                <Text style={styles.activeText}>Completed:</Text>
+                    <Switch
+                        onValueChange={()=> updateTask(!taskData.completed, 'completed')}
+                        value={taskData.completed}
+                    />
+            </View>
+
+            <View>
+                <TextInput placeholder='Task content here' 
+                value={taskData.content}
+                onChangeText={(e) => updateTask(e, 'content')}/>
+            </View>
+            
+            <TouchableOpacity onPress={handleOnPress} style={styles.container}>
+                <Text style={styles.btntext}>Finish editing</Text>
+            </TouchableOpacity>
+        </View>
+    )
+}
+
+type PrincipalStackParamList = {
+    ToDoList: undefined,
+    Task: {id : number},
+}
+
+type Task = {
+    id: number,
+    content: string,
+    completed: boolean,
+}
+
+type PropsToDoList = NativeStackScreenProps<PrincipalStackParamList, 'ToDoList'>;
+
+
+const ToDoListScreen = (props: PropsToDoList) => {
+
+    const context = useContext(TasksContext33);
+
+    useEffect(() => {
+        async function initDB() {
+            await dataSource.initialize();
+        }
+        initDB();
+    }, []);
+
+    async function createTask (){
+        const newTask = {
+            content: '',
+            completed: false
+        };
+
+        await TaskRepository.save(newTask);
+        const newTaskList = await TaskRepository.find();
+        context.setTasks([...newTaskList]);
+        const currentTask = newTaskList[newTaskList.length-1];
+    
+        props.navigation.navigate('Task', {id: currentTask.id});
+    }
+
+    
+    
+    async function changeStatus(taskId : number){
+        const task = await TaskRepository.findOneBy({ id: taskId });
+
+        if (task) {
+            task.completed = !task.completed;
+            await TaskRepository.save(task);
+            const updatedTaskList = await TaskRepository.find();
+            context.setTasks(updatedTaskList);
+        }
+    }
+
+    async function deleteTask(taskId : number){
+        await TaskRepository.delete({ id: taskId });
+        const updatedTaskList = await TaskRepository.find();
+        context.setTasks(updatedTaskList);
+    }
+
+    return (
+        <View style={{flex:1}}>            
+            <View>
+                <FlatList
+                    data={context.tasks}
+                    renderItem={(task) => {
+                    return (
+                        <View key={task.index} style={styles.task}>
+
+                            <TouchableOpacity onPress={() => changeStatus(task.item.id)} style={styles.taskLeftIcon}>
+                                <Icon name={!task.item.completed ? `square-outline` : `checkbox-outline`} size={25} color={'#e3c181'}></Icon>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={() => props.navigation.navigate('Task', {id: task.item.id})} style={styles.taskContent}>
+                                <Text style={task.item.completed ? styles.taskTextCompleted : styles.taskText}>{task.item.content}</Text>
+                            </TouchableOpacity>
+                            
+                            <View style={styles.taskActions}>
+                                <TouchableOpacity onPress={() => props.navigation.navigate('Task', {id: task.item.id})} style={styles.taskActionIcon}>
+                                    <Icon name='pencil' size={25} color={'grey'}></Icon>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => deleteTask(task.item.id)} style={styles.taskActionIcon}>
+                                    <Icon name='trash' size={25} color={'grey'} />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                        )
+                        }}
+                    keyExtractor={(task, index) => task.content + index}
+                />
+            </View>
+            {
+                /**<View>
+                    <Text>{JSON.stringify(context.tasks)}</Text>
+                </View>*/
+            }
+            <View style={styles.container}>
+                <TouchableOpacity onPress={() => createTask()}>
+                    <Text style={styles.btnText}>+</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    )
+}
 
 ```
 
 
 
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
+
 
 ***
 </br>
@@ -2271,23 +3921,6 @@ otro para precio menor que el número dado y otro para precio mayor qué el núm
 y un switch para elegir si ordenamos por nombre ascendente ( si el switch está a false no
 ordena )
 
-- Código:
-
-```tsx
-
-```
-
-
-
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
-
-***
-</br>
-
-
 ### Práctica 35
 
 > 📂
@@ -2297,21 +3930,6 @@ datos almacenados recreamos la base de datos desde cero ( basta cambiar el nombr
 database y ejecutar: npx react-native start --reset-cache.
 No nos preocuparemos ahora de como guardar el producto con la categoría vinculada
 
-- Código:
-
-```tsx
-
-```
-
-
-
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
-
-***
-</br>
 
 ### Práctica 36
 
@@ -2319,21 +3937,6 @@ No nos preocuparemos ahora de como guardar el producto con la categoría vincula
 > Continuamos con la tienda. Ahora en la tab para crear producto hay un
 input para poner el nombre de la categoría y ya debe funcionar la relación bien
 
-- Código:
-
-```tsx
-
-```
-
-
-
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
-
-***
-</br>
 
 ### Práctica 37
 
@@ -2344,16 +3947,390 @@ productos que tiene cada categoría
 
 - Código:
 
-```tsx
+```ts
+@Entity('category')
+export class Category extends BaseEntity
+{
+    @PrimaryGeneratedColumn() id:number;
+    @Column('text') name: string;
 
+    @OneToMany(()=> Product, (pr) => pr.category)
+    products: Product[];
+}
+
+@Entity('product')
+export class Product extends BaseEntity{
+    @PrimaryColumn('text') name: string;
+    @Column('float') price: number;
+    @Column('int') stock: number;
+    @Column('boolean') discontinued: boolean;
+    @ManyToOne(()=> Category, (cat) => cat.products)
+    category: Category;
+
+}
 ```
 
+```tsx
+
+type CategoryCreate = {
+    name: string,
+}
+
+type Product = {
+    name: string,
+    price: number,
+    stock: number,
+    discontinued: boolean,
+    category: Category,
+}
+
+type Category = {
+    id: number,
+    name: string,
+    products: Product[],
+}
+
+const CategoryList37 = (props: Props) => {
+
+    const [categories, setCategories] = useState<Category[]>({} as Category[]);
+    const [name, setName] = useState<string>("");
 
 
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
+    useEffect(() => {
+        const getList = async () => {
+            const categoryList = await CategoryRepository.find(
+                {relations: ['products']}
+            );
+            setCategories([...categoryList]);
+        }
+
+        getList();
+
+    }, [categories])
+
+
+    async function save() {
+            if (!name || name.trim() === "") {
+                return;
+            }
+    
+            const newProduct : CategoryCreate = {
+                name: name,
+            }
+    
+            await CategoryRepository.save(newProduct);
+        }
+
+
+    return (
+        <View style={{flex: 1}}>
+            <View style={styles.mainContainer}>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.inputLabel}>Name</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter category name"
+                        onChangeText={(text) => setName(text)}
+                    />
+                </View>
+            </View>
+            <FlatList
+                data={categories}
+                renderItem={({item}) => (
+                    <View style={styles.rowContainer}>
+                    <Text style={styles.rowText}>{item.name}</Text>
+                    <Text style={styles.rowText}>{JSON.stringify(item.products.map(product => product.name))}</Text>
+                </View>
+                )}
+                keyExtractor={(item, index) => item.name+ "_" + index}
+                ListHeaderComponent={
+                    <View style={styles.headerContainer}>
+                        <Text style={styles.headerText}>Name</Text>
+                        <Text style={styles.headerText}>Products</Text>
+                    </View>
+                }
+                />
+            <Button title='Add new category' color={'#008080'} onPress={save}/>
+        </View>
+    )
+}
+
+
+type Product = {
+    name: string,
+    price: number,
+    stock: number,
+    discontinued: boolean,
+    category: Category,
+}
+
+type Category = {
+    id: number,
+    name: string,
+}
+const ProductList37 = (props: Props) => {
+
+    const [products, setProducts] = useState<Product[]>({} as Product[]);
+    const [name, setName] = useState<string>("");
+    const [price, setPrice] = useState<number>(0)
+    const [stock, setStock] = useState<number>(0)
+    const [discontinued, setDiscontinued] = useState<boolean>(false)
+    const [category, setCategory] = useState<string>("")
+
+    useEffect(() => {
+        const getList = async () => {
+            const productList = await ProductRepository.find(
+                {
+                    relations: ['category']
+                }
+            );
+            setProducts([...productList]);
+        }
+
+        getList();
+
+    }, [products])
+
+
+    async function save() {
+            if (!name || !price || !stock  || !category){
+                return;
+            }
+
+            const checkIfCategoryExists = await CategoryRepository.findOneBy({name: category}); 
+            let categoryAux;
+
+            if (!checkIfCategoryExists){
+                await CategoryRepository.save({name: category});
+                categoryAux = await CategoryRepository.findOneBy({name: category}); 
+            } else {
+                categoryAux = checkIfCategoryExists; 
+            }
+
+
+            console.log(categoryAux);
+            const newProduct : Product = {
+                name: name,
+                price: price,
+                stock: stock,
+                discontinued: discontinued,
+                category: categoryAux,
+            }
+    
+            await ProductRepository.save(newProduct);
+        }
+
+
+    return (
+        <View style={{flex: 1}}>
+            <View style={styles.mainContainer}>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.inputLabel}>Name</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter product name"
+                        onChangeText={(text) => setName(text)}
+                    />
+                </View>
+
+                <View style={styles.inputContainer}>
+                    <Text style={styles.inputLabel}>Price</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter product price"
+                        keyboardType="numeric"
+                        onChangeText={(text) => setPrice(parseFloat(text))}
+                    />
+                </View>
+
+                <View style={styles.inputContainer}>
+                    <Text style={styles.inputLabel}>Stock</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter product stock"
+                        keyboardType="numeric"
+                        onChangeText={(text) => setStock(parseInt(text))}
+                    />
+                </View>
+
+                <View style={styles.inputContainer}>
+                    <Text style={styles.inputLabel}>Category</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter product category"
+                        onChangeText={(text) => setCategory(text)}
+                    />
+                </View>
+
+                <View style={styles.switchContainer}>
+                    <Text style={styles.switchLabel}>Discontinued</Text>
+                    <Switch
+                        value={discontinued}
+                        onValueChange={(value) => setDiscontinued(value)}
+                    />
+                </View>
+            </View>
+            <FlatList
+                data={products}
+                renderItem={({item}) => (
+                    <View style={styles.rowContainer}>
+                    <Text style={styles.rowText}>{item.name}</Text>
+                    <Text style={styles.rowText}>{item.price}</Text>
+                    <Text style={styles.rowText}>{item.stock}</Text>
+                    <Text style={styles.rowText}>{item.discontinued ? 'Yes' : 'No'}</Text>
+                    {
+                        item.category ? 
+                        <Text style={styles.rowText}>{item.category.name}</Text> :
+                        <Text style={styles.rowText}>N/A</Text>
+                    }
+                </View>
+                )}
+                keyExtractor={(item, index) => item.name+ "_" + index}
+                ListHeaderComponent={
+                    <View style={styles.headerContainer}>
+                        <Text style={styles.headerText}>Name</Text>
+                        <Text style={styles.headerText}>Price</Text>
+                        <Text style={styles.headerText}>Stock</Text>
+                        <Text style={styles.headerText}>Discontinued</Text>
+                        <Text style={styles.headerText}>Category</Text>
+                    </View>
+                }
+                />
+            <Button title='Add new product' color={'#008080'} onPress={save}/>
+        </View>
+    )
+}
+
+
+type Product = {
+    name: string,
+    price: number,
+    stock: number,
+    discontinued: boolean,
+    category: Category,
+}
+
+type Category = {
+    id: number,
+    name: string,
+}
+const SearchFilterProduct37 = (props: Props) => {
+    const [products, setProducts] = useState<Product[]>([]);
+    const [subName, setSubName] = useState<string>(""); 
+    const [minPrice, setMinPrice] = useState<number>(); 
+    const [maxPrice, setMaxPrice] = useState<number>(); 
+    const [orderByName, setOrderByName] = useState<boolean>(false); 
+
+        useEffect(() => {
+    
+        }, [products])
+
+    const filterProducts =  async () => {
+            let whereCondition: any = {};  
+        
+            if (subName) {
+                whereCondition.name = Like(`%${subName}%`);
+            }
+        
+            if (!isNaN(Number(minPrice)) && minPrice) {
+                whereCondition.price = MoreThan(Number(minPrice));
+            }
+        
+            if (!isNaN(Number(maxPrice)) && maxPrice) {
+                whereCondition.price = LessThan(Number(maxPrice));
+            }
+        
+            let orderCondition: any = {};
+
+            if (orderByName) {
+                orderCondition.name = 'ASC';
+            } else {
+                orderCondition.name = 'DESC';
+            }
+        
+            const filteredProducts = await ProductRepository.find({
+                relations: ['category'],
+                where: whereCondition,
+                order: orderCondition
+                
+            });
+        
+            setProducts(filteredProducts);
+        };
+        
+        
+    return (
+        <View style={{ flex: 1 }}>
+            <View style={styles.inputContainer}>
+                <Text style={styles.inputLabel}>Name</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Name"
+                    onChangeText={(text) => setSubName(text)}
+                />
+            </View>
+
+            <View style={styles.inputContainer}>
+                <Text style={styles.inputLabel}>Min price</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Min price"
+                    keyboardType="numeric"
+                    onChangeText={(text) => setMinPrice(parseFloat(text))}
+                />
+            </View>
+
+            <View style={styles.inputContainer}>
+                <Text style={styles.inputLabel}>Max price</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Max price"
+                    keyboardType="numeric"
+                    onChangeText={(text) => setMaxPrice(parseFloat(text))}
+                />
+            </View>
+
+            <View style={styles.switchContainer}>
+                <Text style={styles.switchLabel}>Order by name</Text>
+                <Switch
+                    value={orderByName}
+                    onValueChange={(value) => setOrderByName(value)}
+                />
+            </View>
+
+            <FlatList
+                data={products} 
+                ListHeaderComponent={
+                    <View style={styles.headerContainer}>
+                        <Text style={styles.headerText}>Name</Text>
+                        <Text style={styles.headerText}>Price</Text>
+                        <Text style={styles.headerText}>Stock</Text>
+                        <Text style={styles.headerText}>Discontinued</Text>
+                        <Text style={styles.headerText}>Category</Text>
+                    </View>
+                }
+                renderItem={({item}) => (
+                    <View style={styles.rowContainer}>
+                    <Text style={styles.rowText}>{item.name}</Text>
+                    <Text style={styles.rowText}>{item.price}</Text>
+                    <Text style={styles.rowText}>{item.stock}</Text>
+                    <Text style={styles.rowText}>{item.discontinued ? 'Yes' : 'No'}</Text>
+                    {
+                        item.category ? 
+                        <Text style={styles.rowText}>{item.category.name}</Text> :
+                        <Text style={styles.rowText}>N/A</Text>
+                    }
+                </View>
+                )}
+                keyExtractor={(item, index) => item.name + "_" + index}
+            />
+            <Button title='Search' color={'#008080'} onPress={filterProducts}/>
+
+        </View>
+    )
+}
+```
+
 
 ***
 </br>
@@ -2366,22 +4343,6 @@ Uno para introducir propietarios. Otro para introducir casas y una tercera tab p
 vincular un propietario con una casa. En una cuarta tab se mostrará en un FlatList los
 propietarios con JSON.stringify y debe aparecer la información de sus casas
 
-- Código:
-
-```tsx
-
-```
-
-
-
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
-
-***
-</br>
-
 ### Práctica 39
 
 > 📂
@@ -2389,41 +4350,449 @@ propietarios con JSON.stringify y debe aparecer la información de sus casas
 en el otro la referencia catastral de la casa y que al pulsar en el botón: borrar se elimine
 el vínculo entre los dos objetos en la base de datos
 
-- Código:
-
-```tsx
-
-```
-
-
-
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
-
-***
-</br>
-
 ### Práctica 40
 
 > 📂
 > Reproducir el ejemplo anterior con la app de propietarios-casas. De tal
 forma que se pueda guardar un array de casas protegido por una transacción. Llamaremos
-al método del repositorio: saveAtOnce( casas: Casa[] 
+al método del repositorio: saveAtOnce( casas: Casa[] )
 
 - Código:
 
-```tsx
+```ts
 
+@Entity('casa')
+export class Casa extends BaseEntity
+{
+    @PrimaryColumn('text')
+    refCastatal: string;
+
+    @Column('double')
+    metros: number;
+    
+    @ManyToMany(() => Propietario, (propietario) => propietario.casas)
+    propietarios: Propietario[];
+}
+
+
+@Entity('propietario')
+export class Propietario extends BaseEntity{
+    @PrimaryGeneratedColumn()
+    id : number;
+    @Column('text')
+    name: string;
+
+  @ManyToMany(() => Casa, (casa) => casa.propietarios)
+  @JoinTable(
+    {
+      name: 'propietarios_casas',
+      joinColumn: { 
+        name: 'propietarios',
+        referencedColumnName: 'id'
+      },
+      inverseJoinColumn: { 
+        name: 'casas',
+        referencedColumnName: 'refCastatal',
+      }
+    }
+  )
+  casas: Casa[];
+}
 ```
 
+```tsx
+const Tab = createBottomTabNavigator();
+
+const TabNav40 = (props: Props) => {
+    const { width, height} = useWindowDimensions();
+    const isHorizontal = width > height;
+    return (
+        <Tab.Navigator id={undefined}
+            screenOptions={{
+                headerShown:false,
+                tabBarShowLabel: false,
+                tabBarPosition: isHorizontal ? 'left' : 'bottom',
+                tabBarVariant: isHorizontal ? 'material' : 'uikit',
+                tabBarLabelPosition: 'below-icon',
+            }}
+            >   
+                
+            <Tab.Screen name='Propietarios' component={PropietarioScreen}
+                options={ {tabBarIcon: ({focused}) => 
+                    <Icon name={(focused) ? 'person' : 'person-outline'} size={30}/>
+                }
+
+            }/>
+            
+            <Tab.Screen name='Casas' component={CasaScreen}
+                options={ {tabBarIcon: ({focused}) => 
+                    <Icon name={(focused) ? 'home' : 'home-outline'} size={30}/>
+                }
+            }/>
+
+            <Tab.Screen name='PropietariosCasas' component={PropietarioCasaScreen}
+                options={ {tabBarIcon: ({focused}) => 
+                    <Icon name={(focused) ? 'people-circle' : 'people-circle-outline'} size={30}/>
+                }
+            }/>
+
+            <Tab.Screen name='Listado' component={ListaScreen}
+                options={ {tabBarIcon: ({focused}) => 
+                    <Icon name={(focused) ? 'receipt' : 'receipt-outline'} size={30}/>
+                }
+            }/>
+
+            <Tab.Screen name='Eliminar relacion' component={EliminarRelacion}
+                options={ {tabBarIcon: ({focused}) => 
+                    <Icon name={(focused) ? 'trash' : 'trash-outline'} size={30}/>
+                }
+            }/>
+                
+        </Tab.Navigator>
+    )
+}
+
+const CasaScreen = (props: Props) => {
+    const [refCastatal, setRefCastatal] = useState<string>("");
+    const [metros, setMetros] = useState<number>(0);
+
+        const save = async () => {
+            if(refCastatal.trim() === "" || metros <= 0){
+                return;
+            }
+            
+            const casa = new Casa ();
+            casa.refCastatal = refCastatal;
+            casa.metros = metros;
 
 
-- Captura:
-<div align="center">
-<img src="./img/p.png"/>
-</div>
+            const casa2 = new Casa ();
+            casa.refCastatal = refCastatal+2;
+            casa.metros = metros+1;
+            
+            
+            let casas = [];
+            casas.push(casa);
+            casas.push(casa2);
+
+            await CasaRepository.saveAtOnce(casas);
+            setRefCastatal("");
+            setMetros(0);
+        }
+
+    return (
+            <ScrollView style={{flex: 1}}>
+                <View style={styles.mainContainer}>
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.inputLabel}>Ref Castatal</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Referencia castatal"
+                            onChangeText={(text) => setRefCastatal(text)}
+                        />
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.inputLabel}>Metros</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Metros cuadrado"
+                            onChangeText={(text) => setMetros(parseFloat(text))}
+                        />
+                    </View>
+                </View>
+
+                <Button title='Crear casa' color={'#008080'} onPress={save}/>
+            </ScrollView>
+    )
+}
+
+
+type PropietarioType = {
+    id: number,
+    name: string,
+    casas: Casa[]
+}
+
+
+const EliminarRelacion = (props: Props) => {
+    const [propietarios, setPropietarios] = useState<PropietarioType[]>([]);
+
+    const [propietarioName, setPropietarioName] = useState<string>("");
+    const [refCastatal, setRefCastatal] = useState<string>("");
+    
+    
+    useEffect(() => {
+        const getPropietarios = async () => {
+            const propietarioList = await PropietarioRepository.find(
+                {
+                    relations: {casas:true}
+                }
+            );
+            setPropietarios([...propietarioList]);
+        }
+        getPropietarios();  
+    }, [propietarios])
+
+    const handleDeleteRelation = async () => {
+        const propietario = await PropietarioRepository.findOne({where: {name: propietarioName}});
+        const casa = await CasaRepository.findOne({where: {refCastatal: refCastatal}});
+        
+        if(propietario && casa){
+            propietario.casas = [];
+            await PropietarioRepository.save(propietario);
+
+            casa.propietarios = [];
+            await CasaRepository.save(casa);
+        } 
+
+
+        setPropietarioName("");
+        setRefCastatal("");
+    }
+
+
+
+    return (
+        <View style={{flex: 1}}>
+            <View style={styles.mainContainer}>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.inputLabel}>Nombre propietaio</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Nombre del propietario"
+                        onChangeText={(text) => setPropietarioName(text)}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.inputLabel}>Ref Castatal</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Referencia Castatal"
+                        onChangeText={(text) => setRefCastatal(text)}
+                    />
+                </View>
+            </View>
+            <FlatList
+                data={propietarios}
+                renderItem={({item}) => (
+                    <View style={styles.rowContainer}>
+                        {item.casas.length >  0 &&
+                            <>
+                                <Text style={styles.rowText}>{item.name}</Text>
+                                <Text style={styles.rowText}>{JSON.stringify(item.casas.map(casa => casa.refCastatal))}</Text>
+                            </>
+                        }
+                    </View>
+                )}
+                keyExtractor={(item, index) => item.name+ "_" + index}
+                ListHeaderComponent={
+                    <View style={styles.headerContainer}>
+                        <Text style={styles.headerText}>Propietario</Text>
+                        <Text style={styles.headerText}>RefCastatal</Text>
+                    </View>
+                }
+                />
+            <Button title='Eliminar relacion' color={'#008080'} onPress={handleDeleteRelation}/>
+        </View>
+    )
+}
+
+
+type PropietarioType = {
+  id: number;
+  name: string;
+  casas: Casa[];
+}
+
+const ListaScreen = (props: Props) => {
+    const [propietarios, setPropietarios] = useState<PropietarioType[]>({} as PropietarioType[]);  
+
+    useEffect(() => {
+        const getList = async () => {
+            const propietarioList = await PropietarioRepository.find(
+                {relations: {casas:true}}
+            );
+            setPropietarios([...propietarioList]);
+        }
+
+        getList();
+
+    }, [propietarios])
+    
+    return (
+        <View style={{flex: 1}}>
+            <FlatList
+                data={propietarios}
+                renderItem={({item}) => (
+                    <View style={styles.rowContainer}>
+                    <Text style={styles.rowText}>{item.name}</Text>
+                    <Text style={styles.rowText}>{JSON.stringify(item.casas.map(casa => casa.refCastatal))}</Text>
+                    <Text style={styles.rowText}>{JSON.stringify(item.casas.map(casa => casa.metros))}</Text>
+                </View>
+                )}
+                keyExtractor={(item, index) => item.name+ "_" + index}
+                ListHeaderComponent={
+                    <View style={styles.headerContainer}>
+                        <Text style={styles.headerText}>Propietario</Text>
+                        <Text style={styles.headerText}>RefCastatal</Text>
+                        <Text style={styles.headerText}>Metros</Text>
+                    </View>
+                }
+                />
+        </View>
+    )
+}
+
+
+type Propietario = {
+    name: string;
+}
+
+const PropietarioScreen = (props: Props) => {
+        const [nombre, setNombre] = useState<string>("");
+
+        const save = async () => {
+            if(nombre.trim() === ""){
+                return;
+            }
+            
+            const propietario : Propietario = {
+                name: nombre,
+            }
+            
+            await PropietarioRepository.save(propietario);
+            setNombre("");
+        }
+
+    return (
+            <ScrollView style={{flex: 1}}>
+                <View style={styles.mainContainer}>
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.inputLabel}>Nombre</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Nombre del propietario"
+                            onChangeText={(text) => setNombre(text)}
+                        />
+                    </View>
+                </View>
+
+                <Button title='Crear propietario' color={'#008080'} onPress={save}/>
+            </ScrollView>
+    )
+}
+
+type PropietarioType = {
+  id: number,
+  name: string,
+  casas: Casa[]
+}
+
+type CasaType = {
+  refCastatal: string,
+  metros: number,
+  propietarios: Propietario[]
+}
+const PropietarioCasaScreen = (props: Props) => {
+      const [propietarios, setPropietarios] = useState<PropietarioType[]>({} as PropietarioType[]);
+      const [casas, setCasas] = useState<CasaType[]>({} as CasaType[]);
+
+      const [propietarioName, setPropietarioName] = useState<string>("");
+      const [refCastatal, setRefCastatal] = useState<string>("");
+  
+  
+      useEffect(() => {
+          const getPropietarios = async () => {
+              const propietarioList = await PropietarioRepository.find();
+              setPropietarios([...propietarioList]);
+          }
+          getPropietarios();  
+      }, [propietarios])
+
+      useEffect(() => {
+        const getCasas = async () => {
+            const casasList = await CasaRepository.find();
+            setCasas([...casasList]);
+        }
+        getCasas();  
+      }, [casas])
+
+      const handleCreateRelation = async () => {
+        const propietario = await PropietarioRepository.findOne({where: {name: propietarioName}});
+        const casa = await CasaRepository.findOne({where: {refCastatal: refCastatal}});
+        
+        if(propietario && casa){
+          
+          propietario.casas = [...(propietario.casas || []), casa];
+          await PropietarioRepository.save(propietario);
+  
+          casa.propietarios = [...(casa.propietarios || []), propietario];
+          await CasaRepository.save(casa);
+
+        } 
+
+
+        setPropietarioName("");
+        setRefCastatal("");
+      }
+
+  
+  
+  return (
+          <View style={{flex: 1}}>
+            <View style={styles.mainContainer}>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.inputLabel}>Ref Castatal</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Nombre del propietario"
+                        onChangeText={(text) => setPropietarioName(text)}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.inputLabel}>Metros</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Referencia Castatal"
+                        onChangeText={(text) => setRefCastatal(text)}
+                    />
+                </View>
+            </View>
+            <FlatList
+                data={propietarios}
+                renderItem={({item}) => (
+                    <View style={styles.rowContainer}>
+                    <Text style={styles.rowText}>{item.name}</Text>
+                </View>
+                )}
+                keyExtractor={(item, index) => item.name+ "_" + index}
+                ListHeaderComponent={
+                    <View style={styles.headerContainer}>
+                        <Text style={styles.headerText}>Propietario</Text>
+                    </View>
+                }
+                />
+            <FlatList
+                data={casas}
+                renderItem={({item}) => (
+                    <View style={styles.rowContainer}>
+                    <Text style={styles.rowText}>{item.refCastatal}</Text>
+                    <Text style={styles.rowText}>{item.metros}</Text>
+                </View>
+                )}
+                keyExtractor={(item, index) => item.refCastatal+ "_" + index}
+                ListHeaderComponent={
+                    <View style={styles.headerContainer}>
+                        <Text style={styles.headerText}>Ref Castatal</Text>
+                        <Text style={styles.headerText}>Metros</Text>
+                    </View>
+                }
+                />
+          <Button title='Crear relacion' color={'#008080'} onPress={handleCreateRelation}/>
+        </View>
+  )
+}
+```
 
 ***
 </br>
