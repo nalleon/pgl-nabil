@@ -17,7 +17,7 @@ const UserProfile = (props: Props) => {
      * UseStates
      */
     const [data, setData] = useState<UserData>({} as UserData);
-    const uri = ""
+    const uri = "http://172.16.0.110/instituto/api/"
 
     //TODO: add database search 
 

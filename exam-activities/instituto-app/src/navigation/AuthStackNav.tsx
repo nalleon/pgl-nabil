@@ -1,27 +1,27 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import FindAlumno from '../screens/FindAlumno';
-import AlumnoProfile from '../screens/AlumnoProfile';
+import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
 
 type Props = {}
 
-type AlumnoDetails = {
-  FindAlumno: undefined,
-  AlumnoProfile: {dni : string},
+type AuthScreens = {
+  LoginScreen: undefined,
+  RegisterScreen: undefined
 }
 
-const Stack = createNativeStackNavigator<AlumnoDetails>();
+const Stack = createNativeStackNavigator<AuthScreens>();
 
-const AlumnoStackNav = (props: Props) => {
+const AuthStackNav = (props: Props) => {
   return (
     <Stack.Navigator id={undefined}
     screenOptions={{contentStyle:{backgroundColor:'white'}}}
     >
         <Stack.Screen 
-            name="FindAlumno" 
-            component={FindAlumno} 
-            options={{ title: 'Buscador',  headerTitleAlign: 'center', 
+            name="LoginScreen" 
+            component={LoginScreen} 
+            options={{ title: 'Login',  headerTitleAlign: 'center', 
                 headerStyle: {
                     backgroundColor: '#008080', 
                 },
@@ -34,10 +34,10 @@ const AlumnoStackNav = (props: Props) => {
         />
         
         <Stack.Screen 
-            name="AlumnoProfile" 
-            component={AlumnoProfile} 
+            name="RegisterScreen" 
+            component={RegisterScreen} 
             options={({ route }) => ({
-                title: `${route.params.dni.toUpperCase()}`,
+                title: `Register`,
                 headerTitleAlign: 'center',
                 headerStyle: {
                     backgroundColor: '#008080', 
@@ -50,9 +50,10 @@ const AlumnoStackNav = (props: Props) => {
             })} 
         />
     </Stack.Navigator>
+
   )
 }
 
-export default AlumnoStackNav
+export default AuthStackNav
 
 const styles = StyleSheet.create({})
