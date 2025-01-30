@@ -1,12 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios';
-import { styles } from '../theme/LoginStyle';
+import { styles } from '../../theme/LoginStyle';
 import { TextInput } from 'react-native-gesture-handler';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { UserNameContext } from '../context/UserContext';
+import { UserNameContext } from '../../context/UserContext';
 import AsyncStorage  from '@react-native-async-storage/async-storage';
-import { URL as URL_INSTITUTO } from '../utils/Utils';
+import { URL as URL_INSTITUTO } from '../../utils/Utils';
 
 type Props = {}
 
@@ -58,13 +58,7 @@ const RegisterScreen = (props: RegisterProps) => {
     
       
         if (response.data) {
-          try {
-            await AsyncStorage.setItem("token", response.data);
             setRegistered(true);
-          } catch(error){
-            console.error("Error al guardar el token: "+  error);
-          } 
-          
         }
       } catch (error) {
         console.error("Error al iniciar sesión", error);

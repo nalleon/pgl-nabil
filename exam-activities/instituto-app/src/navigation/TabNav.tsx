@@ -2,10 +2,10 @@ import { StyleSheet, Text, useWindowDimensions, View } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
-import AlumnoProfile from '../screens/AlumnoProfile';
+import AlumnoProfile from '../screens/alumnos/AlumnoProfile';
 import AlumnoStackNav from './AlumnoStackNav';
-import AddAlumnoScreen from '../screens/AddAlumnoScreen';
-import DeleteAlumnoScreen from '../screens/DeleteAlumnoScreen';
+import AddAlumnoScreen from '../screens/alumnos/AddAlumnoScreen';
+import DeleteAlumnoScreen from '../screens/alumnos/DeleteAlumnoScreen';
 
 type Props = {}
 const Tab = createBottomTabNavigator();

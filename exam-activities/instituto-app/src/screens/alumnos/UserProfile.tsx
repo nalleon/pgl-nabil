@@ -5,8 +5,8 @@ import axios, { spread } from 'axios';
 import { FlatList } from 'react-native-gesture-handler';
 
 import Icon  from 'react-native-vector-icons/Ionicons';
-import { URL } from '../utils/Utils';
-import { UserNameContext } from '../context/UserContext';
+import { URL } from '../../utils/Utils';
+import { UserNameContext } from '../../context/UserContext';
 import  AsyncStorage  from '@react-native-async-storage/async-storage'
 
 type Props = {}

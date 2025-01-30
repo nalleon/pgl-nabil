@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import TabNav from './TabNav';
-import UserProfile from '../screens/UserProfile';
+import UserProfile from '../screens/alumnos/UserProfile';
 
 type Props = {}
 const Drawer = createDrawerNavigator();

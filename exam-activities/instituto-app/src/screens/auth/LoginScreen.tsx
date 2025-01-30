@@ -1,12 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios';
-import { styles } from '../theme/LoginStyle';
+import { styles } from '../../theme/LoginStyle';
 import { TextInput } from 'react-native-gesture-handler';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import AsyncStorage  from '@react-native-async-storage/async-storage';
-import { URL } from '../utils/Utils';
-import { UserNameContext } from '../context/UserContext';
+import { URL } from '../../utils/Utils';
+import { UserNameContext } from '../../context/UserContext';
 import { log } from 'console';
 
 type Props = {}
@@ -35,7 +35,10 @@ const LoginScreen = (props: LoginProps) => {
 
     useEffect(() => {
       if (logged) {
-        props.navigation.navigate('DrawerNav');
+        props.navigation.reset({
+          index: 0,
+          routes: [{ name: 'DrawerNav' }],
+        });
       }
     }, [logged]);
 

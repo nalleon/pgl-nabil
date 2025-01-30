@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import FindAlumno from '../screens/FindAlumno';
-import AlumnoProfile from '../screens/AlumnoProfile';
+import FindAlumno from '../screens/alumnos/FindAlumno';
+import AlumnoProfile from '../screens/alumnos/AlumnoProfile';
 
 type Props = {}
 
