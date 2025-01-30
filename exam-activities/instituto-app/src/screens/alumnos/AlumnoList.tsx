@@ -39,7 +39,8 @@ const AlumnoList = (props: Props) => {
             }
         };
         fetchData();
-    }, [data])
+        
+    }, [])
     return (
         <View>
             <FlatList
