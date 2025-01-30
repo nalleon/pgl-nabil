@@ -28,4 +28,21 @@ export class AppComponent {
 
 
   }
+
+  arr = [
+    { id:1,
+      name: 'Ana'
+    },
+
+    { id:2,
+      name: 'Mario'
+    },
+
+
+    { id:3,
+      name: 'Marta'
+    },
+  ]
+
 }
+

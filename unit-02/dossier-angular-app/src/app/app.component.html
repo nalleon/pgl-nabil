@@ -8,4 +8,18 @@
         {{item}}
       </li>
     </ul>
+
+    <br>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let persona of arr">
+          <td>{{ persona.nombre }}</td>
+        </tr>
+      </tbody>
+    </table>  
 </main>
