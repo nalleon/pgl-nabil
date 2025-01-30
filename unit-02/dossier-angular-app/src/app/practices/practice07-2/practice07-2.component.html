@@ -1,0 +1,23 @@
+<form
+[formGroup]="mascotaFormData"
+(submit)="guardarMascota()"
+>
+  <input type="text" id="nombre" formControlName="nombre" placeholder="nombre" /><br>
+  <input type="text" id="peso" formControlName="peso" placeholder="peso" /><br>
+  <input type="text" id="edad" formControlName="edad" placeholder="edad" /><br>
+
+  <br>
+  <button type="submit">Guardar</button>
+</form>
+
+
+
+
+  <ul>
+
+    <li *ngFor="let item of mascotas">
+      {{item.nombre}}
+    </li>
+  </ul>
+
+.

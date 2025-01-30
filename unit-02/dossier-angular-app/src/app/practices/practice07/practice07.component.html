@@ -1,0 +1,19 @@
+<form
+[formGroup]="personaFormData"
+(submit)="guardarPersona()"
+>
+<input type="text" id="nombre" formControlName="nombre" placeholder="nombre" /><br>
+<input type="text" id="peso" formControlName="peso" placeholder="peso" /><br>
+<select name="sexo" formControlName="sexo" >
+<option value="Hombre">Hombre</option>
+<option value="Mujer">Mujer</option>
+</select>
+<br>
+<label for="adultotrue">Adulto</label>
+<input type="radio" id="adultotrue" formControlName="adulto" name="adulto" value="true">
+<br>
+<label for="adultofalse">Menor</label>
+<input type="radio" id="adultofalse" name="adulto" formControlName="adulto" value="false">
+<br>
+<button type="submit" >Guardar</button>
+</form>

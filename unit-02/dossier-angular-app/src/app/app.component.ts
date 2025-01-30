@@ -1,9 +1,19 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { PruebaComponent } from './practices/practice03/prueba/prueba.component';
+import { GenteComponent } from './practices/practice04/gente.component';
+import { Practice07Component } from './practices/practice07/practice07.component';
+import { Practice072Component } from "./practices/practice07-2/practice07-2.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [
+    //RouterOutlet,
+    //PruebaComponent,
+    //GenteComponent,
+    Practice07Component,
+    Practice072Component
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
