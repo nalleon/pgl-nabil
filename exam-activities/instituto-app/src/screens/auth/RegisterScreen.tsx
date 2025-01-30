@@ -6,7 +6,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { UserNameContext } from '../../context/UserContext';
 import AsyncStorage  from '@react-native-async-storage/async-storage';
-import { URL as URL_INSTITUTO } from '../../utils/Utils';
+import { URL_INSTITUTO as URL_INSTITUTO } from '../../utils/Utils';
 
 type Props = {}
 

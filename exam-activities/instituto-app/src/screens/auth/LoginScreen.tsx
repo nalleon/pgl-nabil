@@ -5,7 +5,7 @@ import { styles } from '../../theme/LoginStyle';
 import { TextInput } from 'react-native-gesture-handler';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import AsyncStorage  from '@react-native-async-storage/async-storage';
-import { URL } from '../../utils/Utils';
+import { URL_INSTITUTO } from '../../utils/Utils';
 import { UserNameContext } from '../../context/UserContext';
 import { log } from 'console';
 
@@ -48,7 +48,7 @@ const LoginScreen = (props: LoginProps) => {
         }
 
         try {
-          const response = await axios.post(`${URL}login`, {
+          const response = await axios.post(`${URL_INSTITUTO}login`, {
                 nombre,
                 password 
             },
