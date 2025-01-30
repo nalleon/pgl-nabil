@@ -17,6 +17,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { AsyncStorage } from 'react-native';
 import AuthStackNav from './src/navigation/AuthStackNav';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import UserContext from './src/context/UserContext';
 
 
 
@@ -35,11 +36,13 @@ function App(): React.JSX.Element {
     <SafeAreaView style={{flex:1}}>
       <GestureHandlerRootView>
         <NavigationContainer>
+          <UserContext>
           { isAuthenticated ?
               <DrawerNav/>
               :
               <AuthStackNav/>
           }
+          </UserContext>
         </NavigationContainer>
       </GestureHandlerRootView>
     </SafeAreaView>

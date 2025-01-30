@@ -1,31 +1,43 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios';
-import { AsyncStorage } from 'react-native';
 import { styles } from '../theme/LoginStyle';
 import { TextInput } from 'react-native-gesture-handler';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import AsyncStorage  from '@react-native-async-storage/async-storage';
+import { URL } from '../utils/Utils';
+import { UserNameContext } from '../context/UserContext';
+import { log } from 'console';
 
 type Props = {}
 
 
 type AuthScreens = {
     LoginScreen: undefined,
-    RegisterScreen: undefined
+    RegisterScreen: undefined,
+    DrawerNav: undefined
 }
   
 type LoginProps = NativeStackScreenProps<AuthScreens, "LoginScreen">
 
 const LoginScreen = (props: LoginProps) => {
-
+    
+    const [logged, setLogged] = useState<boolean>(false)
     const [nombre, setNombre] = useState<string>("")
     const [password, setPassword] = useState<string>("")
 
-    const url = "http://172.16.0.110:8080/instituto/api/login";
+    const context = useContext(UserNameContext);
+    
+    useEffect(() => {
+      setLogged(false);
+    }, [])
+    
 
     useEffect(() => {
-        
-    }, [])
+      if (logged) {
+        props.navigation.navigate('DrawerNav');
+      }
+    }, [logged]);
 
     const handleLogin = async (nombre : string, password : string) => {
         if(!nombre || nombre.trim() === "" || !password || password.trim() === ""){
@@ -33,11 +45,9 @@ const LoginScreen = (props: LoginProps) => {
         }
 
         try {
-          const response = await axios.post(`${url}`, {
-                
+          const response = await axios.post(`${URL}login`, {
                 nombre,
                 password 
-                
             },
             {
               headers:{
@@ -50,12 +60,19 @@ const LoginScreen = (props: LoginProps) => {
       
         
           if (response.data) {
-            await AsyncStorage.setItem("token", response.data);
+            try {
+              await AsyncStorage.setItem("token", JSON.stringify(response.data));
+              context.setNombreUsuario(nombre);
+              setLogged(true);
+            } catch(error){
+              console.error("Error al guardar el token: "+  error);
+            } 
+            
           }
         } catch (error) {
           console.error("Error al iniciar sesión", error);
         }
-      };
+    };
 
 
       
@@ -86,7 +103,6 @@ const LoginScreen = (props: LoginProps) => {
         <Text>¿No estas registrado? Registrate</Text>
       </TouchableOpacity>
 
-      <Text ></Text>
     </View>
   )
 }
