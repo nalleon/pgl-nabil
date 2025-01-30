@@ -61,7 +61,8 @@ const LoginScreen = (props: LoginProps) => {
         
           if (response.data) {
             try {
-              await AsyncStorage.setItem("token", JSON.stringify(response.data));
+              await AsyncStorage.setItem("token", response.data);
+              await AsyncStorage.setItem("nombreusuario", nombre);
               context.setNombreUsuario(nombre);
               setLogged(true);
             } catch(error){

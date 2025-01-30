@@ -12,8 +12,8 @@ import  AsyncStorage  from '@react-native-async-storage/async-storage'
 type Props = {}
 
 type UserData = {
-    name : string,
-    email : string
+    correo : string,
+    nombre : string
 }
 const UserProfile = (props: Props) => {
     /**
@@ -36,6 +36,8 @@ const UserProfile = (props: Props) => {
               return;
           }
 
+          const nombre =  await AsyncStorage.getItem("nombreusuario");
+
           const token = await AsyncStorage.getItem("token");
           console.log("Token:", token);
           if (!token) {
@@ -44,30 +46,35 @@ const UserProfile = (props: Props) => {
           }
 
           try {
-              const response = await axios.get(`${URL}v2/usuarios/${context.nombreUsuario}`, {
+              const response = await axios.get(`${URL}v2/usuarios/nombre/${nombre}`, {
                   headers: {
                       Authorization: 'Bearer ' + token,
                   },
               });
               console.log("Respuesta del servidor:", response.data); 
-              let userData = response.data as UserData;
+              let userData = response.data.data;
               setData(userData); 
+              console.log(data);
           } catch (error) {
               console.error("Error al obtener los datos:", error);
           }
       };
 
       fetchData();
-    }, [context.nombreUsuario])
+    }, [])
     
 
   return (
     <View>
-        <Text>
-            { data.name }
-            ---
-            { data.email}
-        </Text>
+        <Text>Datos:</Text>
+            {data ? (
+                <>
+                    <Text>Correo: {data.correo}</Text>
+                    <Text>Nombre: {data.nombre}</Text>
+                </>
+            ) : (
+                <Text>Cargando...</Text>
+            )}
     </View>
   )
 }
