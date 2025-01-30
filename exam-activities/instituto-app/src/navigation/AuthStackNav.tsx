@@ -4,13 +4,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/auth/LoginScreen';
 import RegisterScreen from '../screens/auth/RegisterScreen';
 import DrawerNav from './DrawerNav';
+import LogoutScreen from '../screens/auth/LogoutScreen';
 
 type Props = {}
 
 type AuthScreens = {
   LoginScreen: undefined,
   RegisterScreen: undefined,
-  DrawerNav: undefined
+  DrawerNav: undefined,
+  LogoutScreen: undefined
 }
 
 const Stack = createNativeStackNavigator<AuthScreens>();
@@ -57,6 +59,23 @@ const AuthStackNav = (props: Props) => {
             component={DrawerNav} 
             options={({ route }) => ({
                 title: `Principal`,
+                headerTitleAlign: 'center',
+                headerStyle: {
+                    backgroundColor: '#008080', 
+                },
+                headerTintColor: 'white', 
+                headerTitleStyle: {
+                    fontWeight: 'bold',    
+                    fontSize: 20,      
+                }
+            })} 
+        />
+
+    <Stack.Screen 
+            name="LogoutScreen" 
+            component={LogoutScreen} 
+            options={({ route }) => ({
+                title: `Logout`,
                 headerTitleAlign: 'center',
                 headerStyle: {
                     backgroundColor: '#008080', 

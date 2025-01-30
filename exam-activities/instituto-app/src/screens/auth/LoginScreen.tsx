@@ -15,7 +15,7 @@ type Props = {}
 type AuthScreens = {
     LoginScreen: undefined,
     RegisterScreen: undefined,
-    DrawerNav: undefined
+    DrawerNav: undefined,
 }
   
 type LoginProps = NativeStackScreenProps<AuthScreens, "LoginScreen">
@@ -35,10 +35,10 @@ const LoginScreen = (props: LoginProps) => {
 
     useEffect(() => {
       if (logged) {
-        props.navigation.reset({
-          index: 0,
-          routes: [{ name: 'DrawerNav' }],
-        });
+          props.navigation.reset({
+              index: 0,
+              routes: [{ name: 'DrawerNav' }],
+          });
       }
     }, [logged]);
 

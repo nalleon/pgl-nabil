@@ -13,7 +13,8 @@ type Props = {}
 type AuthScreens = {
     LoginScreen: undefined,
     RegisterScreen: undefined,
-    DrawerNav: undefined
+    DrawerNav: undefined,
+    LogoutScreen: undefined
 }
   
 type RegisterProps = NativeStackScreenProps<AuthScreens, "RegisterScreen">
