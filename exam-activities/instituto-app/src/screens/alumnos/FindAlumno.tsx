@@ -42,7 +42,12 @@ const FindAlumno = (props: Props) => {
     } catch (error) {
         console.error("Error al obtener los datos:", error);
     }
-};
+  };
+
+  function handleScreen(dni : string){
+
+  }
+
 
 
   return (
@@ -55,17 +60,15 @@ const FindAlumno = (props: Props) => {
       />
     
       <TouchableOpacity style={styles.button} onPress={() => fetchData(busqueda)}>
-        <Text style={styles.buttonText}>Buscar </Text>
+        <Text style={styles.buttonText}> Buscar </Text>
       </TouchableOpacity>
-
-
 
       <FlatList
         data={data}
         renderItem={({ item }) => (
-            <View>
-                <Text>{item.nombre} {item.apellidos}</Text>
-            </View>
+          <TouchableOpacity onPress={() => handleScreen(item.dni)}>
+              <Text style={{margin:10, borderBottomColor:'#008080', borderBottomWidth:2}}>{item.nombre} {item.apellidos}</Text>
+          </TouchableOpacity>
         )}
         keyExtractor={(item, index) => item.nombre + "_" + item.apellidos + "_" + index}
         horizontal

@@ -6,7 +6,6 @@ import AlumnoProfile from '../screens/alumnos/AlumnoProfile';
 import AlumnoStackNav from './AlumnoStackNav';
 import AddAlumnoScreen from '../screens/alumnos/AddAlumnoScreen';
 import DeleteAlumnoScreen from '../screens/alumnos/DeleteAlumnoScreen';
-import AlumnoList from '../screens/alumnos/AlumnoList';
 
 type Props = {}
 const Tab = createBottomTabNavigator();
@@ -24,13 +23,7 @@ const TabNav = (props: Props) => {
               tabBarLabelPosition: 'below-icon',
           }}
           >   
-          
-          
-          <Tab.Screen name='Listado de alumnos' component={AlumnoList}
-              options={ {tabBarIcon: ({focused}) => 
-                  <Icon name={(focused) ? 'people' : 'people-outline'} size={30}/>
-              }
-          }/>
+
 
           <Tab.Screen name='Agregar alumno' component={AddAlumnoScreen}
               options={ {tabBarIcon: ({focused}) => 

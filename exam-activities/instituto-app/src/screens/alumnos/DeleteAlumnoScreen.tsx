@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
+import { Alert, StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { FlatList } from 'react-native-gesture-handler';
 import axios from 'axios';
@@ -40,6 +40,24 @@ const DeleteAlumnoScreen = (props: Props) => {
       fetchData();
   }, [])
 
+
+  function showConfirmation (dni : string){
+    Alert.alert(`Eliminar`,`¿Está seguro de que desea borrar el alumno cuyo dni es ${dni}?`,
+      [
+        {
+          text: 'No',
+          onPress: () => console.log('No se ha eliminado el alumno'),
+          style: 'cancel'
+        },
+        {
+          text: 'Sí',
+          onPress: () => handleDelete(dni),
+          style:'destructive'
+        }
+
+      ]
+    )
+  }
 
   const handleDelete = async (dni : string) => {
     try {
@@ -87,7 +105,7 @@ const DeleteAlumnoScreen = (props: Props) => {
                               <Icon name='pencil' size={25} color={'grey'}></Icon>
                           </TouchableOpacity>
 
-                          <TouchableOpacity onPress={() => handleDelete(item.dni)} style={styles.taskActionIcon}>
+                          <TouchableOpacity onPress={() => showConfirmation(item.dni)} style={styles.taskActionIcon}>
                               <Icon name='trash' size={25} color={'grey'} />
                           </TouchableOpacity>
                       </View>
