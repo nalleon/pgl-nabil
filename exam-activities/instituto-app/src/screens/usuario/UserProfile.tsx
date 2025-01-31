@@ -46,7 +46,7 @@ const UserProfile = (props: Props) => {
           }
 
           try {
-              const response = await axios.get(`${URL_INSTITUTO}v2/usuarios/nombre/${nombre}`, {
+              const response = await axios.get(`${URL_INSTITUTO}v3/usuarios/nombre/${nombre}`, {
                   headers: {
                       Authorization: 'Bearer ' + token,
                   },

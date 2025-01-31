@@ -1,10 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { URL_INSTITUTO } from '../../utils/Utils'
 import { FlatList, TextInput } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons';
+import { AlumnoContextHook } from '../../context/AlumnoContext'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 type Props = {}
 type AlumnoData = {
@@ -13,10 +15,20 @@ type AlumnoData = {
   apellidos : string,
 }
 
-const FindAlumno = (props: Props) => {
+
+type AlumnoDetails = {
+  FindAlumno: undefined,
+  AlumnoProfile: undefined,
+}
+
+type PropsAlumno = NativeStackScreenProps<AlumnoDetails, 'FindAlumno'>;
+
+const FindAlumno = (props: PropsAlumno) => {
   const [data, setData] = useState<AlumnoData[]>([]);
   const [busqueda, setBusqueda] = useState<string>("");
   
+  const context = useContext(AlumnoContextHook);
+
   useEffect(() => {
 
   }, [data])
@@ -46,6 +58,14 @@ const FindAlumno = (props: Props) => {
 
   function handleScreen(dni : string){
 
+    console.log(dni);
+
+    if(dni){
+      const aux = dni;
+      context.setDNI(aux);
+      props?.navigation?.navigate('AlumnoProfile');
+    }
+
     
   }
 
@@ -68,10 +88,10 @@ const FindAlumno = (props: Props) => {
         <FlatList
             data={data}
             renderItem={({ item }) => (
-                <TouchableOpacity style={styles.task} onPress={() => handleScreen(item.dni)}>
+                <TouchableOpacity style={styles.task} onPress={() => handleScreen(item?.dni ? item.dni : null)}>
                     <Text style={styles.taskText}>{item.nombre} {item.apellidos}</Text>
                     <View style={styles.taskActions}>
-                        <TouchableOpacity onPress={() => handleScreen(item.dni)} style={styles.taskActionIcon}>
+                        <TouchableOpacity onPress={() => handleScreen(item?.dni ? item.dni : null)} style={styles.taskActionIcon}>
                             <Icon name='create-outline' size={35} color={'#d1234e'} />
                         </TouchableOpacity>
                     </View>

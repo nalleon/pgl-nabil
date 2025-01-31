@@ -8,7 +8,7 @@ type Props = {}
 
 type AlumnoDetails = {
   FindAlumno: undefined,
-  AlumnoProfile: {dni : string},
+  AlumnoProfile: undefined,
 }
 
 const Stack = createNativeStackNavigator<AlumnoDetails>();
@@ -30,7 +30,7 @@ const AlumnoStackNav = (props: Props) => {
             name="AlumnoProfile" 
             component={AlumnoProfile} 
             options={({ route }) => ({
-                title: `${route.params.dni.toUpperCase()}`,
+                title: `Alumno`,
                 headerTitleAlign: 'center',
                 headerStyle: {
                     backgroundColor: '#008080', 

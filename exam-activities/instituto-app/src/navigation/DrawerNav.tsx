@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import TabNav from './TabNav';
-import UserProfile from '../screens/alumnos/UserProfile';
+import UserProfile from '../screens/usuario/UserProfile';
 import LogoutScreen from '../screens/auth/LogoutScreen';
 import { UserNameContext } from '../context/UserContext';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';

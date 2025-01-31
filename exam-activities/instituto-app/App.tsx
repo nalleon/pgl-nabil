@@ -18,6 +18,7 @@ import { AsyncStorage } from 'react-native';
 import AuthStackNav from './src/navigation/AuthStackNav';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import UserContext from './src/context/UserContext';
+import AlumnoContext from './src/context/AlumnoContext';
 
 
 
@@ -37,11 +38,13 @@ function App(): React.JSX.Element {
       <GestureHandlerRootView>
         <NavigationContainer>
           <UserContext>
-          { isAuthenticated ?
-              <DrawerNav/>
-              :
-              <AuthStackNav/>
-          }
+            <AlumnoContext>
+            { isAuthenticated ?
+                <DrawerNav/>
+                :
+                <AuthStackNav/>
+            }
+            </AlumnoContext>
           </UserContext>
         </NavigationContainer>
       </GestureHandlerRootView>
