@@ -22,18 +22,24 @@ type TokenPayload = {
   role: string;
 };
 
+type AuthScreens = {
+  LoginScreen: undefined,
+  RegisterScreen: undefined,
+  DrawerNav: undefined,
+}
+
+type LoginProps = NativeStackScreenProps<AuthScreens, "DrawerNav">
+
 
 const Drawer = createDrawerNavigator();
 const DrawerNav = (props: Props) => {
-
   const context = useContext(UserNameContext);
   
   const authorizedRol = "ROLE_ADMIN";
 
   const [isAdmin, setiIsAdmin] = useState<boolean>(false);
   const { decodedToken } = useJwt<TokenPayload>(context.token);
-
-
+  
 
   useEffect(() => {
     const checkRole = async () => {

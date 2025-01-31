@@ -37,7 +37,6 @@ const LoginScreen = (props: LoginProps) => {
     useEffect(() => {
       if (logged) {
           props.navigation.reset({
-              index: 0,
               routes: [{ name: 'DrawerNav' }],
           });
       }

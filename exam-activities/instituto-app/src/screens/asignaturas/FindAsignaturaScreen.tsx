@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
-import { FlatList, TextInput } from 'react-native-gesture-handler';
+import { FlatList, RefreshControl, TextInput } from 'react-native-gesture-handler';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AlumnoContextHook } from '../../context/AlumnoContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -26,6 +26,9 @@ type PropsAsignatura = NativeStackScreenProps<AsignaturaDetails, 'FindAsignatura
 
 const FindAsignaturaScreen = (props: PropsAsignatura) => {
   const [data, setData] = useState<AsignaturaData[]>([]);
+  const [refresh, setRefresh] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  
   const [busquedaNombre, setBusquedaNombre] = useState<string>("");
   const [busquedaCurso, setBusquedaCurso] = useState<string>("");
 
@@ -34,7 +37,15 @@ const FindAsignaturaScreen = (props: PropsAsignatura) => {
   useEffect(() => {
 
   }, [data])
+ 
 
+  function refreshData() {
+    setRefresh(!refresh);
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }
 
   const fetchData = async (nombre : string, curso : string) => {
     const token = await AsyncStorage.getItem("token");
@@ -94,6 +105,7 @@ const FindAsignaturaScreen = (props: PropsAsignatura) => {
 
       {data ? 
         <FlatList
+        refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={refreshData} />}
             data={data}
             renderItem={({ item }) => (
                 <TouchableOpacity style={styles.task} onPress={() => handleScreen(item?.nombre, item?.curso)}>

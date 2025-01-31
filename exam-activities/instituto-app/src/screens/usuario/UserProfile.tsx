@@ -2,12 +2,14 @@ import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import axios, { spread } from 'axios';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, RefreshControl } from 'react-native-gesture-handler';
 
 import Icon  from 'react-native-vector-icons/Ionicons';
 import { URL_INSTITUTO } from '../../utils/Utils';
 import { UserNameContext } from '../../context/UserContext';
 import  AsyncStorage  from '@react-native-async-storage/async-storage'
+import { nativeViewGestureHandlerProps } from 'react-native-gesture-handler/lib/typescript/handlers/NativeViewGestureHandler';
+import { useNavigation } from '@react-navigation/native';
 
 type Props = {}
 
@@ -20,11 +22,12 @@ const UserProfile = (props: Props) => {
      * UseStates
      */
     const [data, setData] = useState<UserData>({} as UserData);
-    
+    const [refresh, setRefresh] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
     const context = useContext(UserNameContext);
 
     useEffect(() => {
-        if(!context.nombreUsuario){
+        if(!context.nombreUsuario || !context.token){
           console.log('el nombre no esta seteado');
           return;
         }
@@ -65,20 +68,27 @@ const UserProfile = (props: Props) => {
     }, [])
 
 
-
+    function refreshData() {
+        setRefresh(!refresh);
+        setRefreshing(true);
+        setTimeout(() => {
+          setRefreshing(false);
+        }, 1000);
+      }
     
   return (
-    <View>
+    <ScrollView style={{flex:1}}
+    refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={refreshData} />}>
         <Text>Datos:</Text>
             {data ? (
                 <>
                     <Text>Correo: {data.correo}</Text>
-                    <Text>Nombre: {data.nombre}</Text>
+                    <Text>Nombre: {context.nombreUsuario}</Text>
                 </>
             ) : (
                 <Text>Cargando...</Text>
             )}
-    </View>
+    </ScrollView>
   )
 }
 

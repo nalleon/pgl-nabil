@@ -24,12 +24,17 @@ import AsignaturaContext from './src/context/AsignaturaContext';
 
 
 function App(): React.JSX.Element {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
     const checkAuth = async () => {
       const token = await AsyncStorage.getItem("token");
-      setIsAuthenticated(!!token); 
+      if(!token){
+        setIsAuthenticated(false);
+      } else {
+        setIsAuthenticated(true);
+      }
+       
     };
     checkAuth();
   }, []);
