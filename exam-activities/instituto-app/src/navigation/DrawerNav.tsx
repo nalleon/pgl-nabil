@@ -10,6 +10,7 @@ import LoginScreen from '../screens/auth/LoginScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MatriculaStackNav from './MatriculaStackNav';
 import { useJwt } from 'react-jwt';
+import AlumnoList from '../screens/alumnos/normal.user/AlumnoList';
 
 type Props = {}
 
@@ -31,7 +32,6 @@ const DrawerNav = (props: Props) => {
 
 
   useEffect(() => {
-
     const checkRole = async () => {
       if(context.rol == authorizedRol){
         setiIsAdmin(true);
@@ -53,9 +53,9 @@ const DrawerNav = (props: Props) => {
       <Drawer.Screen name="Perfil" component={UserProfile} options={{ title: 'Mi perfil' }} />
       {
         isAdmin ? 
-          <Drawer.Screen name="Operaciones Admin" component={TabNav} options={{ title: 'Operaciones' }}/>
+          <Drawer.Screen name="Operaciones" component={TabNav} options={{ title: 'Operaciones (ADMIN)' }}/>
         :
-        <Drawer.Screen name="Operaciones User" component={MatriculaStackNav} options={{ title: 'Operaciones User' }}/>
+        <Drawer.Screen name="Operaciones" component={AlumnoList} options={{ title: 'Operaciones' }}/>
       }
       <Drawer.Screen name="Logout" component={LogoutScreen} options={{ title: 'Cerrar sesión' }}/>
     </Drawer.Navigator>
