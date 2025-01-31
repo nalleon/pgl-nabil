@@ -28,7 +28,6 @@ const TabNav28 = (props: Props) => {
                 options={ {tabBarIcon: ({focused}) => 
                     <Icon name={(focused) ? 'list' : 'list-outline'} size={30}/>
                 }
-
             }/>
             
             <Tab.Screen name='Search' component={StackNavTabSearch}

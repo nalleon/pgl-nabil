@@ -23,7 +23,7 @@ function App(): React.JSX.Element {
 
   return (
     <SafeAreaView style={{flex:1}}>
-      <Practice30Screen/>
+      <Practice28Screen/>
     </SafeAreaView>
   );
 }

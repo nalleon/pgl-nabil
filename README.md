@@ -11,6 +11,7 @@ Repository for the multimedia programming and mobile devices module.
 - [Unit 02](/unit-02/)
     - [Dossier - React Native](./unit-02/dossier-react-native/)
 
+    - [Dossier - Angular](./unit-02/dossier-angular-app/)
 
 ### Extra: 
 
@@ -19,6 +20,9 @@ Repository for the multimedia programming and mobile devices module.
     - [Hangedman](./exam-activities/hangedman/)
     - [Hangedman - Console](./exam-activities/hangedman-console/)
     - [Minesweeper](./exam-activities/minesweeper/)
+    - [Movies API (NO security)](./exam-activities/movies-project/)
+    - [Movies API (Security)](./exam-activities/movies-project-v2/)
+    - [School API](./exam-activities/instituto-app/)
 
 - [Exam Practices](./exam-practices/)
     - [Hangedman - React](./exam-practices/first-trimester/hangedman-react/)
