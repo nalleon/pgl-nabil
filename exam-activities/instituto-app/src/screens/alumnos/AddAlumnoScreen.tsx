@@ -32,15 +32,6 @@ const AddAlumnoScreen = (props: Props) => {
   }, [])
   
 
-  useEffect(() => {
-    /**if (logged) {
-      props.navigation.reset({
-        index: 0,
-        routes: [{ name: 'DrawerNav' }],
-      });
-    }*/
-  }, []);
-
   const selectImage = async () => {
     launchImageLibrary({ mediaType: "photo", includeBase64: true}, (response) => {
       if(response.didCancel){
