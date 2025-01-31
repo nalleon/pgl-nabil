@@ -21,16 +21,9 @@ const AlumnoStackNav = (props: Props) => {
         <Stack.Screen 
             name="FindAlumno" 
             component={FindAlumno} 
-            options={{ title: 'Buscador',  headerTitleAlign: 'center', 
-                headerStyle: {
-                    backgroundColor: '#008080', 
-                },
-                headerTintColor: 'white', 
-                headerTitleStyle: {
-                    fontWeight: 'bold',    
-                    fontSize: 20,                
-                }
-            }}
+            options={({ route }) => ({
+                headerShown: false,
+            })} 
         />
         
         <Stack.Screen 

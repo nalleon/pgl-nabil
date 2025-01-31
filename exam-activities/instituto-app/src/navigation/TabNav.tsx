@@ -33,7 +33,7 @@ const TabNav = (props: Props) => {
 
           <Tab.Screen name='Eliminar alumno' component={DeleteAlumnoScreen}
               options={ {tabBarIcon: ({focused}) => 
-                  <Icon name={(focused) ? 'cog' : 'cog-outline'} size={30}/>
+                  <Icon name={(focused) ? 'trash' : 'trash-outline'} size={30}/>
               }
           }/>
 

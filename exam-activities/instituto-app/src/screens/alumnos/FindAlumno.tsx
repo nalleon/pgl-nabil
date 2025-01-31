@@ -51,7 +51,7 @@ const FindAlumno = (props: Props) => {
 
 
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, flexDirection:'column'}}>
       <TextInput
         style={styles.input}
         placeholder="Nombre de usuario"
@@ -66,8 +66,11 @@ const FindAlumno = (props: Props) => {
       <FlatList
         data={data}
         renderItem={({ item }) => (
+          
           <TouchableOpacity onPress={() => handleScreen(item.dni)}>
+            <View>
               <Text style={{margin:10, borderBottomColor:'#008080', borderBottomWidth:2}}>{item.nombre} {item.apellidos}</Text>
+          </View>
           </TouchableOpacity>
         )}
         keyExtractor={(item, index) => item.nombre + "_" + item.apellidos + "_" + index}

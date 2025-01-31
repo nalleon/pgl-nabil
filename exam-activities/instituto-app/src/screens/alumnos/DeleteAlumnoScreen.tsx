@@ -96,23 +96,15 @@ const DeleteAlumnoScreen = (props: Props) => {
               data={data}
               renderItem={({ item }) => (
                   <View style={styles.task} >
-                      <TouchableOpacity onPress={() => handleModify(item.dni)} style={styles.taskContent}>
-                              <Text style={styles.taskText}>{item.nombre} {item.apellidos}</Text>
-                      </TouchableOpacity>
-                        
+                      <Text style={styles.taskText}>{item.nombre} {item.apellidos}</Text>
                       <View style={styles.taskActions}>
-                          <TouchableOpacity onPress={() => handleModify(item.dni)} style={styles.taskActionIcon}>
-                              <Icon name='pencil' size={25} color={'grey'}></Icon>
-                          </TouchableOpacity>
-
                           <TouchableOpacity onPress={() => showConfirmation(item.dni)} style={styles.taskActionIcon}>
-                              <Icon name='trash' size={25} color={'grey'} />
+                              <Icon name='close' size={35} color={'#d1234e'} />
                           </TouchableOpacity>
                       </View>
                   </View>
               )}
               keyExtractor={(item, index) => item.nombre + "_" + item.apellidos + "_" + index}
-              horizontal
           />
         :
           <Text style={styles.title}>Permiso denegado</Text>
@@ -126,69 +118,57 @@ export default DeleteAlumnoScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "#f4f4f4",
     padding: 20,
   },
+
   btnText: {
-      fontSize: 30,
-      color: 'white',
-      fontWeight: 'bold',
-      textAlign: 'center'
+    fontSize: 30,
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 
-  task:{
-      padding: 10,
-      marginLeft: 10,
-      marginRight: 10,
-      marginTop: 5,
-      marginBottom: 5,
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      height: 50,
-      backgroundColor: "#fff",
-      borderRadius: 8,
-      paddingHorizontal: 15,
-      borderWidth: 1,
-      borderColor: "#008080",
+  task: {
+    padding: 15,
+    marginBottom: 10,
+    backgroundColor: "#fff",
+    borderRadius: 50,
+    borderWidth: 1,
+    borderColor: "#008080",
+    flexDirection: 'row',
+    alignItems: 'center',
+    elevation: 3, 
   },
 
   taskText: {
-      fontSize: 18,
-      marginLeft: 10,
-      textDecorationLine: 'none',
+    fontSize: 17,
+    flex: 1,
+    marginLeft: 25,
+    color: '#333',
   },
-
-  taskTextCompleted: {
-      fontSize: 18,
-      marginLeft: 10,
-      textDecorationLine: 'line-through'
-  },
-
 
   taskActions: {
-      flexDirection: 'row',
-      marginLeft: 'auto', 
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
   taskActionIcon: {
-      marginLeft: 10,
+    marginLeft: 15,
+    padding: 5,
+    borderRadius: 5,
   },
 
   taskContent: {
-      flex: 1,
+    flex: 1,
   },
 
   title: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      marginTop: 20,
-      marginLeft: 10,
-      marginBottom: 10,
-      textAlign: 'center'
-  }
-
-  
-
-})
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 20,
+    marginBottom: 10,
+    textAlign: 'center',
+    color: '#008080',
+  },
+});

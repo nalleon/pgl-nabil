@@ -58,16 +58,7 @@ const AuthStackNav = (props: Props) => {
             name="DrawerNav" 
             component={DrawerNav} 
             options={({ route }) => ({
-                title: `Principal`,
-                headerTitleAlign: 'center',
-                headerStyle: {
-                    backgroundColor: '#008080', 
-                },
-                headerTintColor: 'white', 
-                headerTitleStyle: {
-                    fontWeight: 'bold',    
-                    fontSize: 20,      
-                }
+                headerShown: false, 
             })} 
         />
 
