@@ -10,11 +10,11 @@ import LoginScreen from '../../screens/auth/LoginScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MatriculaStackNav from '../stack/MatriculaStackNav';
 import { useJwt } from 'react-jwt';
-import AlumnoList from '../../screens/alumnos/normal.user/AlumnoList';
 import AsignaturaStackNav from '../stack/AsignaturaStackNav';
-import AsignaturaList from '../../screens/alumnos/normal.user/AsignaturaList';
 import AsignaturaTabNav from '../tab/AsignaturaTabNav';
 import MatriculaTabNav from '../tab/MatriculaTabNav';
+import AsignaturaList from '../../screens/normal.user/AsignaturaList';
+import AlumnoList from '../../screens/normal.user/AlumnoList';
 
 type Props = {}
 

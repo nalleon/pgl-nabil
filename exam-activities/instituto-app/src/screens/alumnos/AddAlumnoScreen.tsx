@@ -17,8 +17,6 @@ type AlumnoType =  {
   fechanacimiento : Date
 }
 
-// TODO: preguntar donde debo de guardar la foto
-
 const AddAlumnoScreen = (props: Props) => {
     
   const [alumno, setAlumno] = useState<AlumnoType>({} as AlumnoType)
