@@ -15,8 +15,6 @@ type AsignaturaType = {
 const AddAsignaturaScreen = (props: Props) => {
     
   const [asignatura, setAsignatura] = useState<AsignaturaType>({} as AsignaturaType)
-
-
   
   useEffect(() => {
   }, [])
