@@ -123,13 +123,16 @@ const AlumnoProfile = (props: PropsAlumno) => {
             }
           );
     
+        
           console.log('Respuesta del servidor: ', response.data);
+          props.navigation.goBack();
         } catch (error) {
           console.error('Error al actualizar alumno: ', error.response || error.message);
           if (error.response) {
             console.log('Detalles del error: ', error.response.data);
           }
         }
+
       };    
 
 

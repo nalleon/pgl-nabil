@@ -7,7 +7,8 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import AsyncStorage  from '@react-native-async-storage/async-storage';
 import { URL_INSTITUTO } from '../../utils/Utils';
 import { UserNameContext } from '../../context/UserContext';
-import { log } from 'console';
+import { useJwt } from "react-jwt"
+
 
 type Props = {}
 
@@ -67,6 +68,9 @@ const LoginScreen = (props: LoginProps) => {
               await AsyncStorage.setItem("token", response.data);
               await AsyncStorage.setItem("nombreusuario", nombre);
               context.setNombreUsuario(nombre);
+              context.setToken(response.data);
+
+
               setLogged(true);
             } catch(error){
               console.error("Error al guardar el token: "+  error);
@@ -77,7 +81,6 @@ const LoginScreen = (props: LoginProps) => {
           console.error("Error al iniciar sesión", error);
         }
     };
-
 
       
   return (

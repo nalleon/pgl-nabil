@@ -33,10 +33,12 @@ const LogoutScreen = (props: LoginProps) => {
             try {
                 await AsyncStorage.removeItem("token");
                 await AsyncStorage.removeItem("nombreusuario");
+                await AsyncStorage.removeItem("rol");
                 context.setNombreUsuario("");
                 context.setToken("");
+                context.setRol("");
                 setLogged(false);
-                console.log(context.token, context.nombreUsuario);
+                console.log(context.token, context.nombreUsuario, context.rol);
             } catch(error){
                 console.error("Error al elininar los elementos del async storage: "+  error);
             } 

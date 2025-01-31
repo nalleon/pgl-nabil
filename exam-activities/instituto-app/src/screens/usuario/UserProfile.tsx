@@ -55,15 +55,18 @@ const UserProfile = (props: Props) => {
               let userData = response.data.data;
               setData(userData); 
               console.log(data);
-          } catch (error) {
+              //console.log(JSON.parse(token));
+          } catch (error) { 
               console.error("Error al obtener los datos:", error);
           }
       };
 
       fetchData();
     }, [])
-    
 
+
+
+    
   return (
     <View>
         <Text>Datos:</Text>

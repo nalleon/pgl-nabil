@@ -10,6 +10,8 @@ type UsuarioContextType ={
   setNombreUsuario: (nombreUsuario: string) => void,
   token: string,
   setToken: (token: string) => void,
+  rol: string,
+  setRol: (rol: string) => void,
 
 }
 
@@ -17,6 +19,7 @@ export const UserNameContext = createContext<UsuarioContextType>({} as UsuarioCo
 const UserContext = (props: Props) => {
   const [nombreUsuario, setNombreUsuario] = useState<string>("");
   const [token, setToken] = useState<string>("");
+  const [rol, setRol] = useState<string>("");
 
   useEffect(() => {
     async () => {
@@ -41,13 +44,25 @@ const UserContext = (props: Props) => {
 
   }, [nombreUsuario])
   
+  useEffect(() => {
+    
+    async () => {
+      const roleStorage = await AsyncStorage.getItem("rol");
   
+      if(roleStorage){
+        setRol(roleStorage);
+      }
+    }
+
+  }, [rol])
 
   const contextValues: UsuarioContextType  = {
     nombreUsuario,
     setNombreUsuario,
     token,
-    setToken
+    setToken,
+    rol,
+    setRol
   }
 
   return (
