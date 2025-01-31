@@ -25,6 +25,7 @@ const UserProfile = (props: Props) => {
     const [refresh, setRefresh] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
     const context = useContext(UserNameContext);
+    
 
     useEffect(() => {
         if(!context.nombreUsuario || !context.token){
