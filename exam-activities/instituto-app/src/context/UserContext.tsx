@@ -13,7 +13,7 @@ type UsuarioContextType ={
 
 }
 
-export const UserNameContext = createContext<UsuarioContextType >({} as UsuarioContextType );
+export const UserNameContext = createContext<UsuarioContextType>({} as UsuarioContextType );
 const UserContext = (props: Props) => {
   const [nombreUsuario, setNombreUsuario] = useState<string>("");
   const [token, setToken] = useState<string>("");

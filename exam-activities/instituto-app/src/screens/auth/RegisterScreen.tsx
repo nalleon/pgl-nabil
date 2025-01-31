@@ -70,7 +70,7 @@ const RegisterScreen = (props: RegisterProps) => {
     
 return (
 <View style={styles.container}>
-    <Text style={styles.title}>Regustrarse</Text>
+    <Text style={styles.title}>Registrarse</Text>
     
     <TextInput
       style={styles.input}

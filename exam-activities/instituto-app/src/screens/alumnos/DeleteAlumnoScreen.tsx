@@ -73,22 +73,6 @@ const DeleteAlumnoScreen = (props: Props) => {
     }
   }
 
-
-  const handleModify = async (dni : string) => {
-    /**
-    try {
-      const token = await AsyncStorage.getItem("token");
-      const response = await axios.delete(`${URL_INSTITUTO}v3/alumnos/${dni}`, {
-          headers: {
-              Authorization: 'Bearer ' + token,
-          },
-      });
-        console.log("Respuesta del servidor:", response.data); 
-    } catch (error) {
-        console.error("Error al obtener los datos:", error);
-    }*/
-  }
-
   return (
       <View style={styles.container}>
         {data ? 
