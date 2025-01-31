@@ -12,10 +12,10 @@ import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
 } from 'react-native';
-import DrawerNav from './src/navigation/DrawerNav';
+import DrawerNav from './src/navigation/drawer/DrawerNav';
 import { NavigationContainer } from '@react-navigation/native';
 import { AsyncStorage } from 'react-native';
-import AuthStackNav from './src/navigation/AuthStackNav';
+import AuthStackNav from './src/navigation/stack/AuthStackNav';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import UserContext from './src/context/UserContext';
 import AlumnoContext from './src/context/AlumnoContext';

@@ -1,16 +1,16 @@
 import { StyleSheet, Text, useWindowDimensions, View } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import AddMatricula from '../../screens/matriculas/AddMatricula';
+import DeleteMatriculaScreen from '../../screens/matriculas/DeleteMatriculaScreen';
+import MatriculaStackNav from '../stack/MatriculaStackNav';
 import Icon from 'react-native-vector-icons/Ionicons';
-import AlumnoProfile from '../screens/alumnos/AlumnoProfile';
-import AlumnoStackNav from './AlumnoStackNav';
-import AddAlumnoScreen from '../screens/alumnos/AddAlumnoScreen';
-import DeleteAlumnoScreen from '../screens/alumnos/DeleteAlumnoScreen';
 
 type Props = {}
+
 const Tab = createBottomTabNavigator();
 
-const TabNav = (props: Props) => {
+const MatriculaTabNav = (props: Props) => {
   const { width, height} = useWindowDimensions();
   const isHorizontal = width > height;
   return (
@@ -25,19 +25,19 @@ const TabNav = (props: Props) => {
           >   
 
 
-          <Tab.Screen name='Agregar alumno' component={AddAlumnoScreen}
+          <Tab.Screen name='Agregar matricula' component={AddMatricula}
               options={ {tabBarIcon: ({focused}) => 
                   <Icon name={(focused) ? 'person-add' : 'person-add-outline'} size={30}/>
               }
           }/>
 
-          <Tab.Screen name='Eliminar alumno' component={DeleteAlumnoScreen}
+          <Tab.Screen name='Eliminar alumno' component={DeleteMatriculaScreen}
               options={ {tabBarIcon: ({focused}) => 
                   <Icon name={(focused) ? 'trash' : 'trash-outline'} size={30}/>
               }
           }/>
 
-          <Tab.Screen name='Buscar' component={AlumnoStackNav}
+          <Tab.Screen name='Buscar' component={MatriculaStackNav}
               options={ {tabBarIcon: ({focused}) => 
                   <Icon name={(focused) ? 'search' : 'search-outline'} size={30}/>
               }
@@ -47,6 +47,7 @@ const TabNav = (props: Props) => {
   )
 }
 
-export default TabNav
+
+export default MatriculaTabNav
 
 const styles = StyleSheet.create({})

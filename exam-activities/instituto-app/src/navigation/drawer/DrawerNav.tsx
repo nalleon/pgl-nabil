@@ -1,16 +1,20 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import TabNav from './TabNav';
-import UserProfile from '../screens/usuario/UserProfile';
-import LogoutScreen from '../screens/auth/LogoutScreen';
-import UserContext, { UserNameContext } from '../context/UserContext';
+import AlumnoTabNav from '../tab/AlumnoTabNav';
+import UserProfile from '../../screens/usuario/UserProfile';
+import LogoutScreen from '../../screens/auth/LogoutScreen';
+import UserContext, { UserNameContext } from '../../context/UserContext';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import LoginScreen from '../screens/auth/LoginScreen';
+import LoginScreen from '../../screens/auth/LoginScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import MatriculaStackNav from './MatriculaStackNav';
+import MatriculaStackNav from '../stack/MatriculaStackNav';
 import { useJwt } from 'react-jwt';
-import AlumnoList from '../screens/alumnos/normal.user/AlumnoList';
+import AlumnoList from '../../screens/alumnos/normal.user/AlumnoList';
+import AsignaturaStackNav from '../stack/AsignaturaStackNav';
+import AsignaturaList from '../../screens/alumnos/normal.user/AsignaturaList';
+import AsignaturaTabNav from '../tab/AsignaturaTabNav';
+import MatriculaTabNav from '../tab/MatriculaTabNav';
 
 type Props = {}
 
@@ -53,9 +57,22 @@ const DrawerNav = (props: Props) => {
       <Drawer.Screen name="Perfil" component={UserProfile} options={{ title: 'Mi perfil' }} />
       {
         isAdmin ? 
-          <Drawer.Screen name="Operaciones" component={TabNav} options={{ title: 'Operaciones (ADMIN)' }}/>
+          <Drawer.Screen name="Operaciones" component={AlumnoTabNav} options={{ title: 'Alumnos (ADMIN)' }}/>
+
         :
-        <Drawer.Screen name="Operaciones" component={AlumnoList} options={{ title: 'Operaciones' }}/>
+        <Drawer.Screen name="Operaciones" component={AlumnoList} options={{ title: 'Alumnos' }}/>
+      }
+
+      {
+       isAdmin ?
+        <Drawer.Screen name="OperacionesAsignaturas" component={AsignaturaTabNav} options={{ title: 'Asignaturas (ADMIN)' }}/>
+        :
+        <Drawer.Screen name="OperacionesAsignaturas" component={AsignaturaList} options={{ title: 'Asignaturas' }}/>
+      }
+
+      {
+        isAdmin &&
+        <Drawer.Screen name="OperacionesMatriculas" component={MatriculaTabNav} options={{ title: 'Matriculas (ADMIN)' }}/> 
       }
       <Drawer.Screen name="Logout" component={LogoutScreen} options={{ title: 'Cerrar sesión' }}/>
     </Drawer.Navigator>

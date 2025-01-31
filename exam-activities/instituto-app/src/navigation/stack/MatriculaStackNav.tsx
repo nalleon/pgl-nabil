@@ -1,36 +1,35 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import FindAlumno from '../screens/alumnos/FindAlumno';
-import AlumnoProfile from '../screens/alumnos/AlumnoProfile';
+import FindMatricula from '../../screens/matriculas/FindMatricula';
+import MatriculaDetails from '../../screens/matriculas/MatriculaDetails';
 
 type Props = {}
-
-type AlumnoDetails = {
-  FindAlumno: undefined,
-  AlumnoProfile: undefined,
+type MatriculaNav = {
+  FindMatricula: undefined,
+  MatriculaDetails: undefined,
 }
 
-const Stack = createNativeStackNavigator<AlumnoDetails>();
+const Stack = createNativeStackNavigator<MatriculaNav>();
 
-const AlumnoStackNav = (props: Props) => {
+const MatriculaStackNav = (props: Props) => {
   return (
     <Stack.Navigator id={undefined}
     screenOptions={{contentStyle:{backgroundColor:'white'}}}
     >
         <Stack.Screen 
-            name="FindAlumno" 
-            component={FindAlumno} 
+            name="FindMatricula" 
+            component={FindMatricula} 
             options={({ route }) => ({
                 headerShown: false,
             })} 
         />
         
         <Stack.Screen 
-            name="AlumnoProfile" 
-            component={AlumnoProfile} 
+            name="MatriculaDetails" 
+            component={MatriculaDetails} 
             options={({ route }) => ({
-                title: `Alumno`,
+                title: `Asignatura`,
                 headerTitleAlign: 'center',
                 headerStyle: {
                     backgroundColor: '#008080', 
@@ -46,6 +45,6 @@ const AlumnoStackNav = (props: Props) => {
   )
 }
 
-export default AlumnoStackNav
+export default MatriculaStackNav
 
 const styles = StyleSheet.create({})

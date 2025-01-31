@@ -3,14 +3,14 @@ import React from 'react'
 
 type Props = {}
 
-const AsignaturaStackNav = (props: Props) => {
+const DeleteMatriculaScreen = (props: Props) => {
   return (
     <View>
-      <Text>AsignaturaStackNav</Text>
+      <Text>DeleteMatriculaScreen</Text>
     </View>
   )
 }
 
-export default AsignaturaStackNav
+export default DeleteMatriculaScreen
 
 const styles = StyleSheet.create({})

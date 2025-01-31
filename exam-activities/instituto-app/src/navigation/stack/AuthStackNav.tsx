@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LoginScreen from '../screens/auth/LoginScreen';
-import RegisterScreen from '../screens/auth/RegisterScreen';
-import DrawerNav from './DrawerNav';
-import LogoutScreen from '../screens/auth/LogoutScreen';
+import LoginScreen from '../../screens/auth/LoginScreen';
+import RegisterScreen from '../../screens/auth/RegisterScreen';
+import DrawerNav from '../drawer/DrawerNav';
+import LogoutScreen from '../../screens/auth/LogoutScreen';
 
 type Props = {}
 

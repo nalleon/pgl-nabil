@@ -8,26 +8,23 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { URL_INSTITUTO } from '../../../utils/Utils'
 
 type Props = {}
-type AlumnoData = {
-  dni: string,
+type AsignaturaData = {
   nombre : string,
-  apellidos : string,
+   curso : string,
 }
 
 
 
 
-const AlumnoList = (props: Props) => {
-  const [data, setData] = useState<AlumnoData[]>([]);
-  const [busqueda, setBusqueda] = useState<string>("");
-  
+const AsignaturaList = (props: Props) => {
+  const [data, setData] = useState<AsignaturaData[]>([]);
 
   useEffect(() => {
-
+    fetchData();
   }, [data])
 
 
-  const fetchData = async (nombre : string) => {
+  const fetchData = async () => {
     const token = await AsyncStorage.getItem("token");
     if (!token) {
         console.error("Token no disponible");
@@ -35,7 +32,7 @@ const AlumnoList = (props: Props) => {
     }
 
     try {
-        const response = await axios.get(`${URL_INSTITUTO}v2/alumnos/nombre/${nombre}`, {
+        const response = await axios.get(`${URL_INSTITUTO}v2/asignaturas`, {
             headers: {
                 Authorization: 'Bearer ' + token,
             },
@@ -53,26 +50,16 @@ const AlumnoList = (props: Props) => {
 
   return (
     <View style={{...styles.container, flexDirection:'column'}}>
-      <TextInput
-        style={styles.input}
-        placeholder="Nombre de usuario"
-        value={busqueda}
-        onChangeText={setBusqueda}
-      />
-    
-      <TouchableOpacity style={styles.button} onPress={() => fetchData(busqueda)}>
-        <Text style={styles.buttonText}> Buscar </Text>
-      </TouchableOpacity>
 
       {data &&
         <FlatList
             data={data}
             renderItem={({ item }) => (
                 <TouchableOpacity style={styles.task}>
-                    <Text style={styles.taskText}>{item.nombre} {item.apellidos}</Text>
+                    <Text style={styles.taskText}>{item.nombre} -- {item.curso}</Text>
                 </TouchableOpacity>
             )}
-            keyExtractor={(item, index) => item.nombre + "_" + item.apellidos + "_" + index}
+            keyExtractor={(item, index) => item.nombre + "_" + item.curso + "_" + index}
             style={{marginTop:20}}
         />
       }
@@ -81,7 +68,7 @@ const AlumnoList = (props: Props) => {
   )
 }
 
-export default AlumnoList
+export default AsignaturaList
 
 const styles = StyleSheet.create({
   container: {
