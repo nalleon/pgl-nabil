@@ -15,7 +15,7 @@ type AlumnoType =  {
   nombre : string,
   apellidos : string,
   fechanacimiento : Date
-  //foto?: string;
+  foto?: string;
 }
 
 //fechanacimento debe de ser un string
@@ -25,6 +25,7 @@ const AddAlumnoScreen = (props: Props) => {
   const [alumno, setAlumno] = useState<AlumnoType>({} as AlumnoType)
   const [foto, setFoto] = useState<String | null>(null);
   const [open, setOpen] = useState<boolean>(false);
+  const [fecha, setFecha] = useState<Date>(new Date());
 
   const context = useContext(UserNameContext);
   
@@ -75,10 +76,12 @@ const AddAlumnoScreen = (props: Props) => {
       try {
         const token = await AsyncStorage.getItem("token");
         console.log(token);
-        console.log(alumno);
-        const response = await axios.post(`${URL_INSTITUTO}/v3/alumnos`, {
+        console.log("URL del API: ", `${URL_INSTITUTO}v3/alumnos`);
+
+        console.log(alumnoSTR );
+        const response = await axios.post(`${URL_INSTITUTO}v3/alumnos`, {
               alumno: alumnoSTR,
-              foto: foto 
+              foto: foto || null
           },
           {
             headers:{
@@ -93,8 +96,12 @@ const AddAlumnoScreen = (props: Props) => {
       console.log("Respuesta del servidor: ", response.data);
     
       } catch (error) {
-        console.error("Error al", error);
-      }
+        console.error("Error al crear alumno: ", error.response || error.message);
+        if (error.response) {
+            console.log("Detalles del error: ", error.response.data);
+        }
+    }
+    
   };
 
 
@@ -125,10 +132,10 @@ return (
       <DatePicker
         modal
         open={open}
-        date={alumno.fechanacimiento ?? new Date()}
+        date={alumno.fechanacimiento?? new Date()}
         mode='date'
         onConfirm={(date)=> {
-          fillFormData(date, 'fechanacimiento');
+          fillFormData(date, 'fechanacimiento')
         }}
         onCancel={()=>{
           console.log('Cancel');
