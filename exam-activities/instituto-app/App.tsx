@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import 'react-native-gesture-handler';
 
 import type {PropsWithChildren} from 'react';
@@ -16,7 +16,7 @@ import DrawerNav from './src/navigation/drawer/DrawerNav';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthStackNav from './src/navigation/stack/AuthStackNav';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import UserContext from './src/context/UserContext';
+import UserContext, { UserNameContext } from './src/context/UserContext';
 import AlumnoContext from './src/context/AlumnoContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AsignaturaContext from './src/context/AsignaturaContext';
@@ -26,9 +26,10 @@ import AsignaturaContext from './src/context/AsignaturaContext';
 function App(): React.JSX.Element {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
+  const context = useContext(UserNameContext);
   useEffect(() => {
     const checkAuth = async () => {
-      const token = await AsyncStorage.getItem("token");
+      const token = context.token;
       if(!token){
         setIsAuthenticated(false);
       } else {

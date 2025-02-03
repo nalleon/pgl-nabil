@@ -47,6 +47,9 @@ const LoginScreen = (props: LoginProps) => {
             return;
         }
 
+        console.log("Dentro de handleLogin ");
+
+        
         try {
           const response = await axios.post(`${URL_INSTITUTO}login`, {
                 nombre,

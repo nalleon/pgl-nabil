@@ -40,9 +40,9 @@ const UserProfile = (props: Props) => {
               return;
           }
 
-          const nombre =  await AsyncStorage.getItem("nombreusuario");
+          const nombre =  context.nombreUsuario;
+          const token = context.token;
 
-          const token = await AsyncStorage.getItem("token");
           console.log("Token:", token);
           if (!token) {
               console.error("Token no disponible");
@@ -59,7 +59,6 @@ const UserProfile = (props: Props) => {
               let userData = response.data.data;
               setData(userData); 
               console.log(data);
-              //console.log(JSON.parse(token));
           } catch (error) { 
               console.error("Error al obtener los datos:", error);
           }

@@ -5,16 +5,29 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { URL_INSTITUTO } from '../../utils/Utils';
 import axios from 'axios';
+import { Matricula } from '../../data/entities/Matricula';
 
 type Props = {}
 
-type AlumnoData = {
+type MatriculaData = {
+  alumno : AlumnoData,
+  year : string,
+  asignaturas : AsignaturaData[]
+}
+
+type AsignaturaData = {
   nombre : string,
   curso : string,
 }
 
+type AlumnoData = {
+  dni: string,
+  nombre : string,
+  apellidos : string,
+}
+
 const DeleteMatriculaScreen = (props: Props) => {
-  const [data, setData] = useState<AlumnoData[]>([]);
+  const [data, setData] = useState<Matricula[]>([]);
 
   useEffect(() => {
       const fetchData = async () => {
@@ -42,8 +55,8 @@ const DeleteMatriculaScreen = (props: Props) => {
   }, [])
 
 
-  function showConfirmation (nombre : string, curso : string){
-    Alert.alert(`Eliminar`,`¿Está seguro de que desea borrar la matricula cuyo alumno ${curso}?`,
+  function showConfirmation (id : number){
+    Alert.alert(`Eliminar`,`¿Está seguro de que desea borrar la matricula cuyo id es ${id}?`,
       [
         {
           text: 'No',
@@ -52,7 +65,7 @@ const DeleteMatriculaScreen = (props: Props) => {
         },
         {
           text: 'Sí',
-          onPress: () => handleDelete(nombre, curso),
+          onPress: () => handleDelete(id),
           style:'destructive'
         }
 
@@ -60,15 +73,16 @@ const DeleteMatriculaScreen = (props: Props) => {
     )
   }
 
-  const handleDelete = async (nombre : string, curso : string) => {
+  const handleDelete = async (id : number) => {
     try {
       const token = await AsyncStorage.getItem("token");
-      console.log();
-      const response = await axios.delete(`${URL_INSTITUTO}v3/asignaturas/nombre/${nombre}/curso/${curso}`, {
-          headers: {
-              Authorization: 'Bearer ' + token,
-          },
-      });
+      console.log(`${URL_INSTITUTO}v3/matriculas?id=${id}`);
+      const response = await axios.delete(`${URL_INSTITUTO}v3/matriculas/{id}?id=${id}`, {
+        headers: {
+            Authorization: 'Bearer ' + token,
+        },
+    });
+    
         console.log("Respuesta del servidor:", response.data); 
     } catch (error) {
         console.error("Error al obtener los datos:", error);
@@ -77,23 +91,22 @@ const DeleteMatriculaScreen = (props: Props) => {
 
   return (
       <View style={styles.container}>
-        {data ? 
+        {data &&
           <FlatList
               data={data}
               renderItem={({ item }) => (
                   <View style={styles.task} >
-                      <Text style={styles.taskText}>{item.nombre} -- {item.curso}</Text>
+                      <Text style={styles.taskText}>{item.alumno.nombre} {item.alumno.apellidos} -- {item.year}
+                      </Text>
                       <View style={styles.taskActions}>
-                          <TouchableOpacity onPress={() => showConfirmation(item.nombre, item.curso)} style={styles.taskActionIcon}>
+                          <TouchableOpacity onPress={() => showConfirmation(item.id)} style={styles.taskActionIcon}>
                               <Icon name='close' size={35} color={'#d1234e'} />
                           </TouchableOpacity>
                       </View>
                   </View>
               )}
-              keyExtractor={(item, index) => item.nombre + "_" + item.curso + "_" + index}
+              keyExtractor={(item, index) => item.alumno.dni + "_" + item.year + "_" + index}
           />
-        :
-          <Text style={styles.title}>Permiso denegado</Text>
         }
       </View>
   )

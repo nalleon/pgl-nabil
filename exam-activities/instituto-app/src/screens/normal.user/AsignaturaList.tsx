@@ -5,16 +5,14 @@ import axios from 'axios'
 import { FlatList, TextInput } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { URL_INSTITUTO } from '../../../utils/Utils'
+import { URL_INSTITUTO } from '../../utils/Utils'
 
 type Props = {}
+
 type AsignaturaData = {
-  nombre : string,
+   nombre : string,
    curso : string,
 }
-
-
-
 
 const AsignaturaList = (props: Props) => {
   const [data, setData] = useState<AsignaturaData[]>([]);
