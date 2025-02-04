@@ -65,6 +65,7 @@ const FindMatricula = (props: PropsMatricula) => {
   function handleScreen(id : number){
     if(id){
       context.setId(id);
+      console.log("navegando")
       props?.navigation?.navigate('MatriculaDetails');
     } 
   }
@@ -84,14 +85,9 @@ const FindMatricula = (props: PropsMatricula) => {
       </TouchableOpacity>
 
       { data &&
-          <View style={styles.task} >
+          <TouchableOpacity onPress={() => handleScreen(data?.id)} style={styles.task} >
               <Text style={styles.taskText}>{data?.alumno?.nombre} {data?.alumno?.apellidos} -- {data?.year}</Text>
-              <View style={styles.taskActions}>
-                  <TouchableOpacity onPress={() => handleScreen(data?.id)} style={styles.taskActionIcon}>
-                      <Icon name='close' size={35} color={'#d1234e'} />
-                  </TouchableOpacity>
-              </View>
-          </View>
+          </TouchableOpacity>
       }
     
     </View>

@@ -29,7 +29,7 @@ const MatriculaStackNav = (props: Props) => {
             name="MatriculaDetails" 
             component={MatriculaDetails} 
             options={({ route }) => ({
-                title: `Asignatura`,
+                title: `Matricula`,
                 headerTitleAlign: 'center',
                 headerStyle: {
                     backgroundColor: '#008080', 
