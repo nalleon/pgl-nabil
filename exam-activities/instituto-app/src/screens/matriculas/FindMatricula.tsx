@@ -19,7 +19,7 @@ type MatriculaDetailsType = {
 type PropsMatricula = NativeStackScreenProps<MatriculaDetailsType, 'FindMatricula'>;
 
 const FindMatricula = (props: PropsMatricula) => {
-  const [data, setData] = useState<Matricula>({} as Matricula);
+  const [data, setData] = useState<Matricula>(null);
   const [refresh, setRefresh] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   
