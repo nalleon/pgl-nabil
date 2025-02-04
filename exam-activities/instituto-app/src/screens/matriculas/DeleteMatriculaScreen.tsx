@@ -108,7 +108,7 @@ const DeleteMatriculaScreen = (props: Props) => {
               keyExtractor={(item, index) => item.alumno.dni + "_" + item.year + "_" + index}
           />
         }
-      </View>
+    </View>
   )
 }
 

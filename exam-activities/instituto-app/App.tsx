@@ -20,6 +20,7 @@ import UserContext, { UserNameContext } from './src/context/UserContext';
 import AlumnoContext from './src/context/AlumnoContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AsignaturaContext from './src/context/AsignaturaContext';
+import MatriculaContext from './src/context/MatriculaContext';
 
 
 
@@ -47,11 +48,13 @@ function App(): React.JSX.Element {
           <UserContext>
             <AlumnoContext>
               <AsignaturaContext>
-                { isAuthenticated ?
-                    <DrawerNav/>
-                    :
-                    <AuthStackNav/>
-                }
+                <MatriculaContext>
+                  { isAuthenticated ?
+                      <DrawerNav/>
+                      :
+                      <AuthStackNav/>
+                  }
+                </MatriculaContext>
               </AsignaturaContext>
             </AlumnoContext>
           </UserContext>

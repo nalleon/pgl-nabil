@@ -76,9 +76,7 @@ const FindAsignaturaScreen = (props: PropsAsignatura) => {
       context.setNombre(nombre);
       context.setCurso(curso);
       props?.navigation?.navigate('AsignaturaDetails');
-    }
-
-    
+    } 
   }
 
 
@@ -103,7 +101,7 @@ const FindAsignaturaScreen = (props: PropsAsignatura) => {
         <Text style={styles.buttonText}> Buscar </Text>
       </TouchableOpacity>
 
-      {data ? 
+      {data && 
         <FlatList
         refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={refreshData} />}
             data={data}
@@ -120,8 +118,6 @@ const FindAsignaturaScreen = (props: PropsAsignatura) => {
             keyExtractor={(item, index) => item.nombre + "_" + item.curso + "_" + index}
             style={{marginTop:20}}
         />
-      :
-        <Text style={styles.title}>No existen resultados</Text>
       }
     
     </View>
