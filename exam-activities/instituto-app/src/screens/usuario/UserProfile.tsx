@@ -10,6 +10,7 @@ import { UserNameContext } from '../../context/UserContext';
 import  AsyncStorage  from '@react-native-async-storage/async-storage'
 import { nativeViewGestureHandlerProps } from 'react-native-gesture-handler/lib/typescript/handlers/NativeViewGestureHandler';
 import { useNavigation } from '@react-navigation/native';
+import { ActivityIndicator } from 'react-native';
 
 type Props = {}
 
@@ -77,21 +78,65 @@ const UserProfile = (props: Props) => {
       }
     
   return (
-    <ScrollView style={{flex:1}}
-    refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={refreshData} />}>
-        <Text>Datos:</Text>
-            {data ? (
-                <>
-                    <Text>Correo: {data.correo}</Text>
-                    <Text>Nombre: {context.nombreUsuario}</Text>
-                </>
-            ) : (
-                <Text>Cargando...</Text>
-            )}
-    </ScrollView>
+<ScrollView 
+  style={styles.scrollContainer}
+  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refreshData} />}
+>
+  <View style={styles.container}>
+    <Text style={styles.textTitle}>Datos: </Text>
+    {data ? (
+      <>
+        <Text style={styles.text}>Correo: {data.correo} </Text>
+        <Text style={styles.text}>Nombre: {context.nombreUsuario} </Text>
+        <Text style={styles.text}>Role: {context.rol}</Text>
+      </>
+    ) : (
+        <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#008080" />
+        </View>
+    )}
+  </View>
+</ScrollView>
+
   )
 }
 
 export default UserProfile
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#f4f4f4',
+      padding: 20,
+      justifyContent: 'center',
+      alignItems:'center'
+    },
+    scrollContainer: {
+      flex: 1,
+    },
+    textTitle: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: '#333',
+      marginBottom: 10,
+    },
+    text: {
+      fontSize: 16,
+      color: '#555',
+      marginBottom: 5,
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 20,
+      },
+    refreshContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingVertical: 20,
+    },
+  });
+  
+  
