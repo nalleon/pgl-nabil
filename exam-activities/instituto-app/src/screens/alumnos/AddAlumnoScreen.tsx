@@ -22,12 +22,9 @@ const AddAlumnoScreen = (props: Props) => {
   const [alumno, setAlumno] = useState<AlumnoType>({} as AlumnoType)
   const [foto, setFoto] = useState<String | null>(null);
   const [open, setOpen] = useState<boolean>(false);
-  const [fecha, setFecha] = useState<Date>(new Date());
 
   const context = useContext(UserNameContext);
-  
-  useEffect(() => {
-  }, [])
+
   
 
   const selectImage = async () => {
@@ -41,7 +38,6 @@ const AddAlumnoScreen = (props: Props) => {
         const mimeType = imageData.type;
         setFoto(`data:${mimeType};base64,${imageData.base64}`)
       }
-      
     })
   }
 
@@ -61,16 +57,11 @@ const AddAlumnoScreen = (props: Props) => {
           return;
       }
 
+      const token = context.token;
       try {
-        const token = await AsyncStorage.getItem("token");
-        console.log(token);
-        //console.log(foto);
-        console.log("URL del API: ", `${URL_INSTITUTO}v3/alumnos`);
-
-        console.log(alumnoSTR );
         const response = await axios.post(`${URL_INSTITUTO}v3/alumnos`, {
               alumno: alumnoSTR,
-              foto: foto || null
+              foto: null
           },
           {
             headers:{
@@ -87,6 +78,38 @@ const AddAlumnoScreen = (props: Props) => {
         if (error.response) {
             console.log("Detalles del error: ", error.response.data);
         }
+    }
+
+    if(!foto){
+      return;
+    }
+
+    try {
+
+  
+      const formData = new FormData();
+      formData.append("file", foto);
+
+      console.log("Subinedo foto");
+
+      const response = await axios.post(`${URL_INSTITUTO}v3/alumnos/upload/{dni}?dni=${alumno.dni}`, 
+           formData
+        ,
+        {
+          headers:{
+            'Content-Type': 'multipart/form-data',
+            Authorization: 'Bearer ' + token,
+          }   
+        }
+    );
+
+    console.log("Respuesta del servidor: ", response.data);
+  
+    } catch (error) {
+      console.error("Error al subir la foto del alumno: ", error.response || error.message);
+      if (error.response) {
+          console.log("Detalles del error: ", error.response.data);
+      }
     }
     
   };
