@@ -28,3 +28,12 @@ Repository for the multimedia programming and mobile devices module.
     - [Hangedman - React](./exam-practices/first-trimester/hangedman-react/)
 
 - [Class Exercises](./class-exercises)
+
+
+
+## Changelog command 
+
+```code
+npm install --save-dev conventional-changelog-cli
+npx conventional-changelog -p angular -i CHANGELOG.MD -s
+```
