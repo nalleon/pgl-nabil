@@ -1,0 +1,24 @@
+<form
+  [formGroup]="gameFormData"
+  (submit)="play()"
+>
+  <br/>
+  <h4 [ngStyle]="{'background-color': 'red'}">Rock-Paper-Scissor</h4>
+  <br/>
+  <p>Computer option: {{game.computerSelection}}</p>
+  <p>User option: {{game.userSelection}}</p>
+
+  <select name="uservalue" formControlName="uservalue">
+    <option value="rock">Rock</option>
+    <option value="scissor">Scissor</option>
+    <option value="paper">Paper</option>
+  </select>
+  <br>
+  <button type="submit" [disabled]="game.finished">Bet</button>
+
+  <p *ngIf="game.finished">
+    Result: {{game.result}}
+    <button type="button" (click)="restart()">Reset</button>
+  </p>
+    <app-practice10></app-practice10>
+</form>
