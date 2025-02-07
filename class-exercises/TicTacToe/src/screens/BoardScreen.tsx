@@ -9,9 +9,15 @@ const BoardScreen = (props: Props) => {
   const [won, setWon] = useState(false);
   const [gameOver, setGameOver] = useState(false);
 
+  const [numTouched, setNumTouched] = useState<number>(0);
+  const [numTouchedComputer, setNumTouchedComputer] = useState<number>(0);
+
+  const minTouched = 3;
 
   useEffect(() => {
-    
+    setWon(false);
+    setNumTouched(0);
+    setNumTouchedComputer(0);
     createBoard();
 
   }, [gameOver])
@@ -27,15 +33,70 @@ const BoardScreen = (props: Props) => {
       }
       arr.push(row);
     }
-    setCells(cells);
+    setCells(arr);
     setWon(false);
   }
 
 
   const play = (rowIndex : number, cellIndex : number) => {
-    if(cells[rowIndex][cellIndex].getValue() != " "){
+    if(cells[rowIndex][cellIndex].getValue() != " " || gameOver==true || won==true){
       return;
     }
+
+    cells[rowIndex][cellIndex].putValueInCell("x");
+    setNumTouched(numTouched+1)
+    refreshCells();
+
+    if(numTouched >= minTouched){
+      const isLine : boolean = hasLine(rowIndex, cellIndex);
+      if(isLine){
+        setWon(true);
+      }
+    }
+
+    if(checkCells() && !won){
+      computerPlay();
+    }
+    
+
+  }
+
+  const refreshCells = () => {
+    let array: Cell[][] = [];
+    for (let i = 0; i < 3; i++) {
+      let row: Cell[] = []
+      for (let j = 0; j < 3; j++) {
+        let cell: Cell = new Cell((i * 3 + j), cells[i][j].getValue());
+        row.push(cell);
+      }
+      array.push(row);
+    }
+    setCells(array);
+  }
+
+
+  const computerPlay = () => {
+    let index1 = Math.trunc(Math.random() * 3);
+    let index2 = Math.trunc(Math.random() * 3);
+
+    while (cells[index1][index2].getValue() != " ") {
+      index1 = Math.trunc(Math.random() * 3);
+      index2 = Math.trunc(Math.random() * 3);
+    }
+
+    cells[index1][index2].putValueInCell("o");
+    refreshCells();
+    setNumTouchedComputer(numTouchedComputer+1)
+
+    if(numTouchedComputer >= minTouched){
+      const isLineComputer : boolean = hasLine(index1, index2);
+
+      if(isLineComputer){
+        setWon(true);
+      }
+    }
+
+
   }
 
   const checkCells = () => {
@@ -121,6 +182,10 @@ const BoardScreen = (props: Props) => {
   }
 
 
+const restart = () => {
+  setGameOver(false);
+
+}
 
   
   return (
@@ -128,16 +193,9 @@ const BoardScreen = (props: Props) => {
       <View style={styles.container}>
         {
           cells.map((row, rowIndex) =>
-            <View style={styles.row}>
+            <View style={styles.row} key={rowIndex}>
               {row.map((cell, cellIndex) =>
-                won ?
-                  <View style={styles.cell}>
-                    <TouchableOpacity>
-                      <Text style={styles.text}>{cell.getValue()}</Text>
-                    </TouchableOpacity>
-                  </View>
-                  :
-                  <View style={styles.cell}>
+                  <View style={styles.cell} key={rowIndex + "_" + cellIndex}>
                     <TouchableOpacity onPress={() => play(rowIndex, cellIndex)}>
                       <Text style={styles.text}>{cell.getValue()}</Text>
                     </TouchableOpacity>
@@ -148,7 +206,7 @@ const BoardScreen = (props: Props) => {
         </View>
         <View>
           <TouchableOpacity onPress={() => setGameOver(!gameOver)}>
-            <Text style={{ borderColor: "black", borderWidth: 1 }}>Restart</Text>
+            <Text style={{ borderColor: "black", borderWidth: 1, textAlign: 'center' }}>Restart</Text>
           </TouchableOpacity>
         </View>
     </View>
@@ -167,8 +225,9 @@ const styles = StyleSheet.create({
   cell: {
     flex: 1,
     borderWidth: 1,
-    borderBlockColor: "black",
-    justifyContent: "center"
+    borderBlockColor: "#008080",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   row: {

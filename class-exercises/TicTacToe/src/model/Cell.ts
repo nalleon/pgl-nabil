@@ -21,7 +21,7 @@ export default class Cell {
         return this.check;
     }
 
-    public play(value:string) {
+    public putValueInCell(value:string) {
         if (!this.check) {
             this.checking();
             this.value = value;

@@ -16,13 +16,14 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import BoardScreen from './src/screens/BoardScreen';
 
 
 function App(): React.JSX.Element {
 
   return (
-    <SafeAreaView>
-
+    <SafeAreaView style={{flex:1}}>
+      <BoardScreen/>
     </SafeAreaView>
   );
 }
