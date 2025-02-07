@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Gato } from './model/Gato';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-practice07-2',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule, CommonModule
   ],
   templateUrl: './practice07-2.component.html',
   styleUrl: './practice07-2.component.css'
@@ -21,18 +22,17 @@ export class Practice072Component {
 
   guardarMascota() {
     let gato = new Gato();
-    /*
+
     gato.nombre = this.mascotaFormData?.value.nombre??"";
     gato.peso = parseInt(this.mascotaFormData?.value.peso?? '0');
     gato.edad = parseInt(this.mascotaFormData?.value.edad?? '0');
     gato.equivalenciahumana = this.calculo(gato.edad);
     this.gatito = gato;
     alert(JSON.stringify(this.gatito));
-*/
+
     this.mascotas.push(gato);
   }
 
- //Ejemplo
   calculo(edad : number){
     if(edad == 1){
       return 1*12/12;
