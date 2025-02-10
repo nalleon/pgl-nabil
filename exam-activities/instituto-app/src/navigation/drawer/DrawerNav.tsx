@@ -13,8 +13,8 @@ import { useJwt } from 'react-jwt';
 import AsignaturaStackNav from '../stack/AsignaturaStackNav';
 import AsignaturaTabNav from '../tab/AsignaturaTabNav';
 import MatriculaTabNav from '../tab/MatriculaTabNav';
-import AsignaturaList from '../../screens/normal.user/AsignaturaList';
-import AlumnoList from '../../screens/normal.user/AlumnoList';
+import AsignaturaList from '../../screens/usuario/normal.user/AsignaturaList';
+import AlumnoList from '../../screens/usuario/normal.user/AlumnoList';
 
 type Props = {}
 
