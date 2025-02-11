@@ -4,6 +4,7 @@ import { PruebaComponent } from './practices/practice03/prueba/prueba.component'
 import { GenteComponent } from './practices/practice04/gente.component';
 import { Practice07Component } from './practices/practice07/practice07.component';
 import { Practice072Component } from "./practices/practice07-2/practice07-2.component";
+import { ImcCalc } from './practices/imccalc/imccalc.component';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,8 @@ import { Practice072Component } from "./practices/practice07-2/practice07-2.comp
     //PruebaComponent,
     //GenteComponent,
     Practice07Component,
-    Practice072Component
+    Practice072Component,
+    ImcCalc
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

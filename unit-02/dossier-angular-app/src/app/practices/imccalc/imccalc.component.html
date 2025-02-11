@@ -1,0 +1,28 @@
+<div>
+  <h2>IMCcalc</h2>
+
+  <form [formGroup]="imcForm" (ngSubmit)="saveIMC()">
+    <label>Name:</label>
+    <input type="text" formControlName="name" required>
+
+    <label>Weight (kg):</label>
+    <input type="number" formControlName="weight" required>
+
+    <label>Age:</label>
+    <input type="number" formControlName="age" required>
+
+    <label>Height (cm):</label>
+    <input type="number" step="0.01" formControlName="height" required>
+
+    <button type="submit">
+      {{ editingIndex != -1 ? 'Update' : 'Add' }}
+    </button>
+  </form>
+
+  <h3>List:</h3>
+  <ul>
+    <li *ngFor="let person of people; let i = index" (click)="editPerson(i)">
+      {{ person.name }} - IMC: {{ person.imc }}
+    </li>
+  </ul>
+</div>
