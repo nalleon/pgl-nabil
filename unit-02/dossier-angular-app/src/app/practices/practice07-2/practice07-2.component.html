@@ -1,4 +1,4 @@
-<form
+<!-- <form
 [formGroup]="mascotaFormData"
 (submit)="guardarMascota()"
 >
@@ -17,4 +17,9 @@
     <li *ngFor="let item of mascotas">
       {{item.nombre}}
     </li>
-  </ul>
+  </ul> -->
+
+  <p>{{gatosAPIArr | json}}</p>
+  <div *ngFor="let item of gatosAPIArr" style="flex-direction: row;">
+    <img src={{item.url}} alt="gatitp" width="350" height="350">
+  </div>
