@@ -4,7 +4,6 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { EjemploRepository } from '../data/Database';
 import { EjemploEntity } from '../data/entity/EjemploEntity';
-import { PruebaStackParamList } from '../navigations/PruebaStack';
 
 
 
@@ -12,8 +11,6 @@ import { PruebaStackParamList } from '../navigations/PruebaStack';
 type PropsInicio = NativeStackScreenProps<PruebaStackParamList, 'Inicio'>;
 
 function InitScreen({navigation,route}:PropsInicio) {
-
-   
 
 
     const crear =  async ()=>{
@@ -24,16 +21,6 @@ function InitScreen({navigation,route}:PropsInicio) {
 
 
     }
-
-
-
-    
-        
-
-
- 
-
-
 
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' ,marginTop: 36}}>

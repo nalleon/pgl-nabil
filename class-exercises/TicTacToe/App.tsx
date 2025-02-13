@@ -20,7 +20,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import "reflect-metadata";
 import { dataSource } from './src/data/Database';
 
-import PruebaStack from './src/navigations/PruebaStack';
+import PruebaStack from './src/navigations/StackNav';
 import axios from 'axios';
 
 
@@ -55,9 +55,7 @@ useEffect(() => {
     {
       dbInitilized? (
         <NavigationContainer >
-         
             <PruebaStack />
-         
         </NavigationContainer>
       ) : (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center' }}>
