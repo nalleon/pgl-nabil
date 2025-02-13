@@ -16,7 +16,6 @@ type AuthProps = NativeStackScreenProps<AuthStackParamList, 'LoginScreen'>;
 const LoginScreen = (props: AuthProps) => {
     const [logged, setLogged] = useState<boolean>(false)
     const [username, setUsername] = useState<string>("")
-    const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
 
     const context = useContext(AppContextProvider);
@@ -27,14 +26,14 @@ const LoginScreen = (props: AuthProps) => {
     
 
 
-    const handleLogin = async (nombre : string, password : string) => {
-        if(!nombre || nombre.trim() === "" || !password || password.trim() === ""){
+    const handleLogin = async (username : string, password : string) => {
+        if(!username || username.trim() === "" || !password || password.trim() === ""){
             return;
         }
         
         try {
             const response = await axios.post(`${URL_API}login`, {
-                    nombre,
+                    username,
                     password 
                 },
                 {
@@ -50,8 +49,8 @@ const LoginScreen = (props: AuthProps) => {
             if (response.data) {
                 try {
                 await AsyncStorage.setItem("token", response.data);
-                await AsyncStorage.setItem("nombreusuario", nombre);
-                context.setUsername(nombre);
+                await AsyncStorage.setItem("nombreusuario", username);
+                context.setUsername(username);
                 context.setToken(response.data);
 
 
@@ -79,13 +78,6 @@ return (
             onChangeText={setUsername}
             />
 
-        <TextInput
-            style={styles.input}
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-        />
-        
         <TextInput
             style={styles.input}
             placeholder="Password"

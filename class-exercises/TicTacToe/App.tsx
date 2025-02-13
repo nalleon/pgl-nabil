@@ -37,11 +37,10 @@ function App(): React.JSX.Element {
   const [dbInitilized, setDbInitilized] = useState(false);
   
 useEffect(() => {
- 
     async function iniciarDDBB(){
       try{
         await dataSource.initialize();
-       console.log("Base de datos inicializada correctamente");
+        console.log("Base de datos inicializada correctamente");
         setDbInitilized(true);
 
       }catch(e){console.error("no arranca la ddbb" + e)}
@@ -49,7 +48,7 @@ useEffect(() => {
     iniciarDDBB();
 
   }, [])
- 
+
   return (
     <>
     <GestureHandlerRootView>
