@@ -78,6 +78,24 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+  flatListElement: {
+    padding: 15,
+    marginBottom: 10,
+    backgroundColor: "#fff",
+    borderRadius: 50,
+    borderWidth: 1,
+    borderColor: "#008080",
+    flexDirection: 'row',
+    alignItems: 'center',
+    elevation: 3, 
+  },
+
+  flatListElementText: {
+    fontSize: 17,
+    flex: 1,
+    marginLeft: 25,
+    color: '#333',
+  },
 });
 
 export default InitScreen;
