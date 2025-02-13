@@ -11,8 +11,8 @@ type Props = {}
 
 export type AuthStackParamList = {
     InitScreen: undefined,
-    Login: undefined,
-    Register: undefined,
+    LoginScreen: undefined,
+    RegisterScreen: undefined,
     LocalHomeScreen: undefined
 };
 
@@ -27,8 +27,8 @@ const AuthStackNav = (props: Props) => {
         
         >
             <Stack.Screen name="InitScreen" component={InitScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Register" component={RegisterScreen} />    
+            <Stack.Screen name="LoginScreen" component={LoginScreen} />
+            <Stack.Screen name="RegisterScreen" component={RegisterScreen} />    
             <Stack.Screen name="LocalHomeScreen" component={LocalHomeScreen} />  
         </Stack.Navigator>
     )

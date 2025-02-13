@@ -4,17 +4,18 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { EjemploRepository } from '../data/Database';
 import { EjemploEntity } from '../data/entity/EjemploEntity';
+import { AuthStackParamList } from '../navigations/stack/AuthStackNav';
 
 
 
 
-type PropsInicio = NativeStackScreenProps<PruebaStackParamList, 'Inicio'>;
+type AuthProps = NativeStackScreenProps<AuthStackParamList, 'InitScreen'>;
 
-function InitScreen({navigation,route}:PropsInicio) {
+function InitScreen(props:AuthProps) {
 
 
     const crear =  async ()=>{
-     
+    
         const datos = await EjemploRepository.find(  );
         console.log("se ha credado : " + JSON.stringify(datos));
         
