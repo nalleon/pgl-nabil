@@ -6,18 +6,17 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import UseGameLogic from '../hooks/UseGameLogic';
 import { GameLocalEntity } from '../data/entity/GameLocalEntity';
 import { GameRepository } from '../data/Database';
-import { AppContextProvider } from '../context/AppContext';
+import { AppContext } from '../context/AppContext';
 
 type Props = {}
 
-type AuthProps = NativeStackScreenProps<AuthStackParamList, 'LocalHomeScreen'>;
+type AuthProps = NativeStackScreenProps<AuthStackParamList, 'PlayLocalScreen'>;
 
+const PlayLocalScreen = (props: AuthProps) => {
 
-const BoardScreen = (props: AuthProps) => {
+  const { restart, createBoard, play, cells, setCells, restoreBoard } = UseGameLogic();
 
-  const { restart, createBoard, play, cells, setCells } = UseGameLogic();
-
-  const context = useContext(AppContextProvider);
+  const context = useContext(AppContext);
 
   const [id, setId] = useState<number>(-1);
 
@@ -26,23 +25,13 @@ const BoardScreen = (props: AuthProps) => {
   }, [])
 
   useEffect(() => {  
+    console.log("segundo ue")
     const getGame = async () => {
-      console.log(context.currentLocalGameId)
       const currentGame : GameLocalEntity = await GameRepository.findOneBy({id: context.currentLocalGameId});
+      let aux : Cell[][]= JSON.parse(currentGame.board);
       
-      let aux = currentGame.board;
-  
-      let boardAux : Cell [][]= [];
-      
-      let count: number = 0;
-      for(let i=0; i<3; i++){
-        for(let j=0; j<3; j++){
-          boardAux[i][j].putValueInCell(aux.charAt(count));
-          count++;
-        }      
-      }
-  
-      setCells(boardAux);
+      console.log(aux);      
+      restoreBoard(aux);
       setId(context.currentLocalGameId);
     }
     getGame();
@@ -50,24 +39,22 @@ const BoardScreen = (props: AuthProps) => {
   
 
   
-
-
   const handleCreate = async () => {
     let newGame : GameLocalEntity = new GameLocalEntity();
     newGame.dateCreation = new Date();
 
-    let aux = "";
-    for(let i=0; i<3; i++){
-      for(let j=0; j<3; j++){
-        aux += cells[i][j];
-      }
-    }
-
-    newGame.board = aux;
-
+    newGame.board = JSON.stringify(cells);
     let currentGame : GameLocalEntity = await GameRepository.save(newGame);
+    props.navigation.navigate('LocalHomeScreen');
+  }
 
-    // context.setCurrentLocalGameId(currentGame.id);
+
+  const handleUpdate = async () => {
+    let currentGame : GameLocalEntity = await GameRepository.findOneBy({id: context.currentLocalGameId});
+    currentGame.board = JSON.stringify(cells);
+
+    let updatedGame : GameLocalEntity = await GameRepository.save(currentGame);
+    setId(context.currentLocalGameId);
     props.navigation.navigate('LocalHomeScreen');
   }
   
@@ -89,15 +76,21 @@ const BoardScreen = (props: AuthProps) => {
           <TouchableOpacity style={styles.button} onPress={() => restart()}>
             <Text style={styles.buttonText}>Restart</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => handleCreate()}>
-            <Text style={styles.buttonText}>Save for later</Text>
-          </TouchableOpacity>
+          { context.currentLocalGameId == -1 ? 
+            <TouchableOpacity style={styles.button} onPress={() => handleCreate()}>
+              <Text style={styles.buttonText}>Save for later (create)</Text>
+            </TouchableOpacity>
+            :
+            <TouchableOpacity style={styles.button} onPress={() => handleUpdate()}>
+              <Text style={styles.buttonText}>Save for later (update)</Text>
+            </TouchableOpacity>
+          }
         </View>
     </View>
   )
 }
 
-export default BoardScreen
+export default PlayLocalScreen
 
 const styles = StyleSheet.create({
   container: {

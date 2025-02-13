@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { FlatList } from 'react-native-gesture-handler';
 import { GameRepository } from '../data/Database';
 import { GameLocalEntity } from '../data/entity/GameLocalEntity';
-import { AppContextProvider } from '../context/AppContext';
+import { AppContext } from '../context/AppContext';
 
 type Props = {}
 
@@ -18,9 +18,9 @@ type AuthProps = NativeStackScreenProps<AuthStackParamList, 'LocalHomeScreen'>;
 
 
 const LocalHomeScreen = (props: AuthProps) => {
-  const [data, setData] = useState<GameLocalEntity[]>({} as GameLocalEntity[]);
+  const [data, setData] = useState<GameLocalEntity[]>([]);
   
-  const context = useContext(AppContextProvider);
+  const context = useContext(AppContext);
 
   useEffect(() => {
     fetchData();
@@ -32,6 +32,7 @@ const LocalHomeScreen = (props: AuthProps) => {
   }
 
   const handleContinueGame = (id: number) => {
+      console.log(id);
       context.setCurrentLocalGameId(id);
       props.navigation.navigate('PlayLocalScreen');
     

@@ -22,6 +22,19 @@ const UseGameLogic = () => {
       setCells([...arr]);
       setWon(false);
     }
+
+    const restoreBoard = (board : any[][]) => {
+      let arr : Cell [][] = [];
+      for(let i=0; i<3; i++){
+        let row : Cell[] = [];
+        for(let j=0; j<3; j++){
+          let cell: Cell = new Cell((i * 3 + j), board[i][j]?.value || " ");
+          row.push(cell);
+        }
+        arr.push(row);
+      }
+      setCells([...arr]);
+    }
   
   
     const play = (rowIndex : number, cellIndex : number) => {
@@ -180,7 +193,7 @@ const UseGameLogic = () => {
     return {
         restart,
         createBoard,
-        play, cells, setCells
+        play, cells, setCells, restoreBoard
     }
 
 }

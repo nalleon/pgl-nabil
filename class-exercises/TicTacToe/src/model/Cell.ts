@@ -4,7 +4,7 @@ export default class Cell {
     private value: string;
 
     constructor (id:number, value:string) {
-        this.id = 0;
+        this.id = id;
         this.check = false;
         this.value = value;
     }

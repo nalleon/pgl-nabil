@@ -17,44 +17,12 @@ type AppContextType ={
     setCurrentLocalGameId: (id: number) => void,
 }
 
-export const AppContextProvider = createContext<AppContextType>({} as AppContextType );
-const AppContext = (props: Props) => {
+export const AppContext = createContext<AppContextType>({} as AppContextType );
+const AppContextProvider = (props: Props) => {
     const [username, setUsername] = useState<string>("");
     const [token, setToken] = useState<string>("");
     const [role, setRole] = useState<string>("");
     const [currentLocalGameId, setCurrentLocalGameId] = useState<number>(-1);
-
-    useEffect(() => {
-        async () => {
-            const tokenStorage = await AsyncStorage.getItem("token");
-            if(tokenStorage){
-            setToken(tokenStorage);
-            }
-        }
-
-    }, [token])
-
-    useEffect(() => {
-    
-        async () => {
-            const userStorage = await AsyncStorage.getItem("nombreusuario");
-        
-            if(userStorage){
-            setUsername(userStorage);
-            }
-        }
-    
-    }, [username])
-    
-    useEffect(() => {
-        async () => {
-            const roleStorage = await AsyncStorage.getItem("rol");
-        
-            if(roleStorage){
-            setRole(roleStorage);
-            }
-        }
-    }, [role])
 
     const contextValues: AppContextType  = {
         username,
@@ -68,11 +36,11 @@ const AppContext = (props: Props) => {
     }
     
         return (
-            <AppContextProvider.Provider value={contextValues}>
+            <AppContext.Provider value={contextValues}>
                 {props.children}
-            </AppContextProvider.Provider>
+            </AppContext.Provider>
         )
     }
-    export default AppContext
+export default AppContextProvider
 
 const styles = StyleSheet.create({})

@@ -23,6 +23,7 @@ import { dataSource } from './src/data/Database';
 import axios from 'axios';
 import AuthStackNav from './src/navigations/stack/AuthStackNav';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import AppContextProvider from './src/context/AppContext';
 
 
 
@@ -55,7 +56,9 @@ useEffect(() => {
       {
         dbInitilized? (
           <NavigationContainer >
+            <AppContextProvider>
               <AuthStackNav />
+            </AppContextProvider>
           </NavigationContainer>
         ) : (
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center' }}>

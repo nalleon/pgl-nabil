@@ -7,7 +7,7 @@ import { GameLocalEntity } from './entity/GameLocalEntity';
 
 
 export const dataSource = new DataSource({
-  database: 'tictactoe3.db',
+  database: 'tictactoe4.db',
   entities: [
     UserEntity, GameLocalEntity
   ],
