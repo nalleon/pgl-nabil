@@ -31,9 +31,11 @@ const LocalHomeScreen = (props: AuthProps) => {
     setData([...list]);
   }
 
-  const handleContinueGame = async (id: number) =>{
-    context.setCurrentLocalGameId(id);
-    props.navigation.navigate('PlayLocalScreen');
+  const handleContinueGame = (id: number) => {
+      context.setCurrentLocalGameId(id);
+      props.navigation.navigate('PlayLocalScreen');
+    
+    
   }
 
 

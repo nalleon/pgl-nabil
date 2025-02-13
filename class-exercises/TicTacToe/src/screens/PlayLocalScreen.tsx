@@ -19,32 +19,37 @@ const BoardScreen = (props: AuthProps) => {
 
   const context = useContext(AppContextProvider);
 
+  const [id, setId] = useState<number>(-1);
+
   useEffect(() => {
-    if(context.currentLocalGameId != -1){
-      getGame();
-    } else {
-      createBoard();
-    }
+    createBoard();
   }, [])
 
-
-  const getGame = async () => {
-    const currentGame : GameLocalEntity = await GameRepository.findOneBy({id: context.currentLocalGameId});
-    
-    let aux = currentGame.board;
-
-    let boardAux : Cell [][]= [];
-    
-    let count: number = 0;
-    for(let i=0; i<3; i++){
-      for(let j=0; j<3; j++){
-        boardAux[i][j].putValueInCell(aux.charAt(count));
-        count++;
-      }      
+  useEffect(() => {  
+    const getGame = async () => {
+      console.log(context.currentLocalGameId)
+      const currentGame : GameLocalEntity = await GameRepository.findOneBy({id: context.currentLocalGameId});
+      
+      let aux = currentGame.board;
+  
+      let boardAux : Cell [][]= [];
+      
+      let count: number = 0;
+      for(let i=0; i<3; i++){
+        for(let j=0; j<3; j++){
+          boardAux[i][j].putValueInCell(aux.charAt(count));
+          count++;
+        }      
+      }
+  
+      setCells(boardAux);
+      setId(context.currentLocalGameId);
     }
+    getGame();
+  }, [id])
+  
 
-    setCells(boardAux);
-  }
+  
 
 
   const handleCreate = async () => {
