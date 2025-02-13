@@ -2,7 +2,7 @@ import { Alert, Button, StyleSheet, Text, TextInput, TouchableOpacity, View } fr
 import React, { useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { UserRepository } from '../data/Database';
+import { GameRepository } from '../data/Database';
 import { UserEntity } from '../data/entity/UserEntity';
 import { AuthStackParamList } from '../navigations/stack/AuthStackNav';
 
@@ -16,7 +16,7 @@ function InitScreen(props:AuthProps) {
 
     const crear =  async ()=>{
     
-        const datos = await UserRepository.find(  );
+        const datos = await GameRepository.find(  );
         console.log("se ha credado : " + JSON.stringify(datos));
         
 

@@ -15,7 +15,7 @@ export type AuthStackParamList = {
     LoginScreen: undefined,
     RegisterScreen: undefined,
     LocalHomeScreen: undefined,
-    PlayLocalScreen: undefined
+    PlayLocalScreen: undefined,
 };
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();

@@ -47,20 +47,6 @@ const UseGameLogic = () => {
   
     }
   
-    // const refreshCells = () => {
-    //   let array: Cell[][] = [];
-    //   for (let i = 0; i < 3; i++) {
-    //     let row: Cell[] = []
-    //     for (let j = 0; j < 3; j++) {
-    //       let cell: Cell = new Cell((i * 3 + j), cells[i][j].getValue());
-    //       row.push(cell);
-    //     }
-    //     array.push(row);
-    //   }
-    //   setCells([...array]);
-    // }
-  
-  
     const computerPlay = () => {
       let index1 = Math.trunc(Math.random() * 3);
       let index2 = Math.trunc(Math.random() * 3);
@@ -194,7 +180,7 @@ const UseGameLogic = () => {
     return {
         restart,
         createBoard,
-        play, cells
+        play, cells, setCells
     }
 
 }

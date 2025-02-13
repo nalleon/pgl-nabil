@@ -13,6 +13,8 @@ type AppContextType ={
     setToken: (token: string) => void,
     role: string,
     setRole: (rol: string) => void,
+    currentLocalGameId: number,
+    setCurrentLocalGameId: (id: number) => void,
 }
 
 export const AppContextProvider = createContext<AppContextType>({} as AppContextType );
@@ -20,19 +22,20 @@ const AppContext = (props: Props) => {
     const [username, setUsername] = useState<string>("");
     const [token, setToken] = useState<string>("");
     const [role, setRole] = useState<string>("");
-    
-        useEffect(() => {
+    const [currentLocalGameId, setCurrentLocalGameId] = useState<number>(-1);
+
+    useEffect(() => {
         async () => {
             const tokenStorage = await AsyncStorage.getItem("token");
             if(tokenStorage){
             setToken(tokenStorage);
             }
         }
-    
-        }, [token])
 
-        useEffect(() => {
-        
+    }, [token])
+
+    useEffect(() => {
+    
         async () => {
             const userStorage = await AsyncStorage.getItem("nombreusuario");
         
@@ -41,10 +44,9 @@ const AppContext = (props: Props) => {
             }
         }
     
-        }, [username])
-        
-        useEffect(() => {
-        
+    }, [username])
+    
+    useEffect(() => {
         async () => {
             const roleStorage = await AsyncStorage.getItem("rol");
         
@@ -52,17 +54,18 @@ const AppContext = (props: Props) => {
             setRole(roleStorage);
             }
         }
-    
-        }, [role])
-    
-        const contextValues: AppContextType  = {
-            username,
-            setUsername,
-            token,
-            setToken,
-            role,
-            setRole
-        }
+    }, [role])
+
+    const contextValues: AppContextType  = {
+        username,
+        setUsername,
+        token,
+        setToken,
+        role,
+        setRole,
+        currentLocalGameId,
+        setCurrentLocalGameId
+    }
     
         return (
             <AppContextProvider.Provider value={contextValues}>

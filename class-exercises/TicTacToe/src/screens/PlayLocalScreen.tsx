@@ -1,9 +1,12 @@
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Cell from '../model/Cell'
 import { AuthStackParamList } from '../navigations/stack/AuthStackNav';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import UseGameLogic from '../hooks/UseGameLogic';
+import { GameLocalEntity } from '../data/entity/GameLocalEntity';
+import { GameRepository } from '../data/Database';
+import { AppContextProvider } from '../context/AppContext';
 
 type Props = {}
 
@@ -12,13 +15,56 @@ type AuthProps = NativeStackScreenProps<AuthStackParamList, 'LocalHomeScreen'>;
 
 const BoardScreen = (props: AuthProps) => {
 
+  const { restart, createBoard, play, cells, setCells } = UseGameLogic();
 
-  const { restart, createBoard, play, cells } = UseGameLogic();
+  const context = useContext(AppContextProvider);
 
   useEffect(() => {
-    createBoard();
+    if(context.currentLocalGameId != -1){
+      getGame();
+    } else {
+      createBoard();
+    }
   }, [])
 
+
+  const getGame = async () => {
+    const currentGame : GameLocalEntity = await GameRepository.findOneBy({id: context.currentLocalGameId});
+    
+    let aux = currentGame.board;
+
+    let boardAux : Cell [][]= [];
+    
+    let count: number = 0;
+    for(let i=0; i<3; i++){
+      for(let j=0; j<3; j++){
+        boardAux[i][j].putValueInCell(aux.charAt(count));
+        count++;
+      }      
+    }
+
+    setCells(boardAux);
+  }
+
+
+  const handleCreate = async () => {
+    let newGame : GameLocalEntity = new GameLocalEntity();
+    newGame.dateCreation = new Date();
+
+    let aux = "";
+    for(let i=0; i<3; i++){
+      for(let j=0; j<3; j++){
+        aux += cells[i][j];
+      }
+    }
+
+    newGame.board = aux;
+
+    let currentGame : GameLocalEntity = await GameRepository.save(newGame);
+
+    // context.setCurrentLocalGameId(currentGame.id);
+    props.navigation.navigate('LocalHomeScreen');
+  }
   
   return (
     <View style={{flex:1}}>
@@ -38,8 +84,8 @@ const BoardScreen = (props: AuthProps) => {
           <TouchableOpacity style={styles.button} onPress={() => restart()}>
             <Text style={styles.buttonText}>Restart</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('LocalHomeScreen')}>
-            <Text style={styles.buttonText}>Go to home</Text>
+          <TouchableOpacity style={styles.button} onPress={() => handleCreate()}>
+            <Text style={styles.buttonText}>Save for later</Text>
           </TouchableOpacity>
         </View>
     </View>
