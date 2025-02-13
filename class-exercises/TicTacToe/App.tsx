@@ -22,6 +22,7 @@ import { dataSource } from './src/data/Database';
 
 import axios from 'axios';
 import AuthStackNav from './src/navigations/stack/AuthStackNav';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 
@@ -51,18 +52,21 @@ useEffect(() => {
  
   return (
     <>
-    {
-      dbInitilized? (
-        <NavigationContainer >
-            <AuthStackNav />
-        </NavigationContainer>
-      ) : (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text>Cargando...</Text>
-        </View>
-      )
-    }
+    <GestureHandlerRootView>
+      {
+        dbInitilized? (
+          <NavigationContainer >
+              <AuthStackNav />
+          </NavigationContainer>
+        ) : (
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text>Cargando...</Text>
+          </View>
+        )
+      }
+    </GestureHandlerRootView>
   </>
+
   );
   
 }

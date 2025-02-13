@@ -11,7 +11,7 @@ import {
 
 
 @Entity()
-export class EjemploEntity extends BaseEntity {
+export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

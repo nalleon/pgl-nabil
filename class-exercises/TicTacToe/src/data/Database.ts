@@ -1,14 +1,14 @@
 
 import {DataSource} from 'typeorm';
 
-import { EjemploEntity } from './entity/EjemploEntity';
+import { UserEntity } from './entity/UserEntity';
 
 
 
 export const dataSource = new DataSource({
   database: 'tictactoe.db',
   entities: [
-    EjemploEntity
+    UserEntity
   ],
   location: 'default',
   //logging: [],
@@ -19,7 +19,7 @@ export const dataSource = new DataSource({
 });
 
 
-export const EjemploRepository = dataSource.getRepository(EjemploEntity);
+export const UserRepository = dataSource.getRepository(UserEntity);
 
 
 
