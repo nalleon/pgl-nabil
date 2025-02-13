@@ -32,10 +32,9 @@ const BoardScreen = (props: AuthProps) => {
                   </TouchableOpacity>
               )}
             </View>
-          )}
+        )}
         </View>
-        <View style={{justifyContent:'flex-end', flex:2}}>
-          
+        <View style={{justifyContent:'flex-end', alignItems: 'center', marginBottom: 70,  flex:1}}>
           <TouchableOpacity style={styles.button} onPress={() => restart()}>
             <Text style={styles.buttonText}>Restart</Text>
           </TouchableOpacity>
@@ -51,7 +50,7 @@ export default BoardScreen
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 3,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -79,7 +78,7 @@ const styles = StyleSheet.create({
     fontFamily: 'courier'
   },
     button: {
-    width: "100%",
+    width: "80%",
     backgroundColor: "#008080",
     padding: 15,
     borderRadius: 8,
