@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { URL_API } from '../utils/Utils';
 import axios from 'axios';
 import { AppContextProvider } from '../context/AppContext';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 type Props = {}
 
@@ -71,7 +72,9 @@ const RegisterScreen = (props: AuthProps) => {
 
 return (
   <View style={styles.container}>
-      <Text style={styles.title}>Iniciar Sesión</Text>
+      <Icon name={'person-circle'} color={'#008080'} size={100} style={{marginTop:20}}/>
+
+      <Text style={styles.title}>Register</Text>
       
       <TextInput
           style={styles.input}
@@ -102,6 +105,12 @@ return (
       <TouchableOpacity  onPress={() => props.navigation.navigate('LoginScreen')}>
           <Text>Already have an account? Press here</Text>
       </TouchableOpacity>
+      
+      <View style={{flex:2,justifyContent:'flex-end'}}>
+            <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('InitScreen')}>
+            <Text style={styles.buttonText}>Go Back</Text>
+            </TouchableOpacity>
+        </View>
     </View>
   )
 }
