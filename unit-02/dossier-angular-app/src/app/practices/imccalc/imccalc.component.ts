@@ -3,6 +3,8 @@ import { Practice10Service } from '../practice10.service';
 import { Game } from '../practice8/model/Game';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ImcServiceService } from './imc-service.service';
+import { ActivatedRoute } from '@angular/router';
 
 interface Person {
   name : string;
@@ -22,16 +24,24 @@ interface Person {
 
 export class ImcCalc {
 
+  route : ActivatedRoute = inject(ActivatedRoute);
   people: Person[] = [];
   editingIndex: number = -1;
-  
+
+  personService : ImcServiceService  = inject(ImcServiceService);
+
+
+  constructor(){
+    this.editingIndex = Number(this.route?.snapshot.paramMap.get("id"));
+    this.people = this.personService.getAll();
+  }
   imcForm = new FormGroup({
         name: new FormControl(''),
         weight: new FormControl(''),
         age: new FormControl(''),
         height:new FormControl('')
       });
-  
+
     saveIMC() {
       const person: Person = {
         name: this.imcForm.value.name ?? '',
@@ -50,7 +60,7 @@ export class ImcCalc {
 
       this.imcForm.reset();
     }
-  
+
     calculateIMC(): number {
       const weight  : number= parseFloat(this.imcForm?.value.weight ?? '0');
       const height : number = parseFloat(this.imcForm?.value.height ?? '1')/100 ;

@@ -1,24 +1,29 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { PruebaComponent } from './practices/practice03/prueba/prueba.component';
 import { GenteComponent } from './practices/practice04/gente.component';
 import { Practice07Component } from './practices/practice07/practice07.component';
 import { Practice072Component } from "./practices/practice07-2/practice07-2.component";
 import { ImcCalc } from './practices/imccalc/imccalc.component';
-
+import { CommonModule } from '@angular/common';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-root',
   imports: [
-    //RouterOutlet,
+    RouterOutlet,
+    RouterModule,
+    CommonModule,
+    RouterLink,
     //PruebaComponent,
     //GenteComponent,
-    Practice07Component,
-    Practice072Component,
-    ImcCalc
-],
+    // Practice07Component,
+    // Practice072Component,
+    ImcCalc,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
+
 export class AppComponent {
   nombre : string ='Nabil';
   apellido : string ='L. A.';
@@ -35,8 +40,6 @@ export class AppComponent {
       this.tableResult[i] = '\n ' + num + ' * ' +  this.numArr[i] + ' = '+ arrTable[i];
     }
     this.result = arrTable;
-
-    //alert(this.table);
 
 
   }
