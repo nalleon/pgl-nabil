@@ -16,6 +16,7 @@ type GameData = {
   date : string,
 }
 
+
 const LocalHomeScreen = (props: AuthProps) => {
   const [data, setData] = useState<GameData[]>([]);
 
@@ -44,7 +45,7 @@ const LocalHomeScreen = (props: AuthProps) => {
         style={{marginTop:20}}
       />
 
-      <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('InitScreen')}>
+      <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('PlayLocalScreen')}>
           <Text style={styles.buttonText}>Create a new game</Text>
       </TouchableOpacity>
 
