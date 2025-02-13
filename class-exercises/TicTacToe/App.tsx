@@ -20,8 +20,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import "reflect-metadata";
 import { dataSource } from './src/data/Database';
 
-import PruebaStack from './src/navigations/StackNav';
 import axios from 'axios';
+import AuthStackNav from './src/navigations/stack/AuthStackNav';
 
 
 
@@ -41,7 +41,6 @@ useEffect(() => {
       try{
         await dataSource.initialize();
        console.log("Base de datos inicializada correctamente");
-        //cargar();
         setDbInitilized(true);
 
       }catch(e){console.error("no arranca la ddbb" + e)}
@@ -55,7 +54,7 @@ useEffect(() => {
     {
       dbInitilized? (
         <NavigationContainer >
-            <PruebaStack />
+            <AuthStackNav />
         </NavigationContainer>
       ) : (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center' }}>

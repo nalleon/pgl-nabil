@@ -6,7 +6,7 @@ import { EjemploEntity } from './entity/EjemploEntity';
 
 
 export const dataSource = new DataSource({
-  database: 'ejemplodb.db',
+  database: 'tictactoe.db',
   entities: [
     EjemploEntity
   ],
