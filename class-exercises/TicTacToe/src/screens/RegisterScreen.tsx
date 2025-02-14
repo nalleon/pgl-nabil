@@ -7,8 +7,8 @@ import { TextInput } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { URL_API } from '../utils/Utils';
 import axios from 'axios';
-import { AppContextProvider } from '../context/AppContext';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { AppContext } from '../context/AppContext';
 
 type Props = {}
 
@@ -21,7 +21,7 @@ const RegisterScreen = (props: AuthProps) => {
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
 
-  const context = useContext(AppContextProvider);
+  const context = useContext(AppContext);
   
   useEffect(() => {
       setLogged(false);

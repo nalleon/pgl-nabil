@@ -13,10 +13,6 @@ type Props = {}
 
 type AuthProps = NativeStackScreenProps<AuthStackParamList, 'LocalHomeScreen'>;
 
-
-
-
-
 const LocalHomeScreen = (props: AuthProps) => {
   const [data, setData] = useState<GameLocalEntity[]>([]);
   

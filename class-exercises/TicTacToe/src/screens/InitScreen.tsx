@@ -13,16 +13,6 @@ type AuthProps = NativeStackScreenProps<AuthStackParamList, 'InitScreen'>;
 
 function InitScreen(props:AuthProps) {
 
-
-    const crear =  async ()=>{
-    
-        const datos = await GameRepository.find(  );
-        console.log("se ha credado : " + JSON.stringify(datos));
-        
-
-
-    }
-
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('LoginScreen')}>
