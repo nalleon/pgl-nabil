@@ -1,12 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Cell from '../model/Cell';
+import { AppContext } from '../context/AppContext';
 
 
 const UseGameLogic = () => {
     const [cells, setCells] = useState<Cell[][]>([]);
     const [won, setWon] = useState(false);
     const [gameOver, setGameOver] = useState(false);
+
+    const context = useContext(AppContext);
   
 
     const createBoard = () => {
@@ -38,17 +41,20 @@ const UseGameLogic = () => {
   
   
     const play = (rowIndex : number, cellIndex : number) => {
-      if(cells[rowIndex][cellIndex].getValue() != " " || gameOver || won){
+      if(cells[rowIndex][cellIndex].getValue() != " " || gameOver || won || 
+        context.isFinished){
         return;
       }
+
       let wonLocal = false;
       let aux : Cell[][] = cells;
       aux[rowIndex][cellIndex].putValueInCell("x");
       setCells([...aux]);
   
       if(hasLine(aux, rowIndex, cellIndex)){
-        setWon(true);
         wonLocal = true;
+        context.setIsFinished(true);
+        setWon(true);
         setGameOver(true);
       }
       
@@ -61,26 +67,27 @@ const UseGameLogic = () => {
     }
   
     const computerPlay = () => {
-      let index1 = Math.trunc(Math.random() * 3);
-      let index2 = Math.trunc(Math.random() * 3);
+      let posX = Math.trunc(Math.random() * 3);
+      let posY = Math.trunc(Math.random() * 3);
   
-      while (cells[index1][index2].getValue() != " ") {
-        index1 = Math.trunc(Math.random() * 3);
-        index2 = Math.trunc(Math.random() * 3);
+      while (cells[posX][posY].getValue() != " ") {
+        posX = Math.trunc(Math.random() * 3);
+        posY = Math.trunc(Math.random() * 3);
       }
   
       
-        let aux : Cell[][] = cells;
-        aux[index1][index2].putValueInCell("o");
-        setCells([...aux]);
-        const isLineComputer : boolean = hasLine(aux,index1, index2);
-  
-        if(isLineComputer){
-          setWon(true);
-          setGameOver(true);
-        }
-      
+      let aux : Cell[][] = cells;
+      aux[posX][posY].putValueInCell("o");
+      setCells([...aux]);
+      const isLineComputer : boolean = hasLine(aux,posX, posY);
+
+      if(isLineComputer){
+        setWon(true);
+        setGameOver(true);
+        context.setIsFinished(true);
       }
+      
+    } 
   
     const checkCells = () => {
       for (let i = 0; i < 3; i++) {
@@ -185,9 +192,9 @@ const UseGameLogic = () => {
     }
 
     const restart = () => {
-        setGameOver(false);
-        createBoard();
-        console.log(won, gameOver)
+      setGameOver(false);
+      createBoard();
+      context.setIsFinished(false);
     }
 
     return {

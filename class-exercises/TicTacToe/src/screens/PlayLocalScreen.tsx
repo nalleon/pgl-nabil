@@ -25,16 +25,17 @@ const PlayLocalScreen = (props: AuthProps) => {
   }, [])
 
   useEffect(() => {  
-    console.log("segundo ue")
-    const getGame = async () => {
-      const currentGame : GameLocalEntity = await GameRepository.findOneBy({id: context.currentLocalGameId});
-      let aux : Cell[][]= JSON.parse(currentGame.board);
-      
-      console.log(aux);      
-      restoreBoard(aux);
-      setId(context.currentLocalGameId);
-    }
-    getGame();
+    if(context.currentLocalGameId != -1){
+      const getGame = async () => {
+        const currentGame : GameLocalEntity = await GameRepository.findOneBy({id: context.currentLocalGameId});
+        let aux : Cell[][]= JSON.parse(currentGame.board);
+        
+        console.log(aux);      
+        restoreBoard(aux);
+        setId(context.currentLocalGameId);
+      }
+      getGame();
+    } 
   }, [id])
   
 
@@ -45,6 +46,9 @@ const PlayLocalScreen = (props: AuthProps) => {
 
     newGame.board = JSON.stringify(cells);
     let currentGame : GameLocalEntity = await GameRepository.save(newGame);
+    
+    context.setCurrentLocalGameId(-1);
+    setId(-1);
     props.navigation.navigate('LocalHomeScreen');
   }
 
@@ -54,7 +58,9 @@ const PlayLocalScreen = (props: AuthProps) => {
     currentGame.board = JSON.stringify(cells);
 
     let updatedGame : GameLocalEntity = await GameRepository.save(currentGame);
-    setId(context.currentLocalGameId);
+    
+    context.setCurrentLocalGameId(-1);
+    setId(-1);
     props.navigation.navigate('LocalHomeScreen');
   }
   
