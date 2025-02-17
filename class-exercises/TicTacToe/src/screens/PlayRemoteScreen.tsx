@@ -53,6 +53,11 @@ const PlayRemoteScreen = (props: AuthProps) => {
       setGame(response.data.data);
     }
 
+    if(response.data.data.finished) {
+      context.setOnlineGameId(-1);
+      props.navigation.navigate('RemoteHomeScreen');
+    }
+
     } catch (error) {
       console.log("Error al obtener datos:", error);
     }
@@ -71,8 +76,34 @@ const PlayRemoteScreen = (props: AuthProps) => {
   }
 
   const handlePressAbandon = async () => {
-    context.setCurrentLocalGameId(-1);
-    props.navigation.navigate('RemoteHomeScreen');
+        
+    if(game.finished){
+      context.setOnlineGameId(-1);
+      props.navigation.navigate('RemoteHomeScreen');
+      return;
+    }
+
+    try {
+      console.log(`${URL_API}/v2/games/abandonment/${context.onlineGameId}`);
+      const response = 
+      await axios.post(`${URL_API}/v2/games/abandonment/${context.onlineGameId}`, {
+              name: context.username,
+          },
+          {
+          headers:{
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + context.token
+            }   
+          }
+      );
+
+      console.log("Respuesta del servidor: ", response.data.message);
+      context.setOnlineGameId(-1);
+      props.navigation.navigate('RemoteHomeScreen');
+
+      } catch (error) {
+          console.error("Error: ", error);
+      }
   }
 
   const handlePlay = async (posX : number, posY : number) => {

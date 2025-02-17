@@ -72,8 +72,7 @@ const RemoteHomeScreen = (props: AuthProps) => {
   
     let status = response.data.status;
     if (status == 200){
-      console.log("Found player")
-      if (pollingInterval.current) {
+      if (pollingInterval.current && !response.data.data.finished) {
         props.navigation.navigate("PlayRemoteScreen");
       }
     }
