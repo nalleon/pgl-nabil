@@ -32,10 +32,11 @@ const LoginScreen = (props: AuthProps) => {
             return;
         }
         
+        console.log(`${URL_API}/v1/auth/login`);
         try {
-            const response = await axios.post(`${URL_API}login`, {
-                    username,
-                    password 
+            const response = await axios.post(`${URL_API}/v1/auth/login`, {
+                    name: username,
+                    password: password 
                 },
                 {
                 headers:{
@@ -56,6 +57,8 @@ const LoginScreen = (props: AuthProps) => {
 
 
                 setLogged(true);
+                props.navigation.navigate('RemoteHomeScreen');
+
                 } catch(error){
                     console.error("Error al guardar el token: "+  error);
                 } 
