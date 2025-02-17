@@ -16,8 +16,6 @@ type Props = {}
 type AuthProps = NativeStackScreenProps<AuthStackParamList, 'RemoteHomeScreen'>;
 
 const RemoteHomeScreen = (props: AuthProps) => {
-  const [data, setData] = useState<GameOutput|null>(null);
-  const [found, setFound] = useState<boolean>(false)
   const pollingInterval = useRef<NodeJS.Timeout | null>(null); 
 
   const context = useContext(AppContext);
@@ -72,11 +70,9 @@ const RemoteHomeScreen = (props: AuthProps) => {
         },
       });
   
-    setData(response.data.data as GameOutput);
     let status = response.data.status;
     if (status == 200){
       console.log("Found player")
-      setFound(true);
       if (pollingInterval.current) {
         props.navigation.navigate("PlayRemoteScreen");
       }
