@@ -1,10 +1,14 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import UseGameLogic from '../hooks/UseGameLogic';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthStackParamList } from '../navigations/stack/AuthStackNav';
 import { GameLocalEntity } from '../data/entity/GameLocalEntity';
 import { AppContext } from '../context/AppContext';
+import axios from 'axios';
+import { POLLING_INTERVAL, URL_API } from '../utils/Utils';
+import Cell from '../model/Cell';
+import { FlatList } from 'react-native-gesture-handler';
 
 type Props = {}
 
@@ -25,39 +29,96 @@ export type GamePlay = {
 
 
 const PlayRemoteScreen = (props: AuthProps) => {
+  const [game, setGame] = useState<GameOutput>({} as GameOutput);
   const [cells, setCells] = useState<string[][]>([])
   const context = useContext(AppContext);
+  const pollingInterval = useRef<NodeJS.Timeout | null>(null); 
 
   useEffect(() => {
-
+    pullStuff(context.onlineGameId);
   }, [])
 
 
+  useEffect(() => {
+    let boardAux: string[][] = [];
+
+
+  }, [])
   
 
+    const fetchData = async (gameId:number) => {
+    try {
+      const response = await axios.get(`${URL_API}/v2/games/${gameId}`, {
+        params: { name: context.username },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${context.token}`,
+        },
+      });
   
-    const handlePress = async () => {
-      context.setCurrentLocalGameId(-1);
-      props.navigation.navigate('RemoteHomeScreen');
+    let status = response.data.status;
+    if (status == 200){
+      console.log("OK")
+      setGame(response.data.data);
+      console.log(response.data.data)
+      console.log("BOARD: " + game?.board[0][1]);
+
     }
+
+    } catch (error) {
+      console.log("Error al obtener datos:", error);
+    }
+  }
+
+  const pullStuff = async (gameId: number) => {
+    pollingInterval.current = setInterval(() => {
+      fetchData(gameId);
+    }, POLLING_INTERVAL);
+
+    return () => {
+      if (pollingInterval.current) {
+        clearInterval(pollingInterval.current);
+      }
+    }
+  }
+
+  const handlePressAbandon = async () => {
+    context.setCurrentLocalGameId(-1);
+    props.navigation.navigate('RemoteHomeScreen');
+  }
+
+  const handlePlay = async () => {
+
+  }
 
   return (
     <View style={{flex:1}}>
       <View style={styles.container}>
-        {
-          cells.map((row, rowIndex) =>
-            <View style={styles.row} key={rowIndex}>
-              {row.map((cell, cellIndex) =>
-                  <TouchableOpacity style={styles.cell} key={rowIndex + "_" + cellIndex}>
-                      <Text style={styles.text}>{cell.charAt(cellIndex)}</Text>
+        { game && 
+          <FlatList
+          data={game?.board}
+          renderItem={({item: row, index: posX}) => (
+            <View style={styles.row}>
+            <FlatList
+              data={row}
+              numColumns={3}
+              renderItem={({item: column, index: posY}) => (
+                  <TouchableOpacity style={styles.cell} onPress={() => handlePlay()}>
+                    <Text style={styles.text}>{column}</Text>
                   </TouchableOpacity>
-              )}
+                )
+              }
+            />
             </View>
-        )}
+          )
+
+          }
+        />
+        }
       </View>
 
         <View style={{justifyContent:'flex-end', alignItems: 'center', marginBottom: 70,  flex:1}}>
-            <TouchableOpacity style={styles.button} onPress={() => handlePress()}>
+            <TouchableOpacity style={styles.button} onPress={() => handlePressAbandon()}>
               <Text style={styles.buttonText}>Abandon</Text>
             </TouchableOpacity>
           
@@ -70,6 +131,7 @@ export default PlayRemoteScreen
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 150,
     flex: 3,
     justifyContent: "center",
     alignItems: "center"
