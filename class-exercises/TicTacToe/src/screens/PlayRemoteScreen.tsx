@@ -30,21 +30,12 @@ export type GamePlay = {
 
 const PlayRemoteScreen = (props: AuthProps) => {
   const [game, setGame] = useState<GameOutput>({} as GameOutput);
-  const [cells, setCells] = useState<string[][]>([])
   const context = useContext(AppContext);
   const pollingInterval = useRef<NodeJS.Timeout | null>(null); 
 
   useEffect(() => {
     pullStuff(context.onlineGameId);
   }, [])
-
-
-  useEffect(() => {
-    let boardAux: string[][] = [];
-
-
-  }, [])
-  
 
     const fetchData = async (gameId:number) => {
     try {
@@ -60,9 +51,6 @@ const PlayRemoteScreen = (props: AuthProps) => {
     if (status == 200){
       console.log("OK")
       setGame(response.data.data);
-      console.log(response.data.data)
-      console.log("BOARD: " + game?.board[0][1]);
-
     }
 
     } catch (error) {
@@ -87,8 +75,30 @@ const PlayRemoteScreen = (props: AuthProps) => {
     props.navigation.navigate('RemoteHomeScreen');
   }
 
-  const handlePlay = async () => {
+  const handlePlay = async (posX : number, posY : number) => {
 
+    
+    try {
+      console.log(`${URL_API}/v2/games/bet/{id}?id=${context.onlineGameId}`);
+      const response = 
+      await axios.post(`${URL_API}/v2/games/bet/{id}?id=${context.onlineGameId}`, {
+              playername: context.username,
+              posX: posX,
+              posY: posY
+          },
+          {
+          headers:{
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + context.token
+            }   
+          }
+      );
+
+      console.log("Respuesta del servidor: ", response.data.message);
+      } catch (error) {
+          console.error("Error 2", error);
+      }
+    
   }
 
   return (
@@ -103,8 +113,8 @@ const PlayRemoteScreen = (props: AuthProps) => {
               data={row}
               numColumns={3}
               renderItem={({item: column, index: posY}) => (
-                  <TouchableOpacity style={styles.cell} onPress={() => handlePlay()}>
-                    <Text style={styles.text}>{column}</Text>
+                  <TouchableOpacity style={styles.cell} onPress={() => handlePlay(posX, posY)}>
+                    <Text style={styles.text}>{column == '_' ? ' ' : column}</Text>
                   </TouchableOpacity>
                 )
               }
