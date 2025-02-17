@@ -7,32 +7,19 @@ import { GameLocalEntity } from '../data/entity/GameLocalEntity';
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 import { PULLING_INTERVAL, URL_API } from '../utils/Utils';
-import Cell from '../model/Cell';
 import { FlatList } from 'react-native-gesture-handler';
+import { GameOutput } from '../hooks/UseApi';
 
 type Props = {}
 
 type AuthProps = NativeStackScreenProps<AuthStackParamList, 'LocalHomeScreen'>;
-
-export type GameOutput = {
-  player1: string;
-  player2: string;
-  board: string[][];
-  finished: boolean;
-  turnPlayer: string;
-};
-
-export type GamePlay = {
-  playername: string;
-  posX: number;
-  posY: number;
-};
 
 
 const PlayRemoteScreen = (props: AuthProps) => {
   const [game, setGame] = useState<GameOutput>({} as GameOutput);
   const context = useContext(AppContext);
   const pullingInterval = useRef<NodeJS.Timeout | null>(null); 
+
 
   useEffect(() => {
     if(context.onlineGameId != -1){

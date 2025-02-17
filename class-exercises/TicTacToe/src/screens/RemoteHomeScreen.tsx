@@ -9,7 +9,6 @@ import { GameLocalEntity } from '../data/entity/GameLocalEntity';
 import { AppContext } from '../context/AppContext';
 import { PULLING_INTERVAL as PULLING_INTERVAL, URL_API } from '../utils/Utils';
 import axios from 'axios';
-import { GameOutput } from './PlayRemoteScreen';
 
 type Props = {}
 

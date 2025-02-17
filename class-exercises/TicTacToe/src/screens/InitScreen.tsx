@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { GameRepository } from '../data/Database';
-import { UserEntity } from '../data/entity/UserEntity';
 import { AuthStackParamList } from '../navigations/stack/AuthStackNav';
 
 
