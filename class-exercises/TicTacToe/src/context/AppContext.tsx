@@ -17,7 +17,8 @@ type AppContextType ={
     setCurrentLocalGameId: (id: number) => void,
     isFinished : boolean,
     setIsFinished: (isFinished: boolean) => void,
-
+    onlineGameId: number,
+    setOnlineGameId: (id: number) => void,
 }
 
 export const AppContext = createContext<AppContextType>({} as AppContextType );
@@ -27,6 +28,7 @@ const AppContextProvider = (props: Props) => {
     const [role, setRole] = useState<string>("");
     const [currentLocalGameId, setCurrentLocalGameId] = useState<number>(-1);
     const [isFinished, setIsFinished] = useState<boolean>(false);
+    const [onlineGameId, setOnlineGameId] = useState<number>(-1)
 
     const contextValues: AppContextType  = {
         username,
@@ -38,7 +40,9 @@ const AppContextProvider = (props: Props) => {
         currentLocalGameId,
         setCurrentLocalGameId,
         isFinished,
-        setIsFinished
+        setIsFinished,
+        onlineGameId,
+        setOnlineGameId
     }
     
         return (
