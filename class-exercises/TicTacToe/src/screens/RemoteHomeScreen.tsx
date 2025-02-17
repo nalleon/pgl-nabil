@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { styles } from './InitScreen';
 import { FlatList } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -7,26 +7,87 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthStackParamList } from '../navigations/stack/AuthStackNav';
 import { GameLocalEntity } from '../data/entity/GameLocalEntity';
 import { AppContext } from '../context/AppContext';
-import { URL_API } from '../utils/Utils';
+import { POLLING_INTERVAL, URL_API } from '../utils/Utils';
 import axios from 'axios';
+import { GameOutput } from './PlayRemoteScreen';
 
 type Props = {}
 
 type AuthProps = NativeStackScreenProps<AuthStackParamList, 'RemoteHomeScreen'>;
 
 const RemoteHomeScreen = (props: AuthProps) => {
-  const [data, setData] = useState<GameLocalEntity[]>([]);
-  
+  const [data, setData] = useState<GameOutput|null>(null);
+  const [found, setFound] = useState<boolean>(false)
+  const pollingInterval = useRef<NodeJS.Timeout | null>(null); 
+
   const context = useContext(AppContext);
 
-  const handleContinueGame = (id: number) => {
-      console.log(id);
-      context.setCurrentLocalGameId(id);
-      props.navigation.navigate('PlayLocalScreen');
-  }
 
+  useEffect(() => {
+    let status : number = null;
+      const fetchData = async () => {
+          try {
+            const response = await axios.get(`${URL_API}/v2/games/${context.onlineGameId}`, {
+              params: { name: context.username },
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${context.token}`,
+              },
+            });
+        
+          setData(response.data.data as GameOutput);
+          status = response.data.status;
+          if (status == 200){
+            console.log("Found player")
+            setFound(true);
+            if (pollingInterval.current) {
+              clearInterval(pollingInterval.current);
+            }
+          }
+          console.log("Respuesta completa del servidor: " + JSON.stringify(response.data.message));
+  
+        } catch (error) {
+          console.log("Error al obtener datos:", error);
+        }
+      }
+
+      fetchData();
+      
+      if(status == 200){
+        setFound(true);
+
+      }
+      
+      pollingInterval.current = setInterval(() => {
+        fetchData();
+      }, POLLING_INTERVAL);
+
+      return () => {
+        if (pollingInterval.current) {
+          clearInterval(pollingInterval.current);
+        }
+      }
+
+    
+  }, [found])
+
+
+  useEffect(() => {
+    console.log("Cambio en data:", data); 
+    if (data) { 
+      if (pollingInterval.current) {
+        clearInterval(pollingInterval.current);
+      }
+      props.navigation.navigate("PlayRemoteScreen");
+    }
+  }, [data]);
+  
 
   const handleGame = async () => {
+    if(context.onlineGameId != -1){
+      return;
+    }
+
     try {
       const response = await axios.post(`${URL_API}/v2/games`, {
               name: context.username,
@@ -48,9 +109,6 @@ const RemoteHomeScreen = (props: AuthProps) => {
             const gameId = response.data.message.slice(-2);
             console.log("ID de la partida:", gameId);
             context.setOnlineGameId(gameId)
-
-            props.navigation.navigate('PlayRemoteScreen');
-
           } catch(error){
               console.error("Error al guardar el token: "+  error);
           } 
@@ -67,6 +125,7 @@ const RemoteHomeScreen = (props: AuthProps) => {
     if (context) {
       context.setToken("");
       context.setUsername("");
+      context.setOnlineGameId(-1);
       props.navigation.navigate('InitScreen');
     } 
   }

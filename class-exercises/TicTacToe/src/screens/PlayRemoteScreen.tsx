@@ -1,9 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import UseGameLogic from '../hooks/UseGameLogic';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthStackParamList } from '../navigations/stack/AuthStackNav';
 import { GameLocalEntity } from '../data/entity/GameLocalEntity';
+import { AppContext } from '../context/AppContext';
 
 type Props = {}
 
@@ -25,9 +26,10 @@ export type GamePlay = {
 
 const PlayRemoteScreen = (props: AuthProps) => {
   const [cells, setCells] = useState<string[][]>([])
+  const context = useContext(AppContext);
 
   useEffect(() => {
-    
+
   }, [])
 
 
@@ -35,6 +37,7 @@ const PlayRemoteScreen = (props: AuthProps) => {
 
   
     const handlePress = async () => {
+      context.setCurrentLocalGameId(-1);
       props.navigation.navigate('RemoteHomeScreen');
     }
 
