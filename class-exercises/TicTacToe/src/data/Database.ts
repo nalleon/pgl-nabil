@@ -1,7 +1,6 @@
 
 import {DataSource} from 'typeorm';
 
-import { UserEntity } from './entity/UserEntity';
 import { GameLocalEntity } from './entity/GameLocalEntity';
 
 
@@ -9,7 +8,7 @@ import { GameLocalEntity } from './entity/GameLocalEntity';
 export const dataSource = new DataSource({
   database: 'tictactoe5.db',
   entities: [
-    UserEntity, GameLocalEntity
+    GameLocalEntity
   ],
   location: 'default',
   //logging: [],
@@ -19,7 +18,6 @@ export const dataSource = new DataSource({
 });
 
 
-export const UserRepository = dataSource.getRepository(UserEntity);
 export const GameRepository = dataSource.getRepository(GameLocalEntity);
 
 

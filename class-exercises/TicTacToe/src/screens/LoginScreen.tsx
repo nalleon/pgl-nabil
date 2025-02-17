@@ -9,65 +9,29 @@ import axios from 'axios';
 import { URL_API as URL_API } from '../utils/Utils';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AppContext } from '../context/AppContext';
+import UseApi from '../hooks/UseApi';
 
 type Props = {}
 
 type AuthProps = NativeStackScreenProps<AuthStackParamList, 'LoginScreen'>;
 
 const LoginScreen = (props: AuthProps) => {
-    const [logged, setLogged] = useState<boolean>(false)
     const [username, setUsername] = useState<string>("")
     const [password, setPassword] = useState<string>("")
 
     const context = useContext(AppContext);
     
-    useEffect(() => {
-        setLogged(false);
-    }, [])
-    
 
+    const { handleLogin } = UseApi();
 
-    const handleLogin = async (username : string, password : string) => {
-        if(!username || username.trim() === "" || !password || password.trim() === ""){
-            return;
+    const login = async (username : string, password : string) => {
+        const result = handleLogin(username, password);
+        if (result){
+            props.navigation.navigate('RemoteHomeScreen');
         }
-        
-        console.log(`${URL_API}/v1/auth/login`);
-        try {
-            const response = await axios.post(`${URL_API}/v1/auth/login`, {
-                    name: username,
-                    password: password 
-                },
-                {
-                headers:{
-                    'Content-Type': 'application/json'
-                }   
-                }
-            );
-
-            console.log("Respuesta del servidor: ", response.data);
-        
-            
-            if (response.data) {
-                try {
-                await AsyncStorage.setItem("token", response.data);
-                await AsyncStorage.setItem("nombreusuario", username);
-                context.setUsername(username);
-                context.setToken(response.data);
+    }
 
 
-                setLogged(true);
-                props.navigation.navigate('RemoteHomeScreen');
-
-                } catch(error){
-                    console.error("Error al guardar el token: "+  error);
-                } 
-                
-            }
-            } catch (error) {
-                console.error("Error al iniciar sesión", error);
-        }
-    };
 
 
 
@@ -90,7 +54,7 @@ return (
                 onChangeText={setPassword}
             />
             
-            <TouchableOpacity style={styles.button} onPress={() => handleLogin(username, password)}>
+            <TouchableOpacity style={styles.button} onPress={() => login(username, password)}>
                 <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
 

@@ -9,6 +9,7 @@ import { URL_API } from '../utils/Utils';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AppContext } from '../context/AppContext';
+import UseApi from '../hooks/UseApi';
 
 type Props = {}
 
@@ -16,56 +17,19 @@ type AuthProps = NativeStackScreenProps<AuthStackParamList, 'RegisterScreen'>;
 
 
 const RegisterScreen = (props: AuthProps) => {
-  const [logged, setLogged] = useState<boolean>(false)
   const [username, setUsername] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
-
-  const context = useContext(AppContext);
   
-  useEffect(() => {
-      setLogged(false);
-  }, [])
-  
+  const { handleRegister } = UseApi();
 
 
-  const handleRegister = async (username : string, password : string, email : string) => {
-      if(!username || username.trim() === "" || !password || password.trim() === ""
-          || email.trim() === "" || !email){
-          return;
-      }
-      
-      try {
-          const response = await axios.post(`${URL_API}login`, {
-                  username,
-                  email,
-                  password 
-              },
-              {
-              headers:{
-                  'Content-Type': 'application/json'
-              }   
-              }
-          );
 
-          console.log("Respuesta del servidor: ", response.data);
-      
-          
-          if (response.data) {
-              try {
-                await AsyncStorage.setItem("token", response.data);
-                await AsyncStorage.setItem("username", username);
-                context.setUsername(username);
-                context.setToken(response.data);
-                setLogged(true);
-              } catch(error){
-                  console.error("Error al guardar el token: "+  error);
-              } 
-              
-          }
-          } catch (error) {
-              console.error("Error al iniciar sesión", error);
-      }
+  const register = async (username : string, password : string, email : string) => {
+    const result = handleRegister(username, email, password);
+    if (result){
+        props.navigation.navigate('LoginScreen');
+    }
   };
 
 
@@ -98,7 +62,7 @@ return (
           onChangeText={setPassword}
       />
       
-      <TouchableOpacity style={styles.button} onPress={() => handleRegister(username, password, email)}>
+      <TouchableOpacity style={styles.button} onPress={() => register(username, password, email)}>
           <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
 

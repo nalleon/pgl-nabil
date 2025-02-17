@@ -35,7 +35,6 @@ const PlayRemoteScreen = (props: AuthProps) => {
   const pullingInterval = useRef<NodeJS.Timeout | null>(null); 
 
   useEffect(() => {
-    console.log( "ESTA ES LA ID EPICA" + context.onlineGameId);
     if(context.onlineGameId != -1){
       pullStuff(context.onlineGameId);
     }else{
