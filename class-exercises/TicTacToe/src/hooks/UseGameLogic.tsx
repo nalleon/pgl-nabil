@@ -31,11 +31,12 @@ const UseGameLogic = () => {
       for(let i=0; i<3; i++){
         let row : Cell[] = [];
         for(let j=0; j<3; j++){
-          let cell: Cell = new Cell((i * 3 + j), board[i][j]?.value || " ");
+          let cell: Cell = new Cell(board[i][j]?.id , board[i][j]?.value || " ");
           row.push(cell);
         }
         arr.push(row);
       }
+      
       setCells([...arr]);
     }
   

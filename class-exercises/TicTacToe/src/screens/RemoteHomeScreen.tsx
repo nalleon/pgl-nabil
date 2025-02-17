@@ -22,65 +22,6 @@ const RemoteHomeScreen = (props: AuthProps) => {
 
   const context = useContext(AppContext);
 
-
-  useEffect(() => {
-    let status : number = null;
-      const fetchData = async () => {
-          try {
-            const response = await axios.get(`${URL_API}/v2/games/${context.onlineGameId}`, {
-              params: { name: context.username },
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${context.token}`,
-              },
-            });
-        
-          setData(response.data.data as GameOutput);
-          status = response.data.status;
-          if (status == 200){
-            console.log("Found player")
-            setFound(true);
-            if (pollingInterval.current) {
-              clearInterval(pollingInterval.current);
-            }
-          }
-          console.log("Respuesta completa del servidor: " + JSON.stringify(response.data.message));
-  
-        } catch (error) {
-          console.log("Error al obtener datos:", error);
-        }
-      }
-
-      fetchData();
-      
-      if(status == 200){
-        setFound(true);
-
-      }
-      
-      pollingInterval.current = setInterval(() => {
-        fetchData();
-      }, POLLING_INTERVAL);
-
-      return () => {
-        if (pollingInterval.current) {
-          clearInterval(pollingInterval.current);
-        }
-      }
-
-    
-  }, [found])
-
-
-  useEffect(() => {
-    console.log("Cambio en data:", data); 
-    if (data) { 
-      if (pollingInterval.current) {
-        clearInterval(pollingInterval.current);
-      }
-      props.navigation.navigate("PlayRemoteScreen");
-    }
-  }, [data]);
   
 
   const handleGame = async () => {
@@ -102,24 +43,62 @@ const RemoteHomeScreen = (props: AuthProps) => {
 
       console.log("Respuesta del servidor: ", response.data.message);
 
-      
+     
       
       if (response.data) {
           try {
-            const gameId = response.data.message.slice(-2);
+            const gameId: number = parseInt(response.data.message.slice(-2).trim());
             console.log("ID de la partida:", gameId);
             context.setOnlineGameId(gameId)
+            await pullStuff(gameId);
           } catch(error){
               console.error("Error al guardar el token: "+  error);
           } 
-          
+        
       }
       } catch (error) {
           console.error("Error al iniciar sesión", error);
-  }
+      }
+    
   }
 
+  const fetchData = async (gameId:number) => {
+    try {
+      const response = await axios.get(`${URL_API}/v2/games/${gameId}`, {
+        params: { name: context.username },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${context.token}`,
+        },
+      });
+  
+    setData(response.data.data as GameOutput);
+    let status = response.data.status;
+    if (status == 200){
+      console.log("Found player")
+      setFound(true);
+      if (pollingInterval.current) {
+        props.navigation.navigate("PlayRemoteScreen");
+      }
+    }
+    console.log("Respuesta completa del servidor: " + JSON.stringify(response.data.message));
 
+  } catch (error) {
+    console.log("Error al obtener datos:", error);
+  }
+}
+
+  const pullStuff = async (gameId: number) => {
+    pollingInterval.current = setInterval(() => {
+      fetchData(gameId);
+    }, POLLING_INTERVAL);
+
+    return () => {
+      if (pollingInterval.current) {
+        clearInterval(pollingInterval.current);
+      }
+    }
+  }
 
   const handleGoBack = () => {
     if (context) {
