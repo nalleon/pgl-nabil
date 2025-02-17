@@ -24,34 +24,30 @@ const RemoteHomeScreen = (props: AuthProps) => {
   }
 
 
-  const handleGame = async () => {
+  const handleGame = () => {
     context.setIsFinished(false);
     props.navigation.navigate('PlayLocalScreen');
   }
 
+
+  const handleGoBack = () => {
+    if (context) {
+      context.setToken("");
+      context.setUsername("");
+      props.navigation.navigate('InitScreen');
+    } 
+  }
   return (
     <View style={styles.container}>
       <Icon name={'game-controller'} color={'#008080'} size={100} style={{marginTop:20, borderColor: '#008080', borderWidth:3, borderRadius: 100, padding:5}}/>
-      <Text style={styles.title}> GAMES</Text>
-
-
-      <FlatList
-        data={data}
-        renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleContinueGame(item?.id)}>
-                <Text style={styles.flatListElementText}>{item?.dateCreation?.toString()} - {item?.id} </Text>
-            </TouchableOpacity>
-        )}
-        keyExtractor={(item, index) => item?.dateCreation + "_" + item.id + "_" + index}
-        style={{marginTop:20}}
-      />
+      <Text style={styles.title}> GAMES </Text>
 
       <TouchableOpacity style={styles.button} onPress={() => handleGame()}>
           <Text style={styles.buttonText}>Create a new game</Text>
       </TouchableOpacity>
 
       <View style={{justifyContent:'flex-end', flex:2}}>
-        <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('InitScreen')}>
+        <TouchableOpacity style={styles.button} onPress={() => handleGoBack()}>
           <Text style={styles.buttonText}>Go Back</Text>
         </TouchableOpacity>
       </View>
