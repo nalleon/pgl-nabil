@@ -28,7 +28,6 @@ const LocalHomeScreen = (props: AuthProps) => {
   }
 
   const handleContinueGame = (id: number) => {
-      console.log(id);
       context.setCurrentLocalGameId(id);
       props.navigation.navigate('PlayLocalScreen');
   }

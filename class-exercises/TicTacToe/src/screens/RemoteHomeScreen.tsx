@@ -7,7 +7,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthStackParamList } from '../navigations/stack/AuthStackNav';
 import { GameLocalEntity } from '../data/entity/GameLocalEntity';
 import { AppContext } from '../context/AppContext';
-import { POLLING_INTERVAL, URL_API } from '../utils/Utils';
+import { PULLING_INTERVAL as PULLING_INTERVAL, URL_API } from '../utils/Utils';
 import axios from 'axios';
 import { GameOutput } from './PlayRemoteScreen';
 
@@ -16,14 +16,12 @@ type Props = {}
 type AuthProps = NativeStackScreenProps<AuthStackParamList, 'RemoteHomeScreen'>;
 
 const RemoteHomeScreen = (props: AuthProps) => {
-  const pollingInterval = useRef<NodeJS.Timeout | null>(null); 
+  const pullingInterval = useRef<NodeJS.Timeout | null>(null); 
 
   const context = useContext(AppContext);
 
   const handleGame = async () => {
-    if(context.onlineGameId != -1){
-      return;
-    }
+  
 
     try {
       const response = await axios.post(`${URL_API}/v2/games`, {
@@ -58,8 +56,11 @@ const RemoteHomeScreen = (props: AuthProps) => {
   }
 
   const fetchData = async (gameId:number) => {
+    if(context.onlineGameId != -1){
+      return;
+    }
     try {
-      const response = await axios.get(`${URL_API}/v2/games/${gameId}`, {
+      const response = await axios.get(`${URL_API}/v2/games/opponent/${gameId}`, {
         params: { name: context.username },
         headers: {
           "Content-Type": "application/json",
@@ -69,12 +70,11 @@ const RemoteHomeScreen = (props: AuthProps) => {
   
     let status = response.data.status;
     if (status == 200){
-      if (pollingInterval.current && !response.data.data.finished) {
+      if (pullingInterval.current && response.data.data.finished == false) {
         context.setOnlineGameId(gameId);
         props.navigation.navigate("PlayRemoteScreen");
       }
     }
-    console.log("Respuesta completa del servidor: " + JSON.stringify(response.data.message));
 
   } catch (error) {
     console.log("Error al obtener datos:", error);
@@ -82,13 +82,13 @@ const RemoteHomeScreen = (props: AuthProps) => {
 }
 
   const pullStuff = async (gameId: number) => {
-    pollingInterval.current = setInterval(() => {
+    pullingInterval.current = setInterval(() => {
       fetchData(gameId);
-    }, POLLING_INTERVAL);
+    }, PULLING_INTERVAL);
 
     return () => {
-      if (pollingInterval.current) {
-        clearInterval(pollingInterval.current);
+      if (pullingInterval.current) {
+        clearInterval(pullingInterval.current);
       }
     }
   }
