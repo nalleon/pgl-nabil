@@ -19,6 +19,7 @@ export type GameOutput = {
   player2: string;
   board: string[][];
   finished: boolean;
+  turnPlayer: string;
 };
 
 export type GamePlay = {
@@ -34,6 +35,7 @@ const PlayRemoteScreen = (props: AuthProps) => {
   const pollingInterval = useRef<NodeJS.Timeout | null>(null); 
 
   useEffect(() => {
+    console.log( "ESTA ES LA ID EPICA" + context.onlineGameId);
     pullStuff(context.onlineGameId);
   }, [])
 
@@ -53,7 +55,8 @@ const PlayRemoteScreen = (props: AuthProps) => {
       setGame(response.data.data);
     }
 
-    if(response.data.data.finished) {
+    if(response.data.data.finished == true) {
+      console.log(response.data.data.finished)
       context.setOnlineGameId(-1);
       props.navigation.navigate('RemoteHomeScreen');
     }
@@ -135,6 +138,9 @@ const PlayRemoteScreen = (props: AuthProps) => {
   return (
     <View style={{flex:1}}>
       <View style={styles.container}>
+        {game && 
+          <Text>Current turn is for: {game.turnPlayer}</Text>
+        }
         { game && 
           <FlatList
           data={game?.board}

@@ -20,8 +20,6 @@ const RemoteHomeScreen = (props: AuthProps) => {
 
   const context = useContext(AppContext);
 
-  
-
   const handleGame = async () => {
     if(context.onlineGameId != -1){
       return;
@@ -47,7 +45,6 @@ const RemoteHomeScreen = (props: AuthProps) => {
           try {
             const gameId: number = parseInt(response.data.message.slice(-2).trim());
             console.log("ID de la partida:", gameId);
-            context.setOnlineGameId(gameId)
             await pullStuff(gameId);
           } catch(error){
               console.error("Error al guardar el token: "+  error);
@@ -73,6 +70,7 @@ const RemoteHomeScreen = (props: AuthProps) => {
     let status = response.data.status;
     if (status == 200){
       if (pollingInterval.current && !response.data.data.finished) {
+        context.setOnlineGameId(gameId);
         props.navigation.navigate("PlayRemoteScreen");
       }
     }
