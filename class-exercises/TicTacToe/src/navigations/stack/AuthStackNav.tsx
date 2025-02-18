@@ -8,6 +8,8 @@ import LocalHomeScreen from '../../screens/LocalHomeScreen';
 import PlayLocalScreen from '../../screens/PlayLocalScreen';
 import PlayRemoteScreen from '../../screens/PlayRemoteScreen';
 import RemoteHomeScreen from '../../screens/RemoteHomeScreen';
+import SpectScreen from '../../screens/SpectScreen';
+import SpectListScreen from '../../screens/SpectListScreen';
 
 type Props = {}
 
@@ -20,6 +22,8 @@ export type AuthStackParamList = {
     PlayLocalScreen: undefined,
     RemoteHomeScreen: undefined,
     PlayRemoteScreen: undefined,
+    SpectListScreen: undefined,
+    SpectScreen : undefined
 };
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
@@ -39,6 +43,8 @@ const AuthStackNav = (props: Props) => {
             <Stack.Screen name="PlayLocalScreen" component={PlayLocalScreen} />
             <Stack.Screen name="RemoteHomeScreen" component={RemoteHomeScreen} />  
             <Stack.Screen name="PlayRemoteScreen" component={PlayRemoteScreen} />  
+            <Stack.Screen name="SpectListScreen" component={SpectListScreen} />  
+            <Stack.Screen name="SpectScreen" component={SpectScreen} />  
         </Stack.Navigator>
     )
 }

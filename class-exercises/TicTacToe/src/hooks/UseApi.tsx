@@ -17,6 +17,15 @@ export type GameOutput = {
   turnPlayer: string;
 };
 
+export type GameOutputList = {
+  id:number,
+  player1: string;
+  player2: string;
+  board: string[][];
+  finished: boolean;
+  turnPlayer: string;
+};
+
 export type GamePlay = {
   playername: string;
   posX: number;

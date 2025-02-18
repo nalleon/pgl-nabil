@@ -20,8 +20,6 @@ const RemoteHomeScreen = (props: AuthProps) => {
   const context = useContext(AppContext);
 
   const handleGame = async () => {
-  
-
     try {
       const response = await axios.post(`${URL_API}/v2/games`, {
               name: context.username,
@@ -98,7 +96,7 @@ const RemoteHomeScreen = (props: AuthProps) => {
       context.setUsername("");
       context.setOnlineGameId(-1);
       props.navigation.navigate('InitScreen');
-    } 
+    }
   }
   return (
     <View style={styles.container}>
@@ -107,6 +105,10 @@ const RemoteHomeScreen = (props: AuthProps) => {
 
       <TouchableOpacity style={styles.button} onPress={() => handleGame()}>
           <Text style={styles.buttonText}>Create or join a game</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate('SpectListScreen')}>
+          <Text style={styles.buttonText}>Look at other games</Text>
       </TouchableOpacity>
 
       <View style={{justifyContent:'flex-end', flex:2}}>

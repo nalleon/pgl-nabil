@@ -20,7 +20,6 @@ const PlayRemoteScreen = (props: AuthProps) => {
   const context = useContext(AppContext);
   const pullingInterval = useRef<NodeJS.Timeout | null>(null); 
 
-
   useEffect(() => {
     if(context.onlineGameId != -1){
       pullStuff(context.onlineGameId);
@@ -135,8 +134,8 @@ const PlayRemoteScreen = (props: AuthProps) => {
   return (
     <View style={{flex:1}}>
       <View style={styles.container}>
-        {game && 
-          <Text>Current turn is for: {game.turnPlayer}</Text>
+        {game.turnPlayer && 
+          <Text style={styles.turnText}>Current turn is for: {game.turnPlayer}</Text>
         }
         { game && 
           <FlatList
@@ -202,6 +201,14 @@ const styles = StyleSheet.create({
     fontSize: 50,
     textAlign: "center",
     fontFamily: 'courier'
+  },
+
+  turnText:{
+    fontSize: 16,
+    textAlign: "center",
+    fontFamily: 'courier',
+    fontWeight: 'bold',
+    marginBottom: 10  
   },
     button: {
     width: "80%",

@@ -11,38 +11,38 @@ type AppContextType ={
     setUsername: (nombreUsuario: string) => void,
     token: string,
     setToken: (token: string) => void,
-    role: string,
-    setRole: (rol: string) => void,
     currentLocalGameId: number,
     setCurrentLocalGameId: (id: number) => void,
     isFinished : boolean,
     setIsFinished: (isFinished: boolean) => void,
     onlineGameId: number,
     setOnlineGameId: (id: number) => void,
+    spectingGameId: number,
+    setSpectingGameId: (id: number) => void,
 }
 
 export const AppContext = createContext<AppContextType>({} as AppContextType );
 const AppContextProvider = (props: Props) => {
     const [username, setUsername] = useState<string>("");
     const [token, setToken] = useState<string>("");
-    const [role, setRole] = useState<string>("");
     const [currentLocalGameId, setCurrentLocalGameId] = useState<number>(-1);
     const [isFinished, setIsFinished] = useState<boolean>(false);
     const [onlineGameId, setOnlineGameId] = useState<number>(-1)
+    const [spectingGameId, setSpectingGameId] = useState<number>(-1)
 
     const contextValues: AppContextType  = {
         username,
         setUsername,
         token,
         setToken,
-        role,
-        setRole,
         currentLocalGameId,
         setCurrentLocalGameId,
         isFinished,
         setIsFinished,
         onlineGameId,
-        setOnlineGameId
+        setOnlineGameId,
+        spectingGameId,
+        setSpectingGameId
     }
     
         return (
