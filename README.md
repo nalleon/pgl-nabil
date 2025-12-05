@@ -30,7 +30,7 @@ Programación multimedia y dispositivos móviles (2DAM - IES Puerto de la Cruz) 
     - [Buscaminas](./exam-activities/minesweeper/)
     - [Peliculas - API](./exam-activities/movies-project/)
     - [Peliculas - API (Cliente) (Securizado)](./exam-activities/movies-project-v2/)
-    - [Gestión de Intituto (Cliente)](./exam-activities/instituto-app/)
+    - [Gestión de Instituto (Cliente)](./exam-activities/instituto-app/)
     - [Tres en Raya (Cliente)](./exam-activities/TicTacToe/)
 
 - [Prácticas](./exam-practices/)
